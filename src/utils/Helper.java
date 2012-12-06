@@ -3,6 +3,8 @@ package utils;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Helper 
 {
@@ -15,7 +17,7 @@ public class Helper
 		}
 		catch (NumberFormatException err) 
 		{
-			JOptionPane.showMessageDialog(null, "Only numbers are allowed in this field", "Error!", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Dette felt kan kun indeholde tal", "Information", JOptionPane.WARNING_MESSAGE, new ImageIcon(Helper.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
 			data.setText(null);
 		}
 	}
@@ -28,7 +30,7 @@ public class Helper
 		}
 		catch (NumberFormatException err) 
 		{
-			JOptionPane.showMessageDialog(null, "Only numbers are allowed in this field", "Error!", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Dette felt kan kun indeholde tal", "Information", JOptionPane.WARNING_MESSAGE, new ImageIcon(Helper.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
 			data.setText(null);
 		}
 	}
@@ -41,9 +43,18 @@ public class Helper
         }
         catch (NumberFormatException err)
         {
-            JOptionPane.showMessageDialog(null, "Only decimal are allowed in this field", "Error!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Dette felt kan kun indeholde decimal tal", "Information", JOptionPane.WARNING_MESSAGE, new ImageIcon(Helper.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
             data.setText(null);
         }
+    }
+
+    public static int showConfirmDialog(String objectName)
+    {
+        int option = JOptionPane.showConfirmDialog (null, String.format("Er du sikker på du vil slette dette %s?", objectName));
+        if (option == JOptionPane.YES_OPTION )
+            return 1;
+
+        return 0;
     }
 	
 	//Added because of stupid a bug with setLocationRelativeTo(null) for some JFrames or JDialogs
@@ -56,7 +67,6 @@ public class Helper
 	    int y = (screenSize.height / 2) - (height / 2);
 	    c.setLocation(x, y);
 	}
-	
 
     public static <E> ArrayList<E> makeCollection(Iterable<E> iter)
     {
@@ -66,4 +76,26 @@ public class Helper
         return list;
     }
 
+    public static int selectDropdownIndex(JComboBox<String> dropdown, String findValue)
+    {
+        int drpIndex = 0;
+        for (int i=0; i< dropdown.getItemCount(); i++)
+        {
+            String currentValue = dropdown.getItemAt(i);
+            if(findValue.equalsIgnoreCase(currentValue))
+            {
+                drpIndex = i;
+                break;
+            }
+        }
+        return drpIndex;
+    }
+
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
 }
