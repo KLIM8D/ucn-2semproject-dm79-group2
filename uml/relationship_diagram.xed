@@ -6,8 +6,8 @@
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="2" name="title" type="varchar" length="255" nulls="false"/>
-      <Column id="3" name="description" type="varchar" length="255" nulls="false"/>
+      <Column id="2" name="title" type="varchar" length="256" nulls="false"/>
+      <Column id="3" name="description" type="varchar" length="2048" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
@@ -21,7 +21,7 @@
       <Column id="7" name="userId" type="int" length="25" nulls="false"/>
       <Column id="8" name="startDate" type="datetime" length="25" nulls="false"/>
       <Column id="9" name="endDate" type="datetime" length="25" nulls="false"/>
-      <Column id="10" name="entryRemark" type="varchar" length="255" nulls="true"/>
+      <Column id="10" name="entryRemark" type="varchar" length="1024" nulls="true"/>
       <Column id="11" name="creationDate" type="datetime" length="25" nulls="false"/>
       <Column id="12" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
@@ -46,9 +46,9 @@
       </Column>
       <Column id="19" name="userId" type="int" length="25" nulls="false"/>
       <Column id="20" name="clientId" type="int" length="25" nulls="false"/>
-      <Column id="21" name="note" type="varchar" length="255" nulls="true"/>
+      <Column id="21" name="note" type="varchar" length="256" nulls="true"/>
       <Column id="22" name="createdDate" type="datetime" length="25" nulls="false"/>
-      <Column id="23" name="editedDate" type="varchar" length="25" nulls="false"/>
+      <Column id="23" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
@@ -59,10 +59,10 @@
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
       <Column id="26" name="permissionId" type="int" length="25" nulls="false"/>
-      <Column id="27" name="firstName" type="varchar" length="255" nulls="false"/>
-      <Column id="28" name="lastName" type="varchar" length="255" nulls="false"/>
-      <Column id="29" name="userName" type="varchar" length="255" nulls="false"/>
-      <Column id="30" name="userPwd" type="varchar" length="255" nulls="false"/>
+      <Column id="27" name="firstName" type="varchar" length="256" nulls="false"/>
+      <Column id="28" name="lastName" type="varchar" length="256" nulls="false"/>
+      <Column id="29" name="userName" type="varchar" length="256" nulls="false"/>
+      <Column id="30" name="userPwd" type="varchar" length="256" nulls="false"/>
       <Column id="31" name="creationDate" type="datetime" length="25" nulls="false"/>
       <Column id="32" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
@@ -74,7 +74,7 @@
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="35" name="userRole" type="varchar" length="255" nulls="false"/>
+      <Column id="35" name="userRole" type="varchar" length="256" nulls="false"/>
       <Column id="36" name="creationDate" type="datetime" length="25" nulls="false"/>
       <Column id="37" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
@@ -87,10 +87,10 @@
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
       <Column id="40" name="cityId" type="int" length="25" nulls="false"/>
-      <Column id="41" name="name" type="varchar" length="255" nulls="false"/>
-      <Column id="42" name="address" type="varchar" length="255" nulls="false"/>
+      <Column id="41" name="name" type="varchar" length="256" nulls="false"/>
+      <Column id="42" name="address" type="varchar" length="256" nulls="false"/>
       <Column id="43" name="phoneNo" type="int" length="25" nulls="false"/>
-      <Column id="44" name="eMail" type="varchar" length="255" nulls="true"/>
+      <Column id="44" name="eMail" type="varchar" length="256" nulls="true"/>
       <Column id="45" name="createdDate" type="datetime" length="25" nulls="false"/>
       <Column id="46" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
@@ -114,7 +114,7 @@
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="54" name="cityName" type="varchar" length="255" nulls="false"/>
+      <Column id="54" name="cityName" type="varchar" length="256" nulls="false"/>
       <Column id="55" name="zipCode" type="int" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
@@ -126,13 +126,63 @@
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
       <Column id="58" name="userId" type="int" length="25" nulls="false"/>
-      <Column id="59" name="userDetails" type="varchar" length="500" nulls="false"/>
-      <Column id="60" name="exception" type="varchar" length="2000" nulls="false"/>
-      <Column id="61" name="exceptionLocation" type="varchar" length="500" nulls="false"/>
+      <Column id="59" name="userDetails" type="varchar" length="512" nulls="false"/>
+      <Column id="60" name="exception" type="varchar" length="2048" nulls="false"/>
+      <Column id="61" name="exceptionLocation" type="varchar" length="512" nulls="false"/>
       <Column id="62" name="createdDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
+   <Relation id="63" name="Clients_Cities" cardinality="1" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>40</FK>
+      <PK>53</PK>
+   </Relation>
+   <Relation id="64" name="DataEntries_Tasks" cardinality="1" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>6</FK>
+      <PK>1</PK>
+   </Relation>
+   <Relation id="65" name="DataEntries_Users" cardinality="1" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>7</FK>
+      <PK>25</PK>
+   </Relation>
+   <Relation id="66" name="EntryCollection_DataEntries" cardinality="1" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>16</FK>
+      <PK>5</PK>
+   </Relation>
+   <Relation id="67" name="TimeSheets_Clients" cardinality="1" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>20</FK>
+      <PK>39</PK>
+   </Relation>
+   <Relation id="68" name="TimeSheets_EntryCollection" cardinality="-2" identifying="false" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>18</FK>
+      <PK>15</PK>
+   </Relation>
+   <Relation id="69" name="TimeSheets_PermissionWrapper" cardinality="-2" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>18</FK>
+      <PK>49</PK>
+   </Relation>
+   <Relation id="70" name="TimeSheets_Users" cardinality="1" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>19</FK>
+      <PK>25</PK>
+   </Relation>
+   <Relation id="71" name="Users_Logs" cardinality="-2" identifying="false" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>25</FK>
+      <PK>58</PK>
+   </Relation>
+   <Relation id="72" name="Users_UserPermissions" cardinality="1" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>26</FK>
+      <PK>34</PK>
+   </Relation>
    <Constraint table="0" name="pkTasks" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
@@ -145,7 +195,7 @@
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
       <ConstraintColumn id="5"></ConstraintColumn>
    </Constraint>
-   <Constraint table="13" name="PK_EntryCollection_1" type="PrimKey">
+   <Constraint table="13" name="pkEntryCollection" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
@@ -175,7 +225,7 @@
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
       <ConstraintColumn id="39"></ConstraintColumn>
    </Constraint>
-   <Constraint table="47" name="PK_PermissionWrapper_1" type="PrimKey">
+   <Constraint table="47" name="pkPermissionWrapper" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
@@ -187,23 +237,33 @@
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
       <ConstraintColumn id="53"></ConstraintColumn>
    </Constraint>
-   <Constraint table="56" name="PK_Logs_1" type="PrimKey">
+   <Constraint table="56" name="pkLogs" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
       <ConstraintColumn id="57"></ConstraintColumn>
    </Constraint>
-   <Sheet name="ucn-2semproject-dm79-group2" id="63" disp_at="true" disp_ph="true" disp_co="true" disp_rn="true" disp_null="true">
-      <Place id="0" visible="true">900,350,270,80</Place>
-      <Place id="24" visible="true">20,59,260,160</Place>
-      <Place id="33" visible="true">20,249,260,90</Place>
-      <Place id="52" visible="true">320,249,230,80</Place>
-      <Place id="4" visible="true">899,152,250,160</Place>
-      <Place id="38" visible="true">319,60,250,160</Place>
-      <Place id="13" visible="true">900,60,210,80</Place>
-      <Place id="17" visible="true">609,59,260,130</Place>
-      <Place id="56" visible="true">579,299,310,130</Place>
-      <Place id="47" visible="true">320,358,230,90</Place>
+   <Sheet name="ucn-2semproject-dm79-group2" id="73" disp_at="true" disp_ph="true" disp_co="true" disp_rn="true" disp_null="true">
+      <Place id="63" visible="true">500,0,0,0</Place>
+      <Place id="33" visible="true">740,960,260,90</Place>
+      <Place id="4" visible="true">283,420,260,160</Place>
+      <Place id="64" visible="true">500,0,0,0</Place>
+      <Place id="47" visible="true">755,230,230,90</Place>
+      <Place id="71" visible="true">500,0,0,0</Place>
+      <Place id="52" visible="true">1100,965,260,80</Place>
+      <Place id="70" visible="true">500,0,0,0</Place>
+      <Place id="66" visible="true">500,0,0,0</Place>
+      <Place id="13" visible="true">245,235,210,80</Place>
+      <Place id="72" visible="true">500,0,0,0</Place>
+      <Place id="65" visible="true">500,0,0,0</Place>
+      <Place id="0" visible="true">120,720,280,80</Place>
+      <Place id="56" visible="true">355,940,310,130</Place>
+      <Place id="67" visible="true">500,0,0,0</Place>
+      <Place id="38" visible="true">912,680,250,160</Place>
+      <Place id="69" visible="true">500,0,0,0</Place>
+      <Place id="17" visible="true">480,0,250,130</Place>
+      <Place id="24" visible="true">500,680,260,160</Place>
+      <Place id="68" visible="true">500,0,0,0</Place>
    </Sheet>
-   <Settings sheet="63" zoom="0.9167244094488188"></Settings>
+   <Settings sheet="73" zoom="0.5330467289719626"></Settings>
 </Diagram>
