@@ -16,44 +16,44 @@ public class Client {
 	public String getName() 
 	{ return _name; }
 	
-	public void setName(String name) 
-	{ _name = name; }
+	public void setName(String value) 
+	{ _name = value; }
 	
 	public String getAddress() 
 	{ return _address; }
 	
-	public void setAddress(String address) 
-	{ _address = address; }
+	public void setAddress(String value) 
+	{ _address = value; }
 	
 	public City getCity() 
 	{ return _city; }
 	
-	public void setCity(City city) 
-	{ _city = city; }
+	public void setCity(City value) 
+	{ _city = value; }
 	
 	public long getPhoneNo() 
 	{ return _phoneNo; }
 	
-	public void setPhoneNo(long phoneNo) 
-	{ _phoneNo = phoneNo; }
+	public void setPhoneNo(long value) 
+	{ _phoneNo = value; }
 	
 	public String getEmail() 
 	{ return _eMail; }
 	
-	public void setEmail(String eMail)
-	{ _eMail = eMail; }
+	public void setEmail(String value)
+	{ _eMail = value; }
 	
 	public Date getCreatedDate() 
 	{ return _createdDate; }
 	
-	public void setCreatedDate(Date createdDate) 
-	{ _createdDate = createdDate; }
+	public void setCreatedDate(Date value) 
+	{ _createdDate = value; }
 	
 	public Date getEditedDate() 
 	{ return _editedDate; }
 	
-	public void setEditedDate(Date editedDate) 
-	{ _editedDate = editedDate; }
+	public void setEditedDate(Date value) 
+	{ _editedDate = value; }
 
 	public Client(String name, String address, City city, long phoneNo, String eMail, Date createdDate, Date editedDate) 
 	{
