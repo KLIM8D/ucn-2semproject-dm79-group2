@@ -60,7 +60,7 @@ CREATE TABLE "TimeSheets"  (
 	"userId"     	int NOT NULL,
 	"clientId"   	int NOT NULL,
 	"note"       	varchar(256) NULL,
-	"createdDate"	datetime NOT NULL,
+	"creationDate"	datetime NOT NULL,
 	"editedDate" 	datetime NOT NULL,
 	CONSTRAINT "pkTimeSheet" PRIMARY KEY CLUSTERED("sheetId")
 )
