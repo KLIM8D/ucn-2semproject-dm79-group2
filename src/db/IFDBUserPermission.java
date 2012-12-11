@@ -33,7 +33,7 @@ public interface IFDBUserPermission
 	 * Inserts a new role in the database
 	 * 
 	 * @param userPermission		the object containing the information you want stored
-	 * @return  					returns the number of rows affected
+	 * @return int 					returns the number of rows affected
 	 */
 	public int insertRole(UserPermission userPermission) throws Exception;
 	
@@ -41,7 +41,7 @@ public interface IFDBUserPermission
 	 * Update an existing role in the database
 	 * 
 	 * @param userPermission		the object containing the updated information you want stored
-	 * @return						returns the number of rows effected
+	 * @return int					returns the number of rows effected
 	 */
 	public int updateRole(UserPermission userPermission) throws Exception;
 	
@@ -49,7 +49,7 @@ public interface IFDBUserPermission
 	 * Delete an existing role from the database
 	 * 
 	 * @param userPermission		the object containing the role which is going to be delete from the database
-	 * @return						returns the number of rows affected
+	 * @return int					returns the number of rows affected
 	 */
 	public int deleteRole(UserPermission userPermission) throws Exception;
 }
