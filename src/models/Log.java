@@ -21,7 +21,7 @@ public class Log
     public long getLogId()
     { return _logId; }
 
-    public long getUser()
+    public User getUser()
     { return _user; }
 
     public String getUserDetails()
