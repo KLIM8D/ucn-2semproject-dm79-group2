@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Client {
 
+	int _clientId;
 	String _name;
 	String _address;
 	City _city;
@@ -57,6 +58,19 @@ public class Client {
 	public Client(String name, String address, City city, long phoneNo, String eMail, Date createdDate, Date editedDate) 
 	{
 		//super();
+		_name = name;
+		_address = address;
+		_city = city;
+		_phoneNo = phoneNo;
+		_eMail = eMail;
+		_createdDate = createdDate;
+		_editedDate = editedDate;
+	}
+	
+	public Client(int clientId, String name, String address, City city, long phoneNo, String eMail, Date createdDate, Date editedDate) 
+	{
+		//super();
+		_clientId = clientId;
 		_name = name;
 		_address = address;
 		_city = city;
