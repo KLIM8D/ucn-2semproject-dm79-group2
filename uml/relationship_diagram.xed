@@ -17,177 +17,162 @@
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="6" name="taskId" type="int" length="25" nulls="false"/>
-      <Column id="7" name="userId" type="int" length="25" nulls="false"/>
-      <Column id="8" name="startDate" type="datetime" length="25" nulls="false"/>
-      <Column id="9" name="endDate" type="datetime" length="25" nulls="false"/>
-      <Column id="10" name="entryRemark" type="varchar" length="1024" nulls="true"/>
-      <Column id="11" name="creationDate" type="datetime" length="25" nulls="false"/>
-      <Column id="12" name="editedDate" type="datetime" length="25" nulls="false"/>
+      <Column id="6" name="sheetId" type="int" length="25" nulls="false"/>
+      <Column id="7" name="taskId" type="int" length="25" nulls="false"/>
+      <Column id="8" name="userId" type="int" length="25" nulls="false"/>
+      <Column id="9" name="startDate" type="datetime" length="25" nulls="false"/>
+      <Column id="10" name="endDate" type="datetime" length="25" nulls="false"/>
+      <Column id="11" name="entryRemark" type="varchar" length="1024" nulls="true"/>
+      <Column id="12" name="creationDate" type="datetime" length="25" nulls="false"/>
+      <Column id="13" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
-   <Table id="13" name="EntryCollection" schema="" database="" background="16777165">
-      <Column id="14" name="collectionId" type="int" length="25" nulls="false">
+   <Table id="14" name="TimeSheets" schema="" database="" background="16777165">
+      <Column id="15" name="sheetId" type="int" length="25" nulls="false">
          <CP name="IDENTITY">YES</CP>
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="15" name="sheetId" type="int" length="25" nulls="false"/>
-      <Column id="16" name="entryId" type="int" length="255" nulls="false"/>
+      <Column id="16" name="userId" type="int" length="25" nulls="false"/>
+      <Column id="17" name="clientId" type="int" length="25" nulls="false"/>
+      <Column id="18" name="note" type="varchar" length="256" nulls="true"/>
+      <Column id="19" name="createdDate" type="datetime" length="25" nulls="false"/>
+      <Column id="20" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
-   <Table id="17" name="TimeSheets" schema="" database="" background="16777165">
-      <Column id="18" name="sheetId" type="int" length="25" nulls="false">
+   <Table id="21" name="Users" schema="" database="" background="16777165">
+      <Column id="22" name="userId" type="int" length="25" nulls="false">
          <CP name="IDENTITY">YES</CP>
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="19" name="userId" type="int" length="25" nulls="false"/>
-      <Column id="20" name="clientId" type="int" length="25" nulls="false"/>
-      <Column id="21" name="note" type="varchar" length="256" nulls="true"/>
-      <Column id="22" name="createdDate" type="datetime" length="25" nulls="false"/>
-      <Column id="23" name="editedDate" type="datetime" length="25" nulls="false"/>
+      <Column id="23" name="permissionId" type="int" length="25" nulls="false"/>
+      <Column id="24" name="firstName" type="varchar" length="256" nulls="false"/>
+      <Column id="25" name="lastName" type="varchar" length="256" nulls="false"/>
+      <Column id="26" name="userName" type="varchar" length="256" nulls="false"/>
+      <Column id="27" name="userPwd" type="varchar" length="256" nulls="false"/>
+      <Column id="28" name="creationDate" type="datetime" length="25" nulls="false"/>
+      <Column id="29" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
-   <Table id="24" name="Users" schema="" database="" background="16777165">
-      <Column id="25" name="userId" type="int" length="25" nulls="false">
+   <Table id="30" name="UserPermissions" schema="" database="" background="16777165">
+      <Column id="31" name="permissionId" type="int" length="25" nulls="false">
          <CP name="IDENTITY">YES</CP>
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="26" name="permissionId" type="int" length="25" nulls="false"/>
-      <Column id="27" name="firstName" type="varchar" length="256" nulls="false"/>
-      <Column id="28" name="lastName" type="varchar" length="256" nulls="false"/>
-      <Column id="29" name="userName" type="varchar" length="256" nulls="false"/>
-      <Column id="30" name="userPwd" type="varchar" length="256" nulls="false"/>
-      <Column id="31" name="creationDate" type="datetime" length="25" nulls="false"/>
-      <Column id="32" name="editedDate" type="datetime" length="25" nulls="false"/>
+      <Column id="32" name="userRole" type="varchar" length="256" nulls="false"/>
+      <Column id="33" name="creationDate" type="datetime" length="25" nulls="false"/>
+      <Column id="34" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
-   <Table id="33" name="UserPermissions" schema="" database="" background="16777165">
-      <Column id="34" name="permissionId" type="int" length="25" nulls="false">
+   <Table id="35" name="Clients" schema="" database="" background="16777165">
+      <Column id="36" name="clientId" type="int" length="25" nulls="false">
          <CP name="IDENTITY">YES</CP>
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="35" name="userRole" type="varchar" length="256" nulls="false"/>
-      <Column id="36" name="creationDate" type="datetime" length="25" nulls="false"/>
-      <Column id="37" name="editedDate" type="datetime" length="25" nulls="false"/>
+      <Column id="37" name="cityId" type="int" length="25" nulls="false"/>
+      <Column id="38" name="name" type="varchar" length="256" nulls="false"/>
+      <Column id="39" name="address" type="varchar" length="256" nulls="false"/>
+      <Column id="40" name="phoneNo" type="int" length="25" nulls="false"/>
+      <Column id="41" name="eMail" type="varchar" length="256" nulls="true"/>
+      <Column id="42" name="createdDate" type="datetime" length="25" nulls="false"/>
+      <Column id="43" name="editedDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
-   <Table id="38" name="Clients" schema="" database="" background="16777165">
-      <Column id="39" name="clientId" type="int" length="25" nulls="false">
+   <Table id="44" name="PermissionWrapper" schema="" database="" background="16777165">
+      <Column id="45" name="wrapperId" type="int" length="25" nulls="false">
          <CP name="IDENTITY">YES</CP>
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="40" name="cityId" type="int" length="25" nulls="false"/>
-      <Column id="41" name="name" type="varchar" length="256" nulls="false"/>
-      <Column id="42" name="address" type="varchar" length="256" nulls="false"/>
-      <Column id="43" name="phoneNo" type="int" length="25" nulls="false"/>
-      <Column id="44" name="eMail" type="varchar" length="256" nulls="true"/>
-      <Column id="45" name="createdDate" type="datetime" length="25" nulls="false"/>
-      <Column id="46" name="editedDate" type="datetime" length="25" nulls="false"/>
+      <Column id="46" name="sheetId" type="int" length="25" nulls="false"/>
+      <Column id="47" name="permissionType" type="int" length="1" nulls="false"/>
+      <Column id="48" name="permissionValue" type="int" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
-   <Table id="47" name="PermissionWrapper" schema="" database="" background="16777165">
-      <Column id="48" name="wrapperId" type="int" length="25" nulls="false">
+   <Table id="49" name="Cities" schema="" database="" background="16777165">
+      <Column id="50" name="cityId" type="int" length="25" nulls="false">
          <CP name="IDENTITY">YES</CP>
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="49" name="sheetId" type="int" length="25" nulls="false"/>
-      <Column id="50" name="permissionType" type="int" length="1" nulls="false"/>
-      <Column id="51" name="permissionValue" type="int" length="25" nulls="false"/>
+      <Column id="51" name="cityName" type="varchar" length="256" nulls="false"/>
+      <Column id="52" name="zipCode" type="int" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
-   <Table id="52" name="Cities" schema="" database="" background="16777165">
-      <Column id="53" name="cityId" type="int" length="25" nulls="false">
+   <Table id="53" name="Logs" schema="" database="" background="16777165">
+      <Column id="54" name="logId" type="int" length="25" nulls="false">
          <CP name="IDENTITY">YES</CP>
          <CP name="IDENTITY_SEED">1</CP>
          <CP name="IDENTITY_INCREMENT">1</CP>
       </Column>
-      <Column id="54" name="cityName" type="varchar" length="256" nulls="false"/>
-      <Column id="55" name="zipCode" type="int" length="25" nulls="false"/>
+      <Column id="55" name="userId" type="int" length="25" nulls="false"/>
+      <Column id="56" name="userDetails" type="varchar" length="512" nulls="false"/>
+      <Column id="57" name="exception" type="varchar" length="2048" nulls="false"/>
+      <Column id="58" name="exceptionLocation" type="varchar" length="512" nulls="false"/>
+      <Column id="59" name="createdDate" type="datetime" length="25" nulls="false"/>
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
-   <Table id="56" name="Logs" schema="" database="" background="16777165">
-      <Column id="57" name="logId" type="int" length="25" nulls="false">
-         <CP name="IDENTITY">YES</CP>
-         <CP name="IDENTITY_SEED">1</CP>
-         <CP name="IDENTITY_INCREMENT">1</CP>
-      </Column>
-      <Column id="58" name="userId" type="int" length="25" nulls="false"/>
-      <Column id="59" name="userDetails" type="varchar" length="512" nulls="false"/>
-      <Column id="60" name="exception" type="varchar" length="2048" nulls="false"/>
-      <Column id="61" name="exceptionLocation" type="varchar" length="512" nulls="false"/>
-      <Column id="62" name="createdDate" type="datetime" length="25" nulls="false"/>
-      <Storage name="Filegroup" value=""></Storage>
-      <Storage name="FilegroupTextImage" value=""></Storage>
-   </Table>
-   <Relation id="63" name="Cities_Clients" cardinality="1" identifying="true" nulls="false">
+   <Relation id="60" name="Cities_Clients" cardinality="1" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>53</FK>
-      <PK>40</PK>
+      <FK>50</FK>
+      <PK>37</PK>
       <Text></Text>
    </Relation>
-   <Relation id="64" name="Tasks_DataEntries" cardinality="1" identifying="true" nulls="false">
+   <Relation id="61" name="Tasks_DataEntries" cardinality="1" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
       <FK>1</FK>
-      <PK>6</PK>
-      <Text></Text>
-   </Relation>
-   <Relation id="65" name="Users_DataEntries" cardinality="1" identifying="true" nulls="false">
-      <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>25</FK>
       <PK>7</PK>
       <Text></Text>
    </Relation>
-   <Relation id="66" name="DataEntries_EntryCollection" cardinality="1" identifying="true" nulls="false">
+   <Relation id="62" name="Users_DataEntries" cardinality="1" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>5</FK>
+      <FK>22</FK>
+      <PK>8</PK>
+      <Text></Text>
+   </Relation>
+   <Relation id="63" name="Clients_TimeSheets" cardinality="1" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>36</FK>
+      <PK>17</PK>
+      <Text></Text>
+   </Relation>
+   <Relation id="64" name="TimeSheets_DataEntries" cardinality="-2" identifying="false" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>15</FK>
+      <PK>6</PK>
+      <Text></Text>
+   </Relation>
+   <Relation id="65" name="TimeSheets_PermissionWrapper" cardinality="-2" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>15</FK>
+      <PK>46</PK>
+   </Relation>
+   <Relation id="66" name="Users_TimeSheets" cardinality="1" identifying="true" nulls="false">
+      <Option name="enfConMS" class="Boolean" value="true"></Option>
+      <FK>22</FK>
       <PK>16</PK>
       <Text></Text>
    </Relation>
-   <Relation id="67" name="Clients_TimeSheets" cardinality="1" identifying="true" nulls="false">
+   <Relation id="67" name="Users_Logs" cardinality="-2" identifying="false" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>39</FK>
-      <PK>20</PK>
-      <Text></Text>
+      <FK>22</FK>
+      <PK>55</PK>
    </Relation>
-   <Relation id="68" name="TimeSheets_EntryCollection" cardinality="-2" identifying="false" nulls="false">
+   <Relation id="68" name="UserPermissions_Users" cardinality="-2" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>18</FK>
-      <PK>15</PK>
-   </Relation>
-   <Relation id="69" name="TimeSheets_PermissionWrapper" cardinality="-2" identifying="true" nulls="false">
-      <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>18</FK>
-      <PK>49</PK>
-   </Relation>
-   <Relation id="70" name="Users_TimeSheets" cardinality="1" identifying="true" nulls="false">
-      <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>25</FK>
-      <PK>19</PK>
-      <Text></Text>
-   </Relation>
-   <Relation id="71" name="Users_Logs" cardinality="-2" identifying="false" nulls="false">
-      <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>25</FK>
-      <PK>58</PK>
-   </Relation>
-   <Relation id="72" name="UserPermissions_Users" cardinality="-2" identifying="true" nulls="false">
-      <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>34</FK>
-      <PK>26</PK>
+      <FK>31</FK>
+      <PK>23</PK>
       <Text></Text>
    </Relation>
    <Constraint table="0" name="pkTasks" type="PrimKey">
@@ -202,75 +187,67 @@
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
       <ConstraintColumn id="5"></ConstraintColumn>
    </Constraint>
-   <Constraint table="13" name="pkEntryCollection" type="PrimKey">
+   <Constraint table="14" name="pkTimeSheet" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
-      <ConstraintColumn id="14"></ConstraintColumn>
+      <ConstraintColumn id="15"></ConstraintColumn>
    </Constraint>
-   <Constraint table="17" name="pkTimeSheet" type="PrimKey">
+   <Constraint table="21" name="pkUsers" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
-      <ConstraintColumn id="18"></ConstraintColumn>
+      <ConstraintColumn id="22"></ConstraintColumn>
    </Constraint>
-   <Constraint table="24" name="pkUsers" type="PrimKey">
+   <Constraint table="30" name="pkUserPermissions" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
-      <ConstraintColumn id="25"></ConstraintColumn>
+      <ConstraintColumn id="31"></ConstraintColumn>
    </Constraint>
-   <Constraint table="33" name="pkUserPermissions" type="PrimKey">
+   <Constraint table="35" name="pkClients" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
-      <ConstraintColumn id="34"></ConstraintColumn>
+      <ConstraintColumn id="36"></ConstraintColumn>
    </Constraint>
-   <Constraint table="38" name="pkClients" type="PrimKey">
+   <Constraint table="44" name="pkPermissionWrapper" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
-      <ConstraintColumn id="39"></ConstraintColumn>
+      <ConstraintColumn id="45"></ConstraintColumn>
    </Constraint>
-   <Constraint table="47" name="pkPermissionWrapper" type="PrimKey">
+   <Constraint table="49" name="pkCities" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
-      <ConstraintColumn id="48"></ConstraintColumn>
+      <ConstraintColumn id="50"></ConstraintColumn>
    </Constraint>
-   <Constraint table="52" name="pkCities" type="PrimKey">
+   <Constraint table="53" name="pkLogs" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
       <Option name="clustered" class="Boolean" value="true"></Option>
       <Option name="allowRowLocks" class="Boolean" value="true"></Option>
-      <ConstraintColumn id="53"></ConstraintColumn>
+      <ConstraintColumn id="54"></ConstraintColumn>
    </Constraint>
-   <Constraint table="56" name="pkLogs" type="PrimKey">
-      <Option name="allowPageLocks" class="Boolean" value="true"></Option>
-      <Option name="clustered" class="Boolean" value="true"></Option>
-      <Option name="allowRowLocks" class="Boolean" value="true"></Option>
-      <ConstraintColumn id="57"></ConstraintColumn>
-   </Constraint>
-   <Sheet name="ucn-2semproject-dm79-group2" id="73" disp_at="true" disp_ph="true" disp_co="true" disp_rn="true" disp_null="true">
-      <Place id="71" visible="true">500,0,0,0</Place>
-      <Place id="52" visible="true">862,5,260,80</Place>
-      <Place id="70" visible="true">500,0,0,0</Place>
-      <Place id="72" visible="true">500,0,0,0</Place>
-      <Place id="69" visible="true" options="870.0,465.0,250.0,130.0,880.0,710.0,230.0,90.0,2,990.0,595.0,990.0,710.0">500,0,0,0</Place>
-      <Place id="38" visible="true">867,190,250,160</Place>
-      <Place id="66" visible="true">500,0,0,0</Place>
-      <Place id="13" visible="true">315,715,210,80</Place>
-      <Place id="65" visible="true">500,0,0,0</Place>
-      <Place id="24" visible="true">470,190,260,160</Place>
-      <Place id="0" visible="true">90,230,280,80</Place>
-      <Place id="68" visible="true" options="870.0,465.0,250.0,130.0,315.0,715.0,210.0,80.0,4,950.0,595.0,950.0,630.0,470.0,630.0,470.0,715.0">500,0,0,0</Place>
+   <Sheet name="ucn-2semproject-dm79-group2" id="69" disp_at="true" disp_ph="true" disp_co="true" disp_rn="true" disp_null="true">
       <Place id="67" visible="true">500,0,0,0</Place>
-      <Place id="56" visible="true">460,465,310,130</Place>
-      <Place id="47" visible="true">880,710,230,90</Place>
-      <Place id="33" visible="true">300,0,260,90</Place>
-      <Place id="64" visible="true">500,0,0,0</Place>
-      <Place id="17" visible="true">870,465,250,130</Place>
-      <Place id="4" visible="true">100,450,260,160</Place>
-      <Place id="63" visible="true" options="862.0,5.0,260.0,80.0,867.0,190.0,250.0,160.0,4,1000.0,85.0,1000.0,140.0,1000.0,140.0,1000.0,189.0">500,0,0,0</Place>
+      <Place id="49" visible="true">862,5,260,80</Place>
+      <Place id="66" visible="true">500,0,0,0</Place>
+      <Place id="68" visible="true">500,0,0,0</Place>
+      <Place id="65" visible="true" options="870.0,465.0,250.0,130.0,880.0,710.0,230.0,90.0,2,990.0,595.0,990.0,710.0">500,0,0,0</Place>
+      <Place id="35" visible="true">867,190,250,160</Place>
+      <Place id="62" visible="true">500,0,0,0</Place>
+      <Place id="21" visible="true">470,190,260,160</Place>
+      <Place id="0" visible="true">90,230,280,80</Place>
+      <Place id="64" visible="true" options="870.0,465.0,250.0,130.0,100.0,450.0,260.0,180.0,5,950.0,595.0,950.0,630.0,415.0,630.0,415.0,570.0,360.0,570.0">500,0,0,0</Place>
+      <Place id="63" visible="true">500,0,0,0</Place>
+      <Place id="53" visible="true">460,465,310,130</Place>
+      <Place id="44" visible="true">880,710,230,90</Place>
+      <Place id="30" visible="true">300,0,260,90</Place>
+      <Place id="61" visible="true">500,0,0,0</Place>
+      <Place id="14" visible="true">870,465,250,130</Place>
+      <Place id="4" visible="true">100,450,260,180</Place>
+      <Place id="60" visible="true" options="862.0,5.0,260.0,80.0,867.0,190.0,250.0,160.0,4,1000.0,85.0,1000.0,140.0,1000.0,140.0,1000.0,189.0">500,0,0,0</Place>
    </Sheet>
-   <Settings sheet="73" zoom="0.71295"></Settings>
+   <Settings sheet="69" zoom="1.0082635592938982"></Settings>
 </Diagram>

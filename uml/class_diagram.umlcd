@@ -4,8 +4,8 @@
   <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_OD4csD-jEeKyTdhHXXjjzA" sourceAnchor="133.0,264.0" targetAnchor="134.0,0.0" target="_q37_QD-VEeKyTdhHXXjjzA" source="_qmOkMD-VEeKyTdhHXXjjzA">
     <modelElement href="class_diagram.uml#_ODyWED-jEeKyTdhHXXjjzA"/>
     <visualProperties xmi:id="_OD4csT-jEeKyTdhHXXjjzA"/>
-    <nameVisual xmi:id="_OD4csj-jEeKyTdhHXXjjzA" text="">
-      <visualProperties xmi:id="_OG2RID-jEeKyTdhHXXjjzA" position="2.0,-4.0" visible="false"/>
+    <nameVisual xmi:id="_e6UjcD-lEeKa8dPiy8QrtA" text="">
+      <visualProperties xmi:id="_kemrYD-lEeKa8dPiy8QrtA" visible="false"/>
     </nameVisual>
     <sourceRole xmi:id="_OD4csz-jEeKyTdhHXXjjzA" aggregationKind="NONE" name="user">
       <modelElement href="class_diagram.uml#_ODy9ID-jEeKyTdhHXXjjzA"/>
@@ -23,8 +23,8 @@
   <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_OgPokD-jEeKyTdhHXXjjzA" sourceAnchor="138.0,264.0" targetAnchor="134.0,0.0" target="_72pjID-VEeKyTdhHXXjjzA" source="__a2psD-VEeKyTdhHXXjjzA">
     <modelElement href="class_diagram.uml#_OgI64D-jEeKyTdhHXXjjzA"/>
     <visualProperties xmi:id="_OgPokT-jEeKyTdhHXXjjzA"/>
-    <nameVisual xmi:id="_OgPokj-jEeKyTdhHXXjjzA" text="">
-      <visualProperties xmi:id="_OkGN0D-jEeKyTdhHXXjjzA" position="4.5,23.0" visible="false"/>
+    <nameVisual xmi:id="_e6VxkD-lEeKa8dPiy8QrtA" text="">
+      <visualProperties xmi:id="_jr2_0D-lEeKa8dPiy8QrtA" visible="false"/>
     </nameVisual>
     <sourceRole xmi:id="_OgPokz-jEeKyTdhHXXjjzA" aggregationKind="NONE" name="client">
       <modelElement href="class_diagram.uml#_OgJh8D-jEeKyTdhHXXjjzA"/>
@@ -42,8 +42,8 @@
   <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_eV6gwD-jEeKyTdhHXXjjzA" sourceAnchor="0.0,129.0" targetAnchor="268.0,132.0" target="__a2psD-VEeKyTdhHXXjjzA" source="_cMH1oD-WEeKyTdhHXXjjzA">
     <modelElement href="class_diagram.uml#_eV1BMD-jEeKyTdhHXXjjzA"/>
     <visualProperties xmi:id="_eV6gwT-jEeKyTdhHXXjjzA"/>
-    <nameVisual xmi:id="_eV6gwj-jEeKyTdhHXXjjzA" text="">
-      <visualProperties xmi:id="_eZDUUT-jEeKyTdhHXXjjzA" position="-8.0,2.0" visible="false"/>
+    <nameVisual xmi:id="_e6VxkT-lEeKa8dPiy8QrtA" text="">
+      <visualProperties xmi:id="_jTgxQD-lEeKa8dPiy8QrtA" visible="false"/>
     </nameVisual>
     <sourceRole xmi:id="_eV6gwz-jEeKyTdhHXXjjzA" aggregationKind="NONE" name="timeSheet">
       <modelElement href="class_diagram.uml#_eV1oQD-jEeKyTdhHXXjjzA"/>
@@ -63,8 +63,8 @@
     <visualProperties xmi:id="_e48VUT-jEeKyTdhHXXjjzA"/>
     <bendpoints xmi:id="_bg3w0D-kEeKyTdhHXXjjzA" sourceY="-18" targetX="643" targetY="-15"/>
     <bendpoints xmi:id="_bg3w0T-kEeKyTdhHXXjjzA" sourceX="-643" sourceY="-18" targetY="-15"/>
-    <nameVisual xmi:id="_e48VUj-jEeKyTdhHXXjjzA" text="">
-      <visualProperties xmi:id="_e7-bMD-jEeKyTdhHXXjjzA" position="-35.68181818181813,-22.999999999999957" visible="false"/>
+    <nameVisual xmi:id="_e6WYoD-lEeKa8dPiy8QrtA" text="">
+      <visualProperties xmi:id="_k4WBED-lEeKa8dPiy8QrtA" visible="false"/>
     </nameVisual>
     <sourceRole xmi:id="_e48VUz-jEeKyTdhHXXjjzA" aggregationKind="NONE" name="timeSheet">
       <modelElement href="class_diagram.uml#_e455ET-jEeKyTdhHXXjjzA"/>
@@ -82,8 +82,8 @@
   <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_OAO2UD-kEeKyTdhHXXjjzA" sourceAnchor="279.0,132.0" targetAnchor="0.0,132.0" target="_QOlFkD-WEeKyTdhHXXjjzA" source="_cMH1oD-WEeKyTdhHXXjjzA">
     <modelElement href="class_diagram.uml#_OAJWwD-kEeKyTdhHXXjjzA"/>
     <visualProperties xmi:id="_OAO2UT-kEeKyTdhHXXjjzA"/>
-    <nameVisual xmi:id="_OAO2Uj-kEeKyTdhHXXjjzA" text="">
-      <visualProperties xmi:id="_ODXp4D-kEeKyTdhHXXjjzA" position="9.0,41.0" visible="false"/>
+    <nameVisual xmi:id="_e6W_sD-lEeKa8dPiy8QrtA" text="">
+      <visualProperties xmi:id="_i3UkgD-lEeKa8dPiy8QrtA" visible="false"/>
     </nameVisual>
     <sourceRole xmi:id="_OAO2Uz-kEeKyTdhHXXjjzA" aggregationKind="NONE" name="timeSheet">
       <modelElement href="class_diagram.uml#_OAJ90D-kEeKyTdhHXXjjzA"/>
@@ -103,8 +103,8 @@
     <visualProperties xmi:id="_QfJIwT-kEeKyTdhHXXjjzA"/>
     <bendpoints xmi:id="_bg4X4j-kEeKyTdhHXXjjzA" sourceY="-48" targetX="998" targetY="-45"/>
     <bendpoints xmi:id="_bg4X4z-kEeKyTdhHXXjjzA" sourceX="-998" sourceY="-48" targetY="-45"/>
-    <nameVisual xmi:id="_QfJIwj-kEeKyTdhHXXjjzA" text="">
-      <visualProperties xmi:id="_QiXb4T-kEeKyTdhHXXjjzA" position="36.818181818181756,-22.999999999999964" visible="false"/>
+    <nameVisual xmi:id="_e6XmwD-lEeKa8dPiy8QrtA" text="">
+      <visualProperties xmi:id="_lKIUoD-lEeKa8dPiy8QrtA" visible="false"/>
     </nameVisual>
     <sourceRole xmi:id="_QfJIwz-kEeKyTdhHXXjjzA" aggregationKind="NONE" name="dataEntry">
       <modelElement href="class_diagram.uml#_QfGFcD-kEeKyTdhHXXjjzA"/>
@@ -124,8 +124,8 @@
     <visualProperties xmi:id="_YaB7sT-kEeKyTdhHXXjjzA"/>
     <bendpoints xmi:id="_bg4X4D-kEeKyTdhHXXjjzA" sourceX="-354" targetX="15" targetY="364"/>
     <bendpoints xmi:id="_bg4X4T-kEeKyTdhHXXjjzA" sourceX="-354" sourceY="-364" targetX="15"/>
-    <nameVisual xmi:id="_YaB7sj-kEeKyTdhHXXjjzA" text="">
-      <visualProperties xmi:id="_YdFPsD-kEeKyTdhHXXjjzA" position="2.0,5.000000000000057" visible="false"/>
+    <nameVisual xmi:id="_e6YN0D-lEeKa8dPiy8QrtA" text="">
+      <visualProperties xmi:id="_kB-ZwD-lEeKa8dPiy8QrtA" visible="false"/>
     </nameVisual>
     <sourceRole xmi:id="_YaB7sz-kEeKyTdhHXXjjzA" aggregationKind="NONE" name="log">
       <modelElement href="class_diagram.uml#_YZ-RUD-kEeKyTdhHXXjjzA"/>
@@ -143,8 +143,8 @@
   <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_bd58YD-kEeKyTdhHXXjjzA" sourceAnchor="135.0,264.0" targetAnchor="134.0,0.0" target="_LpUxsD-WEeKyTdhHXXjjzA" source="_QOlFkD-WEeKyTdhHXXjjzA">
     <modelElement href="class_diagram.uml#_bd25ED-kEeKyTdhHXXjjzA"/>
     <visualProperties xmi:id="_bd58YT-kEeKyTdhHXXjjzA"/>
-    <nameVisual xmi:id="_bd58Yj-kEeKyTdhHXXjjzA" text="">
-      <visualProperties xmi:id="_bg4-8T-kEeKyTdhHXXjjzA" position="2.0,-17.399999999999977" visible="false"/>
+    <nameVisual xmi:id="_e6Y04D-lEeKa8dPiy8QrtA" text="">
+      <visualProperties xmi:id="_iZ6PwD-lEeKa8dPiy8QrtA" visible="false"/>
     </nameVisual>
     <sourceRole xmi:id="_bd58Yz-kEeKyTdhHXXjjzA" aggregationKind="NONE" name="dataEntry">
       <modelElement href="class_diagram.uml#_bd3gID-kEeKyTdhHXXjjzA"/>
