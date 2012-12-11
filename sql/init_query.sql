@@ -91,25 +91,33 @@ CREATE TABLE "Users"  (
 	CONSTRAINT "pkUsers" PRIMARY KEY CLUSTERED("userId")
 )
 GO
-ALTER TABLE "Cities"
-	ADD CONSTRAINT "Clients_Cities"
+ALTER TABLE "Clients"
+	ADD CONSTRAINT "Cities_Clients"
 	FOREIGN KEY("cityId")
-	REFERENCES "Clients"("cityId")
+	REFERENCES "Cities"("cityId")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
 GO
-ALTER TABLE "Tasks"
-	ADD CONSTRAINT "DataEntries_Tasks"
-	FOREIGN KEY("taskId")
-	REFERENCES "DataEntries"("taskId")
+ALTER TABLE "TimeSheets"
+	ADD CONSTRAINT "Clients_TimeSheets"
+	FOREIGN KEY("clientId")
+	REFERENCES "Clients"("clientId")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
 GO
-ALTER TABLE "Users"
-	ADD CONSTRAINT "DataEntries_Users"
-	FOREIGN KEY("userId")
-	REFERENCES "DataEntries"("userId")
+ALTER TABLE "EntryCollection"
+	ADD CONSTRAINT "DataEntries_EntryCollection"
+	FOREIGN KEY("entryId")
+	REFERENCES "DataEntries"("entryId")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
 GO
 ALTER TABLE "DataEntries"
-	ADD CONSTRAINT "EntryCollection_DataEntries"
-	FOREIGN KEY("entryId")
-	REFERENCES "EntryCollection"("entryId")
+	ADD CONSTRAINT "Tasks_DataEntries"
+	FOREIGN KEY("taskId")
+	REFERENCES "Tasks"("taskId")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
 GO
 ALTER TABLE "EntryCollection"
 	ADD CONSTRAINT "TimeSheets_EntryCollection"
@@ -122,22 +130,28 @@ ALTER TABLE "PermissionWrapper"
 	REFERENCES "TimeSheets"("sheetId")
 GO
 ALTER TABLE "Users"
-	ADD CONSTRAINT "TimeSheets_Users"
-	FOREIGN KEY("userId")
-	REFERENCES "TimeSheets"("userId")
+	ADD CONSTRAINT "UserPermissions_Users"
+	FOREIGN KEY("permissionId")
+	REFERENCES "UserPermissions"("permissionId")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
 GO
-ALTER TABLE "Clients"
-	ADD CONSTRAINT "TimeSheets_Clients"
-	FOREIGN KEY("clientId")
-	REFERENCES "TimeSheets"("clientId")
+ALTER TABLE "DataEntries"
+	ADD CONSTRAINT "Users_DataEntries"
+	FOREIGN KEY("userId")
+	REFERENCES "Users"("userId")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
+GO
+ALTER TABLE "TimeSheets"
+	ADD CONSTRAINT "Users_TimeSheets"
+	FOREIGN KEY("userId")
+	REFERENCES "Users"("userId")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
 GO
 ALTER TABLE "Logs"
 	ADD CONSTRAINT "Users_Logs"
 	FOREIGN KEY("userId")
 	REFERENCES "Users"("userId")
-GO
-ALTER TABLE "UserPermissions"
-	ADD CONSTRAINT "Users_UserPermissions"
-	FOREIGN KEY("permissionId")
-	REFERENCES "Users"("permissionId")
 GO

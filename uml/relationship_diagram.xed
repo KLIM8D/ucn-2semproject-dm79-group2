@@ -133,30 +133,35 @@
       <Storage name="Filegroup" value=""></Storage>
       <Storage name="FilegroupTextImage" value=""></Storage>
    </Table>
-   <Relation id="63" name="Clients_Cities" cardinality="1" identifying="true" nulls="false">
+   <Relation id="63" name="Cities_Clients" cardinality="1" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>40</FK>
-      <PK>53</PK>
+      <FK>53</FK>
+      <PK>40</PK>
+      <Text></Text>
    </Relation>
-   <Relation id="64" name="DataEntries_Tasks" cardinality="1" identifying="true" nulls="false">
+   <Relation id="64" name="Tasks_DataEntries" cardinality="1" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>6</FK>
-      <PK>1</PK>
+      <FK>1</FK>
+      <PK>6</PK>
+      <Text></Text>
    </Relation>
-   <Relation id="65" name="DataEntries_Users" cardinality="1" identifying="true" nulls="false">
+   <Relation id="65" name="Users_DataEntries" cardinality="1" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>7</FK>
-      <PK>25</PK>
+      <FK>25</FK>
+      <PK>7</PK>
+      <Text></Text>
    </Relation>
-   <Relation id="66" name="EntryCollection_DataEntries" cardinality="1" identifying="true" nulls="false">
+   <Relation id="66" name="DataEntries_EntryCollection" cardinality="1" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>16</FK>
-      <PK>5</PK>
+      <FK>5</FK>
+      <PK>16</PK>
+      <Text></Text>
    </Relation>
-   <Relation id="67" name="TimeSheets_Clients" cardinality="1" identifying="true" nulls="false">
+   <Relation id="67" name="Clients_TimeSheets" cardinality="1" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>20</FK>
-      <PK>39</PK>
+      <FK>39</FK>
+      <PK>20</PK>
+      <Text></Text>
    </Relation>
    <Relation id="68" name="TimeSheets_EntryCollection" cardinality="-2" identifying="false" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
@@ -168,20 +173,22 @@
       <FK>18</FK>
       <PK>49</PK>
    </Relation>
-   <Relation id="70" name="TimeSheets_Users" cardinality="1" identifying="true" nulls="false">
+   <Relation id="70" name="Users_TimeSheets" cardinality="1" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>19</FK>
-      <PK>25</PK>
+      <FK>25</FK>
+      <PK>19</PK>
+      <Text></Text>
    </Relation>
    <Relation id="71" name="Users_Logs" cardinality="-2" identifying="false" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
       <FK>25</FK>
       <PK>58</PK>
    </Relation>
-   <Relation id="72" name="Users_UserPermissions" cardinality="1" identifying="true" nulls="false">
+   <Relation id="72" name="UserPermissions_Users" cardinality="-2" identifying="true" nulls="false">
       <Option name="enfConMS" class="Boolean" value="true"></Option>
-      <FK>26</FK>
-      <PK>34</PK>
+      <FK>34</FK>
+      <PK>26</PK>
+      <Text></Text>
    </Relation>
    <Constraint table="0" name="pkTasks" type="PrimKey">
       <Option name="allowPageLocks" class="Boolean" value="true"></Option>
@@ -244,26 +251,26 @@
       <ConstraintColumn id="57"></ConstraintColumn>
    </Constraint>
    <Sheet name="ucn-2semproject-dm79-group2" id="73" disp_at="true" disp_ph="true" disp_co="true" disp_rn="true" disp_null="true">
-      <Place id="63" visible="true">500,0,0,0</Place>
-      <Place id="33" visible="true">740,960,260,90</Place>
-      <Place id="4" visible="true">283,420,260,160</Place>
-      <Place id="64" visible="true">500,0,0,0</Place>
-      <Place id="47" visible="true">755,230,230,90</Place>
       <Place id="71" visible="true">500,0,0,0</Place>
-      <Place id="52" visible="true">1100,965,260,80</Place>
+      <Place id="52" visible="true">862,5,260,80</Place>
       <Place id="70" visible="true">500,0,0,0</Place>
-      <Place id="66" visible="true">500,0,0,0</Place>
-      <Place id="13" visible="true">245,235,210,80</Place>
       <Place id="72" visible="true">500,0,0,0</Place>
+      <Place id="69" visible="true" options="870.0,465.0,250.0,130.0,880.0,710.0,230.0,90.0,2,990.0,595.0,990.0,710.0">500,0,0,0</Place>
+      <Place id="38" visible="true">867,190,250,160</Place>
+      <Place id="66" visible="true">500,0,0,0</Place>
+      <Place id="13" visible="true">315,715,210,80</Place>
       <Place id="65" visible="true">500,0,0,0</Place>
-      <Place id="0" visible="true">120,720,280,80</Place>
-      <Place id="56" visible="true">355,940,310,130</Place>
+      <Place id="24" visible="true">470,190,260,160</Place>
+      <Place id="0" visible="true">90,230,280,80</Place>
+      <Place id="68" visible="true" options="870.0,465.0,250.0,130.0,315.0,715.0,210.0,80.0,4,950.0,595.0,950.0,630.0,470.0,630.0,470.0,715.0">500,0,0,0</Place>
       <Place id="67" visible="true">500,0,0,0</Place>
-      <Place id="38" visible="true">912,680,250,160</Place>
-      <Place id="69" visible="true">500,0,0,0</Place>
-      <Place id="17" visible="true">480,0,250,130</Place>
-      <Place id="24" visible="true">500,680,260,160</Place>
-      <Place id="68" visible="true">500,0,0,0</Place>
+      <Place id="56" visible="true">460,465,310,130</Place>
+      <Place id="47" visible="true">880,710,230,90</Place>
+      <Place id="33" visible="true">300,0,260,90</Place>
+      <Place id="64" visible="true">500,0,0,0</Place>
+      <Place id="17" visible="true">870,465,250,130</Place>
+      <Place id="4" visible="true">100,450,260,160</Place>
+      <Place id="63" visible="true" options="862.0,5.0,260.0,80.0,867.0,190.0,250.0,160.0,4,1000.0,85.0,1000.0,140.0,1000.0,140.0,1000.0,189.0">500,0,0,0</Place>
    </Sheet>
-   <Settings sheet="73" zoom="0.5330467289719626"></Settings>
+   <Settings sheet="73" zoom="0.71295"></Settings>
 </Diagram>
