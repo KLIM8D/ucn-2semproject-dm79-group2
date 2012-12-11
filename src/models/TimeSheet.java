@@ -13,6 +13,7 @@ public class TimeSheet {
 	private Date _editedDate;
 	
 	
+	// getters and setters
 	public int getSheetId()
 	{ return _sheetId; }
 	public void setSheetId(int sheetId)
@@ -52,11 +53,11 @@ public class TimeSheet {
 	{ return _editedDate; }
 	public void setEditedDate(Date editedDate)
 	{ _editedDate = editedDate; }
-	
+	// end getters and setters
 	
 	
 	// Constructor
-	public Timesheet(int sheetId, User, user)
+	public Timesheet(int sheetId, User user)
 	{
 		this._sheetId = sheetId;
 		this._user = user;
@@ -66,12 +67,12 @@ public class TimeSheet {
 	// add a data entry object to list of data entries
 	public void addDataEntry(DataEntry dataEntry)
 	{
-		_dataEntry.add(dataEntry);
+		_dataEntries.add(dataEntry);
 	}
 	
 	// remove a data entry object from list of data entries
 	public void removeDataEntry(DataEntry dataEntry)
 	{
-		_dataEntry.remove(dataEntry);
+		_dataEntries.remove(dataEntry);
 	}
 }
