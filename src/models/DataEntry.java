@@ -20,7 +20,8 @@ public class DataEntry
     private Date _creationDate;
     private Date _editedDate;
 
-    public int getEntryId(){ return _entryId; }
+    public int getEntryId()
+    { return _entryId; }
 
     public Task getTask()
     { return _task; }
