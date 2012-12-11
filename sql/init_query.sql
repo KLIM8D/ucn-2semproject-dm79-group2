@@ -19,6 +19,7 @@ CREATE TABLE "Clients"  (
 GO
 CREATE TABLE "DataEntries"  ( 
 	"entryId"     	int IDENTITY(1,1) NOT NULL,
+	"sheetId"     	int NOT NULL,
 	"taskId"      	int NOT NULL,
 	"userId"      	int NOT NULL,
 	"startDate"   	datetime NOT NULL,
@@ -27,13 +28,6 @@ CREATE TABLE "DataEntries"  (
 	"creationDate"	datetime NOT NULL,
 	"editedDate"  	datetime NOT NULL,
 	CONSTRAINT "pkDataEntry" PRIMARY KEY CLUSTERED("entryId")
-)
-GO
-CREATE TABLE "EntryCollection"  ( 
-	"collectionId"	int IDENTITY(1,1) NOT NULL,
-	"sheetId"     	int NOT NULL,
-	"entryId"     	int NOT NULL,
-	CONSTRAINT "pkEntryCollection" PRIMARY KEY CLUSTERED("collectionId")
 )
 GO
 CREATE TABLE "Logs"  ( 
@@ -96,59 +90,48 @@ ALTER TABLE "Clients"
 	FOREIGN KEY("cityId")
 	REFERENCES "Cities"("cityId")
 	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
 GO
 ALTER TABLE "TimeSheets"
 	ADD CONSTRAINT "Clients_TimeSheets"
 	FOREIGN KEY("clientId")
 	REFERENCES "Clients"("clientId")
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
-GO
-ALTER TABLE "EntryCollection"
-	ADD CONSTRAINT "DataEntries_EntryCollection"
-	FOREIGN KEY("entryId")
-	REFERENCES "DataEntries"("entryId")
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
+	ON DELETE NO ACTION  
 GO
 ALTER TABLE "DataEntries"
 	ADD CONSTRAINT "Tasks_DataEntries"
 	FOREIGN KEY("taskId")
 	REFERENCES "Tasks"("taskId")
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
-GO
-ALTER TABLE "EntryCollection"
-	ADD CONSTRAINT "TimeSheets_EntryCollection"
-	FOREIGN KEY("sheetId")
-	REFERENCES "TimeSheets"("sheetId")
+	ON DELETE NO ACTION  
 GO
 ALTER TABLE "PermissionWrapper"
 	ADD CONSTRAINT "TimeSheets_PermissionWrapper"
 	FOREIGN KEY("sheetId")
 	REFERENCES "TimeSheets"("sheetId")
+    ON DELETE NO ACTION
+GO
+ALTER TABLE "DataEntries"
+	ADD CONSTRAINT "TimeSheets_DataEntries"
+	FOREIGN KEY("sheetId")
+	REFERENCES "TimeSheets"("sheetId")
+	ON DELETE NO ACTION  
 GO
 ALTER TABLE "Users"
 	ADD CONSTRAINT "UserPermissions_Users"
 	FOREIGN KEY("permissionId")
 	REFERENCES "UserPermissions"("permissionId")
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
+	ON DELETE NO ACTION  
 GO
 ALTER TABLE "DataEntries"
 	ADD CONSTRAINT "Users_DataEntries"
 	FOREIGN KEY("userId")
 	REFERENCES "Users"("userId")
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
+	ON DELETE NO ACTION  
 GO
 ALTER TABLE "TimeSheets"
 	ADD CONSTRAINT "Users_TimeSheets"
 	FOREIGN KEY("userId")
 	REFERENCES "Users"("userId")
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
+	ON DELETE NO ACTION  
 GO
 ALTER TABLE "Logs"
 	ADD CONSTRAINT "Users_Logs"
