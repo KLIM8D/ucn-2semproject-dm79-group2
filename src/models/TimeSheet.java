@@ -61,7 +61,7 @@ public class TimeSheet {
 	{
 		this._sheetId = sheetId;
 		this._user = user;
-		_dataEntry = new ArrayList<DataEntry>();
+		_dataEntries = new ArrayList<DataEntry>();
 	}
 	
 	// add a data entry object to list of data entries
