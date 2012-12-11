@@ -1,5 +1,7 @@
 package utils;
 
+import models.Log;
+
 /**
  * Created: 27-10-2012
  * @version: 0.1
@@ -16,7 +18,8 @@ public class Logging
 
     public static String handleException(Exception ex, int returnMessage)
     {
-        //Add logging functionality here
+        //TODO: Get logged in User and add creation date for the log entry
+        //Log newLog = new Log(ex.getMessage(), ex.getCause().toString())
 
         return messages(returnMessage);
     }
