@@ -14,6 +14,9 @@ public class Client
 	Date _createdDate;
 	Date _editedDate;
 	
+	public int getClientId()
+	{ return _clientId; }
+	
 	public String getName() 
 	{ return _name; }
 	public void setName(String value) 
