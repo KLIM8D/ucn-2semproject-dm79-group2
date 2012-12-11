@@ -118,8 +118,7 @@ GO
 ALTER TABLE "Users"
 	ADD CONSTRAINT "UserPermissions_Users"
 	FOREIGN KEY("permissionId")
-	REFERENCES "UserPermissions"("permissionId")
-	ON DELETE NO ACTION  
+	REFERENCES "UserPermissions"("permissionId") 
 GO
 ALTER TABLE "DataEntries"
 	ADD CONSTRAINT "Users_DataEntries"
