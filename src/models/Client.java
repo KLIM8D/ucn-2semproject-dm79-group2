@@ -16,7 +16,7 @@ public class Client {
 	public String getName() 
 	{ return _name; }
 	
-	public void set_name(String name) 
+	public void setName(String name) 
 	{ _name = name; }
 	
 	public String getAddress() 
