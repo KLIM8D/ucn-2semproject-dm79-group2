@@ -33,7 +33,7 @@ public interface IFDBUserPermission
 	 * Inserts a new role in the database
 	 * 
 	 * @param userPermission		the object containing the information you want stored
-	 * @return int 					returns the number of rows affected
+	 * @return int					returns the number of rows affected
 	 */
 	public int insertRole(UserPermission userPermission) throws Exception;
 	
