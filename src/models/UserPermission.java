@@ -1,8 +1,8 @@
 /**
  * filename    : User.java
  * created     : Dec 11, 2012 (1:33:02 PM)
- * description : User roles (admin, superuser etc.)
- *               for system operators.
+ * description : User role object, containing the single
+ *               users role (admin, superuser etc.).
  * -------------------------------------------------------
  * @version    : 0.1
  * @changes    :
