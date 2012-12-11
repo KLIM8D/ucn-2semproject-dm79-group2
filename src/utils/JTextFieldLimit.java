@@ -1,12 +1,10 @@
 package utils;
 
 /**
- * @author: Morten Klim Sørensen - mail@kl1m.dk
  * Created: 08-09-2012
  * @version: 0.1
  * Filename: JTextFieldLimit.java
  * Description:
- * @changes
  */
 
 import javax.swing.text.AttributeSet;
