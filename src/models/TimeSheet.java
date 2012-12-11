@@ -57,7 +57,7 @@ public class TimeSheet {
 	
 	
 	// Constructor
-	public Timesheet(int sheetId, User user)
+	public TimeSheet(int sheetId, User user)
 	{
 		this._sheetId = sheetId;
 		this._user = user;
