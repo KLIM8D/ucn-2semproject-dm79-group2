@@ -12,7 +12,7 @@ CREATE TABLE "Clients"  (
 	"address"    	varchar(256) NOT NULL,
 	"phoneNo"    	int NOT NULL,
 	"eMail"      	varchar(256) NULL,
-	"createdDate"	datetime NOT NULL,
+	"creationDate"	datetime NOT NULL,
 	"editedDate" 	datetime NOT NULL,
 	CONSTRAINT "pkClients" PRIMARY KEY CLUSTERED("clientId")
 )
