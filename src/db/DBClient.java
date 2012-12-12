@@ -57,6 +57,25 @@ public class DBClient implements IFDBClient
 
         return null;
 	}
+    
+	/**
+	 * Get specific client by phonenumber
+	 * 
+	 * @param phoneNo				the phonenumber of the client you need returned
+	 * @return Client
+	 */
+	@Override
+	public Client getClientByPhone(long phoneNo) throws Exception 
+	{
+        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Clients WHERE phoneNo = ?");
+        query.setLong(1, phoneNo);
+        _da.setSqlCommandText(query);
+        ResultSet clientResult = _da.callCommandGetRow();
+        if(clientResult.next())
+            return buildClient(clientResult);
+
+        return null;
+	}
 	
 	/**
 	 * Retrieve specific client by name
