@@ -78,45 +78,26 @@ public interface IFDBTimesheet {
 	
 
 	/**
-	 * Retrieves all timesheets by user before a given date
+	 * Retrieves all timesheets by user between startdate and enddate
 	 * 
 	 * @param user						the user whose timesheets are assigned to
-	 * @param date						the date where all timesheets created before this date are returned
+	 * @param startDate					the first date of the date interval
+	 * @param endDate					the last date of the date interval
 	 * @return	ArrayList<TimeSheet>
 	 * @throws Exception
 	 */
-	public ArrayList<TimeSheet> getAllTimeSheetsBeforeDataByUser(User user, Date date) throws Exception;
-	
-		
-	/**
-	 * Retrieves all timesheets by user after a given date
-	 * 
-	 * @param user						the user whose timesheets are assigned to
-	 * @param date						the date where all timesheets created after this date are returned
-	 * @return	ArrayList<TimeSheet>
-	 * @throws Exception
-	 */
-	public ArrayList<TimeSheet> getAllTimeSheetsAfterDateByUser(User user, Date date) throws Exception;
+	public ArrayList<TimeSheet> getAllTimeSheetsBetweenDatesByUser(User user, Date startDate, Date endDate) throws Exception;
 	
 
+
 	/**
-	 * Retrieves all timesheets by client before a given date
+	 * Retrieves all timesheets by client between startdate and enddate
 	 * 
 	 * @param client					the client whose timesheets are assigned to
-	 * @param date						the date where all timesheets created before this date are returned
-	 * @return ArrayList<TimeSheet>
+	 * @param startDate					the first date of the date interval
+	 * @param endDate					the last date of the date interval
+	 * @return	ArrayList<TimeSheet>
 	 * @throws Exception
 	 */
-	public ArrayList<TimeSheet> getAllTimeSheetsBeforeDataByClient(Client client, Date date) throws Exception;
-	
-	
-	/**
-	 * Retrieves all timesheets by client after a given date
-	 * 
-	 * @param client					the client whose timesheets are assigned to
-	 * @param date						the date where all timesheets created after this date are returned
-	 * @return ArrayList<TimeSheet>
-	 * @throws Exception
-	 */
-	public ArrayList<TimeSheet> getAllTimeSheetsAfterDataByClient(Client client, Date date) throws Exception;	
+	public ArrayList<TimeSheet> getAllTimeSheetsBetweenDatesByClient(Client client, Date startDate, Date endDate) throws Exception;	
 }
