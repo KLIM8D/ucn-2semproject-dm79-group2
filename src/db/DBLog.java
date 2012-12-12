@@ -122,6 +122,8 @@ public class DBLog implements IFDBLog
         if(row == null)
             return null;
 
+        DBUser dbUser = new DBUser();
+
         int logId = row.getInt("logId");
         User user = dbUser.getUserById(row.getInt("userId"));
         String userDetails = row.getString("userDetails");

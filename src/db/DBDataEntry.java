@@ -219,6 +219,9 @@ public class DBDataEntry implements IFDBDataEntry
         if(row == null)
             return null;
 
+        DBUser dbUser = new DBUser();
+        DBTask dbTask = new DBTask();
+
         int entryId = row.getInt("entryId");
         Task task = dbTask.getTaskById(row.getInt("taskId"));
         User user = dbUser.getUserById(row.getInt("userId"));
