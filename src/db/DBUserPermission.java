@@ -104,13 +104,12 @@ public class DBUserPermission implements IFDBUserPermission
 		if(getRoleById(userPermission.getPermissionId()) == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE UserRoles SET userRole = ?, creationDate = ?, " + 
+		PreparedStatement query = _da.getCon().prepareStatement("UPDATE UserRoles SET userRole = ?, " + 
 																"editedDate = ? WHERE permissionId = ?");
 		
 		query.setString(1, userPermission.getUserRole());
-		query.setDate(2, (java.sql.Date)userPermission.getCreationDate());
-		query.setDate(3, (java.sql.Date)userPermission.getEditedDate());
-		query.setInt(4, userPermission.getPermissionId());
+		query.setDate(2, (java.sql.Date)userPermission.getEditedDate());
+		query.setInt(3, userPermission.getPermissionId());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
