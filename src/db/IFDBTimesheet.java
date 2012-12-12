@@ -6,10 +6,11 @@ import models.Client;
 import java.util.ArrayList;
 import java.util.Date;
 
-public interface IFDBTimesheet {
+public interface IFDBTimesheet
+{
 	
 	/**
-	 * Retrieve all timesheets from the database
+	 * Retrieve all TimeSheets from the database
 	 * 
 	 * @return ArrayList<TimeSheet>
 	 * @throws Exception
@@ -18,9 +19,9 @@ public interface IFDBTimesheet {
 	
 	
 	/**
-	 * Retrieve a specific timesheet by id
+	 * Retrieve a specific TimeSheet by id
 	 * 
-	 * @param sheetId					the id of the timesheet you need returned			
+	 * @param sheetId					the id of the TimeSheet you need returned
 	 * @return Timesheet
 	 * @throws Exception
 	 */
@@ -28,9 +29,9 @@ public interface IFDBTimesheet {
 	
 	
 	/**
-	 * Retrieve all timesheets by specific user
+	 * Retrieve all TimeSheets by specific user
 	 * 
-	 * @param user						the user who assined to the timesheet
+	 * @param user						the user who assigned to the TimeSheet
 	 * @return ArrayList<TimeSheet>
 	 * @throws Exception
 	 */
@@ -38,9 +39,9 @@ public interface IFDBTimesheet {
 	
 		
 	/**
-	 * Retrieve all timesheets by specific client
+	 * Retrieve all TimeSheets by specific client
 	 * 
-	 * @param client					the user who assined to the timesheet
+	 * @param client					the user who assigned to the TimeSheet
 	 * @return ArrayList<TimeSheet>
 	 * @throws Exception
 	 */
@@ -48,33 +49,33 @@ public interface IFDBTimesheet {
 	
 	
 	/**
-	 * Inserts a new timesheet into the database
+	 * Inserts a new TimeSheet into the database
 	 * 
-	 * @param timesheet				the object containing the information to be stored
+	 * @param timeSheet				    the object containing the information to be stored
 	 * @return							returns the number of rows affected
 	 * @throws Exception
 	 */
-	public int insertTimeSheet(TimeSheet timesheet) throws Exception;
+	public int insertTimeSheet(TimeSheet timeSheet) throws Exception;
 	
 	
 	/**
-	 * Updates a timesheet already existing in the database
+	 * Updates a TimeSheet already existing in the database
 	 * 
-	 * @param timesheet				the object containing the updated information to be stored
+	 * @param timeSheet				the object containing the updated information to be stored
 	 * @return 						returns the number of rows affected
 	 * @throws Exception
 	 */
-	public int updateTimeSheet(TimeSheet timesheet) throws Exception;
+	public int updateTimeSheet(TimeSheet timeSheet) throws Exception;
 	
 	
 	/**
-	 * Deletes a timesheet from the database
+	 * Deletes a TimeSheet from the database
 	 * 
-	 * @param timesheet				the object containing the timesheet that should be deleted
+	 * @param timeSheet				the object containing the timesheet that should be deleted
 	 * @return							returns the number of rows affected
 	 * @throws Exception			
 	 */
-	public int deleteTimeSheet(TimeSheet timesheet) throws Exception;
+	public int deleteTimeSheet(TimeSheet timeSheet) throws Exception;
 	
 
 	/**
@@ -86,8 +87,7 @@ public interface IFDBTimesheet {
 	 * @return	ArrayList<TimeSheet>
 	 * @throws Exception
 	 */
-	public ArrayList<TimeSheet> getAllTimeSheetsBetweenDatesByUser(User user, Date startDate, Date endDate) throws Exception;
-	
+	public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user, Date startDate, Date endDate) throws Exception;
 
 
 	/**
@@ -99,5 +99,5 @@ public interface IFDBTimesheet {
 	 * @return	ArrayList<TimeSheet>
 	 * @throws Exception
 	 */
-	public ArrayList<TimeSheet> getAllTimeSheetsBetweenDatesByClient(Client client, Date startDate, Date endDate) throws Exception;	
+	public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client, Date startDate, Date endDate) throws Exception;
 }
