@@ -15,7 +15,7 @@ import java.util.Date;
 public class User
 {
 	int _userId;
-	int _permissionId;
+	UserPermission _userPermission;
 	String _firstName;
 	String _lastName;
 	String _userName;
@@ -28,10 +28,10 @@ public class User
 	public void setUserId(int value)
 	{ _userId = value; }
 
-	public int getUserPermission()
-	{ return _permissionId; }
-	public void setUserPermission(int value)
-	{ _permissionId = value; }
+	public UserPermission getUserPermission()
+	{ return _userPermission; }
+	public void setUserPermission(UserPermission value)
+	{ _userPermission = value; }
 
 	public String getFirstName()
 	{ return _firstName; }
@@ -63,10 +63,10 @@ public class User
 	public void setEditedDate(Date value)
 	{ _editedDate = value; }
 
-	public User(int userId, int permissionId, String firstName, String lastName, String userName, String userPassword, Date createdDate, Date editedDate)
+	public User(int userId, UserPermission userPermission, String firstName, String lastName, String userName, String userPassword, Date createdDate, Date editedDate)
 	{
 		_userId = userId;
-		_permissionId = permissionId;
+		_userPermission = userPermission;
 		_firstName = firstName;
 		_lastName = lastName;
 		_userName = userName;

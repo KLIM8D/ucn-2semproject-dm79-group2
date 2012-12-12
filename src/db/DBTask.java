@@ -1,10 +1,10 @@
 package db;
 
 import models.Task;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DBTask implements IFDBTask
 {

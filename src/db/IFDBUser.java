@@ -10,6 +10,7 @@
 package db;
 
 import models.User;
+
 import java.util.ArrayList;
 
 public interface IFDBUser

@@ -10,6 +10,8 @@
 package db;
 
 import models.User;
+import models.UserPermission;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class DBUser implements IFDBUser
 	 * 
 	 * @return ArrayList<User>
 	 */
+	@Override
 	public ArrayList<User> getAllUsers() throws Exception
 	{
 		ArrayList<User> returnList = new ArrayList<User>();
@@ -51,6 +54,7 @@ public class DBUser implements IFDBUser
 	 * @param value				the value of the id you need returned
 	 * @return User
 	 */
+	@Override
 	public User getUserById(int value) throws Exception
 	{
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM User WHERE userId = ?");
@@ -69,6 +73,7 @@ public class DBUser implements IFDBUser
 	 * @param user				the object that contains the data you want stored
 	 * @return int				returns the number of rows affected
 	 */
+	@Override
 	public int insertUser(User user) throws Exception
 	{
 		if(user == null)
@@ -78,7 +83,7 @@ public class DBUser implements IFDBUser
 																"userName, userPassword, creationDate, editedDate " +
 																"VALUES(?, ?, ?, ?, ?, ?, ?)");
 
-		query.setInt(1, user.getUserPermission());
+		query.setInt(1, user.getUserPermission().getPermissionId());
 		query.setString(2, user.getFirstName());
 		query.setString(3, user.getLastName());
 		query.setString(4, user.getUserName());
@@ -96,6 +101,7 @@ public class DBUser implements IFDBUser
 	 * @param user				the object containing the data you want to update
 	 * @return int				returns the number of rows affected
 	 */
+	@Override
 	public int updateUser(User user) throws Exception
 	{
 		if(user == null)
@@ -108,7 +114,7 @@ public class DBUser implements IFDBUser
 																"userName = ?, userPassword = ?, creationDate = ?, editedDate = ? " +
 																"WHERE userId = ?");
 		
-		query.setInt(1, user.getUserPermission());
+		query.setInt(1, user.getUserPermission().getPermissionId());
 		query.setString(2, user.getFirstName());
 		query.setString(3, user.getLastName());
 		query.setString(4, user.getUserName());
@@ -127,42 +133,29 @@ public class DBUser implements IFDBUser
 	 * @param user				the object containing the role which is going to be deleted
 	 * @return int				returns the number of rows affected
 	 */
+	@Override
 	public int deleteUser(User user) throws Exception
 	{
 		if(user == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Users WHERE userID = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Users WHERE userId = ?");
 		
 		query.setInt(1, user.getUserId());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
 	}
-	
-	/**
-	 * Delete an existing user from the database
-	 * 
-	 * @param value				the value of the id which is going to be deleted
-	 * @return int				returns the number of rows affected
-	 */
-	public int deleteUser(int value) throws Exception
-	{
-		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Users WHERE userID = ?");
-		
-		query.setInt(1, value);
-		_da.setSqlCommandText(query);
-		
-		return _da.callCommand();
-	}
-	
+
 	private User buildUsers(ResultSet row) throws Exception
 	{
 		if(row == null)
 			return null;
 		
+		DBUserPermission dbUserPermission = new DBUserPermission();
+		
 		int userId = row.getInt("userId");
-		int permissionId = row.getInt("permissionId");
+		UserPermission userPermission = dbUserPermission.getRoleById(row.getInt("permissionId"));
 		String firstName = row.getString("firstName");
 		String lastName = row.getString("lastName");
 		String userName = row.getString("userName");
@@ -170,6 +163,6 @@ public class DBUser implements IFDBUser
 		Date creationDate = row.getDate("creationDate");
 		Date editedDate = row.getDate("editedDate");
 		
-		return new User(userId, permissionId, firstName, lastName, userName, userPassword, creationDate, editedDate);
+		return new User(userId, userPermission, firstName, lastName, userName, userPassword, creationDate, editedDate);
 	}
 }

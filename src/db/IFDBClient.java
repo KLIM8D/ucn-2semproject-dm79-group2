@@ -1,6 +1,7 @@
 package db;
 
 import models.Client;
+
 import java.util.ArrayList;
 
 public interface IFDBClient {
@@ -19,6 +20,14 @@ public interface IFDBClient {
 	 * @return Client
 	 */
 	public Client getClientById(int id) throws Exception;
+	
+	/**
+	 * Get specific client by phonenumber
+	 * 
+	 * @param phoneNo				the phonenumber of the client you need returned
+	 * @return Client
+	 */
+	public Client getClientByPhone(long phoneNo) throws Exception;
 	
 	/**
 	 * Get specific client by name

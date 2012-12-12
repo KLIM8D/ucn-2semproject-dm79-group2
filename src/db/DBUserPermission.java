@@ -10,6 +10,7 @@
 package db;
 
 import models.UserPermission;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class DBUserPermission implements IFDBUserPermission
 	 * 
 	 * @return ArrayList<UserPermission>
 	 */
+	@Override
 	public ArrayList<UserPermission> getAllRoles() throws Exception
 	{
 		ArrayList<UserPermission> returnList = new ArrayList<UserPermission>();
@@ -51,6 +53,7 @@ public class DBUserPermission implements IFDBUserPermission
 	 * @param value				the value of the id you need returned
 	 * @return UserPermission
 	 */
+	@Override
 	public UserPermission getRoleById(int value) throws Exception
 	{
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM UserPermissions WHERE permissionId = ?");
@@ -69,6 +72,7 @@ public class DBUserPermission implements IFDBUserPermission
 	 * @param userPermission	the object that contains the data you want stored
 	 * @return int				returns the number of rows affected
 	 */
+	@Override
 	public int insertRole(UserPermission userPermission) throws Exception
 	{
 		if(userPermission == null)
@@ -79,7 +83,7 @@ public class DBUserPermission implements IFDBUserPermission
 		
 		query.setString(1, userPermission.getUserRole());
 		query.setDate(2, (java.sql.Date)userPermission.getCreatedDate());
-		query.setDate(3, (java.sql.Date)userPermission.getEditedDate());
+		query.setDate(3, (java.sql.Date) userPermission.getEditedDate());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -91,6 +95,7 @@ public class DBUserPermission implements IFDBUserPermission
 	 * @param userPermission	the object containing the data you want to update
 	 * @return int				returns the number of rows affected
 	 */
+	@Override
 	public int updateRole(UserPermission userPermission) throws Exception
 	{
 		if(userPermission == null)
@@ -117,6 +122,7 @@ public class DBUserPermission implements IFDBUserPermission
 	 * @param userPermission	the object containing the role which is going to be deleted
 	 * @return int				returns the number of rows affected
 	 */
+	@Override
 	public int deleteRole(UserPermission userPermission) throws Exception
 	{
 		if(userPermission == null)
@@ -125,22 +131,6 @@ public class DBUserPermission implements IFDBUserPermission
 		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM UserPermissions WHERE permissionId = ?");
 		
 		query.setInt(1, userPermission.getPermissionId());
-		_da.setSqlCommandText(query);
-		
-		return _da.callCommand();
-	}
-	
-	/**
-	 * Delete an existing role from the database
-	 * 
-	 * @param value				the value of the id which is going to be deleted
-	 * @return int				returns the number of rows affected
-	 */
-	public int deleteRole(int value) throws Exception
-	{
-		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM UserPermissions WHERE permissionId = ?");
-		
-		query.setInt(1, value);
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();

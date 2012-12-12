@@ -1,6 +1,9 @@
 package db;
 
-import models.*;
+import models.DataEntry;
+import models.Task;
+import models.TimeSheet;
+import models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

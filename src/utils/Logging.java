@@ -1,6 +1,9 @@
 package utils;
 
+import db.DBLog;
 import models.Log;
+
+import java.util.Calendar;
 
 /**
  * Created: 27-10-2012
@@ -18,8 +21,27 @@ public class Logging
 
     public static String handleException(Exception ex, int returnMessage)
     {
-        //TODO: Get logged in User and add creation date for the log entry
-        //Log newLog = new Log(ex.getMessage(), ex.getCause().toString())
+        Calendar cal = Calendar.getInstance();
+        StringBuilder sb = new StringBuilder();
+        sb.append("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + "<br/>");
+        sb.append("Java vendor: " + System.getProperty("java.vendor") + "<br/>");
+        sb.append("Java version: " + System.getProperty("java.version") + "<br/>");
+        sb.append("User home dir: " + System.getProperty("user.home") + "<br/>");
+
+        Log newLog = new Log(UserSession.getLoggedInUser(), sb.toString(), ex.getMessage(), ex.getCause().toString(), cal.getTime());
+
+        try
+        {
+            DBLog dbLog = new DBLog();
+            dbLog.insertLog(newLog);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+
+            System.out.println("System tried to log this exception:");
+            ex.printStackTrace();
+        }
 
         return messages(returnMessage);
     }

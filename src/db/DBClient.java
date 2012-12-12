@@ -1,6 +1,8 @@
 package db;
 
+import models.City;
 import models.Client;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -49,6 +51,25 @@ public class DBClient implements IFDBClient
 	{
         PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Clients WHERE clientId = ?");
         query.setInt(1, id);
+        _da.setSqlCommandText(query);
+        ResultSet clientResult = _da.callCommandGetRow();
+        if(clientResult.next())
+            return buildClient(clientResult);
+
+        return null;
+	}
+    
+	/**
+	 * Get specific client by phonenumber
+	 * 
+	 * @param phoneNo				the phonenumber of the client you need returned
+	 * @return Client
+	 */
+	@Override
+	public Client getClientByPhone(long phoneNo) throws Exception 
+	{
+        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Clients WHERE phoneNo = ?");
+        query.setLong(1, phoneNo);
         _da.setSqlCommandText(query);
         ResultSet clientResult = _da.callCommandGetRow();
         if(clientResult.next())
@@ -158,7 +179,8 @@ public class DBClient implements IFDBClient
 			return null;
 		
         int clientId = row.getInt("clientId");
-        int cityId = DBCity.getCityById(row.getInt("cityId"));
+        DBCity dbc = new DBCity();
+        City city = dbc.getCityById(row.getInt("cityId"));
         String name = row.getString("name");
         String address = row.getString("address");
         long phoneNo = row.getLong("phoneNo");
