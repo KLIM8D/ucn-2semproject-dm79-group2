@@ -100,17 +100,19 @@ public class DBTimeSheet implements IFDBTimeSheet
      */
     public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user, Date startDate, Date endDate) throws Exception
     {
-		ArrayList<TimeSheet> filterList = new ArrayList<TimeSheet>();
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? ");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND creationDate BETWEEN = ? AND = ? ");
+		query.setInt(1, user.getUserId());
+		query.setDate(2, (java.sql.Date)startDate);
+		query.setDate(3, (java.sql.Date)endDate);
 		_da.setSqlCommandText(query);
 		ResultSet timesheets = _da.callCommandGetResultSet();
 		
 		while (timesheets.next()) 
 		{
 			TimeSheet timeSheet = buildTimeSheet(timesheets);
-			filterList.add(timeSheet);
+			returnList.add(timeSheet);
 		}
 		return returnList;
     }
@@ -156,6 +158,9 @@ public class DBTimeSheet implements IFDBTimeSheet
 		
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? ");
 		_da.setSqlCommandText(query);
+		query.setInt(1, client.getClientId());
+		query.setDate(2, (java.sql.Date)startDate);
+		query.setDate(3, (java.sql.Date)endDate);
 		ResultSet timesheets = _da.callCommandGetResultSet();
 		
 		while (timesheets.next()) 
