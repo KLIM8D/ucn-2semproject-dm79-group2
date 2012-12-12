@@ -1,7 +1,7 @@
 /**
  * filename    : DBUserPermission.java
  * created     : Dec 11, 2012 (5:05:06 PM)
- * description :
+ * description : Methods for DB interaction
  * -------------------------------------------------------
  * @version    : 0.1
  * @changes    :
@@ -64,14 +64,14 @@ public class DBUserPermission implements IFDBUserPermission
 	}
 	
 	/**
-	 * Insert a role into the database
+	 * Inserts a role into the database
 	 * 
 	 * @param userPermission	the object that contains the data you want stored
 	 * @return int				returns the number of rows affected
 	 */
 	public int insertRole(UserPermission userPermission) throws Exception
 	{
-		if (userPermission == null)
+		if(userPermission == null)
 			return 0;
 		
 		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO UserPermissions (userRole, creationDate, editedDate " +
@@ -93,10 +93,10 @@ public class DBUserPermission implements IFDBUserPermission
 	 */
 	public int updateRole(UserPermission userPermission) throws Exception
 	{
-		if (userPermission == null)
+		if(userPermission == null)
 			return 0;
 		
-		if (getRoleById(userPermission.getPermissionId()) == null)
+		if(getRoleById(userPermission.getPermissionId()) == null)
 			return 0;
 		
 		PreparedStatement query = _da.getCon().prepareStatement("UPDATE UserRoles SET userRole = ?, creationDate = ?, " + 
@@ -112,7 +112,7 @@ public class DBUserPermission implements IFDBUserPermission
 	}
 	
 	/**
-	 * Delete an existing role from the database
+	 * Deletes an existing role from the database
 	 * 
 	 * @param userPermission	the object containing the role which is going to be deleted
 	 * @return int				returns the number of rows affected
