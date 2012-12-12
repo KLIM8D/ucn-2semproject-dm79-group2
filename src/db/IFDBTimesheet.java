@@ -25,7 +25,7 @@ public interface IFDBTimesheet
 	 * @return Timesheet
 	 * @throws Exception
 	 */
-	public TimeSheet getTimesheetById(int sheetId) throws Exception;
+	public TimeSheet getTimeSheetById(int sheetId) throws Exception;
 	
 	
 	/**

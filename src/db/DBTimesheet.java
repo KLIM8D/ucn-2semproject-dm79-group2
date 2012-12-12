@@ -9,7 +9,8 @@ import models.Client;
 import models.TimeSheet;
 import models.User;
 
-public class DBTimesheet implements IFDBTimesheet{
+public class DBTimesheet implements IFDBTimesheet
+{
 	
 	private DataAccess _da;
 	
@@ -20,21 +21,22 @@ public class DBTimesheet implements IFDBTimesheet{
 	
 
 	/**
-	 * Get all the timesheets from the database
+	 * Get all the TimeSheets from the database
 	 * 
 	 * @return ArrayList<TimeSheet>  
 	 */
 	@Override
-	public ArrayList<TimeSheet> getAllTimeSheets() throws Exception {
+	public ArrayList<TimeSheet> getAllTimeSheets() throws Exception
+    {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets");
 		_da.setSqlCommandText(query);
-		ResultSet timesheets = _da.callCommandGetResultSet();
+		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
-		while (timesheets.next()) 
+		while (timeSheets.next())
 		{
-			TimeSheet timeSheet = buildTimeSheet(timesheets);
+			TimeSheet timeSheet = buildTimeSheet(timeSheets);
 			returnList.add(timeSheet);
 		}
 		return returnList;
@@ -42,14 +44,15 @@ public class DBTimesheet implements IFDBTimesheet{
 	
 
 	/**
-	 * Get a specific timesheet record by id
+	 * Get a specific TimeSheet record by id
 	 * 
 	 * @param sheetId						the id of the record to be returned
-	 * @return Timesheet
+	 * @return TimeSheet
 	 */
 	@Override
-	public TimeSheet getTimesheetById(int sheetId) throws Exception {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT FROM TimeSheets WHERE sheetId = ?");
+	public TimeSheet getTimeSheetById(int sheetId) throws Exception
+    {
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE sheetId = ?");
 		query.setInt(1, sheetId);
 		_da.setSqlCommandText(query);
 		ResultSet timeSheetResult = _da.callCommandGetRow();
@@ -60,22 +63,23 @@ public class DBTimesheet implements IFDBTimesheet{
 
 
 	/**
-	 * Retrieve all timesheet records assigned to a specific user
+	 * Retrieve all TimeSheet records assigned to a specific user
 	 * 
-	 * @param User							the user to find timesheet records for
-	 * @return ArrayList<Timesheet>
+	 * @param user							the user to find TimeSheet records for
+	 * @return ArrayList<TimeSheet>
 	 */
 	@Override
-	public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user) throws Exception {
+	public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user) throws Exception
+    {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT FROM TimeSheets WHERE userId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ?");
 		_da.setSqlCommandText(query);
-		ResultSet timesheets = _da.callCommandGetResultSet();
+		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
-		while (timesheets.next()) 
+		while (timeSheets.next())
 		{
-			TimeSheet timeSheet = buildTimeSheet(timesheets);
+			TimeSheet timeSheet = buildTimeSheet(timeSheets);
 			returnList.add(timeSheet);
 		}
 		
@@ -84,22 +88,23 @@ public class DBTimesheet implements IFDBTimesheet{
 	
 
 	/**
-	 * Retrieve all timesheet records connected to a specific client
+	 * Retrieve all TimeSheet records connected to a specific client
 	 * 
-	 * @param Client							the client to find timesheet records for
-	 * @return ArrayList<Timesheet>
+	 * @param client							the client to find TimeSheet records for
+	 * @return ArrayList<TimeSheet>
 	 */
 	@Override
-	public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client) throws Exception {
+	public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client) throws Exception
+    {
 		ArrayList<TimeSheet>  returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT FROM TimeSheets WHERE clientId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ?");
 		_da.setSqlCommandText(query);
-		ResultSet timesheets = _da.callCommandGetResultSet();
+		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
-		while (timesheets.next()) 
+		while (timeSheets.next())
 		{
-			TimeSheet timeSheet = buildTimeSheet(timesheets);
+			TimeSheet timeSheet = buildTimeSheet(timeSheets);
 			returnList.add(timeSheet);
 		}
 		
@@ -108,23 +113,23 @@ public class DBTimesheet implements IFDBTimesheet{
 
 	
 	/**
-	 * Insert a new timesheet into the database
+	 * Insert a new TimeSheet into the database
 	 * 
-	 * @param TimesSheet							the object containing information to be stored
+	 * @param timeSheet							the object containing information to be stored
 	 * @return 									returns the number of rows affected
 	 */
 	@Override
-	public int insertTimeSheet(TimeSheet timesheet) throws Exception {
-		if (timesheet == null)
+	public int insertTimeSheet(TimeSheet timeSheet) throws Exception
+    {
+		if (timeSheet == null)
 		return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO TimeSheets (sheetId, userId, clientId, note, createdDate, editedDate) VALUES (?, ?, ?, ?, ?, ?)");
-		query.setInt(1, timesheet.getSheetId());
-		query.setInt(2, timesheet.getUser().getUserId());
-		query.setInt(3, timesheet.getClient().getClientId());
-		query.setString(4, timesheet.getNote());
-		query.setDate(5, (java.sql.Date)timesheet.getcreationDate());
-		query.setDate(6, (java.sql.Date)timesheet.getEditedDate());
+		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO TimeSheets (userId, clientId, note, createdDate, editedDate) VALUES (?, ?, ?, ?, ?)");
+		query.setInt(1, timeSheet.getUser().getUserId());
+		query.setInt(2, timeSheet.getClient().getClientId());
+		query.setString(3, timeSheet.getNote());
+		query.setDate(4, (java.sql.Date)timeSheet.getcreationDate());
+		query.setDate(5, (java.sql.Date)timeSheet.getEditedDate());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -132,23 +137,24 @@ public class DBTimesheet implements IFDBTimesheet{
 
 	
 	/**
-	 * Update a timesheet already existing in the database
+	 * Update a TimeSheet already existing in the database
 	 * 
-	 * @param TimeSheet							the object containing the updated information you need to store
+	 * @param timeSheet 							the object containing the updated information you need to store
 	 * @return int									returns the number of rows affected
 	 */
 	@Override
-	public int updateTimeSheet(TimeSheet timesheet) throws Exception {
-		if (timesheet == null)
+	public int updateTimeSheet(TimeSheet timeSheet) throws Exception
+    {
+		if (timeSheet == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE TimeSheets SET sheetId = ?, userId = ?, clientId = ?, note = ?, createdDate = ?, editedDate = ?");
-		query.setInt(1, timesheet.getSheetId());
-		query.setInt(2, timesheet.getUser().getUserId());
-		query.setInt(3, timesheet.getClient().getClientId());
-		query.setString(4, timesheet.getNote());
-		query.setDate(5, (java.sql.Date)timesheet.getcreationDate());
-		query.setDate(6, (java.sql.Date)timesheet.getEditedDate());
+		PreparedStatement query = _da.getCon().prepareStatement("UPDATE TimeSheets SET userId = ?, clientId = ?, note = ?, createdDate = ?, editedDate = ? WHERE sheetId = ?");
+		query.setInt(1, timeSheet.getUser().getUserId());
+		query.setInt(2, timeSheet.getClient().getClientId());
+		query.setString(3, timeSheet.getNote());
+		query.setDate(4, (java.sql.Date)timeSheet.getcreationDate());
+		query.setDate(5, (java.sql.Date)timeSheet.getEditedDate());
+        query.setInt(6, timeSheet.getSheetId());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -156,56 +162,57 @@ public class DBTimesheet implements IFDBTimesheet{
 
 	
 	/**
-	 * Deletes a timesheet existing in the database
+	 * Deletes a TimeSheet existing in the database
 	 * 
-	 * @param TimeSheet							the object containing the timesheet that you need to delete from the database
+	 * @param timeSheet 							the object containing the TimeSheet that you need to delete from the database
 	 * @return										returns the number of rows affected
 	 */
 	@Override
-	public int deleteTimeSheet(TimeSheet timesheet) throws Exception {
-		if (timesheet == null)
+	public int deleteTimeSheet(TimeSheet timeSheet) throws Exception
+    {
+		if (timeSheet == null)
 		return 0;
 		
 		int rowsAffected = 0;
 		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM TimeSheets WHERE sheetId = ?");
-		query.setInt(1, timesheet.getSheetId());
+		query.setInt(1, timeSheet.getSheetId());
 		_da.setSqlCommandText(query);
 		rowsAffected += _da.callCommand();
 		
 		return rowsAffected;
 	}
 
+    /**
+     * Retrieves all TimeSheets by user between startDate and endDate
+     *
+     * @param user						the user whose TimeSheets are assigned to
+     * @param startDate					the first date of the date interval
+     * @param endDate					the last date of the date interval
+     * @return	ArrayList<TimeSheet>
+     * @throws Exception
+     */
+    public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user, Date startDate, Date endDate) throws Exception
+    {
+        return null;
+    }
+
+
+    /**
+     * Retrieves all TimeSheets by client between startDate and endDate
+     *
+     * @param client					the client whose TimeSheets are assigned to
+     * @param startDate					the first date of the date interval
+     * @param endDate					the last date of the date interval
+     * @return	ArrayList<TimeSheet>
+     * @throws Exception
+     */
+    public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client, Date startDate, Date endDate) throws Exception
+    {
+        return null;
+    }
+
 	
-	@Override
-	public ArrayList<TimeSheet> getAllTimeSheetsBeforeDataByUser(User user,
-			Date date) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<TimeSheet> getAllTimeSheetsAfterDateByUser(User user,
-			Date date) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<TimeSheet> getAllTimeSheetsBeforeDataByClient(
-			Client client, Date date) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<TimeSheet> getAllTimeSheetsAfterDataByClient(
-			Client client, Date date) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-	public TimeSheet buildTimeSheet(ResultSet row) throws Exception
+	private TimeSheet buildTimeSheet(ResultSet row) throws Exception
 	{
 		if (row == null)
 			return null;
