@@ -122,11 +122,11 @@ public class DBTimesheet implements IFDBTimesheet{
 		query.setInt(1, timesheet.getSheetId());
 		query.setInt(2, timesheet.getUser().getUserId());
 		query.setInt(3, timesheet.getClient().getClientId());
-		query.setString(1, timesheet.getNote());
-		query.setDate(4, timesheet.getcreationDate();
-		query.setDate(5, timesheet.getEditedDate());
+		query.setString(4, timesheet.getNote());
+		query.setDate(5, (java.sql.Date)timesheet.getcreationDate());
+		query.setDate(6, (java.sql.Date)timesheet.getEditedDate());
 		_da.setSqlCommandText(query);
-
+		
 		return _da.callCommand();
 	}
 
@@ -147,8 +147,8 @@ public class DBTimesheet implements IFDBTimesheet{
 		query.setInt(2, timesheet.getUser().getUserId());
 		query.setInt(3, timesheet.getClient().getClientId());
 		query.setString(4, timesheet.getNote());
-		query.setDate(5, timesheet.getcreationDate();
-		query.setDate(6, timesheet.getEditedDate());
+		query.setDate(5, (java.sql.Date)timesheet.getcreationDate());
+		query.setDate(6, (java.sql.Date)timesheet.getEditedDate());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
