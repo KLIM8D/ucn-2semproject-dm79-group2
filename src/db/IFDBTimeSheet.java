@@ -6,7 +6,7 @@ import models.Client;
 import java.util.ArrayList;
 import java.util.Date;
 
-public interface IFDBTimesheet
+public interface IFDBTimeSheet
 {
 	
 	/**

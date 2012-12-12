@@ -37,9 +37,9 @@ public class TimeSheet
 	public void setNote(String note)
 	{ _note = note; }
 
-	public Date getcreationDate()
+	public Date getCreationDate()
 	{ return _creationDate; }
-	public void setCreatedDate(Date createdDate)
+	public void setCreationDate(Date createdDate)
 	{ _creationDate = createdDate; }
 
 	public Date getEditedDate()
@@ -53,6 +53,7 @@ public class TimeSheet
 	{
 		_sheetId = sheetId;
 		_user = user;
+        _client = client;
 		_dataEntries = new ArrayList<DataEntry>();
 		_note = note;
 		_creationDate = createdDate;
@@ -63,6 +64,7 @@ public class TimeSheet
 	public TimeSheet(User user, Client client, String note, Date createdDate, Date editedDate)
 	{
 		_user = user;
+        _client = client;
 		_dataEntries = new ArrayList<DataEntry>();
 		_note = note;
 		_creationDate = createdDate;

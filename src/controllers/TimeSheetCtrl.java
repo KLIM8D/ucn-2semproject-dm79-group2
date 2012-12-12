@@ -1,6 +1,6 @@
 package controllers;
 
-import db.DBTimesheet;
+import db.DBTimeSheet;
 import models.Client;
 import models.TimeSheet;
 import models.User;
@@ -18,10 +18,10 @@ import java.util.Date;
 
 public class TimeSheetCtrl
 {
-    private DBTimesheet _dbTimeSheet;
+    private DBTimeSheet _dbTimeSheet;
     public TimeSheetCtrl()
     {
-        _dbTimeSheet = new DBTimesheet();
+        _dbTimeSheet = new DBTimeSheet();
     }
 
     /**
