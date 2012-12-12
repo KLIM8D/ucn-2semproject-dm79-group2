@@ -147,22 +147,6 @@ public class DBUser implements IFDBUser
 		return _da.callCommand();
 	}
 
-	/**
-	 * Delete an existing user from the database
-	 * 
-	 * @param value				the value of the id which is going to be deleted
-	 * @return int				returns the number of rows affected
-	 */
-	public int deleteUser(int value) throws Exception
-	{
-		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Users WHERE userId = ?");
-		
-		query.setInt(1, value);
-		_da.setSqlCommandText(query);
-		
-		return _da.callCommand();
-	}
-
 	private User buildUsers(ResultSet row) throws Exception
 	{
 		if(row == null)
