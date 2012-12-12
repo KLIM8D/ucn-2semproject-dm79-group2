@@ -170,50 +170,6 @@
       </type>
     </attributes>
   </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_2XqNAD33EeKWJf1YZZ0sGQ" name="TimeSheet" associationsOut="_R77cgD4HEeKWJf1YZZ0sGQ _S8ceUD4HEeKWJf1YZZ0sGQ _hRDW8D4IEeKWJf1YZZ0sGQ">
-    <modelElement href="domain_model.uml#_2Xpl8D33EeKWJf1YZZ0sGQ"/>
-    <visualProperties xmi:id="_2XqNAT33EeKWJf1YZZ0sGQ" position="643.0,88.0" size="197.0,106.0"/>
-    <visibility xmi:id="_2XqNAj33EeKWJf1YZZ0sGQ" label="+"/>
-    <attributes xmi:id="_CRPMoD4EEeKWJf1YZZ0sGQ" name="note">
-      <modelElement href="domain_model.uml#_CRN-gD4EEeKWJf1YZZ0sGQ"/>
-      <visibility xmi:id="_CRPMoT4EEeKWJf1YZZ0sGQ" label="+"/>
-      <cardinality xmi:id="_CRPMoj4EEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
-    </attributes>
-    <attributes xmi:id="_gS3NMD4EEeKWJf1YZZ0sGQ" name="creationDate">
-      <modelElement href="domain_model.uml#_gS1_ED4EEeKWJf1YZZ0sGQ"/>
-      <visibility xmi:id="_gS3NMT4EEeKWJf1YZZ0sGQ" label="+"/>
-      <cardinality xmi:id="_gS3NMj4EEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
-    </attributes>
-    <attributes xmi:id="_iGBM4D4EEeKWJf1YZZ0sGQ" name="editedDate">
-      <modelElement href="domain_model.uml#_iGAl0D4EEeKWJf1YZZ0sGQ"/>
-      <visibility xmi:id="_iGBM4T4EEeKWJf1YZZ0sGQ" label="+"/>
-      <cardinality xmi:id="_iGBM4j4EEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
-    </attributes>
-    <attributes xmi:id="_R7_G4D4HEeKWJf1YZZ0sGQ" name="">
-      <modelElement href="domain_model.uml#_R7xrgD4HEeKWJf1YZZ0sGQ"/>
-      <visibility xmi:id="_R7_G4T4HEeKWJf1YZZ0sGQ" label="+"/>
-      <cardinality xmi:id="_R7_G4j4HEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
-      <type xmi:id="_R7_G4z4HEeKWJf1YZZ0sGQ" name="Client">
-        <modelElement href="domain_model.uml#_8AdeAD32EeKWJf1YZZ0sGQ"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_S8eTgD4HEeKWJf1YZZ0sGQ" name="">
-      <modelElement href="domain_model.uml#_S8Yz8z4HEeKWJf1YZZ0sGQ"/>
-      <visibility xmi:id="_S8e6kD4HEeKWJf1YZZ0sGQ" label="+"/>
-      <cardinality xmi:id="_S8e6kT4HEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
-      <type xmi:id="_S8e6kj4HEeKWJf1YZZ0sGQ" name="User">
-        <modelElement href="domain_model.uml#_L9cUkD32EeKWJf1YZZ0sGQ"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_hRFzMD4IEeKWJf1YZZ0sGQ" name="">
-      <modelElement href="domain_model.uml#_hRA6sT4IEeKWJf1YZZ0sGQ"/>
-      <visibility xmi:id="_hRFzMT4IEeKWJf1YZZ0sGQ" label="+"/>
-      <cardinality xmi:id="_hRFzMj4IEeKWJf1YZZ0sGQ" label="*" max="-1"/>
-      <type xmi:id="_hRFzMz4IEeKWJf1YZZ0sGQ" name="DataEntry">
-        <modelElement href="domain_model.uml#_sfS5YD36EeKWJf1YZZ0sGQ"/>
-      </type>
-    </attributes>
-  </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_8AeFED32EeKWJf1YZZ0sGQ" name="Client" associationsIn="_R77cgD4HEeKWJf1YZZ0sGQ">
     <modelElement href="domain_model.uml#_8AdeAD32EeKWJf1YZZ0sGQ"/>
     <visualProperties xmi:id="_8AeFET32EeKWJf1YZZ0sGQ" position="331.0,87.0" size="196.0,-1.0"/>
@@ -256,7 +212,7 @@
         <modelElement href="domain_model.uml#_2Xpl8D33EeKWJf1YZZ0sGQ"/>
       </type>
     </attributes>
-    <attributes xmi:id="_s1QAkD7REeK4I9iiYUdaQg" name="createdDate">
+    <attributes xmi:id="_s1QAkD7REeK4I9iiYUdaQg" name="creationDate">
       <modelElement href="domain_model.uml#_s1M9QD7REeK4I9iiYUdaQg"/>
       <visibility xmi:id="_s1QAkT7REeK4I9iiYUdaQg" label="+"/>
       <cardinality xmi:id="_s1QAkj7REeK4I9iiYUdaQg" label="1" max="1" min="1"/>
@@ -372,6 +328,50 @@
       <cardinality xmi:id="_QsZyYj-IEeKvXOCfuXhQmQ" label="1" max="1" min="1"/>
       <type xmi:id="_QsZyYz-IEeKvXOCfuXhQmQ" name="UserPermission">
         <modelElement href="domain_model.uml#_V3dGoD32EeKWJf1YZZ0sGQ"/>
+      </type>
+    </attributes>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_2XqNAD33EeKWJf1YZZ0sGQ" name="TimeSheet" associationsOut="_R77cgD4HEeKWJf1YZZ0sGQ _S8ceUD4HEeKWJf1YZZ0sGQ _hRDW8D4IEeKWJf1YZZ0sGQ">
+    <modelElement href="domain_model.uml#_2Xpl8D33EeKWJf1YZZ0sGQ"/>
+    <visualProperties xmi:id="_2XqNAT33EeKWJf1YZZ0sGQ" position="643.0,88.0" size="197.0,106.0"/>
+    <visibility xmi:id="_2XqNAj33EeKWJf1YZZ0sGQ" label="+"/>
+    <attributes xmi:id="_CRPMoD4EEeKWJf1YZZ0sGQ" name="note">
+      <modelElement href="domain_model.uml#_CRN-gD4EEeKWJf1YZZ0sGQ"/>
+      <visibility xmi:id="_CRPMoT4EEeKWJf1YZZ0sGQ" label="+"/>
+      <cardinality xmi:id="_CRPMoj4EEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
+    </attributes>
+    <attributes xmi:id="_gS3NMD4EEeKWJf1YZZ0sGQ" name="creationDate">
+      <modelElement href="domain_model.uml#_gS1_ED4EEeKWJf1YZZ0sGQ"/>
+      <visibility xmi:id="_gS3NMT4EEeKWJf1YZZ0sGQ" label="+"/>
+      <cardinality xmi:id="_gS3NMj4EEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
+    </attributes>
+    <attributes xmi:id="_iGBM4D4EEeKWJf1YZZ0sGQ" name="editedDate">
+      <modelElement href="domain_model.uml#_iGAl0D4EEeKWJf1YZZ0sGQ"/>
+      <visibility xmi:id="_iGBM4T4EEeKWJf1YZZ0sGQ" label="+"/>
+      <cardinality xmi:id="_iGBM4j4EEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
+    </attributes>
+    <attributes xmi:id="_R7_G4D4HEeKWJf1YZZ0sGQ" name="">
+      <modelElement href="domain_model.uml#_R7xrgD4HEeKWJf1YZZ0sGQ"/>
+      <visibility xmi:id="_R7_G4T4HEeKWJf1YZZ0sGQ" label="+"/>
+      <cardinality xmi:id="_R7_G4j4HEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
+      <type xmi:id="_R7_G4z4HEeKWJf1YZZ0sGQ" name="Client">
+        <modelElement href="domain_model.uml#_8AdeAD32EeKWJf1YZZ0sGQ"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_S8eTgD4HEeKWJf1YZZ0sGQ" name="">
+      <modelElement href="domain_model.uml#_S8Yz8z4HEeKWJf1YZZ0sGQ"/>
+      <visibility xmi:id="_S8e6kD4HEeKWJf1YZZ0sGQ" label="+"/>
+      <cardinality xmi:id="_S8e6kT4HEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
+      <type xmi:id="_S8e6kj4HEeKWJf1YZZ0sGQ" name="User">
+        <modelElement href="domain_model.uml#_L9cUkD32EeKWJf1YZZ0sGQ"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_hRFzMD4IEeKWJf1YZZ0sGQ" name="">
+      <modelElement href="domain_model.uml#_hRA6sT4IEeKWJf1YZZ0sGQ"/>
+      <visibility xmi:id="_hRFzMT4IEeKWJf1YZZ0sGQ" label="+"/>
+      <cardinality xmi:id="_hRFzMj4IEeKWJf1YZZ0sGQ" label="*" max="-1"/>
+      <type xmi:id="_hRFzMz4IEeKWJf1YZZ0sGQ" name="DataEntry">
+        <modelElement href="domain_model.uml#_sfS5YD36EeKWJf1YZZ0sGQ"/>
       </type>
     </attributes>
   </nodes>

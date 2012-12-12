@@ -67,7 +67,7 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_R7xEcD4HEeKWJf1YZZ0sGQ"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_R7xEcT4HEeKWJf1YZZ0sGQ" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="_s1M9QD7REeK4I9iiYUdaQg" name="createdDate"/>
+    <ownedAttribute xmi:id="_s1M9QD7REeK4I9iiYUdaQg" name="creationDate"/>
     <ownedAttribute xmi:id="_tl9r0D7REeK4I9iiYUdaQg" name="editedDate"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_2Xpl8D33EeKWJf1YZZ0sGQ" name="TimeSheet">
