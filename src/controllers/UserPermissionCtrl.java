@@ -9,8 +9,9 @@
 
 package controllers;
 
-import models.UserPermission;
 import db.DBUserPermission;
+import models.UserPermission;
+
 import java.util.ArrayList;
 
 public class UserPermissionCtrl

@@ -9,8 +9,9 @@
 
 package controllers;
 
-import models.User;
 import db.DBUser;
+import models.User;
+
 import java.util.ArrayList;
 
 public class UserCtrl
