@@ -198,7 +198,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 		ArrayList<TimeSheet> filterList = new ArrayList<TimeSheet>();
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT FROM TimeSheets WHERE userId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ?");
 		_da.setSqlCommandText(query);
 		ResultSet timesheets = _da.callCommandGetResultSet();
 		
@@ -214,10 +214,11 @@ public class DBTimeSheet implements IFDBTimeSheet
 			if (filterList.get(index).getCreationDate().compareTo(startDate) > 0 && filterList.get(index).getEditedDate().compareTo(endDate) < 0) {
 				returnList.add(filterList.get(index));
 			}
+			index++;
 		}
 		return returnList;
     }
-
+    
 
     /**
      * Retrieves all TimeSheets by client between startDate and endDate
@@ -233,7 +234,7 @@ public class DBTimeSheet implements IFDBTimeSheet
     	ArrayList<TimeSheet> filterList = new ArrayList<TimeSheet>();
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT FROM TimeSheets WHERE clientId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ?");
 		_da.setSqlCommandText(query);
 		ResultSet timesheets = _da.callCommandGetResultSet();
 		
@@ -249,6 +250,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 			if (filterList.get(index).getCreationDate().compareTo(startDate) > 0 && filterList.get(index).getEditedDate().compareTo(endDate) < 0) {
 				returnList.add(filterList.get(index));
 			}
+			index++;
 		}
 		return returnList;
     }
