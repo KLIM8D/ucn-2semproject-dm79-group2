@@ -21,7 +21,7 @@ public interface IFDBClient {
 	public Client getClientById(long id) throws Exception;
 	
 	/**
-	 * Get specific client by contact name
+	 * Get specific client by name
 	 * 
 	 * @param name					the name of the client you need returned
 	 * @return Client
@@ -37,7 +37,7 @@ public interface IFDBClient {
 	public int insertClient(Client client) throws Exception;
 	
 	/**
-	 * Update a existing contact in database
+	 * Update a existing client in database
 	 * 
 	 * @param client 				the object containing the updated information you want stored
 	 * @return						returns the number of rows affected
