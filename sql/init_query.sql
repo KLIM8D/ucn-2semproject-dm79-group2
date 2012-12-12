@@ -79,7 +79,8 @@ CREATE TABLE "Users"  (
 	"firstName"   	varchar(256) NOT NULL,
 	"lastName"    	varchar(256) NOT NULL,
 	"userName"    	varchar(256) NOT NULL,
-	"userPwd"     	varchar(256) NOT NULL,
+	"userPassword"  varchar(256) NOT NULL,
+    "saltValue"     varchar(128) NOT NULL,
 	"creationDate"	datetime NOT NULL,
 	"editedDate"  	datetime NOT NULL,
 	CONSTRAINT "pkUsers" PRIMARY KEY CLUSTERED("userId")
