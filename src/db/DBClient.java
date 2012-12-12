@@ -116,7 +116,7 @@ public class DBClient implements IFDBClient
         query.setInt(3, client.getCity().getCityId());
         query.setLong(4, client.getPhoneNo());
         query.setString(5, client.getEmail());
-        query.setDate(6, (java.sql.Date)client.getCreatedDate());
+        query.setDate(6, (java.sql.Date)client.getCreationDate());
         query.setDate(7, (java.sql.Date)client.getEditedDate());
         _da.setSqlCommandText(query);
 
@@ -141,7 +141,7 @@ public class DBClient implements IFDBClient
         query.setString(3, client.getAddress());
         query.setLong(4, client.getPhoneNo());
         query.setString(5, client.getEmail());
-        query.setDate(6, (java.sql.Date)client.getCreatedDate());
+        query.setDate(6, (java.sql.Date)client.getCreationDate());
         query.setDate(7, (java.sql.Date)client.getEditedDate());
         query.setInt(8, client.getClientId());
         _da.setSqlCommandText(query);
@@ -185,9 +185,9 @@ public class DBClient implements IFDBClient
         String address = row.getString("address");
         long phoneNo = row.getLong("phoneNo");
         String eMail = row.getString("eMail");
-        Date createdDate = row.getDate("createdDate");
+        Date creationDate = row.getDate("creationDate");
         Date editedDate = row.getDate("editedDate");
 
-        return new Client(clientId, name, address, city, phoneNo, eMail, createdDate, editedDate);
+        return new Client(clientId, name, address, city, phoneNo, eMail, creationDate, editedDate);
 	}
 }

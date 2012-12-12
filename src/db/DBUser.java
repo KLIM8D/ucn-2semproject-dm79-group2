@@ -47,6 +47,30 @@ public class DBUser implements IFDBUser
 		
 		return returnList;
 	}
+
+    /**
+     * Retrieve all users from database by user role
+     *
+     * @return ArrayList<User>
+     */
+    @Override
+    public ArrayList<User> getAllUsersByUserRole(UserPermission userPermission) throws Exception
+    {
+        ArrayList<User> returnList = new ArrayList<User>();
+
+        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Users WHERE permissionId = ?");
+        query.setInt(1, userPermission.getPermissionId());
+        _da.setSqlCommandText(query);
+        ResultSet userResult = _da.callCommandGetResultSet();
+
+        while(userResult.next())
+        {
+            User user = buildUsers(userResult);
+            returnList.add(user);
+        }
+
+        return returnList;
+    }
 	
 	/**
 	 * Retrieve a specific user by it's id
@@ -57,15 +81,36 @@ public class DBUser implements IFDBUser
 	@Override
 	public User getUserById(int value) throws Exception
 	{
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM User WHERE userId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Users WHERE userId = ?");
 		query.setInt(1, value);
 		_da.setSqlCommandText(query);
 		ResultSet userResult = _da.callCommandGetRow();
+
 		if(userResult.next())
 			return buildUsers(userResult);
 		
 		return null;
 	}
+
+    /**
+     * Retrieve a specific user by it's id
+     *
+     * @param userName				the value of the id you need returned
+     * @return User
+     */
+    @Override
+    public User getUserByUserName(String userName) throws Exception
+    {
+        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Users WHERE userName = ?");
+        query.setString(1, userName);
+        _da.setSqlCommandText(query);
+        ResultSet userResult = _da.callCommandGetRow();
+
+        if(userResult.next())
+            return buildUsers(userResult);
+
+        return null;
+    }
 	
 	/**
 	 * Inserts a user into the database
@@ -80,16 +125,17 @@ public class DBUser implements IFDBUser
 			return 0;
 		
 		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Users (permissionId, firstName, lastName, " +
-																"userName, userPassword, creationDate, editedDate " +
-																"VALUES(?, ?, ?, ?, ?, ?, ?)");
+																"userName, userPassword, saltValue, creationDate, editedDate " +
+																"VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
 
 		query.setInt(1, user.getUserPermission().getPermissionId());
 		query.setString(2, user.getFirstName());
 		query.setString(3, user.getLastName());
 		query.setString(4, user.getUserName());
 		query.setString(5, user.getUserPassword());
-		query.setDate(6, (java.sql.Date)user.getCreatedDate());
-		query.setDate(7, (java.sql.Date)user.getEditedDate());
+        query.setString(6, user.getSaltValue());
+		query.setDate(7, (java.sql.Date)user.getCreationDate());
+		query.setDate(8, (java.sql.Date)user.getEditedDate());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -119,7 +165,7 @@ public class DBUser implements IFDBUser
 		query.setString(3, user.getLastName());
 		query.setString(4, user.getUserName());
 		query.setString(5, user.getUserPassword());
-		query.setDate(6, (java.sql.Date)user.getCreatedDate());
+		query.setDate(6, (java.sql.Date)user.getCreationDate());
 		query.setDate(7, (java.sql.Date)user.getEditedDate());
 		query.setInt(8, user.getUserId());
 		_da.setSqlCommandText(query);
@@ -160,9 +206,10 @@ public class DBUser implements IFDBUser
 		String lastName = row.getString("lastName");
 		String userName = row.getString("userName");
 		String userPassword = row.getString("userPassword");
+        String saltValue = row.getString("saltValue");
 		Date creationDate = row.getDate("creationDate");
 		Date editedDate = row.getDate("editedDate");
 		
-		return new User(userId, userPermission, firstName, lastName, userName, userPassword, creationDate, editedDate);
+		return new User(userId, userPermission, firstName, lastName, userName, saltValue, userPassword, creationDate, editedDate);
 	}
 }

@@ -16,7 +16,7 @@ public class UserPermission
 {
 	private int _permissionId;
 	private String _userRole;
-	private Date _createdDate;
+	private Date _creationDate;
 	private Date _editedDate;
 	
 	public int getPermissionId()
@@ -29,10 +29,10 @@ public class UserPermission
 	public void setUserRole(String value)
 	{ this._userRole = value; }
 
-	public Date getCreatedDate()
-	{ return _createdDate; }
-	public void setCreatedDate(Date value)
-	{ _createdDate = value; }
+	public Date getCreationDate()
+	{ return _creationDate; }
+	public void setCreationDate(Date value)
+	{ _creationDate = value; }
 
 	public Date getEditedDate()
 	{ return _editedDate; }
@@ -43,7 +43,7 @@ public class UserPermission
 	{
 		_permissionId = permissionId;
 		_userRole = userRole;
-		_createdDate = createdDate;
+		_creationDate = createdDate;
 		_editedDate = editedDate;
 	}	
 }

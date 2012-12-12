@@ -10,25 +10,41 @@
 package db;
 
 import models.User;
+import models.UserPermission;
 
 import java.util.ArrayList;
 
 public interface IFDBUser
 {
 	/**
-	 * Retrieve all roles from database
+	 * Retrieve all users from database
 	 * 
 	 * @return ArrayList<User>
 	 */
 	public ArrayList<User> getAllUsers() throws Exception;
+
+    /**
+     * Retrieve all users from database by user role
+     *
+     * @return ArrayList<User>
+     */
+    public ArrayList<User> getAllUsersByUserRole(UserPermission userPermission) throws Exception;
 	
 	/**
-	 * Retrieve a specific user by it's id
+	 * Retrieve a specific user by it's userName
 	 * 
-	 * @param value				the value of the id you need returned
+	 * @param userName			the userName for the User you want returned
 	 * @return User
 	 */
-	public User getUserById(int value) throws Exception;
+	public User getUserByUserName(String userName) throws Exception;
+
+    /**
+     * Retrieve a specific user by it's id
+     *
+     * @param value				the value of the id you need returned
+     * @return User
+     */
+    public User getUserById(int value) throws Exception;
 	
 	/**
 	 * Insert a user into the database

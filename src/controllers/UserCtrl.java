@@ -11,6 +11,8 @@ package controllers;
 
 import db.DBUser;
 import models.User;
+import models.UserPermission;
+import utils.Helper;
 
 import java.util.ArrayList;
 
@@ -26,6 +28,12 @@ public class UserCtrl
 		DBUser dbu = new DBUser();
 		return dbu.getAllUsers();
 	}
+
+    public ArrayList<User> getAllUsersByUserRole(UserPermission userPermission) throws Exception
+    {
+        DBUser dbu = new DBUser();
+        return dbu.getAllUsersByUserRole(userPermission);
+    }
 	
 	public User getUserById(int value) throws Exception
 	{
@@ -47,7 +55,21 @@ public class UserCtrl
 	
 	public int deleteUser(User user) throws Exception
 	{
-		DBUser dbu = new DBUser();
+        DBUser dbu = new DBUser();
 		return dbu.deleteUser(user);
 	}
+
+    public boolean validateUserLogin(String userName, String password) throws Exception
+    {
+        DBUser dbu = new DBUser();
+        User user = dbu.getUserByUserName(userName.trim());
+
+        if(user == null)
+            return false;
+
+        String saltValue = user.getSaltValue();
+        String hashed = Helper.hashPassword(password, saltValue);
+
+        return hashed.equals(user.getUserPassword());
+    }
 }
