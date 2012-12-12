@@ -6,14 +6,14 @@ CREATE TABLE "Cities"  (
 )
 GO
 CREATE TABLE "Clients"  ( 
-	"clientId"   	int IDENTITY(1,1) NOT NULL,
-	"cityId"     	int NOT NULL,
-	"name"       	varchar(256) NOT NULL,
-	"address"    	varchar(256) NOT NULL,
-	"phoneNo"    	int NOT NULL,
-	"eMail"      	varchar(256) NULL,
+	"clientId"    	int IDENTITY(1,1) NOT NULL,
+	"cityId"      	int NOT NULL,
+	"name"        	varchar(256) NOT NULL,
+	"address"     	varchar(256) NOT NULL,
+	"phoneNo"     	int NOT NULL,
+	"eMail"       	varchar(256) NULL,
 	"creationDate"	datetime NOT NULL,
-	"editedDate" 	datetime NOT NULL,
+	"editedDate"  	datetime NOT NULL,
 	CONSTRAINT "pkClients" PRIMARY KEY CLUSTERED("clientId")
 )
 GO
@@ -36,7 +36,7 @@ CREATE TABLE "Logs"  (
 	"userDetails"      	varchar(512) NOT NULL,
 	"exception"        	varchar(2048) NOT NULL,
 	"exceptionLocation"	varchar(512) NOT NULL,
-	"createdDate"      	datetime NOT NULL,
+	"creationDate"     	datetime NOT NULL,
 	CONSTRAINT "pkLogs" PRIMARY KEY CLUSTERED("logId")
 )
 GO
@@ -56,12 +56,12 @@ CREATE TABLE "Tasks"  (
 )
 GO
 CREATE TABLE "TimeSheets"  ( 
-	"sheetId"    	int IDENTITY(1,1) NOT NULL,
-	"userId"     	int NOT NULL,
-	"clientId"   	int NOT NULL,
-	"note"       	varchar(256) NULL,
+	"sheetId"     	int IDENTITY(1,1) NOT NULL,
+	"userId"      	int NOT NULL,
+	"clientId"    	int NOT NULL,
+	"note"        	varchar(256) NULL,
 	"creationDate"	datetime NOT NULL,
-	"editedDate" 	datetime NOT NULL,
+	"editedDate"  	datetime NOT NULL,
 	CONSTRAINT "pkTimeSheet" PRIMARY KEY CLUSTERED("sheetId")
 )
 GO
@@ -79,59 +79,63 @@ CREATE TABLE "Users"  (
 	"firstName"   	varchar(256) NOT NULL,
 	"lastName"    	varchar(256) NOT NULL,
 	"userName"    	varchar(256) NOT NULL,
-	"userPassword"  varchar(256) NOT NULL,
-    "saltValue"     varchar(128) NOT NULL,
+	"userPassword"	varchar(256) NOT NULL,
+	"saltValue"   	varchar(128) NOT NULL,
 	"creationDate"	datetime NOT NULL,
 	"editedDate"  	datetime NOT NULL,
 	CONSTRAINT "pkUsers" PRIMARY KEY CLUSTERED("userId")
 )
 GO
+ALTER TABLE "Users"
+	ADD CONSTRAINT "ucUsers"
+	UNIQUE ("userName")
+GO
 ALTER TABLE "Clients"
 	ADD CONSTRAINT "Cities_Clients"
 	FOREIGN KEY("cityId")
 	REFERENCES "Cities"("cityId")
-	ON DELETE NO ACTION 
+    ON DELETE NO ACTION 
 GO
 ALTER TABLE "TimeSheets"
 	ADD CONSTRAINT "Clients_TimeSheets"
 	FOREIGN KEY("clientId")
 	REFERENCES "Clients"("clientId")
-	ON DELETE NO ACTION  
+    ON DELETE NO ACTION 
 GO
 ALTER TABLE "DataEntries"
 	ADD CONSTRAINT "Tasks_DataEntries"
 	FOREIGN KEY("taskId")
 	REFERENCES "Tasks"("taskId")
-	ON DELETE NO ACTION  
-GO
-ALTER TABLE "PermissionWrapper"
-	ADD CONSTRAINT "TimeSheets_PermissionWrapper"
-	FOREIGN KEY("sheetId")
-	REFERENCES "TimeSheets"("sheetId")
-    ON DELETE NO ACTION
+    ON DELETE NO ACTION 
 GO
 ALTER TABLE "DataEntries"
 	ADD CONSTRAINT "TimeSheets_DataEntries"
 	FOREIGN KEY("sheetId")
 	REFERENCES "TimeSheets"("sheetId")
-	ON DELETE NO ACTION  
+    ON DELETE NO ACTION 
+GO
+ALTER TABLE "PermissionWrapper"
+	ADD CONSTRAINT "TimeSheets_PermissionWrapper"
+	FOREIGN KEY("sheetId")
+	REFERENCES "TimeSheets"("sheetId")
+    ON DELETE NO ACTION 
 GO
 ALTER TABLE "Users"
 	ADD CONSTRAINT "UserPermissions_Users"
 	FOREIGN KEY("permissionId")
-	REFERENCES "UserPermissions"("permissionId") 
+	REFERENCES "UserPermissions"("permissionId")
 GO
 ALTER TABLE "DataEntries"
 	ADD CONSTRAINT "Users_DataEntries"
 	FOREIGN KEY("userId")
 	REFERENCES "Users"("userId")
-	ON DELETE NO ACTION  
+    ON DELETE NO ACTION 
 GO
 ALTER TABLE "TimeSheets"
 	ADD CONSTRAINT "Users_TimeSheets"
 	FOREIGN KEY("userId")
 	REFERENCES "Users"("userId")
-	ON DELETE NO ACTION  
+    ON DELETE NO ACTION 
 GO
 ALTER TABLE "Logs"
 	ADD CONSTRAINT "Users_Logs"
