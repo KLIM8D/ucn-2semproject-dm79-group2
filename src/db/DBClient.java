@@ -109,7 +109,7 @@ public class DBClient implements IFDBClient
         if(client == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Clients (cityId, name, address, phoneNo, eMail, createdDate, editedDate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Clients (cityId, name, address, phoneNo, eMail, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         query.setString(1, client.getName());
         query.setString(2, client.getAddress());
@@ -135,7 +135,7 @@ public class DBClient implements IFDBClient
 		if(client == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("UPDATE Clients SET cityId = ?, name = ?, address = ?, phoneNo = ?, eMail = ?, createdDate = ?, editedDate = ? WHERE clientId = ?");
+        PreparedStatement query = _da.getCon().prepareStatement("UPDATE Clients SET cityId = ?, name = ?, address = ?, phoneNo = ?, eMail = ?, creationDate = ?, editedDate = ? WHERE clientId = ?");
         query.setInt(1, client.getCity().getCityId());
         query.setString(2, client.getName());
         query.setString(3, client.getAddress());
