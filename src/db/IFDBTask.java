@@ -3,7 +3,8 @@ package db;
 import models.Task;
 import java.util.ArrayList;
 
-public interface IFDBTask {
+public interface IFDBTask
+{
 	
 	/**
 	 * Retrieve all tasks from database
@@ -51,5 +52,4 @@ public interface IFDBTask {
      * @return int 			returns the number of rows affected
      */
     public int deleteTask(Task task) throws Exception;
-
 }

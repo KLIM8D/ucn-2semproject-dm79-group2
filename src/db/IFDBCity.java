@@ -3,7 +3,8 @@ package db;
 import models.City;
 import java.util.ArrayList;
 
-public interface IFDBCity {
+public interface IFDBCity
+{
 	
 	/**
 	 * Retrieve all Cities from the database

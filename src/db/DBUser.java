@@ -132,7 +132,7 @@ public class DBUser implements IFDBUser
 		if(user == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Users WHERE userID = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Users WHERE userId = ?");
 		
 		query.setInt(1, user.getUserId());
 		_da.setSqlCommandText(query);
@@ -148,7 +148,7 @@ public class DBUser implements IFDBUser
 	 */
 	public int deleteUser(int value) throws Exception
 	{
-		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Users WHERE userID = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Users WHERE userId = ?");
 		
 		query.setInt(1, value);
 		_da.setSqlCommandText(query);

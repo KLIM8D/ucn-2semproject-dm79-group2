@@ -10,26 +10,22 @@ public class DBCity implements IFDBCity
 {
 	
 	private DataAccess _da;
-	
 	public DBCity()
 	{
 		_da = DataAccess.getInstance();
 	}
 
-	
-	
-	
-	
 	/**
 	 * Get all the cities from the database
 	 * 
 	 * @return ArrayList<City>
 	 */
 	@Override
-	public ArrayList<City> getAllCities() throws Exception {
+	public ArrayList<City> getAllCities() throws Exception
+    {
 		ArrayList<City> returnList = new ArrayList<City>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM City");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities");
 		_da.setSqlCommandText(query);
 		ResultSet cities = _da.callCommandGetResultSet();
 		
@@ -46,8 +42,9 @@ public class DBCity implements IFDBCity
 	 * Retrieve a specific city from cityId
 	 */
 	@Override
-	public City getCityById(int cityId) throws Exception {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM City WHERE cityId = ?");
+	public City getCityById(int cityId) throws Exception
+    {
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities WHERE cityId = ?");
 		query.setInt(1, cityId);
 		_da.setSqlCommandText(query);
 		ResultSet cityResult = _da.callCommandGetRow();
@@ -61,8 +58,9 @@ public class DBCity implements IFDBCity
 	 * Retrieve a specific city from zipCode
 	 */
 	@Override
-	public City getCityByZipCode(int zipCode) throws Exception {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM City WHERE ZipCode = ?");
+	public City getCityByZipCode(int zipCode) throws Exception
+    {
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities WHERE ZipCode = ?");
 		query.setInt(1, zipCode);
 		_da.setSqlCommandText(query);
 		ResultSet cityResult = _da.callCommandGetRow();
@@ -76,8 +74,9 @@ public class DBCity implements IFDBCity
 	 * Retrieve a specific city from name
 	 */
 	@Override
-	public City getCityByName(String cityName) throws Exception {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM City WHERE cityName = ?");
+	public City getCityByName(String cityName) throws Exception
+    {
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities WHERE cityName = ?");
 		query.setString(1, cityName);
 		_da.setSqlCommandText(query);
 		ResultSet cityResult = _da.callCommandGetRow();
@@ -91,11 +90,12 @@ public class DBCity implements IFDBCity
 	 * Insert a new City to the database
 	 */
 	@Override
-	public int insertCity(City city) throws Exception {
+	public int insertCity(City city) throws Exception
+    {
 		if(city == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO City (cityId, cityName, zipCode)");
+		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Cities (cityId, cityName, zipCode)");
 		query.setInt(1, city.getCityId());
 		query.setString(2, city.getCityName());
 		query.setInt(3, city.getZipCode());
@@ -109,14 +109,15 @@ public class DBCity implements IFDBCity
 	 * Update a city that already exists in the database
 	 */
 	@Override
-	public int updateCity(City city) throws Exception {
+	public int updateCity(City city) throws Exception
+    {
 		if (city == null)
 			return 0;
 		
 		if (getCityByZipCode(city.getZipCode()) == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE City SET cityId = ?, cityName = ?, zipCode = ? WHERE cityID ?");
+		PreparedStatement query = _da.getCon().prepareStatement("UPDATE Cities SET cityId = ?, cityName = ?, zipCode = ? WHERE cityID ?");
 		query.setInt(1, city.getCityId());
 		query.setString(2, city.getCityName());
 		query.setInt(3, city.getZipCode());
@@ -138,7 +139,7 @@ public class DBCity implements IFDBCity
 			return 0;
 		
 		int rowsAffected = 0;
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT FROM City WHERE zipCode = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT FROM Cities WHERE zipCode = ?");
 		query.setInt(1, city.getZipCode());
 		_da.setSqlCommandText(query);
 		rowsAffected += _da.callCommand();
