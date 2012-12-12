@@ -1,10 +1,11 @@
 package controllers;
 
-import java.util.ArrayList;
-import models.Client;
-import models.City;
-import db.DBClient;
 import db.DBCity;
+import db.DBClient;
+import models.City;
+import models.Client;
+
+import java.util.ArrayList;
 
 public class ClientCtrl
 {

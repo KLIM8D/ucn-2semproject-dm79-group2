@@ -10,6 +10,7 @@
 package db;
 
 import models.UserPermission;
+
 import java.util.ArrayList;
 
 public interface IFDBUserPermission

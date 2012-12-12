@@ -1,6 +1,7 @@
 package db;
 
 import models.City;
+
 import java.util.ArrayList;
 
 public interface IFDBCity

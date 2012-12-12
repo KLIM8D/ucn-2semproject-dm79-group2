@@ -1,9 +1,10 @@
 package db;
 
-import java.util.ArrayList;
 import models.City;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 
 public class DBCity implements IFDBCity

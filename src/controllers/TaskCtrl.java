@@ -1,8 +1,9 @@
 package controllers;
 
-import java.util.ArrayList;
-import models.Task;
 import db.DBTask;
+import models.Task;
+
+import java.util.ArrayList;
 
 public class TaskCtrl
 {

@@ -2,6 +2,7 @@ package db;
 
 import models.City;
 import models.Client;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;

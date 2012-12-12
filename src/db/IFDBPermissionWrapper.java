@@ -1,6 +1,8 @@
 package db;
 
-import models.*;
+import models.TimeSheet;
+import models.User;
+import models.UserPermission;
 
 /**
  * Created: 12-12-2012

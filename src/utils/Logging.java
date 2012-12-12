@@ -3,10 +3,7 @@ package utils;
 import db.DBLog;
 import models.Log;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created: 27-10-2012

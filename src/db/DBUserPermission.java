@@ -10,6 +10,7 @@
 package db;
 
 import models.UserPermission;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class DBUserPermission implements IFDBUserPermission
 		
 		query.setString(1, userPermission.getUserRole());
 		query.setDate(2, (java.sql.Date)userPermission.getCreatedDate());
-		query.setDate(3, (java.sql.Date)userPermission.getEditedDate());
+		query.setDate(3, (java.sql.Date) userPermission.getEditedDate());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
