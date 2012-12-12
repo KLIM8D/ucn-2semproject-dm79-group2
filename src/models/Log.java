@@ -16,7 +16,7 @@ public class Log
     private String _userDetails;
     private String _exception;
     private String _exceptionLocation;
-    private Date _createdDate;
+    private Date _creationDate;
 
     public long getLogId()
     { return _logId; }
@@ -33,8 +33,8 @@ public class Log
     public String getExceptionLocation()
     { return _exceptionLocation; }
 
-    public Date getCreatedDate()
-    { return _createdDate; }
+    public Date getCreationDate()
+    { return _creationDate; }
 
     public Log(User user, String userDetails, String exception, String exceptionLocation, Date createdDate)
     {
@@ -42,7 +42,7 @@ public class Log
         _userDetails = userDetails;
         _exception = exception;
         _exceptionLocation = exceptionLocation;
-        _createdDate = createdDate;
+        _creationDate = createdDate;
     }
 
     public Log(long logId, User user, String userDetails, String exception, String exceptionLocation, Date createdDate)
@@ -52,6 +52,6 @@ public class Log
         _userDetails = userDetails;
         _exception = exception;
         _exceptionLocation = exceptionLocation;
-        _createdDate = createdDate;
+        _creationDate = createdDate;
     }
 }

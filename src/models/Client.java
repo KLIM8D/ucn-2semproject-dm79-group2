@@ -11,7 +11,7 @@ public class Client
 	City _city;
 	long _phoneNo;
 	String _eMail;
-	Date _createdDate;
+	Date _creationDate;
 	Date _editedDate;
 	
 	public int getClientId()
@@ -42,10 +42,10 @@ public class Client
 	public void setEmail(String value)
 	{ _eMail = value; }
 	
-	public Date getCreatedDate() 
-	{ return _createdDate; }
-	public void setCreatedDate(Date value) 
-	{ _createdDate = value; }
+	public Date getCreationDate()
+	{ return _creationDate; }
+	public void setCreationDate(Date value)
+	{ _creationDate = value; }
 	
 	public Date getEditedDate() 
 	{ return _editedDate; }
@@ -59,7 +59,7 @@ public class Client
 		_city = city;
 		_phoneNo = phoneNo;
 		_eMail = eMail;
-		_createdDate = createdDate;
+		_creationDate = createdDate;
 		_editedDate = editedDate;
 	}
 	
@@ -71,7 +71,7 @@ public class Client
 		_city = city;
 		_phoneNo = phoneNo;
 		_eMail = eMail;
-		_createdDate = createdDate;
+		_creationDate = createdDate;
 		_editedDate = editedDate;
 	}
 	

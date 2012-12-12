@@ -9,7 +9,7 @@ public class TimeSheet
 	private Client _client;
 	private ArrayList<DataEntry> _dataEntries;
 	private String _note;
-	private Date _createdDate;
+	private Date _creationDate;
 	private Date _editedDate;
 
 	public int getSheetId()
@@ -37,10 +37,10 @@ public class TimeSheet
 	public void setNote(String note)
 	{ _note = note; }
 
-	public Date getCreatedDate()
-	{ return _createdDate; }
+	public Date getcreationDate()
+	{ return _creationDate; }
 	public void setCreatedDate(Date createdDate)
-	{ _createdDate = createdDate; }
+	{ _creationDate = createdDate; }
 
 	public Date getEditedDate()
 	{ return _editedDate; }
@@ -49,13 +49,27 @@ public class TimeSheet
 	// end getters and setters
 	
 
-	public TimeSheet(int sheetId, User user)
+	public TimeSheet(int sheetId, User user, Client client, String note, Date createdDate, Date editedDate)
 	{
 		_sheetId = sheetId;
 		_user = user;
 		_dataEntries = new ArrayList<DataEntry>();
+		_note = note;
+		_creationDate = createdDate;
+		_editedDate = editedDate;
+	}
+
+	
+	public TimeSheet(User user, Client client, String note, Date createdDate, Date editedDate)
+	{
+		_user = user;
+		_dataEntries = new ArrayList<DataEntry>();
+		_note = note;
+		_creationDate = createdDate;
+		_editedDate = editedDate;
 	}
 	
+		
 	// add a data entry object to list of data entries
 	public void addDataEntry(DataEntry dataEntry)
 	{

@@ -105,13 +105,13 @@ public class DBLog implements IFDBLog
         if(logEntry == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Logs (userId, userDetails, exception, exceptionLocation, createdDate) VALUES (?, ?, ?, ?, ?)");
+        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Logs (userId, userDetails, exception, exceptionLocation, creationDate) VALUES (?, ?, ?, ?, ?)");
 
         query.setInt(1, logEntry.getUser().getUserId());
         query.setString(2, logEntry.getUserDetails());
         query.setString(3, logEntry.getException());
         query.setString(4, logEntry.getExceptionLocation());
-        query.setDate(5, (java.sql.Date) logEntry.getCreatedDate());
+        query.setDate(5, (java.sql.Date) logEntry.getCreationDate());
         _da.setSqlCommandText(query);
 
         return _da.callCommand();
@@ -129,7 +129,7 @@ public class DBLog implements IFDBLog
         String userDetails = row.getString("userDetails");
         String exception = row.getString("exception");
         String exceptionLocation = row.getString("exceptionLocation");
-        Date createdDate = row.getDate("createdDate");
+        Date createdDate = row.getDate("creationDate");
 
         return new Log(logId, user, userDetails, exception, exceptionLocation, createdDate);
     }

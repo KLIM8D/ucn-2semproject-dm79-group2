@@ -20,7 +20,8 @@ public class User
 	String _lastName;
 	String _userName;
 	String _userPassword;
-	Date _createdDate;
+    String _saltValue;
+	Date _creationDate;
 	Date _editedDate;
 
 	public int getUserId()
@@ -53,17 +54,34 @@ public class User
 	public void setUserPassword(String value)
 	{ _userPassword = value; }
 
-	public Date getCreatedDate()
-	{ return _createdDate; }
-	public void setCreatedDate(Date value)
-	{ _createdDate = value; }
+    public String getSaltValue()
+    { return _saltValue; }
+    public void setSaltValue(String value)
+    { _saltValue = value; }
+
+	public Date getCreationDate()
+	{ return _creationDate; }
+	public void setCreationDate(Date value)
+	{ _creationDate = value; }
 
 	public Date getEditedDate()
 	{ return _editedDate; }
 	public void setEditedDate(Date value)
 	{ _editedDate = value; }
 
-	public User(int userId, UserPermission userPermission, String firstName, String lastName, String userName, String userPassword, Date createdDate, Date editedDate)
+    public User(UserPermission userPermission, String firstName, String lastName, String userName, String saltValue, String userPassword, Date createdDate, Date editedDate)
+    {
+        _userPermission = userPermission;
+        _firstName = firstName;
+        _lastName = lastName;
+        _userName = userName;
+        _userPassword = userPassword;
+        _saltValue = saltValue;
+        _creationDate = createdDate;
+        _editedDate = editedDate;
+    }
+
+	public User(int userId, UserPermission userPermission, String firstName, String lastName, String userName, String saltValue, String userPassword, Date createdDate, Date editedDate)
 	{
 		_userId = userId;
 		_userPermission = userPermission;
@@ -71,7 +89,8 @@ public class User
 		_lastName = lastName;
 		_userName = userName;
 		_userPassword = userPassword;
-		_createdDate = createdDate;
+        _saltValue = saltValue;
+		_creationDate = createdDate;
 		_editedDate = editedDate;
 	}
 }

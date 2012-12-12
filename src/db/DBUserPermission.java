@@ -82,7 +82,7 @@ public class DBUserPermission implements IFDBUserPermission
 																"VALUES(?, ?, ?)");
 		
 		query.setString(1, userPermission.getUserRole());
-		query.setDate(2, (java.sql.Date)userPermission.getCreatedDate());
+		query.setDate(2, (java.sql.Date)userPermission.getCreationDate());
 		query.setDate(3, (java.sql.Date) userPermission.getEditedDate());
 		_da.setSqlCommandText(query);
 		
@@ -108,7 +108,7 @@ public class DBUserPermission implements IFDBUserPermission
 																"editedDate = ? WHERE permissionId = ?");
 		
 		query.setString(1, userPermission.getUserRole());
-		query.setDate(2, (java.sql.Date)userPermission.getCreatedDate());
+		query.setDate(2, (java.sql.Date)userPermission.getCreationDate());
 		query.setDate(3, (java.sql.Date)userPermission.getEditedDate());
 		query.setInt(4, userPermission.getPermissionId());
 		_da.setSqlCommandText(query);

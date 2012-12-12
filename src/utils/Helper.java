@@ -1,7 +1,10 @@
 package utils;
 
+import models.User;
+
 import javax.swing.*;
 import java.awt.*;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -97,5 +100,42 @@ public class Helper
         cal.setTime(date);
         cal.add(Calendar.DATE, days); //minus number would decrement the days
         return cal.getTime();
+    }
+
+    public static String createSalt(User user)
+    {
+
+        Calendar currentDate = Calendar.getInstance();
+        String combined = user.getFirstName() + user.getLastName() + user.getUserId() + currentDate.getTimeInMillis();
+
+        return createHash(combined);
+    }
+
+    public static String hashPassword(String password, String salt)
+    {
+        return createHash(password + salt);
+    }
+
+    public static String createHash(String input)
+    {
+        try
+        {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] hash = md.digest(input.getBytes());
+
+            StringBuffer sb = new StringBuffer();
+            for(byte b : hash)
+            {
+                sb.append(Integer.toHexString(b & 0xff));
+            }
+
+            return sb.toString();
+        }
+        catch(Exception e)
+        {
+            Logging.handleException(e, 0);
+        }
+
+        return "";
     }
 }
