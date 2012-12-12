@@ -22,7 +22,7 @@ public interface IFDBUserPermission
 	public ArrayList<UserPermission> getAllRoles() throws Exception;
 	
 	/**
-	 * Get a specific role by its id
+	 * Retrieve a specific role by its id
 	 * 
 	 * @param value					the value of the id you need returned
 	 * @return UserPermission
@@ -30,7 +30,7 @@ public interface IFDBUserPermission
 	public UserPermission getRoleById(int value) throws Exception;
 	
 	/**
-	 * Inserts a new role in the database
+	 * Insert a new role in the database
 	 * 
 	 * @param userPermission		the object containing the information you want stored
 	 * @return int					returns the number of rows affected

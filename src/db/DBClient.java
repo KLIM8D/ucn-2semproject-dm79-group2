@@ -1,7 +1,6 @@
 package db;
 
 import models.Client;
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -104,7 +103,7 @@ public class DBClient implements IFDBClient
 	}
 
     /**
-     * Update a existing contact in database
+     * Update a existing client in database
      *
      * @param client 				the object containing the updated information you want stored
      * @return						returns the number of rows affected
