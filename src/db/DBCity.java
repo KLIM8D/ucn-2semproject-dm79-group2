@@ -95,7 +95,7 @@ public class DBCity implements IFDBCity
 		if(city == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO City (cityId, cityName, zipCode)");
+		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO City (cityId, cityName, zipCode) VALUES (?, ?, ?)");
 		query.setInt(1, city.getCityId());
 		query.setString(2, city.getCityName());
 		query.setInt(3, city.getZipCode());
