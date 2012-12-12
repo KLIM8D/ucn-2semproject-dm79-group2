@@ -4,8 +4,10 @@ import java.util.Date;
 
 /**
  * Created: 11-12-2012
+ * @version: 0.1
  * Filename: DataEntry.java
  * Description:
+ * @changes
  */
 
 public class DataEntry
@@ -27,6 +29,11 @@ public class DataEntry
     { return _task; }
     public void setTask(Task value)
     { _task = value; }
+
+    public User getUser()
+    { return _user; }
+    public void setUser(User value)
+    { _user = value; }
 
     public Date getStartDate()
     { return _startDate; }

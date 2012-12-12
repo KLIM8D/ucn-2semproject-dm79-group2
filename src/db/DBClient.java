@@ -9,7 +9,8 @@ import java.util.Date;
 
 public class DBClient implements IFDBClient
 {
-	private DataAccess _da;
+
+    private DataAccess _da;
 	public DBClient()
 	{
 		_da = DataAccess.getInstance();
@@ -45,10 +46,10 @@ public class DBClient implements IFDBClient
 	 *  @return Client
 	 */
     @Override
-	public Client getClientById(long id) throws Exception
+	public Client getClientById(int id) throws Exception
 	{
         PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Clients WHERE clientId = ?");
-        query.setLong(1, id);
+        query.setInt(1, id);
         _da.setSqlCommandText(query);
         ResultSet clientResult = _da.callCommandGetRow();
         if(clientResult.next())
@@ -122,7 +123,7 @@ public class DBClient implements IFDBClient
         query.setString(5, client.getEmail());
         query.setDate(6, (java.sql.Date)client.getCreatedDate());
         query.setDate(7, (java.sql.Date)client.getEditedDate());
-        query.setLong(8, client.getClientId());
+        query.setInt(8, client.getClientId());
         _da.setSqlCommandText(query);
 
         return _da.callCommand();
@@ -140,12 +141,12 @@ public class DBClient implements IFDBClient
         if(client == null)
             return 0;
         
-        if(getClientById(client.getPhoneNo()) == null)
+        if(getClientById(client.getClientId()) == null)
             return 0;
 
         int rowsAffected = 0;
         PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Clients WHERE clientId = ?");
-        query.setLong(1, client.getPhoneNo());
+        query.setLong(1, client.getClientId());
         _da.setSqlCommandText(query);
         rowsAffected += _da.callCommand();
 

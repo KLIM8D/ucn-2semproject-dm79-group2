@@ -377,7 +377,7 @@ public class DataAccess
     */
     public String dateToSqlDate(java.util.Date d)
     {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return df.format(d);
     }
 

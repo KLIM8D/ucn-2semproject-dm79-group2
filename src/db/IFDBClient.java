@@ -18,7 +18,7 @@ public interface IFDBClient {
 	 * @param id					the id of the client you need returned
 	 * @return Client
 	 */
-	public Client getClientById(long id) throws Exception;
+	public Client getClientById(int id) throws Exception;
 	
 	/**
 	 * Get specific client by contact name
