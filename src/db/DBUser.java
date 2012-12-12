@@ -157,7 +157,7 @@ public class DBUser implements IFDBUser
 			return 0;
 		
 		PreparedStatement query = _da.getCon().prepareStatement("UPDATE Users SET permissionId = ? , firstName = ?, lastName = ?, " +
-																"userName = ?, userPassword = ?, creationDate = ?, editedDate = ? " +
+																"userName = ?, userPassword = ?, editedDate = ? " +
 																"WHERE userId = ?");
 		
 		query.setInt(1, user.getUserPermission().getPermissionId());
@@ -165,9 +165,8 @@ public class DBUser implements IFDBUser
 		query.setString(3, user.getLastName());
 		query.setString(4, user.getUserName());
 		query.setString(5, user.getUserPassword());
-		query.setDate(6, (java.sql.Date)user.getCreationDate());
-		query.setDate(7, (java.sql.Date)user.getEditedDate());
-		query.setInt(8, user.getUserId());
+		query.setDate(6, (java.sql.Date)user.getEditedDate());
+		query.setInt(7, user.getUserId());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
