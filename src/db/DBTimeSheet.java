@@ -198,7 +198,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 		ArrayList<TimeSheet> filterList = new ArrayList<TimeSheet>();
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND CreationDate BETWEEN = 'yyyy/mm/dd' AND = 'yyyy/mm/dd' ");
 		_da.setSqlCommandText(query);
 		ResultSet timesheets = _da.callCommandGetResultSet();
 		
@@ -206,15 +206,6 @@ public class DBTimeSheet implements IFDBTimeSheet
 		{
 			TimeSheet timeSheet = buildTimeSheet(timesheets);
 			filterList.add(timeSheet);
-		}
-		
-		int index = 0;
-		while (index < filterList.size())
-		{
-			if (filterList.get(index).getCreationDate().compareTo(startDate) > 0 && filterList.get(index).getEditedDate().compareTo(endDate) < 0) {
-				returnList.add(filterList.get(index));
-			}
-			index++;
 		}
 		return returnList;
     }
@@ -234,23 +225,14 @@ public class DBTimeSheet implements IFDBTimeSheet
     	ArrayList<TimeSheet> filterList = new ArrayList<TimeSheet>();
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND CreationDate BETWEEN = 'yyyy/mm/dd' AND = 'yyyy/mm/dd' ");
 		_da.setSqlCommandText(query);
 		ResultSet timesheets = _da.callCommandGetResultSet();
 		
 		while (timesheets.next()) 
 		{
 			TimeSheet timeSheet = buildTimeSheet(timesheets);
-			filterList.add(timeSheet);
-		}
-		
-		int index = 0;
-		while (index < filterList.size())
-		{
-			if (filterList.get(index).getCreationDate().compareTo(startDate) > 0 && filterList.get(index).getEditedDate().compareTo(endDate) < 0) {
-				returnList.add(filterList.get(index));
-			}
-			index++;
+			returnList.add(timeSheet);
 		}
 		return returnList;
     }
