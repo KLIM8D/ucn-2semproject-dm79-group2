@@ -71,7 +71,7 @@ public interface IFDBTimeSheet
 	/**
 	 * Deletes a TimeSheet from the database
 	 * 
-	 * @param timeSheet				the object containing the timesheet that should be deleted
+	 * @param timeSheet				    the object containing the TimeSheet that should be deleted
 	 * @return							returns the number of rows affected
 	 * @throws Exception			
 	 */
@@ -79,9 +79,9 @@ public interface IFDBTimeSheet
 	
 
 	/**
-	 * Retrieves all timesheets by user between startdate and enddate
+	 * Retrieves all TimeSheets by user between startDate and endDate
 	 * 
-	 * @param user						the user whose timesheets are assigned to
+	 * @param user						the user whose TimeSheets are assigned to
 	 * @param startDate					the first date of the date interval
 	 * @param endDate					the last date of the date interval
 	 * @return	ArrayList<TimeSheet>
@@ -91,9 +91,9 @@ public interface IFDBTimeSheet
 
 
 	/**
-	 * Retrieves all timesheets by client between startdate and enddate
+	 * Retrieves all TimeSheets by client between startDate and endDate
 	 * 
-	 * @param client					the client whose timesheets are assigned to
+	 * @param client					the client whose TimeSheets are assigned to
 	 * @param startDate					the first date of the date interval
 	 * @param endDate					the last date of the date interval
 	 * @return	ArrayList<TimeSheet>

@@ -40,12 +40,12 @@ public class TimeSheetCtrl
      * Retrieve a specific TimeSheet by id
      *
      * @param sheetId					the id of the TimeSheet you need returned
-     * @return Timesheet
+     * @return TimeSheet
      * @throws Exception
      */
     public TimeSheet getTimesheetById(int sheetId) throws Exception
     {
-        return _dbTimeSheet.getTimesheetById(sheetId);
+        return _dbTimeSheet.getTimeSheetById(sheetId);
     }
 
 
@@ -79,7 +79,7 @@ public class TimeSheetCtrl
      * Inserts a new TimeSheet into the database
      *
      * @param timeSheet				the object containing the information to be stored
-     * @return							returns the number of rows affected
+     * @return						returns the number of rows affected
      * @throws Exception
      */
     public int insertTimeSheet(TimeSheet timeSheet) throws Exception
@@ -115,43 +115,30 @@ public class TimeSheetCtrl
 
 
     /**
-     * Retrieves all TimeSheets by user before a given date
+     * Retrieves all TimeSheet by user between startDate and endDate
      *
      * @param user						the user whose TimeSheets are assigned to
-     * @param date						the date where all TimeSheets created before this date are returned
+     * @param startDate					the first date of the date interval
+     * @param endDate					the last date of the date interval
      * @return	ArrayList<TimeSheet>
      * @throws Exception
      */
-    public ArrayList<TimeSheet> getAllTimeSheetsBeforeDataByUser(User user, Date date) throws Exception
+    public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user, Date startDate, Date endDate) throws Exception
     {
-        return _dbTimeSheet.getAllTimeSheetsBeforeDataByUser(user, date);
+        return _dbTimeSheet.getAllTimeSheetsByUser(user, startDate, endDate);
     }
 
-
     /**
-     * Retrieves all TimeSheets by user after a given date
-     *
-     * @param user						the user whose TimeSheets are assigned to
-     * @param date						the date where all TimeSheets created after this date are returned
-     * @return	ArrayList<TimeSheet>
-     * @throws Exception
-     */
-    public ArrayList<TimeSheet> getAllTimeSheetsAfterDateByUser(User user, Date date) throws Exception
-    {
-        return null;
-    }
-
-
-    /**
-     * Retrieves all TimeSheets by client before a given date
+     * Retrieves all TimeSheets by client between startDate and endDate
      *
      * @param client					the client whose TimeSheets are assigned to
-     * @param date						the date where all TimeSheets created before this date are returned
-     * @return ArrayList<TimeSheet>
+     * @param startDate					the first date of the date interval
+     * @param endDate					the last date of the date interval
+     * @return	ArrayList<TimeSheet>
      * @throws Exception
      */
-    public ArrayList<TimeSheet> getAllTimeSheetsBeforeDataByClient(Client client, Date date) throws Exception
+    public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client, Date startDate, Date endDate) throws Exception
     {
-        return null;
+        return _dbTimeSheet.getAllTimeSheetsByClient(client, startDate, endDate);
     }
 }
