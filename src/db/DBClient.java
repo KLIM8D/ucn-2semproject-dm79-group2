@@ -1,5 +1,6 @@
 package db;
 
+import models.City;
 import models.Client;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -158,7 +159,8 @@ public class DBClient implements IFDBClient
 			return null;
 		
         int clientId = row.getInt("clientId");
-        int cityId = DBCity.getCityById(row.getInt("cityId"));
+        DBCity dbc = new DBCity();
+        City city = dbc.getCityById(row.getInt("cityId"));
         String name = row.getString("name");
         String address = row.getString("address");
         long phoneNo = row.getLong("phoneNo");
