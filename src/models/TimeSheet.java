@@ -11,6 +11,7 @@ public class TimeSheet
 	private String _note;
 	private Date _creationDate;
 	private Date _editedDate;
+	private int _caseId;
 
 	public int getSheetId()
 	{ return _sheetId; }
@@ -46,10 +47,15 @@ public class TimeSheet
 	{ return _editedDate; }
 	public void setEditedDate(Date editedDate)
 	{ _editedDate = editedDate; }
+	
+	public int getCaseId()
+	{ return _caseId; }
+	public void setCaseId(int caseId)
+	{ _caseId = caseId; }
 	// end getters and setters
 	
 
-	public TimeSheet(int sheetId, User user, Client client, String note, Date createdDate, Date editedDate)
+	public TimeSheet(int sheetId, User user, Client client, String note, Date createdDate, Date editedDate, int caseId)
 	{
 		_sheetId = sheetId;
 		_user = user;
@@ -58,10 +64,11 @@ public class TimeSheet
 		_note = note;
 		_creationDate = createdDate;
 		_editedDate = editedDate;
+		_caseId = caseId;
 	}
 
 	
-	public TimeSheet(User user, Client client, String note, Date createdDate, Date editedDate)
+	public TimeSheet(User user, Client client, String note, Date createdDate, Date editedDate, int caseId)
 	{
 		_user = user;
         _client = client;
@@ -69,6 +76,7 @@ public class TimeSheet
 		_note = note;
 		_creationDate = createdDate;
 		_editedDate = editedDate;
+		_caseId = caseId;
 	}
 	
 		

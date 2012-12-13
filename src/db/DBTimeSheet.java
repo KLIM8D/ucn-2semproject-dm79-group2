@@ -102,17 +102,17 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? ");
-        query.setInt(1, user.getUserId());
-        query.setDate(2, (java.sql.Date) startDate);
-        query.setDate(3, (java.sql.Date) endDate);
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND creationDate BETWEEN = ? AND = ? ");
+		query.setInt(1, user.getUserId());
+		query.setDate(2, (java.sql.Date) startDate);
+		query.setDate(3, (java.sql.Date) endDate);
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
 		while (timeSheets.next())
 		{
 			TimeSheet timeSheet = buildTimeSheet(timeSheets);
-            returnList.add(timeSheet);
+			returnList.add(timeSheet);
 		}
 
 		return returnList;
