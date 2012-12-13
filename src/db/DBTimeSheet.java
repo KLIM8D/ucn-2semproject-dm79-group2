@@ -100,18 +100,21 @@ public class DBTimeSheet implements IFDBTimeSheet
      */
     public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user, Date startDate, Date endDate) throws Exception
     {
-		ArrayList<TimeSheet> filterList = new ArrayList<TimeSheet>();
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? ");
+        query.setInt(1, user.getUserId());
+        query.setDate(2, (java.sql.Date) startDate);
+        query.setDate(3, (java.sql.Date) endDate);
 		_da.setSqlCommandText(query);
-		ResultSet timesheets = _da.callCommandGetResultSet();
+		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
-		while (timesheets.next()) 
+		while (timeSheets.next())
 		{
-			TimeSheet timeSheet = buildTimeSheet(timesheets);
-			filterList.add(timeSheet);
+			TimeSheet timeSheet = buildTimeSheet(timeSheets);
+            returnList.add(timeSheet);
 		}
+
 		return returnList;
     }
 	
@@ -155,14 +158,18 @@ public class DBTimeSheet implements IFDBTimeSheet
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? ");
+        query.setInt(1, client.getClientId());
+        query.setDate(2, (java.sql.Date) startDate);
+        query.setDate(3, (java.sql.Date) endDate);
 		_da.setSqlCommandText(query);
-		ResultSet timesheets = _da.callCommandGetResultSet();
+		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
-		while (timesheets.next()) 
+		while (timeSheets.next())
 		{
-			TimeSheet timeSheet = buildTimeSheet(timesheets);
+			TimeSheet timeSheet = buildTimeSheet(timeSheets);
 			returnList.add(timeSheet);
 		}
+
 		return returnList;
     }
 	
@@ -179,12 +186,13 @@ public class DBTimeSheet implements IFDBTimeSheet
 		if (timeSheet == null)
 		    return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO TimeSheets (userId, clientId, note, creationDate, editedDate) VALUES (?, ?, ?, ?, ?)");
-		query.setInt(1, timeSheet.getUser().getUserId());
-		query.setInt(2, timeSheet.getClient().getClientId());
-		query.setString(3, timeSheet.getNote());
-		query.setDate(4, (java.sql.Date)timeSheet.getCreationDate());
-		query.setDate(5, (java.sql.Date)timeSheet.getEditedDate());
+		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO TimeSheets (caseId, userId, clientId, note, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?)");
+        query.setInt(1, timeSheet.getCaseId());
+		query.setInt(2, timeSheet.getUser().getUserId());
+		query.setInt(3, timeSheet.getClient().getClientId());
+		query.setString(4, timeSheet.getNote());
+		query.setDate(5, (java.sql.Date)timeSheet.getCreationDate());
+		query.setDate(6, (java.sql.Date)timeSheet.getEditedDate());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -203,13 +211,14 @@ public class DBTimeSheet implements IFDBTimeSheet
 		if (timeSheet == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE TimeSheets SET userId = ?, clientId = ?, note = ?, creationDate = ?, editedDate = ? WHERE sheetId = ?");
-		query.setInt(1, timeSheet.getUser().getUserId());
-		query.setInt(2, timeSheet.getClient().getClientId());
-		query.setString(3, timeSheet.getNote());
-		query.setDate(4, (java.sql.Date)timeSheet.getCreationDate());
-		query.setDate(5, (java.sql.Date)timeSheet.getEditedDate());
-        query.setInt(6, timeSheet.getSheetId());
+		PreparedStatement query = _da.getCon().prepareStatement("UPDATE TimeSheets SET caseId = ?, userId = ?, clientId = ?, note = ?, creationDate = ?, editedDate = ? WHERE sheetId = ?");
+        query.setInt(1, timeSheet.getCaseId());
+        query.setInt(2, timeSheet.getUser().getUserId());
+		query.setInt(3, timeSheet.getClient().getClientId());
+		query.setString(4, timeSheet.getNote());
+		query.setDate(5, (java.sql.Date)timeSheet.getCreationDate());
+		query.setDate(6, (java.sql.Date)timeSheet.getEditedDate());
+        query.setInt(7, timeSheet.getSheetId());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -247,12 +256,13 @@ public class DBTimeSheet implements IFDBTimeSheet
         DBClient dbc = new DBClient();
 
 		int sheetId = row.getInt("sheetId");
+        int caseId = row.getInt("caseId");
 		User user = dbu.getUserById(row.getInt("userId"));
 		Client client = dbc.getClientById(row.getInt("clientId"));	
 		String note = row.getString("note");
 		Date creationDate = row.getDate("creationDate");
 		Date editedDate = row.getDate("editedDate");
 		
-		return new TimeSheet(sheetId, user, client, note, creationDate, editedDate);
+		return new TimeSheet(sheetId, caseId, user, client, note, creationDate, editedDate);
 	}
 }
