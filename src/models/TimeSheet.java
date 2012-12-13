@@ -5,18 +5,23 @@ import java.util.Date;
 public class TimeSheet
 {
 	private int _sheetId;
+	private String _caseId;
 	private User _user;
 	private Client _client;
 	private ArrayList<DataEntry> _dataEntries;
 	private String _note;
 	private Date _creationDate;
 	private Date _editedDate;
-	private int _caseId;
 
 	public int getSheetId()
 	{ return _sheetId; }
 	public void setSheetId(int sheetId)
 	{ _sheetId = sheetId; }
+	
+	public String getCaseId()
+	{ return _caseId; }
+	public void setCaseId(String caseId)
+	{ _caseId = caseId; }
 
 	public User getUser()
 	{ return _user; }
@@ -47,15 +52,10 @@ public class TimeSheet
 	{ return _editedDate; }
 	public void setEditedDate(Date editedDate)
 	{ _editedDate = editedDate; }
-	
-	public int getCaseId()
-	{ return _caseId; }
-	public void setCaseId(int caseId)
-	{ _caseId = caseId; }
 	// end getters and setters
 	
 
-	public TimeSheet(int sheetId, int caseId, User user, Client client, String note, Date createdDate, Date editedDate)
+	public TimeSheet(int sheetId, String caseId, User user, Client client, String note, Date createdDate, Date editedDate)
 	{
 		_sheetId = sheetId;
         _caseId = caseId;
@@ -68,7 +68,7 @@ public class TimeSheet
 	}
 
 	
-	public TimeSheet(int caseId, User user, Client client, String note, Date createdDate, Date editedDate)
+	public TimeSheet(String caseId, User user, Client client, String note, Date createdDate, Date editedDate)
 	{
         _caseId = caseId;
 		_user = user;

@@ -187,7 +187,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 		    return 0;
 		
 		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO TimeSheets (caseId, userId, clientId, note, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?)");
-        query.setInt(1, timeSheet.getCaseId());
+        query.setString(1, timeSheet.getCaseId());
 		query.setInt(2, timeSheet.getUser().getUserId());
 		query.setInt(3, timeSheet.getClient().getClientId());
 		query.setString(4, timeSheet.getNote());
@@ -212,7 +212,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 			return 0;
 		
 		PreparedStatement query = _da.getCon().prepareStatement("UPDATE TimeSheets SET caseId = ?, userId = ?, clientId = ?, note = ?, creationDate = ?, editedDate = ? WHERE sheetId = ?");
-        query.setInt(1, timeSheet.getCaseId());
+        query.setString(1, timeSheet.getCaseId());
         query.setInt(2, timeSheet.getUser().getUserId());
 		query.setInt(3, timeSheet.getClient().getClientId());
 		query.setString(4, timeSheet.getNote());
@@ -256,7 +256,7 @@ public class DBTimeSheet implements IFDBTimeSheet
         DBClient dbc = new DBClient();
 
 		int sheetId = row.getInt("sheetId");
-        int caseId = row.getInt("caseId");
+        String caseId = row.getString("caseId");
 		User user = dbu.getUserById(row.getInt("userId"));
 		Client client = dbc.getClientById(row.getInt("clientId"));	
 		String note = row.getString("note");

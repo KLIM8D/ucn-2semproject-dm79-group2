@@ -57,7 +57,7 @@ CREATE TABLE "Tasks"  (
 GO
 CREATE TABLE "TimeSheets"  ( 
 	"sheetId"     	int IDENTITY(1,1) NOT NULL,
-    "caseId"     	int NOT NULL,
+    "caseId"     	varchar(64) NOT NULL,
 	"userId"      	int NOT NULL,
 	"clientId"    	int NOT NULL,
 	"note"        	varchar(2048) NULL,
