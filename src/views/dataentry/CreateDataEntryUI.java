@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JFrame;
@@ -20,10 +21,12 @@ import javax.swing.JSeparator;
 
 import models.DataEntry;
 import models.Task;
+import models.TimeSheet;
 import models.User;
 
 import controllers.TimeSheetCtrl;
 import utils.Logging;
+import utils.UserSession;
 import db.DataAccess;
 
 public class CreateDataEntryUI extends JFrame {
@@ -33,6 +36,7 @@ public class CreateDataEntryUI extends JFrame {
     private JPanel contentPane;
     
     private TimeSheetCtrl _tsCtrl;
+    private TimeSheet ts; // timesheet needs to be imported from super, when we open this class.
     
     private JComboBox<Task> drpXAssignment;
     private JComboBox<Date> drpXStartDate;
@@ -144,15 +148,17 @@ public class CreateDataEntryUI extends JFrame {
             @SuppressWarnings("unused")
 			DataAccess da = DataAccess.getInstance();
             Task task = drpXAssignment.getPrototypeDisplayValue();
-            //User user = 
+            UserSession uS = new UserSession();
+            User user = uS.getLoggedInUser();
             Date startDate = drpXStartDate.getPrototypeDisplayValue();
             Date endDate = drpXEndDate.getPrototypeDisplayValue();
             String entryRemark = txtRemark.getText();
-            //Date creationDate =
-            //Date editedDate = 
-            //DataEntry dataEntry = new DataEntry(task, user, startDate, endDate, entryRemark, creationDate, editedDate)
+            Calendar cal = Calendar.getInstance();
+            Date creationDate = cal.getTime();
+            Date editedDate =  cal.getTime();
+            DataEntry dataEntry = new DataEntry(task, user, startDate, endDate, entryRemark, creationDate, editedDate);
 
-            //_tsCtrl.addDataEntry(dataEntry);
+            _tsCtrl.addDataEntry(ts, dataEntry);
 
             JOptionPane.showMessageDialog(null, "Registreringen er oprettet", "INFORMATION!", JOptionPane.INFORMATION_MESSAGE);
             _instance = null;

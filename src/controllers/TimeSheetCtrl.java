@@ -1,7 +1,10 @@
 package controllers;
 
+import db.DBDataEntry;
 import db.DBTimeSheet;
 import models.Client;
+import models.DataEntry;
+import models.Task;
 import models.TimeSheet;
 import models.User;
 
@@ -19,6 +22,8 @@ import java.util.Date;
 public class TimeSheetCtrl
 {
     private DBTimeSheet _dbTimeSheet;
+    private DBDataEntry _dbDataEntry;
+   
     public TimeSheetCtrl()
     {
         _dbTimeSheet = new DBTimeSheet();
@@ -140,5 +145,11 @@ public class TimeSheetCtrl
     public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client, Date startDate, Date endDate) throws Exception
     {
         return _dbTimeSheet.getAllTimeSheetsByClient(client, startDate, endDate);
+    }
+    
+    public boolean addDataEntry(TimeSheet ts, DataEntry de) throws Exception
+    {
+    	ts.addDataEntry(de);
+    	return true;
     }
 }
