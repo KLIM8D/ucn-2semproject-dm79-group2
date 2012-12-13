@@ -15,8 +15,7 @@ public class ErrorHandling
 	{
 		switch(code)
 		{
-		case 01:
-			return "En session fejl er hændt, programmet afsluttes.";
+
 		}
 		return "En ukendt system fejl er hændt";
 	}
