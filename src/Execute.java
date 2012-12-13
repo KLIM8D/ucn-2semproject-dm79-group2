@@ -15,7 +15,7 @@ final class Execute
     {
     	try
         {
-    		// switched out with login, when appropriate
+    		// swap with login, when appropriate
     		SystemUI window = new views.SystemUI();
     		window.setVisible(true);
     	}
