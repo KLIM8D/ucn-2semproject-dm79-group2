@@ -40,8 +40,7 @@ import javax.swing.JTextArea;
 @SuppressWarnings("serial")
 public class SystemUI extends JFrame implements ChangeListener
 {
-	private boolean _activeSession;
-	private int _selectedIndex;
+	private boolean _primaryTabActive;
 	private JPanel _pnlSystemLayout;
 	private JPanel _pnlClients;
 	private JPanel _pnlTimeSheet;
@@ -158,40 +157,10 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlOverviewSelection.setBounds(5, 36, 215, 675);
 		_pnlSystemLayout.add(pnlOverviewSelection);
 		pnlOverviewSelection.setLayout(null);
-		
-		JTabbedPane tabSelection = new JTabbedPane(JTabbedPane.TOP);
-		tabSelection.setFont(new Font("Dialog", Font.PLAIN, 12));
-		tabSelection.setBounds(5, 0, 202, 668);
-		tabSelection.addChangeListener(this);
-		pnlOverviewSelection.add(tabSelection);
-		
-		JPanel pnlTimeSheetTab = new JPanel();
-		tabSelection.addTab("Time-sager", null, pnlTimeSheetTab, null);
-		pnlTimeSheetTab.setLayout(null);
-		
-		JCheckBox chkUsersSheetsOnly = new JCheckBox("Vis kun mine sager");
-		chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
-		chkUsersSheetsOnly.setBounds(5, 614, 181, 23);
-		pnlTimeSheetTab.add(chkUsersSheetsOnly);
-		
-		JList lstTimeSheets = new JList();
-		lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		lstTimeSheets.setBounds(5, 5, 187, 605);
-		pnlTimeSheetTab.add(lstTimeSheets);
-		
-		JPanel pnlClientTab = new JPanel();
-		tabSelection.addTab("Klienter", null, pnlClientTab, null);
-		pnlClientTab.setLayout(null);
-		
-		JList lstClients = new JList();
-		lstClients.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		lstClients.setBounds(5, 5, 187, 631);
-		pnlClientTab.add(lstClients);
-		
+
 		_pnlTimeSheet = new JPanel();
 		_pnlTimeSheet.setBounds(220, 36, 799, 675);
 		_pnlSystemLayout.add(_pnlTimeSheet);
-		_pnlTimeSheet.setVisible(true);
 		_pnlTimeSheet.setLayout(null);
 		
 		JPanel pnlTimeSheetInfo = new JPanel();
@@ -251,36 +220,54 @@ public class SystemUI extends JFrame implements ChangeListener
 		_pnlClients = new JPanel();
 		_pnlClients.setBounds(220, 36, 799, 675);
 		_pnlSystemLayout.add(_pnlClients);
-		_pnlClients.setVisible(false);
 		_pnlTimeSheet.setLayout(null);
+
+		JTabbedPane tabSelection = new JTabbedPane(JTabbedPane.TOP);
+		tabSelection.setFont(new Font("Dialog", Font.PLAIN, 12));
+		tabSelection.setBounds(5, 0, 202, 668);
+		tabSelection.addChangeListener(this);
+		pnlOverviewSelection.add(tabSelection);
+		
+		JPanel pnlTimeSheetTab = new JPanel();
+		tabSelection.addTab("Time-sager", null, pnlTimeSheetTab, null);
+		pnlTimeSheetTab.setLayout(null);
+		
+		JCheckBox chkUsersSheetsOnly = new JCheckBox("Vis kun mine sager");
+		chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
+		chkUsersSheetsOnly.setBounds(5, 614, 181, 23);
+		pnlTimeSheetTab.add(chkUsersSheetsOnly);
+		
+		JList lstTimeSheets = new JList();
+		lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		lstTimeSheets.setBounds(5, 5, 187, 605);
+		pnlTimeSheetTab.add(lstTimeSheets);
+		
+		JPanel pnlClientTab = new JPanel();
+		tabSelection.addTab("Klienter", null, pnlClientTab, null);
+		pnlClientTab.setLayout(null);
+		
+		JList lstClients = new JList();
+		lstClients.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		lstClients.setBounds(5, 5, 187, 631);
+		pnlClientTab.add(lstClients);
 	}
 	
 	@Override
 	public void stateChanged(ChangeEvent e)
-	{
+	{	
 		try
 		{
-			if(_activeSession == false)
-				_activeSession = true;
-
-			else if(_activeSession == true)
-				if(_selectedIndex == 0)
-				{
-					_pnlTimeSheet.setVisible(false);
-					_pnlClients.setVisible(true);
-					_selectedIndex = 1;
-				}
-				else
-				{
-					_pnlClients.setVisible(false);
-					_pnlTimeSheet.setVisible(true);
-					_selectedIndex = 0;
-				}
-
+			if(_primaryTabActive == false)
+			{
+				_pnlClients.setVisible(false);
+				_pnlTimeSheet.setVisible(true);
+				_primaryTabActive = true;
+			}
 			else
 			{
-				JOptionPane.showMessageDialog(null, ErrorHandling.errorHandling(01), "Fejl!", JOptionPane.ERROR_MESSAGE);
-				System.exit(EXIT_ON_CLOSE);
+				_pnlTimeSheet.setVisible(false);
+				_pnlClients.setVisible(true);
+				_primaryTabActive = false;
 			}
 		}
 		catch(Exception ex)
