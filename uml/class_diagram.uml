@@ -711,12 +711,6 @@
       <ownedAttribute xmi:id="_d9AkcD-WEeKyTdhHXXjjzA" name="_sheetId" visibility="private">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
       </ownedAttribute>
-      <ownedAttribute xmi:id="_hnYkcD-WEeKyTdhHXXjjzA" name="_user" visibility="private" type="_qmMvAD-VEeKyTdhHXXjjzA"/>
-      <ownedAttribute xmi:id="_inZP8D-WEeKyTdhHXXjjzA" name="_client" visibility="private" type="__a2CoD-VEeKyTdhHXXjjzA"/>
-      <ownedAttribute xmi:id="_j8MfsD-WEeKyTdhHXXjjzA" name="_dataEntry" visibility="private" type="_IwmQED-hEeKyTdhHXXjjzA"/>
-      <ownedAttribute xmi:id="_k26bgD-WEeKyTdhHXXjjzA" name="_note" visibility="private" type="_YoRawD-eEeKyTdhHXXjjzA"/>
-      <ownedAttribute xmi:id="_lXKB0D-WEeKyTdhHXXjjzA" name="_creationDate" visibility="private" type="_mSj6ID-WEeKyTdhHXXjjzA"/>
-      <ownedAttribute xmi:id="_cGIowD-eEeKyTdhHXXjjzA" name="_editedDate" visibility="private" type="_-__PcD-REeKyTdhHXXjjzA"/>
       <ownedAttribute xmi:id="_eV2PUT-jEeKyTdhHXXjjzA" name="client" type="__a2CoD-VEeKyTdhHXXjjzA" association="_eV1BMD-jEeKyTdhHXXjjzA">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eV22YD-jEeKyTdhHXXjjzA"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eV22YT-jEeKyTdhHXXjjzA" value="*"/>
@@ -729,6 +723,17 @@
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OALzAD-kEeKyTdhHXXjjzA"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OALzAT-kEeKyTdhHXXjjzA" value="*"/>
       </ownedAttribute>
+      <ownedAttribute xmi:id="_Bfp18EUbEeKZNt3aBbxYEw" name="_caseId" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_C4cN0EUbEeKZNt3aBbxYEw" name="_user" visibility="private" type="_qmMvAD-VEeKyTdhHXXjjzA"/>
+      <ownedAttribute xmi:id="_D60Q0EUbEeKZNt3aBbxYEw" name="_client" visibility="private" type="__a2CoD-VEeKyTdhHXXjjzA"/>
+      <ownedAttribute xmi:id="_QIQeEEUbEeKZNt3aBbxYEw" name="_dataEntry" visibility="private" type="_IwmQED-hEeKyTdhHXXjjzA"/>
+      <ownedAttribute xmi:id="_TYgG0EUbEeKZNt3aBbxYEw" name="_note" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_UZr3AEUbEeKZNt3aBbxYEw" name="_creationDate" visibility="private" type="_-__PcD-REeKyTdhHXXjjzA"/>
+      <ownedAttribute xmi:id="_U_VhwEUbEeKZNt3aBbxYEw" name="_editedDate" visibility="private" type="_Vul0cEUbEeKZNt3aBbxYEw"/>
       <ownedOperation xmi:id="_c4vfgD-gEeKyTdhHXXjjzA" name="TimeSheet">
         <ownedParameter xmi:id="_c4vfgT-gEeKyTdhHXXjjzA" name="sheetId">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
@@ -860,6 +865,8 @@
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bd4HMT-kEeKyTdhHXXjjzA" value="*"/>
       </ownedEnd>
     </packagedElement>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_U_Wv4EUbEeKZNt3aBbxYEw" name="Dat"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_Vul0cEUbEeKZNt3aBbxYEw" name="Date"/>
     <profileApplication xmi:id="_7IEYID-QEeKyTdhHXXjjzA">
       <eAnnotations xmi:id="_7IFmQD-QEeKyTdhHXXjjzA" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile"/>
@@ -931,4 +938,6 @@
   <UMLLabProfile:UnresolvedElement xmi:id="_YoTP8D-eEeKyTdhHXXjjzA" base_Element="_YoRawD-eEeKyTdhHXXjjzA"/>
   <UMLLabProfile:UnresolvedElement xmi:id="_KABigD-fEeKyTdhHXXjjzA" base_Element="_KAA7cD-fEeKyTdhHXXjjzA"/>
   <UMLLabProfile:UnresolvedElement xmi:id="_IwosUD-hEeKyTdhHXXjjzA" base_Element="_IwmQED-hEeKyTdhHXXjjzA"/>
+  <UMLLabProfile:UnresolvedElement xmi:id="_U_X-AEUbEeKZNt3aBbxYEw" base_Element="_U_Wv4EUbEeKZNt3aBbxYEw"/>
+  <UMLLabProfile:UnresolvedElement xmi:id="_VunpoEUbEeKZNt3aBbxYEw" base_Element="_Vul0cEUbEeKZNt3aBbxYEw"/>
 </xmi:XMI>

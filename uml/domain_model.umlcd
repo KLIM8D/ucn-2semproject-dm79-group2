@@ -333,19 +333,19 @@
   </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_2XqNAD33EeKWJf1YZZ0sGQ" name="TimeSheet" associationsOut="_R77cgD4HEeKWJf1YZZ0sGQ _S8ceUD4HEeKWJf1YZZ0sGQ _hRDW8D4IEeKWJf1YZZ0sGQ">
     <modelElement href="domain_model.uml#_2Xpl8D33EeKWJf1YZZ0sGQ"/>
-    <visualProperties xmi:id="_2XqNAT33EeKWJf1YZZ0sGQ" position="643.0,88.0" size="197.0,106.0"/>
+    <visualProperties xmi:id="_2XqNAT33EeKWJf1YZZ0sGQ" position="643.0,88.0" size="197.0,-1.0"/>
     <visibility xmi:id="_2XqNAj33EeKWJf1YZZ0sGQ" label="+"/>
-    <attributes xmi:id="_CRPMoD4EEeKWJf1YZZ0sGQ" name="note">
+    <attributes xmi:id="_CRPMoD4EEeKWJf1YZZ0sGQ" name="caseId">
       <modelElement href="domain_model.uml#_CRN-gD4EEeKWJf1YZZ0sGQ"/>
       <visibility xmi:id="_CRPMoT4EEeKWJf1YZZ0sGQ" label="+"/>
       <cardinality xmi:id="_CRPMoj4EEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
     </attributes>
-    <attributes xmi:id="_gS3NMD4EEeKWJf1YZZ0sGQ" name="creationDate">
+    <attributes xmi:id="_gS3NMD4EEeKWJf1YZZ0sGQ" name="note">
       <modelElement href="domain_model.uml#_gS1_ED4EEeKWJf1YZZ0sGQ"/>
       <visibility xmi:id="_gS3NMT4EEeKWJf1YZZ0sGQ" label="+"/>
       <cardinality xmi:id="_gS3NMj4EEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
     </attributes>
-    <attributes xmi:id="_iGBM4D4EEeKWJf1YZZ0sGQ" name="editedDate">
+    <attributes xmi:id="_iGBM4D4EEeKWJf1YZZ0sGQ" name="creationId">
       <modelElement href="domain_model.uml#_iGAl0D4EEeKWJf1YZZ0sGQ"/>
       <visibility xmi:id="_iGBM4T4EEeKWJf1YZZ0sGQ" label="+"/>
       <cardinality xmi:id="_iGBM4j4EEeKWJf1YZZ0sGQ" label="1" max="1" min="1"/>
@@ -373,6 +373,11 @@
       <type xmi:id="_hRFzMz4IEeKWJf1YZZ0sGQ" name="DataEntry">
         <modelElement href="domain_model.uml#_sfS5YD36EeKWJf1YZZ0sGQ"/>
       </type>
+    </attributes>
+    <attributes xmi:id="_GjicAEUaEeKZNt3aBbxYEw" name="editedId">
+      <modelElement href="domain_model.uml#_Gjf_wEUaEeKZNt3aBbxYEw"/>
+      <visibility xmi:id="_GjicAUUaEeKZNt3aBbxYEw" label="+"/>
+      <cardinality xmi:id="_GjicAkUaEeKZNt3aBbxYEw" label="1" max="1" min="1"/>
     </attributes>
   </nodes>
 </com.yattasolutions.uml.diagrams.classifier:ClassDiagram>

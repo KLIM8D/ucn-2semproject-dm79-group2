@@ -71,9 +71,9 @@
     <ownedAttribute xmi:id="_tl9r0D7REeK4I9iiYUdaQg" name="editedDate"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_2Xpl8D33EeKWJf1YZZ0sGQ" name="TimeSheet">
-    <ownedAttribute xmi:id="_CRN-gD4EEeKWJf1YZZ0sGQ" name="note"/>
-    <ownedAttribute xmi:id="_gS1_ED4EEeKWJf1YZZ0sGQ" name="creationDate"/>
-    <ownedAttribute xmi:id="_iGAl0D4EEeKWJf1YZZ0sGQ" name="editedDate"/>
+    <ownedAttribute xmi:id="_CRN-gD4EEeKWJf1YZZ0sGQ" name="caseId"/>
+    <ownedAttribute xmi:id="_gS1_ED4EEeKWJf1YZZ0sGQ" name="note"/>
+    <ownedAttribute xmi:id="_iGAl0D4EEeKWJf1YZZ0sGQ" name="creationId"/>
     <ownedAttribute xmi:id="_R7xrgD4HEeKWJf1YZZ0sGQ" name="" type="_8AdeAD32EeKWJf1YZZ0sGQ" association="_R7uoMD4HEeKWJf1YZZ0sGQ">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_R7xrgT4HEeKWJf1YZZ0sGQ" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_R7xrgj4HEeKWJf1YZZ0sGQ" value="1"/>
@@ -86,6 +86,7 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_hRA6sj4IEeKWJf1YZZ0sGQ"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hRA6sz4IEeKWJf1YZZ0sGQ" value="*"/>
     </ownedAttribute>
+    <ownedAttribute xmi:id="_Gjf_wEUaEeKZNt3aBbxYEw" name="editedId"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_6k8s0D33EeKWJf1YZZ0sGQ" name="Task">
     <ownedAttribute xmi:id="_AKEFwD35EeKWJf1YZZ0sGQ" name="title"/>
