@@ -21,6 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -30,7 +31,6 @@ import javax.swing.JList;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.UIManager;
@@ -41,14 +41,17 @@ import javax.swing.JTextArea;
 public class SystemUI extends JFrame implements ChangeListener
 {
 	private boolean _activeSession;
-	private int _nextIndex;
+	private int _selectedIndex;
 	private JPanel _pnlSystemLayout;
+	private JPanel _pnlClients;
+	private JPanel _pnlTimeSheet;
 	private JTextField _txtSearchOverview;
 
 	@SuppressWarnings("rawtypes")
 	public SystemUI() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
-		setTitle(SystemInformation.systemInformation(1) + " - " + SystemInformation.systemInformation(2) + " (build " + SystemInformation.systemInformation(3) + ")");
+		setTitle(SystemInformation.systemInformation(01) + " (" + SystemInformation.systemInformation(02) +
+				" - build " + SystemInformation.systemInformation(03) + ")");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 1024, 768);
 		setLocationRelativeTo(null);
@@ -132,7 +135,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		JLabel lblSearchOverview = new JLabel("");
 		lblSearchOverview.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblSearchOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/search_overview.png")));
-		lblSearchOverview.setBounds(990, 12, 16, 16);
+		lblSearchOverview.setBounds(833, 12, 16, 16);
 		pnlQuickAccess.add(lblSearchOverview);
 		
 		_txtSearchOverview = new JTextField();
@@ -166,7 +169,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		tabSelection.addTab("Time-sager", null, pnlTimeSheetTab, null);
 		pnlTimeSheetTab.setLayout(null);
 		
-		JCheckBox chkUsersSheetsOnly = new JCheckBox("Vis kun mine");
+		JCheckBox chkUsersSheetsOnly = new JCheckBox("Vis kun mine sager");
 		chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
 		chkUsersSheetsOnly.setBounds(5, 614, 181, 23);
 		pnlTimeSheetTab.add(chkUsersSheetsOnly);
@@ -185,48 +188,49 @@ public class SystemUI extends JFrame implements ChangeListener
 		lstClients.setBounds(5, 5, 187, 631);
 		pnlClientTab.add(lstClients);
 		
-		JPanel pnlTimeSheet = new JPanel();
-		pnlTimeSheet.setBounds(220, 36, 799, 675);
-		_pnlSystemLayout.add(pnlTimeSheet);
-		pnlTimeSheet.setLayout(null);
+		_pnlTimeSheet = new JPanel();
+		_pnlTimeSheet.setBounds(220, 36, 799, 675);
+		_pnlSystemLayout.add(_pnlTimeSheet);
+		_pnlTimeSheet.setVisible(true);
+		_pnlTimeSheet.setLayout(null);
 		
 		JPanel pnlTimeSheetInfo = new JPanel();
 		pnlTimeSheetInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlTimeSheetInfo.setBackground(Color.WHITE);
 		pnlTimeSheetInfo.setBounds(3, 2, 790, 86);
-		pnlTimeSheet.add(pnlTimeSheetInfo);
+		_pnlTimeSheet.add(pnlTimeSheetInfo);
 		pnlTimeSheetInfo.setLayout(null);
 		
-		JLabel lblClientName = new JLabel("Vestergaard Ejendomsservice");
+		JLabel lblClientName = new JLabel("[swap section with db data]");
 		lblClientName.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		lblClientName.setFont(new Font("Dialog", Font.PLAIN, 18));
 		lblClientName.setBounds(5, 5, 500, 20);
 		pnlTimeSheetInfo.add(lblClientName);
 		
-		JLabel lblCaseId = new JLabel("L13-123456");
+		JLabel lblCaseId = new JLabel("[swap section with db data]");
 		lblCaseId.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCaseId.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		lblCaseId.setFont(new Font("Dialog", Font.PLAIN, 18));
 		lblCaseId.setBounds(535, 5, 250, 20);
 		pnlTimeSheetInfo.add(lblCaseId);
 		
-		JLabel lblClientAddres = new JLabel("Birkevej 40, 8305 Samsø");
+		JLabel lblClientAddres = new JLabel("[swap section with db data]");
 		lblClientAddres.setForeground(Color.GRAY);
 		lblClientAddres.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientAddres.setBounds(5, 25, 500, 15);
 		pnlTimeSheetInfo.add(lblClientAddres);
 		
-		JLabel lblClientPhoneNo = new JLabel("Telefon: 53910114");
+		JLabel lblClientPhoneNo = new JLabel("Telefon: [swap section with db data]");
 		lblClientPhoneNo.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientPhoneNo.setBounds(5, 52, 450, 15);
 		pnlTimeSheetInfo.add(lblClientPhoneNo);
 		
-		JLabel lblClientEmail = new JLabel("E-Mail: tristan@vestergaardegendomsservice.dk");
+		JLabel lblClientEmail = new JLabel("E-Mail: [swap section with db data]");
 		lblClientEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientEmail.setBounds(5, 66, 450, 15);
 		pnlTimeSheetInfo.add(lblClientEmail);
 		
-		JLabel lblTimeSheetOwner = new JLabel("Ansvarlig: Frederik Lorenzen");
+		JLabel lblTimeSheetOwner = new JLabel("Ansvarlig: [swap section with db data]");
 		lblTimeSheetOwner.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTimeSheetOwner.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblTimeSheetOwner.setBounds(485, 66, 300, 15);
@@ -236,43 +240,53 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheetNote.setBackground(Color.WHITE);
 		pnlTimeSheetNote.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlTimeSheetNote.setBounds(3, 99, 790, 65);
-		pnlTimeSheet.add(pnlTimeSheetNote);
+		_pnlTimeSheet.add(pnlTimeSheetNote);
 		pnlTimeSheetNote.setLayout(null);
 		
 		JTextArea txtNoteField = new JTextArea();
-		txtNoteField.setText("Note:");
+		txtNoteField.setText("Note: [swap section with db data]");
 		txtNoteField.setBounds(5, 5, 780, 55);
-		pnlTimeSheetNote.add(txtNoteField);
+		pnlTimeSheetNote.add(txtNoteField);	
 		
-		JPanel pnlClients = new JPanel();
-		pnlClients.setBounds(220, 36, 799, 675);
-		_pnlSystemLayout.add(pnlClients);
-		pnlClients.setLayout(null);
+		_pnlClients = new JPanel();
+		_pnlClients.setBounds(220, 36, 799, 675);
+		_pnlSystemLayout.add(_pnlClients);
+		_pnlClients.setVisible(false);
+		_pnlTimeSheet.setLayout(null);
 	}
 	
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{
-		if(_activeSession == false)
+		try
 		{
-			_activeSession = true;
-		}
-		else if(_activeSession == true)
-		{
-			if(_nextIndex == 0)
-			{
-				System.out.println("Client tab selected....");
-				_nextIndex = 1;
-			}
+			if(_activeSession == false)
+				_activeSession = true;
+
+			else if(_activeSession == true)
+				if(_selectedIndex == 0)
+				{
+					_pnlTimeSheet.setVisible(false);
+					_pnlClients.setVisible(true);
+					_selectedIndex = 1;
+				}
+				else
+				{
+					_pnlClients.setVisible(false);
+					_pnlTimeSheet.setVisible(true);
+					_selectedIndex = 0;
+				}
+
 			else
 			{
-				System.out.println("Timesheet tab selected....");
-				_nextIndex = 0;
+				JOptionPane.showMessageDialog(null, ErrorHandling.errorHandling(01), "Fejl!", JOptionPane.ERROR_MESSAGE);
+				System.exit(EXIT_ON_CLOSE);
 			}
 		}
-		else
+		catch(Exception ex)
 		{
-			// session error message
+			JOptionPane.showMessageDialog(null, ErrorHandling.errorHandling(99) + ", programmet afsluttes.", "Fejl!", JOptionPane.ERROR_MESSAGE);
+			System.exit(EXIT_ON_CLOSE);
 		}
 	}
 }
