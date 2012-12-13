@@ -55,28 +55,28 @@ public class TimeSheet
 	// end getters and setters
 	
 
-	public TimeSheet(int sheetId, User user, Client client, String note, Date createdDate, Date editedDate, int caseId)
+	public TimeSheet(int sheetId, int caseId, User user, Client client, String note, Date createdDate, Date editedDate)
 	{
 		_sheetId = sheetId;
+        _caseId = caseId;
 		_user = user;
         _client = client;
 		_dataEntries = new ArrayList<DataEntry>();
 		_note = note;
 		_creationDate = createdDate;
 		_editedDate = editedDate;
-		_caseId = caseId;
 	}
 
 	
-	public TimeSheet(User user, Client client, String note, Date createdDate, Date editedDate, int caseId)
+	public TimeSheet(int caseId, User user, Client client, String note, Date createdDate, Date editedDate)
 	{
+        _caseId = caseId;
 		_user = user;
         _client = client;
 		_dataEntries = new ArrayList<DataEntry>();
 		_note = note;
 		_creationDate = createdDate;
 		_editedDate = editedDate;
-		_caseId = caseId;
 	}
 	
 		
