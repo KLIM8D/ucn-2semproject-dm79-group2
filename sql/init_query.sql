@@ -33,9 +33,9 @@ GO
 CREATE TABLE "Logs"  ( 
 	"logId"            	int IDENTITY(1,1) NOT NULL,
 	"userId"           	int NOT NULL,
-	"userDetails"      	varchar(512) NOT NULL,
+	"userDetails"      	varchar(1024) NOT NULL,
 	"exception"        	varchar(2048) NOT NULL,
-	"exceptionLocation"	varchar(512) NOT NULL,
+	"exceptionLocation"	varchar(1024) NOT NULL,
 	"creationDate"     	datetime NOT NULL,
 	CONSTRAINT "pkLogs" PRIMARY KEY CLUSTERED("logId")
 )
@@ -60,7 +60,7 @@ CREATE TABLE "TimeSheets"  (
     "caseId"     	int NOT NULL,
 	"userId"      	int NOT NULL,
 	"clientId"    	int NOT NULL,
-	"note"        	varchar(256) NULL,
+	"note"        	varchar(2048) NULL,
 	"creationDate"	datetime NOT NULL,
 	"editedDate"  	datetime NOT NULL,
 	CONSTRAINT "pkTimeSheet" PRIMARY KEY CLUSTERED("sheetId")
