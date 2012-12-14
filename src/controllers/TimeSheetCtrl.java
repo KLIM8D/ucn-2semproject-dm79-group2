@@ -10,6 +10,7 @@ import models.User;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created: 12-12-2012
@@ -151,5 +152,15 @@ public class TimeSheetCtrl
     {
     	ts.addDataEntry(de);
     	return true;
+    }
+
+    public List<TimeSheet> getAllTimeSheets(int[] sheetIds) throws Exception
+    {
+        List<TimeSheet> returnList = new ArrayList<TimeSheet>();
+
+        for(int i = 0; i < sheetIds.length; i++)
+            returnList.add(getTimesheetById(sheetIds[i]));
+
+        return returnList;
     }
 }
