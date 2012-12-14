@@ -354,6 +354,9 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlClientTab.setLayout(null);
 		
 		JList<String> lstClients = new JList<String>();
+        lstClients.setListData(populateClientList());
+        for(int i = 0; i < lstClients.getModel().getSize(); i++)
+            System.out.println(lstClients.getModel().getElementAt(i));
 		lstClients.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		lstClients.setBounds(5, 5, 187, 631);
 		pnlClientTab.add(lstClients);
