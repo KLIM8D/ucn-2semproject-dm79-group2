@@ -350,13 +350,6 @@ public class SystemUI extends JFrame implements ChangeListener
 		_chkUsersSheetsOnly.setBounds(5, 614, 181, 23);;
 		pnlTimeSheetTab.add(_chkUsersSheetsOnly);
 		
-		/*JList<String> lstTimeSheets = new JList<String>();
-		lstTimeSheets.setListData(populateTimesheetList());
-		lstTimeSheets.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		lstTimeSheets.setBounds(5, 5, 187, 605);
-		pnlTimeSheetTab.add(lstTimeSheets);*/
-		
 		_lstTimeSheets = new JList<String>();
 		_lstTimeSheets.setListData(populateTimesheetList());
 		_lstTimeSheets.setFont(new Font("Dialog", Font.PLAIN, 12));
