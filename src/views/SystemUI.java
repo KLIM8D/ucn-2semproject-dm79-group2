@@ -11,15 +11,16 @@ package views;
 
 import utils.*;
 import views.client.CreateClientUI;
+import views.client.EditClientUI;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
+
+import javax.print.attribute.standard.SheetCollate;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
@@ -29,7 +30,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JTabbedPane;
@@ -44,8 +44,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import models.Client;
+import models.TimeSheet;
 
 import controllers.ClientCtrl;
+import controllers.TimeSheetCtrl;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -63,14 +65,12 @@ public class SystemUI extends JFrame implements ChangeListener
 	private JTextField _txtSearchOverview;
 	
 	// Controllers
+	private TimeSheetCtrl _timesheetCtrl;
 	private ClientCtrl _clientCtrl;
-	
-	// Elements
-	private DefaultListModel<String> clientModel;
 
-	@SuppressWarnings("rawtypes")
 	public SystemUI()
 	{
+		_timesheetCtrl = new TimeSheetCtrl();
 		_clientCtrl = new ClientCtrl();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
@@ -344,7 +344,9 @@ public class SystemUI extends JFrame implements ChangeListener
 		chkUsersSheetsOnly.setBounds(5, 614, 181, 23);
 		pnlTimeSheetTab.add(chkUsersSheetsOnly);
 		
-		JList lstTimeSheets = new JList();
+		JList<String> lstTimeSheets = new JList<String>();
+		lstTimeSheets.setListData(populateTimesheetList());
+		lstTimeSheets.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		lstTimeSheets.setBounds(5, 5, 187, 605);
 		pnlTimeSheetTab.add(lstTimeSheets);
@@ -355,13 +357,10 @@ public class SystemUI extends JFrame implements ChangeListener
 		
 		JList<String> lstClients = new JList<String>();
         lstClients.setListData(populateClientList());
-        for(int i = 0; i < lstClients.getModel().getSize(); i++)
-            System.out.println(lstClients.getModel().getElementAt(i));
+        lstClients.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstClients.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		lstClients.setBounds(5, 5, 187, 631);
 		pnlClientTab.add(lstClients);
-		clientModel = new DefaultListModel<String>();
-		lstClients.setModel(clientModel);
 	}
 	
 	private void applicationExit()
@@ -385,6 +384,27 @@ public class SystemUI extends JFrame implements ChangeListener
 	private void createClient()
 	{
 		CreateClientUI.createWindow();
+	}
+	
+	private String[] populateTimesheetList()
+	{
+		ArrayList<TimeSheet> timesheetList;
+		try
+		{
+			timesheetList = _timesheetCtrl.getAllTimeSheets();
+			String[] sheetNames = new String[timesheetList.size()];
+			for(int i = 0; i < timesheetList.size(); i++)
+				sheetNames[i] = timesheetList.get(i).getCaseId() + 
+								" (" + timesheetList.get(i).getClient().getName() + ")";
+			
+			return sheetNames;
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+		
+		return null;
 	}
 	
 	private String[] populateClientList()
