@@ -11,7 +11,6 @@ package views;
 
 import utils.*;
 import views.client.CreateClientUI;
-import views.client.EditClientUI;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -63,6 +62,8 @@ public class SystemUI extends JFrame implements ChangeListener
 	private JPanel _pnlClients;
 	private JPanel _pnlTimeSheet;
 	private JTextField _txtSearchOverview;
+	private JCheckBox _chkUsersSheetsOnly;
+	private JList<String> _lstTimeSheets;
 	
 	// Controllers
 	private TimeSheetCtrl _timesheetCtrl;
@@ -339,17 +340,29 @@ public class SystemUI extends JFrame implements ChangeListener
 		tabSelection.addTab("Time-sager", null, pnlTimeSheetTab, null);
 		pnlTimeSheetTab.setLayout(null);
 		
-		JCheckBox chkUsersSheetsOnly = new JCheckBox("Vis kun mine sager");
-		chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
-		chkUsersSheetsOnly.setBounds(5, 614, 181, 23);
-		pnlTimeSheetTab.add(chkUsersSheetsOnly);
+		_chkUsersSheetsOnly = new JCheckBox("Vis kun mine sager");
+		_chkUsersSheetsOnly.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checkUserSheetsOnly();
+			}
+		});
+		_chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
+		_chkUsersSheetsOnly.setBounds(5, 614, 181, 23);;
+		pnlTimeSheetTab.add(_chkUsersSheetsOnly);
 		
-		JList<String> lstTimeSheets = new JList<String>();
+		/*JList<String> lstTimeSheets = new JList<String>();
 		lstTimeSheets.setListData(populateTimesheetList());
 		lstTimeSheets.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		lstTimeSheets.setBounds(5, 5, 187, 605);
-		pnlTimeSheetTab.add(lstTimeSheets);
+		pnlTimeSheetTab.add(lstTimeSheets);*/
+		
+		_lstTimeSheets = new JList<String>();
+		_lstTimeSheets.setListData(populateTimesheetList());
+		_lstTimeSheets.setFont(new Font("Dialog", Font.PLAIN, 12));
+		_lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		_lstTimeSheets.setBounds(5, 5, 187, 605);
+		pnlTimeSheetTab.add(_lstTimeSheets);
 		
 		JPanel pnlClientTab = new JPanel();
 		tabSelection.addTab("Klienter", null, pnlClientTab, null);
@@ -386,6 +399,18 @@ public class SystemUI extends JFrame implements ChangeListener
 		CreateClientUI.createWindow();
 	}
 	
+	private void checkUserSheetsOnly()
+	{
+		if(_chkUsersSheetsOnly.isSelected())
+		{
+			// only show user specific sheets
+		}
+		else
+		{
+			// show all sheets in db
+		}
+	}
+	
 	private String[] populateTimesheetList()
 	{
 		ArrayList<TimeSheet> timesheetList;
@@ -405,6 +430,11 @@ public class SystemUI extends JFrame implements ChangeListener
 		}
 		
 		return null;
+	}
+	
+	private String[] populateUserSpeceficTimesheetList()
+	{
+		return null; // code missing :(
 	}
 	
 	private String[] populateClientList()
