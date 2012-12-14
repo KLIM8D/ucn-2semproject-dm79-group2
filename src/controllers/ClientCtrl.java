@@ -45,6 +45,12 @@ public class ClientCtrl
 		return DBC.getCityById(id);
 	}
 	
+	public City getCityByZipCode(int zipCode) throws Exception
+	{
+		DBCity DBC = new DBCity();
+		return DBC.getCityByZipCode(zipCode);
+	}
+	
 	public int insertClient(Client client) throws Exception
 	{
 		DBClient DBC = new DBClient();
