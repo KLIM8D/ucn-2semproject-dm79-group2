@@ -10,6 +10,7 @@
 package views;
 
 import utils.*;
+import views.client.CreateClientUI;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -22,7 +23,11 @@ import javax.swing.JMenu;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JTabbedPane;
@@ -33,9 +38,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.UIManager;
-import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class SystemUI extends JFrame implements ChangeListener
@@ -64,6 +72,33 @@ public class SystemUI extends JFrame implements ChangeListener
 		mnFiles.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnFiles);
 		
+		JMenuItem mntmPrint = new JMenuItem("Udskriv");
+		mntmPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printFunction();
+			}
+		});
+		mnFiles.add(mntmPrint);
+		
+		JSeparator separator = new JSeparator();
+		mnFiles.add(separator);
+		
+		JMenuItem mntmLogout = new JMenuItem("Logud");
+		mntmLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				applicationLogout();
+			}
+		});
+		mnFiles.add(mntmLogout);
+		
+		JMenuItem mntmExit = new JMenuItem("Afslut");
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				applicationExit();
+			}
+		});
+		mnFiles.add(mntmExit);
+		
 		JMenu mnTimeSheet = new JMenu("Time-sag");
 		mnTimeSheet.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnTimeSheet);
@@ -71,6 +106,14 @@ public class SystemUI extends JFrame implements ChangeListener
 		JMenu mnClient = new JMenu("Klient");
 		mnClient.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnClient);
+		
+		JMenuItem mntmNewClient = new JMenuItem("Ny klient");
+		mntmNewClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				createClient();
+			}
+		});
+		mnClient.add(mntmNewClient);
 		
 		JMenu mnSettings = new JMenu("Indstillinger");
 		mnSettings.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -104,6 +147,12 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlQuickAccess.add(lblNewDataEntry);
 		
 		JLabel lblNewClient = new JLabel("Ny klient");
+		lblNewClient.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				createClient();
+			}
+		});
 		lblNewClient.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNewClient.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblNewClient.setIcon(new ImageIcon(SystemUI.class.getResource("/new_client.png")));
@@ -170,40 +219,40 @@ public class SystemUI extends JFrame implements ChangeListener
 		_pnlTimeSheet.add(pnlTimeSheetInfo);
 		pnlTimeSheetInfo.setLayout(null);
 		
-		JLabel lblClientName = new JLabel("[swap section with db data]");
-		lblClientName.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
-		lblClientName.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblClientName.setBounds(5, 5, 500, 20);
-		pnlTimeSheetInfo.add(lblClientName);
+		JLabel lblClientName_ts = new JLabel("[swap section with db data]");
+		lblClientName_ts.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+		lblClientName_ts.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblClientName_ts.setBounds(5, 5, 500, 20);
+		pnlTimeSheetInfo.add(lblClientName_ts);
 		
-		JLabel lblCaseId = new JLabel("[swap section with db data]");
-		lblCaseId.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCaseId.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
-		lblCaseId.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblCaseId.setBounds(535, 5, 250, 20);
-		pnlTimeSheetInfo.add(lblCaseId);
+		JLabel lblCaseId_ts = new JLabel("[swap section with db data]");
+		lblCaseId_ts.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCaseId_ts.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+		lblCaseId_ts.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblCaseId_ts.setBounds(535, 5, 250, 20);
+		pnlTimeSheetInfo.add(lblCaseId_ts);
 		
-		JLabel lblClientAddres = new JLabel("[swap section with db data]");
-		lblClientAddres.setForeground(Color.GRAY);
-		lblClientAddres.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblClientAddres.setBounds(5, 25, 500, 15);
-		pnlTimeSheetInfo.add(lblClientAddres);
+		JLabel lblClientAddress_ts = new JLabel("[swap section with db data]");
+		lblClientAddress_ts.setForeground(Color.GRAY);
+		lblClientAddress_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblClientAddress_ts.setBounds(5, 25, 500, 15);
+		pnlTimeSheetInfo.add(lblClientAddress_ts);
 		
-		JLabel lblClientPhoneNo = new JLabel("Telefon: [swap section with db data]");
-		lblClientPhoneNo.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblClientPhoneNo.setBounds(5, 52, 450, 15);
-		pnlTimeSheetInfo.add(lblClientPhoneNo);
+		JLabel lblClientPhoneNo_ts = new JLabel("Telefon: [swap section with db data]");
+		lblClientPhoneNo_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblClientPhoneNo_ts.setBounds(5, 52, 450, 15);
+		pnlTimeSheetInfo.add(lblClientPhoneNo_ts);
 		
-		JLabel lblClientEmail = new JLabel("E-Mail: [swap section with db data]");
-		lblClientEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblClientEmail.setBounds(5, 66, 450, 15);
-		pnlTimeSheetInfo.add(lblClientEmail);
+		JLabel lblClientEmail_ts = new JLabel("E-Mail: [swap section with db data]");
+		lblClientEmail_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblClientEmail_ts.setBounds(5, 66, 450, 15);
+		pnlTimeSheetInfo.add(lblClientEmail_ts);
 		
-		JLabel lblTimeSheetOwner = new JLabel("Ansvarlig: [swap section with db data]");
-		lblTimeSheetOwner.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTimeSheetOwner.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblTimeSheetOwner.setBounds(485, 66, 300, 15);
-		pnlTimeSheetInfo.add(lblTimeSheetOwner);
+		JLabel lblTimeSheetOwner_ts = new JLabel("Ansvarlig: [swap section with db data]");
+		lblTimeSheetOwner_ts.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTimeSheetOwner_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblTimeSheetOwner_ts.setBounds(485, 66, 300, 15);
+		pnlTimeSheetInfo.add(lblTimeSheetOwner_ts);
 		
 		JPanel pnlTimeSheetNote = new JPanel();
 		pnlTimeSheetNote.setBackground(Color.WHITE);
@@ -215,13 +264,54 @@ public class SystemUI extends JFrame implements ChangeListener
 		JTextArea txtNoteField = new JTextArea();
 		txtNoteField.setText("Note: [swap section with db data]");
 		txtNoteField.setBounds(5, 5, 780, 55);
-		pnlTimeSheetNote.add(txtNoteField);	
+		pnlTimeSheetNote.add(txtNoteField);
+		
+		JPanel pnlTimeSheetOverview = new JPanel();
+		pnlTimeSheetOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		pnlTimeSheetOverview.setBackground(Color.WHITE);
+		pnlTimeSheetOverview.setBounds(3, 176, 790, 492);
+		_pnlTimeSheet.add(pnlTimeSheetOverview);
 		
 		_pnlClients = new JPanel();
 		_pnlClients.setBounds(220, 36, 799, 675);
 		_pnlSystemLayout.add(_pnlClients);
-		_pnlTimeSheet.setLayout(null);
-
+		_pnlClients.setLayout(null);
+		
+		JPanel pnlClientInfo = new JPanel();
+		pnlClientInfo.setLayout(null);
+		pnlClientInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		pnlClientInfo.setBackground(Color.WHITE);
+		pnlClientInfo.setBounds(3, 2, 790, 86);
+		_pnlClients.add(pnlClientInfo);
+		
+		JLabel lblClientName_cl = new JLabel("[swap section with db data]");
+		lblClientName_cl.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+		lblClientName_cl.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblClientName_cl.setBounds(5, 5, 500, 20);
+		pnlClientInfo.add(lblClientName_cl);
+		
+		JLabel lblClientAddress_cl = new JLabel("[swap section with db data]");
+		lblClientAddress_cl.setForeground(Color.GRAY);
+		lblClientAddress_cl.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblClientAddress_cl.setBounds(5, 25, 500, 15);
+		pnlClientInfo.add(lblClientAddress_cl);
+		
+		JLabel lblClientPhoneNo_cl = new JLabel("Telefon: [swap section with db data]");
+		lblClientPhoneNo_cl.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblClientPhoneNo_cl.setBounds(5, 52, 450, 15);
+		pnlClientInfo.add(lblClientPhoneNo_cl);
+		
+		JLabel lblClientEmail_cl = new JLabel("E-Mail: [swap section with db data]");
+		lblClientEmail_cl.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblClientEmail_cl.setBounds(5, 66, 450, 15);
+		pnlClientInfo.add(lblClientEmail_cl);
+		
+		JPanel pnlClientOverview = new JPanel();
+		pnlClientOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		pnlClientOverview.setBackground(Color.WHITE);
+		pnlClientOverview.setBounds(3, 99, 790, 569);
+		_pnlClients.add(pnlClientOverview);
+		
 		JTabbedPane tabSelection = new JTabbedPane(JTabbedPane.TOP);
 		tabSelection.setFont(new Font("Dialog", Font.PLAIN, 12));
 		tabSelection.setBounds(5, 0, 202, 668);
@@ -252,6 +342,29 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlClientTab.add(lstClients);
 	}
 	
+	public void applicationExit()
+	{
+		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil afslutte programmet?", "Afsluttet programmet", JOptionPane.YES_NO_OPTION);
+		if(request == JOptionPane.YES_OPTION)
+			System.exit(0);
+	}
+	
+	public void applicationLogout()
+	{
+		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil logge ud af programmet?", "Logud af programmet", JOptionPane.YES_NO_OPTION);
+		if(request == JOptionPane.YES_OPTION)
+			return; // logout and go to login dialog
+	}
+	
+	public void printFunction()
+	{
+	}
+	
+	public void createClient()
+	{
+		CreateClientUI.createWindow();
+	}
+	
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{	
@@ -272,8 +385,8 @@ public class SystemUI extends JFrame implements ChangeListener
 		}
 		catch(Exception ex)
 		{
-			JOptionPane.showMessageDialog(null, ErrorHandling.errorHandling(99) + ", programmet afsluttes.", "Fejl!", JOptionPane.ERROR_MESSAGE);
-			System.exit(EXIT_ON_CLOSE);
+			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 5), "Fejl!", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
 		}
 	}
 }
