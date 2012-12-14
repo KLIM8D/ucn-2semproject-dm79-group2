@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
@@ -40,10 +42,16 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+
+import models.Client;
+
+import controllers.ClientCtrl;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class SystemUI extends JFrame implements ChangeListener
@@ -53,9 +61,18 @@ public class SystemUI extends JFrame implements ChangeListener
 	private JPanel _pnlClients;
 	private JPanel _pnlTimeSheet;
 	private JTextField _txtSearchOverview;
+	
+	// Controllers
+	private ClientCtrl _clientCtrl;
+	
+	// Elements
+	private DefaultListModel<String> clientModel;
 
 	@SuppressWarnings("rawtypes")
-	public SystemUI() {
+	public SystemUI()
+	{
+		_clientCtrl = new ClientCtrl();
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
 		setTitle(SystemInformation.systemInformation(01) + " (" + SystemInformation.systemInformation(02) +
 				" - build " + SystemInformation.systemInformation(03) + ")");
@@ -336,33 +353,55 @@ public class SystemUI extends JFrame implements ChangeListener
 		tabSelection.addTab("Klienter", null, pnlClientTab, null);
 		pnlClientTab.setLayout(null);
 		
-		JList lstClients = new JList();
+		JList<String> lstClients = new JList<String>();
 		lstClients.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		lstClients.setBounds(5, 5, 187, 631);
 		pnlClientTab.add(lstClients);
+		clientModel = new DefaultListModel<String>();
+		lstClients.setModel(clientModel);
 	}
 	
-	public void applicationExit()
+	private void applicationExit()
 	{
-		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil afslutte programmet?", "Afsluttet programmet", JOptionPane.YES_NO_OPTION);
+		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil afslutte programmet?", "Afslut", JOptionPane.YES_NO_OPTION);
 		if(request == JOptionPane.YES_OPTION)
 			System.exit(0);
 	}
 	
-	public void applicationLogout()
+	private void applicationLogout()
 	{
-		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil logge ud af programmet?", "Logud af programmet", JOptionPane.YES_NO_OPTION);
+		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil logge ud af programmet?", "Logud", JOptionPane.YES_NO_OPTION);
 		if(request == JOptionPane.YES_OPTION)
 			return; // logout and go to login dialog
 	}
 	
-	public void printFunction()
+	private void printFunction()
 	{
 	}
 	
-	public void createClient()
+	private void createClient()
 	{
 		CreateClientUI.createWindow();
+	}
+	
+	private String[] populateClientList()
+	{
+		ArrayList<Client> clientsList;
+		try
+		{
+			clientsList = _clientCtrl.getAllClients();
+			String[] clientNames = new String[clientsList.size()];
+			for(int i = 0; i < clientsList.size(); i++)
+				clientNames[i] = clientsList.get(i).getName();
+			
+			return clientNames;
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+		
+		return null;
 	}
 	
 	@Override
