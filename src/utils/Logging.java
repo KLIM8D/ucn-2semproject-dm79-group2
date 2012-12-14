@@ -60,6 +60,8 @@ public class Logging
                 return "Det var pt. ikke muligt at oprette en produkt kategori. Pr\u00F8v igen senere eller kontakt support";
             case 4:
                 return "Det var pt. ikke muligt at opdatere produkt kategorien. Pr\u00F8v igen senere eller kontakt support";
+            case 5:
+            	return "En ukendt system fejl er hændt, programmet afsluttes.";
             default:
                 return "Der skete en fejl i udf\u00F8rselen af denne handling. Kontakt support";
         }
