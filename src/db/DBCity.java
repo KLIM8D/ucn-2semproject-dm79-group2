@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class DBCity implements IFDBCity
 {
-	
 	private DataAccess _da;
 	public DBCity()
 	{
@@ -35,6 +34,7 @@ public class DBCity implements IFDBCity
 			City city = buildCity(cities);
 			returnList.add(city);
 		}
+
 		return returnList;
 	}
 

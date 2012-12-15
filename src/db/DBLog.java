@@ -18,7 +18,6 @@ import java.util.Date;
 
 public class DBLog implements IFDBLog
 {
-
     private DataAccess _da;
     public DBLog()
     {

@@ -10,7 +10,6 @@ import java.util.Date;
 
 public class DBClient implements IFDBClient
 {
-
     private DataAccess _da;
 	public DBClient()
 	{

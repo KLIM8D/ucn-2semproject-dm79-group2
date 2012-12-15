@@ -20,7 +20,6 @@ import java.util.Date;
 
 public class DBDataEntry implements IFDBDataEntry
 {
-
     private DataAccess _da;
     public DBDataEntry()
     {

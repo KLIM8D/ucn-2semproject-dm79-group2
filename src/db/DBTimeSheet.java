@@ -11,7 +11,6 @@ import models.User;
 
 public class DBTimeSheet implements IFDBTimeSheet
 {
-	
 	private DataAccess _da;
 	public DBTimeSheet()
 	{
@@ -198,7 +197,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 		return _da.callCommand();
 	}
 
-	
+
 	/**
 	 * Update a TimeSheet already existing in the database
 	 * 

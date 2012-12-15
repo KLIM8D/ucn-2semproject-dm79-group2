@@ -1,6 +1,7 @@
 package utils;
 
 import controllers.TimeSheetCtrl;
+import models.ReportWrapper;
 import models.TimeSheet;
 
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -53,13 +54,11 @@ public class GenerateReport
 
     protected void postProcessReport(JasperPrint populatedReport) throws Exception
     {
-        System.out.println("start download");
-        String exportLocation =  "/home/klim/report.pdf";
+        System.out.println("Exporting to PDF");
+        String exportLocation =  "/home/klim/report2.pdf";
         JRPdfExporter exporterPdf = new JRPdfExporter();
         exporterPdf.setParameter(JRExporterParameter.JASPER_PRINT,  populatedReport);
         exporterPdf.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, exportLocation);
         exporterPdf.exportReport();
-
-        System.out.println("End download");
     }
 }
