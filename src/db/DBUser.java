@@ -134,8 +134,8 @@ public class DBUser implements IFDBUser
 		query.setString(4, user.getUserName());
 		query.setString(5, user.getUserPassword());
         query.setString(6, user.getSaltValue());
-		query.setDate(7, (java.sql.Date)user.getCreationDate());
-		query.setDate(8, (java.sql.Date)user.getEditedDate());
+		query.setString(7, _da.dateToSqlDate(user.getCreationDate()));
+		query.setString(8, _da.dateToSqlDate(user.getEditedDate()));
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -165,7 +165,7 @@ public class DBUser implements IFDBUser
 		query.setString(3, user.getLastName());
 		query.setString(4, user.getUserName());
 		query.setString(5, user.getUserPassword());
-		query.setDate(6, (java.sql.Date)user.getEditedDate());
+		query.setString(6, _da.dateToSqlDate(user.getEditedDate()));
 		query.setInt(7, user.getUserId());
 		_da.setSqlCommandText(query);
 		

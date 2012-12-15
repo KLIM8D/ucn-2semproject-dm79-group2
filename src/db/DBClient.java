@@ -59,9 +59,9 @@ public class DBClient implements IFDBClient
 	}
     
 	/**
-	 * Get specific client by phonenumber
+	 * Get specific client by phone number
 	 * 
-	 * @param phoneNo				the phonenumber of the client you need returned
+	 * @param phoneNo				the phone number of the client you need returned
 	 * @return Client
 	 */
 	@Override
@@ -108,15 +108,15 @@ public class DBClient implements IFDBClient
         if(client == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Clients (cityId, name, address, phoneNo, eMail, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Clients (name, address, cityId, phoneNo, eMail, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         query.setString(1, client.getName());
         query.setString(2, client.getAddress());
         query.setInt(3, client.getCity().getCityId());
         query.setLong(4, client.getPhoneNo());
         query.setString(5, client.getEmail());
-        query.setDate(6, (java.sql.Date)client.getCreationDate());
-        query.setDate(7, (java.sql.Date)client.getEditedDate());
+        query.setString(6, _da.dateToSqlDate(client.getCreationDate()));
+        query.setString(7, _da.dateToSqlDate(client.getEditedDate()));
         _da.setSqlCommandText(query);
 
         return _da.callCommand();
@@ -134,15 +134,14 @@ public class DBClient implements IFDBClient
 		if(client == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("UPDATE Clients SET cityId = ?, name = ?, address = ?, phoneNo = ?, eMail = ?, creationDate = ?, editedDate = ? WHERE clientId = ?");
+        PreparedStatement query = _da.getCon().prepareStatement("UPDATE Clients SET cityId = ?, name = ?, address = ?, phoneNo = ?, eMail = ?, editedDate = ? WHERE clientId = ?");
         query.setInt(1, client.getCity().getCityId());
         query.setString(2, client.getName());
         query.setString(3, client.getAddress());
         query.setLong(4, client.getPhoneNo());
         query.setString(5, client.getEmail());
-        query.setDate(6, (java.sql.Date)client.getCreationDate());
-        query.setDate(7, (java.sql.Date)client.getEditedDate());
-        query.setInt(8, client.getClientId());
+        query.setString(6, _da.dateToSqlDate(client.getEditedDate()));
+        query.setInt(7, client.getClientId());
         _da.setSqlCommandText(query);
 
         return _da.callCommand();

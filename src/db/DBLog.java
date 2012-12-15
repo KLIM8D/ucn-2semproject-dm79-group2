@@ -110,7 +110,7 @@ public class DBLog implements IFDBLog
         query.setString(2, logEntry.getUserDetails());
         query.setString(3, logEntry.getException());
         query.setString(4, logEntry.getExceptionLocation());
-        query.setDate(5, (java.sql.Date) logEntry.getCreationDate());
+        query.setString(5, _da.dateToSqlDate(logEntry.getCreationDate()));
         _da.setSqlCommandText(query);
 
         return _da.callCommand();

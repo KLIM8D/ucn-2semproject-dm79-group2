@@ -1,7 +1,6 @@
 package views.client;
 
 import controllers.ClientCtrl;
-import db.DataAccess;
 import models.City;
 import models.Client;
 import utils.Helper;
@@ -13,7 +12,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -41,7 +39,7 @@ public class CreateClientUI
         return _frame;
     }
 
-    public CreateClientUI()
+    private CreateClientUI()
     {
         createElements();
     }

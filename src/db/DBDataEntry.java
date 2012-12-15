@@ -162,11 +162,11 @@ public class DBDataEntry implements IFDBDataEntry
         query.setInt(1, sheetId);
         query.setInt(2, dataEntry.getTask().getTaskId());
         query.setInt(3, dataEntry.getUser().getUserId());
-        query.setDate(4, (java.sql.Date) dataEntry.getStartDate());
-        query.setDate(5, (java.sql.Date) dataEntry.getEndDate());
+        query.setString(4, _da.dateToSqlDate(dataEntry.getStartDate()));
+        query.setString(5, _da.dateToSqlDate(dataEntry.getEndDate()));
         query.setString(6, dataEntry.getEntryRemark());
-        query.setDate(7, (java.sql.Date) dataEntry.getCreationDate());
-        query.setDate(8, (java.sql.Date) dataEntry.getEditedDate());
+        query.setString(7, _da.dateToSqlDate(dataEntry.getCreationDate()));
+        query.setString(8, _da.dateToSqlDate(dataEntry.getEditedDate()));
         _da.setSqlCommandText(query);
 
         return _da.callCommand();
@@ -187,10 +187,10 @@ public class DBDataEntry implements IFDBDataEntry
         PreparedStatement query = _da.getCon().prepareStatement("UPDATE DataEntries SET taskId = ?, userId = ?, startDate = ?, endDate = ?, entryRemark = ?, editedDate = ? WHERE entryId = ?");
         query.setInt(1, dataEntry.getTask().getTaskId());
         query.setInt(2, dataEntry.getUser().getUserId());
-        query.setDate(3, (java.sql.Date) dataEntry.getStartDate());
-        query.setDate(4, (java.sql.Date) dataEntry.getEndDate());
+        query.setString(3, _da.dateToSqlDate(dataEntry.getStartDate()));
+        query.setString(4, _da.dateToSqlDate(dataEntry.getEndDate()));
         query.setString(5, dataEntry.getEntryRemark());
-        query.setDate(6, (java.sql.Date) dataEntry.getEditedDate());
+        query.setString(6, _da.dateToSqlDate(dataEntry.getEditedDate()));
         query.setInt(7, dataEntry.getEntryId());
         _da.setSqlCommandText(query);
 

@@ -1,6 +1,8 @@
 package views.client;
 
 import controllers.ClientCtrl;
+import models.City;
+import models.Client;
 import utils.Helper;
 import utils.JTextFieldLimit;
 import utils.Logging;
@@ -8,13 +10,8 @@ import views.SystemUI;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import models.City;
-import models.Client;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -43,7 +40,7 @@ public class EditClientUI
         return _frame;
     }
 
-    public EditClientUI(long data)
+    private EditClientUI(long data)
     {
     	_phoneNo = data;
         createElements();
@@ -63,41 +60,41 @@ public class EditClientUI
         _frame.setLocationRelativeTo(null);
 
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5,5,5,5));
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         _frame.setContentPane(contentPane);
 
         JLabel lblClientName = new JLabel("Navn:");
-        lblClientName.setBounds(5,7,120,15);
+        lblClientName.setBounds(5, 7, 120, 15);
         contentPane.add(lblClientName);
         
         JLabel lblClientAddress = new JLabel("Adresse:");
-        lblClientAddress.setBounds(5,32,120,15);
+        lblClientAddress.setBounds(5, 32, 120, 15);
         contentPane.add(lblClientAddress);
         
         JLabel lblClientZipCode = new JLabel("Postnummer:");
-        lblClientZipCode.setBounds(5,57,120,15);
+        lblClientZipCode.setBounds(5, 57, 120, 15);
         contentPane.add(lblClientZipCode);
         
         JLabel lblClientCity = new JLabel("By");
-        lblClientCity.setBounds(222,57,120,15);
+        lblClientCity.setBounds(222, 57, 120, 15);
         contentPane.add(lblClientCity);
         
         JLabel lblClientNumber = new JLabel("Telefonnummer:");
-        lblClientNumber.setBounds(5,82,120,15);
+        lblClientNumber.setBounds(5, 82, 120, 15);
         contentPane.add(lblClientNumber);
         
         JLabel lblClientEmail = new JLabel("Email:");
-        lblClientEmail.setBounds(244,82,120,15);
+        lblClientEmail.setBounds(244, 82, 120, 15);
         contentPane.add(lblClientEmail);
                 
         txtName = new JTextField();
-        txtName.setBounds(142,5,355,19);
+        txtName.setBounds(142, 5, 355, 19);
         contentPane.add(txtName);
         txtName.setColumns(10);
 
         txtAddress = new JTextField();
-        txtAddress.setBounds(142,30,355,19);
+        txtAddress.setBounds(142, 30, 355, 19);
         contentPane.add(txtAddress);
         txtAddress.setColumns(10);
         
@@ -106,57 +103,57 @@ public class EditClientUI
         {
             public void keyReleased(KeyEvent e)
             {
-                if(txtZipCode.getText().length() > 0)
+                if (txtZipCode.getText().length() > 0)
                 {
-                	Helper.checkIfInt(txtZipCode);
+                    Helper.checkIfInt(txtZipCode);
                 }
             }
         });
         txtZipCode.addFocusListener(new FocusListener()
         {
-        	
-        	public void focusGained(FocusEvent e)
+
+            public void focusGained(FocusEvent e)
             {
-        	}
-        	
-        	public void focusLost(FocusEvent e)
+            }
+
+            public void focusLost(FocusEvent e)
             {
-            	try
-            	{
-           			txtCity.setText(_cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText())).getCityName());
-           		}
-            	catch (Exception error)
-            	{
-            		error.printStackTrace();
-            		JOptionPane.showMessageDialog(null, Logging.handleException(error, 1), "Forkert postnummer", JOptionPane.WARNING_MESSAGE);
-            	}
-        	}
+                try
+                {
+                    txtCity.setText(_cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText())).getCityName());
+                }
+                catch (Exception error)
+                {
+                    error.printStackTrace();
+                    JOptionPane.showMessageDialog(null, Logging.handleException(error, 1), "Forkert postnummer", JOptionPane.WARNING_MESSAGE);
+                }
+            }
         });
 
         txtZipCode.setDocument(new JTextFieldLimit(5));
-        txtZipCode.setBounds(142,55,50,19);
+        txtZipCode.setBounds(142, 55, 50, 19);
         contentPane.add(txtZipCode);
         txtZipCode.setColumns(10);
         
         txtCity = new JTextField();
-        txtCity.setBounds(265,55,232,19);
+        txtCity.setBounds(265, 55, 232, 19);
         contentPane.add(txtCity);
         txtCity.setColumns(10);
         
         txtPhoneNo = new JTextField();
-        txtPhoneNo.setBounds(142,80,75,19);
+        txtPhoneNo.setBounds(142, 80, 75, 19);
         txtPhoneNo.setEditable(false);
         txtPhoneNo.setDocument(new JTextFieldLimit(9));
         contentPane.add(txtPhoneNo);
         txtPhoneNo.setColumns(10);
         
         txtEmail = new JTextField();
-        txtEmail.setBounds(305,80,192,19);
+        txtEmail.setBounds(305, 80, 192, 19);
         contentPane.add(txtEmail);
         txtEmail.setColumns(10);
         
         JSeparator separator = new JSeparator();
-        separator.setBounds(5,105,490,1);
+        separator.setBounds(5, 105, 490, 1);
         contentPane.add(separator);
         
         JButton btnCancel = new JButton("Annuller");
@@ -168,7 +165,7 @@ public class EditClientUI
                 _frame.dispose();
             }
         });
-        btnCancel.setBounds(375,115,120,25);
+        btnCancel.setBounds(375, 115, 120, 25);
         contentPane.add(btnCancel);
 
         JButton btnCreate = new JButton("Opdater");

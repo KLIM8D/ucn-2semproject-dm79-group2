@@ -61,7 +61,7 @@ public class DBCity implements IFDBCity
 	@Override
 	public City getCityByZipCode(int zipCode) throws Exception
     {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities WHERE ZipCode = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities WHERE zipCode = ?");
 		query.setInt(1, zipCode);
 		_da.setSqlCommandText(query);
 		ResultSet cityResult = _da.callCommandGetRow();
@@ -96,10 +96,9 @@ public class DBCity implements IFDBCity
 		if(city == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO City (cityId, cityName, zipCode) VALUES (?, ?, ?)");
-		query.setInt(1, city.getCityId());
-		query.setString(2, city.getCityName());
-		query.setInt(3, city.getZipCode());
+		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Cities (cityName, zipCode) VALUES (?, ?)");
+		query.setString(1, city.getCityName());
+		query.setInt(2, city.getZipCode());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -115,13 +114,13 @@ public class DBCity implements IFDBCity
 		if (city == null)
 			return 0;
 		
-		if (getCityByZipCode(city.getZipCode()) == null)
+		if (getCityById(city.getCityId()) == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE Cities SET cityId = ?, cityName = ?, zipCode = ? WHERE cityID ?");
-		query.setInt(1, city.getCityId());
-		query.setString(2, city.getCityName());
-		query.setInt(3, city.getZipCode());
+		PreparedStatement query = _da.getCon().prepareStatement("UPDATE Cities SET cityName = ?, zipCode = ? WHERE cityId = ?");
+        query.setString(1, city.getCityName());
+        query.setInt(2, city.getZipCode());
+		query.setInt(3, city.getCityId());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -132,11 +131,12 @@ public class DBCity implements IFDBCity
 	 * Delete city that already exists in the database
 	 */
 	@Override
-	public int deleteCity(City city) throws Exception {
+	public int deleteCity(City city) throws Exception
+    {
 		if (city == null)
 			return 0;
 		
-		if (getCityByZipCode(city.getZipCode())== null)
+		if (getCityById(city.getCityId()) == null)
 			return 0;
 		
 		int rowsAffected = 0;

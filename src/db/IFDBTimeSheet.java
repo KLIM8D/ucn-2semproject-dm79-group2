@@ -1,8 +1,9 @@
 package db;
 
+import models.Client;
 import models.TimeSheet;
 import models.User;
-import models.Client;
+
 import java.util.ArrayList;
 import java.util.Date;
 

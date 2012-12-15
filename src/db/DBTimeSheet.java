@@ -1,14 +1,14 @@
 package db;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Date;
-
 import models.Client;
 import models.DataEntry;
 import models.TimeSheet;
 import models.User;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class DBTimeSheet implements IFDBTimeSheet
 {
@@ -104,8 +104,8 @@ public class DBTimeSheet implements IFDBTimeSheet
 		
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND creationDate BETWEEN = ? AND = ? ");
 		query.setInt(1, user.getUserId());
-		query.setDate(2, (java.sql.Date) startDate);
-		query.setDate(3, (java.sql.Date) endDate);
+		query.setString(2, _da.dateToSqlDate(startDate));
+		query.setString(3, _da.dateToSqlDate(endDate));
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
@@ -159,8 +159,8 @@ public class DBTimeSheet implements IFDBTimeSheet
 		
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? ");
         query.setInt(1, client.getClientId());
-        query.setDate(2, (java.sql.Date) startDate);
-        query.setDate(3, (java.sql.Date) endDate);
+        query.setString(2, _da.dateToSqlDate(startDate));
+        query.setString(3, _da.dateToSqlDate(endDate));
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
@@ -191,8 +191,8 @@ public class DBTimeSheet implements IFDBTimeSheet
 		query.setInt(2, timeSheet.getUser().getUserId());
 		query.setInt(3, timeSheet.getClient().getClientId());
 		query.setString(4, timeSheet.getNote());
-		query.setDate(5, (java.sql.Date)timeSheet.getCreationDate());
-		query.setDate(6, (java.sql.Date)timeSheet.getEditedDate());
+		query.setString(5, _da.dateToSqlDate(timeSheet.getCreationDate()));
+		query.setString(6, _da.dateToSqlDate(timeSheet.getEditedDate()));
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();
@@ -211,14 +211,13 @@ public class DBTimeSheet implements IFDBTimeSheet
 		if (timeSheet == null)
 			return 0;
 		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE TimeSheets SET caseId = ?, userId = ?, clientId = ?, note = ?, creationDate = ?, editedDate = ? WHERE sheetId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("UPDATE TimeSheets SET caseId = ?, userId = ?, clientId = ?, note = ?, editedDate = ? WHERE sheetId = ?");
         query.setString(1, timeSheet.getCaseId());
         query.setInt(2, timeSheet.getUser().getUserId());
 		query.setInt(3, timeSheet.getClient().getClientId());
 		query.setString(4, timeSheet.getNote());
-		query.setDate(5, (java.sql.Date)timeSheet.getCreationDate());
-		query.setDate(6, (java.sql.Date)timeSheet.getEditedDate());
-        query.setInt(7, timeSheet.getSheetId());
+		query.setString(5, _da.dateToSqlDate(timeSheet.getEditedDate()));
+        query.setInt(6, timeSheet.getSheetId());
 		_da.setSqlCommandText(query);
 		
 		return _da.callCommand();

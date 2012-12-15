@@ -4,7 +4,6 @@ import db.DBDataEntry;
 import db.DBTimeSheet;
 import models.Client;
 import models.DataEntry;
-import models.Task;
 import models.TimeSheet;
 import models.User;
 
@@ -28,6 +27,7 @@ public class TimeSheetCtrl
     public TimeSheetCtrl()
     {
         _dbTimeSheet = new DBTimeSheet();
+        _dbDataEntry = new DBDataEntry();
     }
 
     /**
@@ -41,6 +41,15 @@ public class TimeSheetCtrl
         return _dbTimeSheet.getAllTimeSheets();
     }
 
+    public List<TimeSheet> getAllTimeSheets(int[] sheetIds) throws Exception
+    {
+        List<TimeSheet> returnList = new ArrayList<TimeSheet>();
+
+        for(int i = 0; i < sheetIds.length; i++)
+            returnList.add(getTimeSheetById(sheetIds[i]));
+
+        return returnList;
+    }
 
     /**
      * Retrieve a specific TimeSheet by id
@@ -49,7 +58,7 @@ public class TimeSheetCtrl
      * @return TimeSheet
      * @throws Exception
      */
-    public TimeSheet getTimesheetById(int sheetId) throws Exception
+    public TimeSheet getTimeSheetById(int sheetId) throws Exception
     {
         return _dbTimeSheet.getTimeSheetById(sheetId);
     }
@@ -148,19 +157,18 @@ public class TimeSheetCtrl
         return _dbTimeSheet.getAllTimeSheetsByClient(client, startDate, endDate);
     }
     
-    public boolean addDataEntry(TimeSheet ts, DataEntry de) throws Exception
+    public int addDataEntry(TimeSheet timeSheet, DataEntry dataEntry) throws Exception
     {
-    	ts.addDataEntry(de);
-    	return true;
+    	return _dbDataEntry.insertDataEntry(dataEntry, timeSheet.getSheetId());
     }
 
-    public List<TimeSheet> getAllTimeSheets(int[] sheetIds) throws Exception
+    public int updateDataEntry(DataEntry dataEntry) throws Exception
     {
-        List<TimeSheet> returnList = new ArrayList<TimeSheet>();
+        return _dbDataEntry.updateDataEntry(dataEntry);
+    }
 
-        for(int i = 0; i < sheetIds.length; i++)
-            returnList.add(getTimesheetById(sheetIds[i]));
-
-        return returnList;
+    public int removeDataEntry(DataEntry dataEntry) throws Exception
+    {
+        return _dbDataEntry.deleteDataEntry(dataEntry);
     }
 }
