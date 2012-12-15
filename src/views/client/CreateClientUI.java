@@ -109,13 +109,15 @@ public class CreateClientUI
                 }
             }
         });
-        txtZipCode.addFocusListener(new FocusListener() {
+        txtZipCode.addFocusListener(new FocusListener()
+        {
         	
-        	public void focusGained(FocusEvent e) {
-        		
+        	public void focusGained(FocusEvent e)
+            {
         	}
         	
-        	public void focusLost(FocusEvent e) {
+        	public void focusLost(FocusEvent e)
+            {
             	try
             	{
            			txtCity.setText(_cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText())).getCityName());
@@ -127,6 +129,7 @@ public class CreateClientUI
             	}
         	}
         });
+
         txtZipCode.setDocument(new JTextFieldLimit(5));
         txtZipCode.setBounds(142,55,50,19);
         contentPane.add(txtZipCode);
@@ -197,8 +200,6 @@ public class CreateClientUI
     {
         try
         {
-            @SuppressWarnings("unused")
-			DataAccess da = DataAccess.getInstance();
             String name = txtName.getText();
             String address = txtAddress.getText();
             City city = _cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText()));

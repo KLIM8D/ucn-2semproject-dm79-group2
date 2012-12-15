@@ -176,9 +176,10 @@ public class DBClient implements IFDBClient
 	{
 		if(row == null)
 			return null;
-		
-        int clientId = row.getInt("clientId");
+
         DBCity dbc = new DBCity();
+
+        int clientId = row.getInt("clientId");
         City city = dbc.getCityById(row.getInt("cityId"));
         String name = row.getString("name");
         String address = row.getString("address");

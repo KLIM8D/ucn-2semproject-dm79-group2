@@ -4,7 +4,8 @@ import models.Client;
 
 import java.util.ArrayList;
 
-public interface IFDBClient {
+public interface IFDBClient
+{
 	
 	/**
 	 * Retrieve all clients from database
@@ -22,9 +23,9 @@ public interface IFDBClient {
 	public Client getClientById(int id) throws Exception;
 	
 	/**
-	 * Get specific client by phonenumber
+	 * Get specific client by phone number
 	 * 
-	 * @param phoneNo				the phonenumber of the client you need returned
+	 * @param phoneNo				the phone number of the client you need returned
 	 * @return Client
 	 */
 	public Client getClientByPhone(long phoneNo) throws Exception;

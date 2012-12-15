@@ -59,7 +59,7 @@ public class DBTask implements IFDBTask
 	/**
 	 * Retrieve specific task by name
 	 * 
-	 * @param name					the name of the record you wish to return
+	 * @param title					the name of the record you wish to return
 	 * @return Task
 	 */
     @Override

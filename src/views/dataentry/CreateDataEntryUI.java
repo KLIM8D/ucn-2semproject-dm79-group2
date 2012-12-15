@@ -29,7 +29,8 @@ import utils.Logging;
 import utils.UserSession;
 import db.DataAccess;
 
-public class CreateDataEntryUI extends JFrame {
+public class CreateDataEntryUI extends JFrame
+{
 
     private static JFrame _frame;
     private static CreateDataEntryUI _instance;
@@ -145,11 +146,8 @@ public class CreateDataEntryUI extends JFrame {
 	{
         try
         {
-            @SuppressWarnings("unused")
-			DataAccess da = DataAccess.getInstance();
             Task task = drpXAssignment.getPrototypeDisplayValue();
-            UserSession uS = new UserSession();
-            User user = uS.getLoggedInUser();
+            User user = UserSession.getLoggedInUser();
             Date startDate = drpXStartDate.getPrototypeDisplayValue();
             Date endDate = drpXEndDate.getPrototypeDisplayValue();
             String entryRemark = txtRemark.getText();

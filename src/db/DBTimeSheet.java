@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import models.Client;
+import models.DataEntry;
 import models.TimeSheet;
 import models.User;
 
@@ -253,6 +254,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 
         DBUser dbu = new DBUser();
         DBClient dbc = new DBClient();
+        DBDataEntry dbDataEntry = new DBDataEntry();
 
 		int sheetId = row.getInt("sheetId");
         String caseId = row.getString("caseId");
@@ -262,6 +264,10 @@ public class DBTimeSheet implements IFDBTimeSheet
 		Date creationDate = row.getDate("creationDate");
 		Date editedDate = row.getDate("editedDate");
 		
-		return new TimeSheet(sheetId, caseId, user, client, note, creationDate, editedDate);
+		TimeSheet timeSheet = new TimeSheet(sheetId, caseId, user, client, note, creationDate, editedDate);
+        ArrayList<DataEntry> dataEntries = dbDataEntry.getAllDataEntriesByTimeSheet(timeSheet);
+        timeSheet.setDataEntries(dataEntries);
+
+        return timeSheet;
 	}
 }

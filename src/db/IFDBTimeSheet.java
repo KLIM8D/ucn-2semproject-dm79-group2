@@ -22,7 +22,7 @@ public interface IFDBTimeSheet
 	 * Retrieve a specific TimeSheet by id
 	 * 
 	 * @param sheetId					the id of the TimeSheet you need returned
-	 * @return Timesheet
+	 * @return TimeSheet
 	 * @throws Exception
 	 */
 	public TimeSheet getTimeSheetById(int sheetId) throws Exception;
