@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import static org.junit.Assert.*;
 
+import models.City;
 import models.Client;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,29 +75,57 @@ public class ClientTest
     }
 
     @Test
+    public void getNextId() throws Exception
+    {
+        DataAccess _da = DataAccess.getInstance();
+        long id = _da.getNextId("Clients");
+        assertTrue(id > 0);
+    }
+
+    @Test
     public void updateClient() throws Exception
     {
-        Client client = _clientCtrl.getClientById(3);
+        DataAccess _da = DataAccess.getInstance();
+        long id = _da.getNextId("Clients");
+        Client client = _clientCtrl.getClientById((int)id - 1);
         client.setName("Bente Nielsen");
         int rowsAffected = _clientCtrl.updateClient(client);
 
         assertEquals(1, rowsAffected);
     }
 
-    /*@Test
-    public void deleteClient() throws Exception
-    {
-        Client client = _clientCtrl.getClientById(2);
-        int rowsAffected = _clientCtrl.deleteClient(client);
-
-        assertEquals(1, rowsAffected);
-    }*/
-
     @Test
-    public void getNextId() throws Exception
+    public void deleteClient() throws Exception
     {
         DataAccess _da = DataAccess.getInstance();
         long id = _da.getNextId("Clients");
-        assertTrue(id > 0);
+        Client client = _clientCtrl.getClientById((int)id - 1);
+        int rowsAffected = _clientCtrl.deleteClient(client);
+
+        assertEquals(1, rowsAffected);
+    }
+
+    @Test
+    public void getCityById() throws Exception
+    {
+        City city = _clientCtrl.getCityById(50);
+
+        assertNotNull(city);
+    }
+
+    @Test
+    public void getCityByZipCode() throws Exception
+    {
+        City city = _clientCtrl.getCityByZipCode(9000);
+
+        assertNotNull(city);
+    }
+
+    @Test
+    public void getCityByName()throws Exception
+    {
+        City city = _clientCtrl.getCityByName("Aalborg");
+
+        assertNotNull(city);
     }
 }

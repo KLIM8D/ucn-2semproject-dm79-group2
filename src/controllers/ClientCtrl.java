@@ -50,6 +50,12 @@ public class ClientCtrl
 		DBCity DBC = new DBCity();
 		return DBC.getCityByZipCode(zipCode);
 	}
+
+    public City getCityByName(String cityName) throws Exception
+    {
+        DBCity DBC = new DBCity();
+        return DBC.getCityByName(cityName);
+    }
 	
 	public int insertClient(Client client) throws Exception
 	{
