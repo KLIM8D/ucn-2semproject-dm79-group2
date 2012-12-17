@@ -42,7 +42,6 @@ public class DBTimeSheet implements IFDBTimeSheet
 		return returnList;
 	}
 	
-
 	/**
 	 * Get a specific TimeSheet record by id
 	 * 
@@ -76,6 +75,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ?");
+		query.setInt(1, user.getUserId());
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
@@ -87,7 +87,6 @@ public class DBTimeSheet implements IFDBTimeSheet
 		
 		return returnList;
 	}
-	
 	
 	/**
      * Retrieves all TimeSheets by user between startDate and endDate
@@ -131,6 +130,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 		ArrayList<TimeSheet>  returnList = new ArrayList<TimeSheet>();
 		
 		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ?");
+		query.setInt(1, client.getClientId());
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
 		

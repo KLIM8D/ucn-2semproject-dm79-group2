@@ -63,7 +63,6 @@ public class TimeSheetCtrl
         return _dbTimeSheet.getTimeSheetById(sheetId);
     }
 
-
     /**
      * Retrieve all TimeSheets by specific user
      *
@@ -75,7 +74,6 @@ public class TimeSheetCtrl
     {
         return _dbTimeSheet.getAllTimeSheetsByUser(user);
     }
-
 
     /**
      * Retrieve all TimeSheets by specific client
@@ -89,7 +87,6 @@ public class TimeSheetCtrl
         return _dbTimeSheet.getAllTimeSheetsByClient(client);
     }
 
-
     /**
      * Inserts a new TimeSheet into the database
      *
@@ -101,7 +98,6 @@ public class TimeSheetCtrl
     {
         return _dbTimeSheet.insertTimeSheet(timeSheet);
     }
-
 
     /**
      * Updates a TimeSheet already existing in the database
@@ -115,7 +111,6 @@ public class TimeSheetCtrl
         return _dbTimeSheet.updateTimeSheet(timeSheet);
     }
 
-
     /**
      * Deletes a TimeSheet from the database
      *
@@ -127,7 +122,6 @@ public class TimeSheetCtrl
     {
         return _dbTimeSheet.deleteTimeSheet(timeSheet);
     }
-
 
     /**
      * Retrieves all TimeSheet by user between startDate and endDate

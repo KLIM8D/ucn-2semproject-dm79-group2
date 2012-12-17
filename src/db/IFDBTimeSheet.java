@@ -37,7 +37,6 @@ public interface IFDBTimeSheet
 	 * @throws Exception
 	 */
 	public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user) throws Exception;
-	
 		
 	/**
 	 * Retrieve all TimeSheets by specific client
