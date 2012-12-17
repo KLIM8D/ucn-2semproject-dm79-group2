@@ -23,14 +23,17 @@ public class DataNotificationUI extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 
 	public DataNotificationUI() {
+		setResizable(false);
 		setTitle("Vent venligst....");
 		setBounds(100, 100, 310, 85);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		JLabel lblLoadingImg = new JLabel("");
+		JLabel lblLoadingImg = new JLabel();
         lblLoadingImg.setIcon(new ImageIcon(DataNotificationUI.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
         lblLoadingImg.setBounds(12, 12, 32, 32);
         contentPanel.add(lblLoadingImg);
