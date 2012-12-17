@@ -490,23 +490,16 @@ public class SystemUI extends JFrame implements ChangeListener
 	
 	private String[] populateSheetByUser()
 	{
-		ArrayList<TimeSheet> timesheetList;
-		try
-		{
-			timesheetList = _timesheetCtrl.getAllTimeSheetsByUser(UserSession.getLoggedInUser());
-			String[] sheetNames = new String[timesheetList.size()];
-			for(int i = 0; i < timesheetList.size(); i++)
-				sheetNames[i] = timesheetList.get(i).getCaseId() + 
-						" (" + timesheetList.get(i).getClient().getName() + ")";
-			
-			return sheetNames;
-		}
-		catch(Exception ex)
-		{
-			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
-		}
-		
-		return null;
+        try
+        {
+            return new PopulateSheetListByUser().doInBackground();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
 	}
 	
 	private String[] populateClientList()
@@ -572,6 +565,30 @@ public class SystemUI extends JFrame implements ChangeListener
             try
             {
                 timeSheetList = _timesheetCtrl.getAllTimeSheets();
+                String[] sheetNames = new String[timeSheetList.size()];
+                for(int i = 0; i < timeSheetList.size(); i++)
+                    sheetNames[i] = timeSheetList.get(i).getCaseId() +
+                            " (" + timeSheetList.get(i).getClient().getName() + ")";
+
+                return sheetNames;
+            }
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            }
+
+            return null;
+        }
+    }
+
+    class PopulateSheetListByUser extends SwingWorker<String[], Integer>
+    {
+        protected String[] doInBackground() throws Exception
+        {
+            ArrayList<TimeSheet> timeSheetList;
+            try
+            {
+                timeSheetList = _timesheetCtrl.getAllTimeSheetsByUser(UserSession.getLoggedInUser());
                 String[] sheetNames = new String[timeSheetList.size()];
                 for(int i = 0; i < timeSheetList.size(); i++)
                     sheetNames[i] = timeSheetList.get(i).getCaseId() +

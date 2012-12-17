@@ -2,6 +2,7 @@ package utils;
 
 import db.DBLog;
 import models.Log;
+import models.User;
 
 import java.util.Calendar;
 
@@ -27,8 +28,8 @@ public class Logging
         sb.append("Java vendor: " + System.getProperty("java.vendor") + "<br/>");
         sb.append("Java version: " + System.getProperty("java.version") + "<br/>");
         sb.append("User home dir: " + System.getProperty("user.home") + "<br/>");
-
-        Log newLog = new Log(UserSession.getLoggedInUser(), sb.toString(), ex.getMessage(), ex.getCause().toString(), cal.getTime());
+        User user = UserSession.getLoggedInUser();
+        Log newLog = new Log(user, sb.toString(), ex.getStackTrace().toString(), ex.getClass().getName(), cal.getTime());
 
         try
         {

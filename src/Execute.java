@@ -7,7 +7,12 @@
  * @changes    :
  */
 
+import models.User;
+import models.UserPermission;
+import utils.UserSession;
 import views.SystemUI;
+
+import java.util.Date;
 
 final class Execute
 {
@@ -16,6 +21,8 @@ final class Execute
     	try
         {
     		// swap with login, when appropriate
+            User user = new User(1, new UserPermission(3, "User", new Date(), new Date()), "Test", "User", "test", "1289hjusbv7f123", "testpass", new Date(), new Date());
+            UserSession.setLoggedInUser(user);
     		SystemUI window = new views.SystemUI();
     		window.setVisible(true);
     	}
