@@ -13,10 +13,23 @@ import java.util.Date;
 public class DBTimeSheet implements IFDBTimeSheet
 {
 	private DataAccess _da;
+    private String _sortExpression = "";
+
+    public String getSortExpression()
+    { return _sortExpression; }
+    public void setSortExpression(String value)
+    { _sortExpression = value; }
+
 	public DBTimeSheet()
 	{
 		_da = DataAccess.getInstance();
 	}
+
+    public DBTimeSheet(String sortExpression)
+    {
+        _da = DataAccess.getInstance();
+        _sortExpression = sortExpression;
+    }
 	
 
 	/**
@@ -29,7 +42,7 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets" + _sortExpression);
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
@@ -51,7 +64,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 	@Override
 	public TimeSheet getTimeSheetById(int sheetId) throws Exception
     {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE sheetId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE sheetId = ?" + _sortExpression);
 		query.setInt(1, sheetId);
 		_da.setSqlCommandText(query);
 		ResultSet timeSheetResult = _da.callCommandGetRow();
@@ -74,7 +87,7 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ?" + _sortExpression);
 		query.setInt(1, user.getUserId());
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
@@ -101,7 +114,7 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND creationDate BETWEEN = ? AND = ? ");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND creationDate BETWEEN = ? AND = ? " + _sortExpression);
 		query.setInt(1, user.getUserId());
 		query.setString(2, _da.dateToSqlDate(startDate));
 		query.setString(3, _da.dateToSqlDate(endDate));
@@ -129,7 +142,7 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		ArrayList<TimeSheet>  returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ?");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ?" + _sortExpression);
 		query.setInt(1, client.getClientId());
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
@@ -157,7 +170,7 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? ");
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? " + _sortExpression);
         query.setInt(1, client.getClientId());
         query.setString(2, _da.dateToSqlDate(startDate));
         query.setString(3, _da.dateToSqlDate(endDate));
