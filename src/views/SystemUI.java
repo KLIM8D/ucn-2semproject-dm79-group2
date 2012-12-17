@@ -14,8 +14,6 @@ import views.client.CreateClientUI;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
-
-import javax.print.attribute.standard.SheetCollate;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -351,7 +349,16 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheetTab.add(_chkUsersSheetsOnly);
 		
 		_lstTimeSheets = new JList<String>();
-		_lstTimeSheets.setListData(populateTimesheetList());
+		_lstTimeSheets.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String listSelection = _lstTimeSheets.getSelectedValue();
+				String selectedValue = listSelection.substring(0, listSelection.indexOf(" "));
+				
+				System.out.println(selectedValue);
+			}
+		});
+		_lstTimeSheets.setListData(populateSheetList());
 		_lstTimeSheets.setFont(new Font("Dialog", Font.PLAIN, 12));
 		_lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		_lstTimeSheets.setBounds(5, 5, 187, 605);
@@ -396,15 +403,15 @@ public class SystemUI extends JFrame implements ChangeListener
 	{
 		if(_chkUsersSheetsOnly.isSelected())
 		{
-			// only show user specific sheets
+			_lstTimeSheets.setListData(populateSheetByUser());
 		}
 		else
 		{
-			// show all sheets in db
+			_lstTimeSheets.setListData(populateSheetList());
 		}
 	}
 	
-	private String[] populateTimesheetList()
+	private String[] populateSheetList()
 	{
 		ArrayList<TimeSheet> timesheetList;
 		try
@@ -419,15 +426,31 @@ public class SystemUI extends JFrame implements ChangeListener
 		}
 		catch(Exception ex)
 		{
-			System.out.println(ex);
+			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		return null;
 	}
 	
-	private String[] populateUserSpeceficTimesheetList()
+	private String[] populateSheetByUser()
 	{
-		return null; // code missing :(
+		ArrayList<TimeSheet> timesheetList;
+		try
+		{
+			timesheetList = _timesheetCtrl.getAllTimeSheetsByUser(UserSession.getLoggedInUser());
+			String[] sheetNames = new String[timesheetList.size()];
+			for(int i = 0; i < timesheetList.size(); i++)
+				sheetNames[i] = timesheetList.get(i).getCaseId() + 
+								" (" + timesheetList.get(i).getClient().getName() + ")";
+			
+			return sheetNames;
+		}
+		catch(Exception ex)
+		{
+			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		return null;
 	}
 	
 	private String[] populateClientList()
@@ -444,7 +467,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		}
 		catch(Exception ex)
 		{
-			System.out.println(ex);
+			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		return null;
