@@ -3,6 +3,9 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/klim/workspace/test/src/"]]></defaultValueExpression>
+	</parameter>
 	<field name="name" class="java.lang.String">
 		<fieldDescription><![CDATA[name]]></fieldDescription>
 	</field>
@@ -48,74 +51,74 @@
 	<pageHeader>
 		<band height="163" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="ab6542eb-7b4f-423f-9326-4e09e96bbeb5" x="4" y="60" width="53" height="20"/>
+				<reportElement uuid="ab6542eb-7b4f-423f-9326-4e09e96bbeb5" x="4" y="56" width="44" height="20"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Telefon.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="90c37648-5676-44fd-b617-0fff95ae47bb" x="314" y="46" width="69" height="20"/>
+				<reportElement uuid="90c37648-5676-44fd-b617-0fff95ae47bb" x="314" y="39" width="60" height="20"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Oprettet....:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c4439d32-1a9a-40da-b772-1e008ee81c72" x="314" y="69" width="69" height="20"/>
+				<reportElement uuid="c4439d32-1a9a-40da-b772-1e008ee81c72" x="314" y="56" width="60" height="20"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Sidst rettet:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="e74850f3-c6a6-4121-8349-0878069951a0" x="59" y="60" width="204" height="20"/>
+				<reportElement uuid="e74850f3-c6a6-4121-8349-0878069951a0" x="48" y="56" width="211" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{phoneNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="19d77a72-f55c-491f-a60f-ad5267400976" x="383" y="46" width="127" height="20"/>
+				<reportElement uuid="19d77a72-f55c-491f-a60f-ad5267400976" x="371" y="39" width="169" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy HH:mm")).format($F{creationDate})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a590030b-77d7-421c-80df-1749a17ffd5a" x="383" y="69" width="117" height="20"/>
+				<reportElement uuid="a590030b-77d7-421c-80df-1749a17ffd5a" x="371" y="56" width="169" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy HH:mm")).format($F{editedDate})]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="5bb2319b-3f5f-46e2-b23c-ebe64450cee2" x="4" y="80" width="55" height="20"/>
+				<reportElement uuid="5bb2319b-3f5f-46e2-b23c-ebe64450cee2" x="4" y="73" width="44" height="20"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[E-Mail...:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="430397c5-ec81-4291-9d07-300219c39111" x="59" y="80" width="200" height="20"/>
+				<reportElement uuid="430397c5-ec81-4291-9d07-300219c39111" x="48" y="73" width="211" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{eMail}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="225aab3e-6ba0-45ef-a83f-179e5e45fb76" x="59" y="109" width="494" height="48"/>
+				<reportElement uuid="225aab3e-6ba0-45ef-a83f-179e5e45fb76" x="48" y="109" width="505" height="48"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{note}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="5bb2319b-3f5f-46e2-b23c-ebe64450cee2" x="4" y="109" width="55" height="20"/>
+				<reportElement uuid="5bb2319b-3f5f-46e2-b23c-ebe64450cee2" x="4" y="109" width="44" height="20"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Note.....:]]></text>
 			</staticText>
 			<textField pattern="M/d/yy h:mm:ss a">
-				<reportElement uuid="f4716123-af2f-4962-ac74-78f6289bd0cc" x="383" y="89" width="129" height="20"/>
+				<reportElement uuid="f4716123-af2f-4962-ac74-78f6289bd0cc" x="371" y="73" width="169" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy HH:mm")).format(new Date())]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="7023e5f4-1ef8-4e49-983d-a2e12ea1ac7e" x="314" y="89" width="69" height="20"/>
+				<reportElement uuid="7023e5f4-1ef8-4e49-983d-a2e12ea1ac7e" x="314" y="73" width="60" height="20"/>
 				<textElement>
-					<font isBold="true" isItalic="false"/>
+					<font isBold="false" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Udskrevet.:]]></text>
 			</staticText>
@@ -125,7 +128,7 @@
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="5a281be6-b57f-4118-993b-3e20f3c57239" x="382" y="27" width="80" height="20"/>
+				<reportElement uuid="5a281be6-b57f-4118-993b-3e20f3c57239" x="371" y="22" width="169" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{caseId}]]></textFieldExpression>
 			</textField>
@@ -135,85 +138,43 @@
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="144364f5-49c0-4653-a659-ab176269e04e" x="37" y="41" width="224" height="20"/>
+				<reportElement uuid="144364f5-49c0-4653-a659-ab176269e04e" x="32" y="39" width="229" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{cityName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="5a64dd82-db95-4229-a247-99d87359bdff" x="382" y="6" width="131" height="20"/>
+				<reportElement uuid="5a64dd82-db95-4229-a247-99d87359bdff" x="371" y="5" width="169" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{firstName} + " " + $F{lastName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="7e0f0e34-252c-407c-a6a3-61cc50198a09" key="fieldZipCode" x="4" y="41" width="33" height="20"/>
+				<reportElement uuid="7e0f0e34-252c-407c-a6a3-61cc50198a09" key="fieldZipCode" x="4" y="39" width="33" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{zipCode}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="aff67220-8f6f-41ae-9725-e07585dc6b4c" x="314" y="6" width="69" height="20"/>
+				<reportElement uuid="aff67220-8f6f-41ae-9725-e07585dc6b4c" x="314" y="5" width="60" height="20"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Revisor.....:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ffe12619-16d1-45e4-96ac-e2043299c1f0" x="314" y="27" width="69" height="20"/>
+				<reportElement uuid="ffe12619-16d1-45e4-96ac-e2043299c1f0" x="314" y="22" width="60" height="20"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Sags nr.....:]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
-	<columnHeader>
-		<band height="28" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="4" y="8" width="81" height="15"/>
-				<textElement>
-					<font isBold="true" isItalic="false"/>
-				</textElement>
-				<text><![CDATA[Påbegyndt]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="82" y="8" width="81" height="15"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Afsluttet]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="163" y="8" width="81" height="15"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Opgave]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="238" y="8" width="81" height="15"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Registrator]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="319" y="8" width="81" height="15"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Bemærkning]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement uuid="41f31d92-88af-4e5b-bbb2-ac4d4b1c84e6" x="4" y="25" width="532" height="1" backcolor="#000000"/>
-			</rectangle>
-		</band>
-	</columnHeader>
 	<detail>
 		<band height="251" splitType="Stretch">
-			<textField>
-				<reportElement uuid="b2faa7c1-d6db-416a-a6a3-e3f1170bf6f9" x="4" y="6" width="531" height="235"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[""+$F{dataEntries}]]></textFieldExpression>
-			</textField>
+			<subreport>
+				<reportElement uuid="794cdcf3-3061-4725-aee5-342ba53353c8" x="4" y="0" width="549" height="251"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{dataEntries})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "dataEntries.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<pageFooter>

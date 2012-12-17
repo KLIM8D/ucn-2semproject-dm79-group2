@@ -7,6 +7,7 @@ import models.TimeSheet;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 
@@ -48,7 +49,7 @@ public class GenerateReport
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listTimeSheets);
         String templateLocation = "/home/klim/workspace/java/ucn-2semproject-dm79-group2/src/utils/templates/TimeSheet.jasper";
         JasperPrint jasperPrint = JasperFillManager.fillReport(templateLocation, new HashMap(), beanCollectionDataSource);
-        exportToPdf(jasperPrint);
+        exportToPrintDialog(jasperPrint);
     }
 
 
@@ -60,5 +61,10 @@ public class GenerateReport
         exporterPdf.setParameter(JRExporterParameter.JASPER_PRINT,  populatedReport);
         exporterPdf.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, exportLocation);
         exporterPdf.exportReport();
+    }
+
+    protected void exportToPrintDialog(JasperPrint populatedReport) throws Exception
+    {
+        JasperPrintManager.printReport(populatedReport, true);
     }
 }
