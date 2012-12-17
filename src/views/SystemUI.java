@@ -13,6 +13,7 @@ import utils.*;
 import views.client.CreateClientUI;
 import java.awt.Cursor;
 import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -22,6 +23,7 @@ import javax.swing.JMenu;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -305,7 +307,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheetOverview.setBackground(Color.WHITE);
 		pnlTimeSheetOverview.setBounds(3, 176, 790, 492);
 		pnlTimeSheet.add(pnlTimeSheetOverview);
-		
+
 		sheetColumn = new String[]{"Påbegyndt", "Afsluttet", "Opgave", "Registrator", "Bemærkning", " "};
 		
 		sheetTable = new JTable()
@@ -322,6 +324,13 @@ public class SystemUI extends JFrame implements ChangeListener
 		
 		sheetTable.setModel(sheetModel);
 		sheetTable.setFillsViewportHeight(true);
+		
+		JScrollPane scrollPane = new JScrollPane(sheetTable);
+		sheetTable.setBounds(8, 181, 780, 482);
+		sheetTable.setPreferredScrollableViewportSize(new Dimension(780, 482));
+		scrollPane.setPreferredSize(new Dimension(780, 482));
+		pnlTimeSheetOverview.add(sheetTable);
+		sheetTable.add(scrollPane);
 		// END OF SHEETGRID
 		// END OF TIMESHEETS PANEL
 		
@@ -547,7 +556,7 @@ public class SystemUI extends JFrame implements ChangeListener
 				 {
 					 DataEntry dataEntry = dataEntries.get(i);
 					 Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(), 
-							                      dataEntry.getUser().getFirstName() + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark() };
+							                      dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark() };
 					 sheetModel.addRow(row);
 				 }
 			}
