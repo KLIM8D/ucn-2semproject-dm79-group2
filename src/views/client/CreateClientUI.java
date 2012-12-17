@@ -198,6 +198,11 @@ public class CreateClientUI
     {
         try
         {
+        	if(_cliCtrl.getClientByPhone(Long.parseLong(txtPhoneNo.getText())) != null)
+        	{
+        		throw new Exception();
+        	}
+        	
             String name = txtName.getText();
             String address = txtAddress.getText();
             City city = _cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText()));
