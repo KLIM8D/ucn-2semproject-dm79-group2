@@ -11,7 +11,6 @@ package views;
 
 import utils.*;
 import views.client.CreateClientUI;
-
 import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.JFrame;
@@ -23,6 +22,7 @@ import javax.swing.JMenu;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -35,12 +35,14 @@ import javax.swing.JList;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import models.Client;
+import models.DataEntry;
 import models.TimeSheet;
 
 import controllers.ClientCtrl;
@@ -51,21 +53,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 @SuppressWarnings("serial")
 public class SystemUI extends JFrame implements ChangeListener
 {
-	private boolean _primaryTabActive;
-	private JPanel _pnlSystemLayout;
-	private JPanel _pnlClients;
-	private JPanel _pnlTimeSheet;
-	private JTextField _txtSearchOverview;
-	private JCheckBox _chkUsersSheetsOnly;
-	private JList<String> _lstTimeSheets;
+	private boolean primaryTabActive;
+	private JPanel pnlSystemLayout;
+	private JPanel pnlClients;
+	private JPanel pnlTimeSheet;
+	private JTextField txtSearchOverview;
+	private JCheckBox chkUsersSheetsOnly;
+	private JList<String> lstTimeSheets;
 	
 	// Controllers
 	private TimeSheetCtrl _timesheetCtrl;
 	private ClientCtrl _clientCtrl;
+	
+	// Grid
+	private DefaultTableModel sheetModel;
+	private JTable sheetTable;
+	private String[] sheetColumn;
+	private DefaultTableModel clientModel;
+	private JTable clientTable;
+	private String[] clientColumn;
 
 	public SystemUI()
 	{
@@ -138,14 +150,14 @@ public class SystemUI extends JFrame implements ChangeListener
 		JMenu mnAbout = new JMenu("Om");
 		mnAbout.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnAbout);
-		_pnlSystemLayout = new JPanel();
-		_pnlSystemLayout.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(_pnlSystemLayout);
-		_pnlSystemLayout.setLayout(null);
+		pnlSystemLayout = new JPanel();
+		pnlSystemLayout.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(pnlSystemLayout);
+		pnlSystemLayout.setLayout(null);
 		
 		JPanel pnlQuickAccess = new JPanel();
 		pnlQuickAccess.setBounds(5, 0, 1014, 37);
-		_pnlSystemLayout.add(pnlQuickAccess);
+		pnlSystemLayout.add(pnlQuickAccess);
 		pnlQuickAccess.setLayout(null);
 		
 		JLabel lblNewTimeSheet = new JLabel("Ny time-sag");
@@ -202,37 +214,39 @@ public class SystemUI extends JFrame implements ChangeListener
 		lblSearchOverview.setBounds(833, 12, 16, 16);
 		pnlQuickAccess.add(lblSearchOverview);
 		
-		_txtSearchOverview = new JTextField();
-		_txtSearchOverview.addFocusListener(new FocusAdapter() {
+		txtSearchOverview = new JTextField();
+		txtSearchOverview.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				_txtSearchOverview.setText("");
+				txtSearchOverview.setText("");
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				_txtSearchOverview.setText("S\u00F8g");
+				txtSearchOverview.setText("S\u00F8g");
 			}
 		});
-		_txtSearchOverview.setText("S\u00F8g");
-		_txtSearchOverview.setBounds(854, 9, 155, 22);
-		pnlQuickAccess.add(_txtSearchOverview);
-		_txtSearchOverview.setColumns(10);
+		txtSearchOverview.setText("S\u00F8g");
+		txtSearchOverview.setBounds(854, 9, 155, 22);
+		pnlQuickAccess.add(txtSearchOverview);
+		txtSearchOverview.setColumns(10);
 		
 		JPanel pnlOverviewSelection = new JPanel();
 		pnlOverviewSelection.setBounds(5, 36, 215, 675);
-		_pnlSystemLayout.add(pnlOverviewSelection);
+		pnlSystemLayout.add(pnlOverviewSelection);
 		pnlOverviewSelection.setLayout(null);
 
-		_pnlTimeSheet = new JPanel();
-		_pnlTimeSheet.setBounds(220, 36, 799, 675);
-		_pnlSystemLayout.add(_pnlTimeSheet);
-		_pnlTimeSheet.setLayout(null);
+		// START OF TIMESHEETS PANEL
+		pnlTimeSheet = new JPanel();
+		pnlTimeSheet.setBounds(220, 36, 799, 675);
+		pnlSystemLayout.add(pnlTimeSheet);
+		pnlTimeSheet.setLayout(null);
 		
+		// START OF TS_INFO PANEL
 		JPanel pnlTimeSheetInfo = new JPanel();
 		pnlTimeSheetInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlTimeSheetInfo.setBackground(Color.WHITE);
 		pnlTimeSheetInfo.setBounds(3, 2, 790, 86);
-		_pnlTimeSheet.add(pnlTimeSheetInfo);
+		pnlTimeSheet.add(pnlTimeSheetInfo);
 		pnlTimeSheetInfo.setLayout(null);
 		
 		JLabel lblClientName_ts = new JLabel("[swap section with db data]");
@@ -269,36 +283,61 @@ public class SystemUI extends JFrame implements ChangeListener
 		lblTimeSheetOwner_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblTimeSheetOwner_ts.setBounds(485, 66, 300, 15);
 		pnlTimeSheetInfo.add(lblTimeSheetOwner_ts);
+		// END OF TS_INFO PANEL
 		
+		// START OF NOTE PANEL
 		JPanel pnlTimeSheetNote = new JPanel();
 		pnlTimeSheetNote.setBackground(Color.WHITE);
 		pnlTimeSheetNote.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlTimeSheetNote.setBounds(3, 99, 790, 65);
-		_pnlTimeSheet.add(pnlTimeSheetNote);
+		pnlTimeSheet.add(pnlTimeSheetNote);
 		pnlTimeSheetNote.setLayout(null);
 		
 		JTextArea txtNoteField = new JTextArea();
 		txtNoteField.setText("Note: [swap section with db data]");
 		txtNoteField.setBounds(5, 5, 780, 55);
-		pnlTimeSheetNote.add(txtNoteField);
+		pnlTimeSheetNote.add(txtNoteField);	
+		// END OF NOTE PANEL
 		
+		// START OF SHEETGRID
 		JPanel pnlTimeSheetOverview = new JPanel();
 		pnlTimeSheetOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlTimeSheetOverview.setBackground(Color.WHITE);
 		pnlTimeSheetOverview.setBounds(3, 176, 790, 492);
-		_pnlTimeSheet.add(pnlTimeSheetOverview);
+		pnlTimeSheet.add(pnlTimeSheetOverview);
 		
-		_pnlClients = new JPanel();
-		_pnlClients.setBounds(220, 36, 799, 675);
-		_pnlSystemLayout.add(_pnlClients);
-		_pnlClients.setLayout(null);
+		sheetColumn = new String[]{"Påbegyndt", "Afsluttet", "Opgave", "Registrator", "Bemærkning", " "};
 		
+		sheetTable = new JTable()
+		{
+			public boolean isCellEditable(int data, int columns)
+			{
+				if(columns == 5 || columns == 6)
+					return true;
+				return false;
+			}
+		};
+		
+		sheetModel = new DefaultTableModel();
+		
+		sheetTable.setModel(sheetModel);
+		sheetTable.setFillsViewportHeight(true);
+		// END OF SHEETGRID
+		// END OF TIMESHEETS PANEL
+		
+		// START OF CLIENTS PANEL
+		pnlClients = new JPanel();
+		pnlClients.setBounds(220, 36, 799, 675);
+		pnlSystemLayout.add(pnlClients);
+		pnlClients.setLayout(null);
+		
+		// START OF CL_INFO PANEL
 		JPanel pnlClientInfo = new JPanel();
 		pnlClientInfo.setLayout(null);
 		pnlClientInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlClientInfo.setBackground(Color.WHITE);
 		pnlClientInfo.setBounds(3, 2, 790, 86);
-		_pnlClients.add(pnlClientInfo);
+		pnlClients.add(pnlClientInfo);
 		
 		JLabel lblClientName_cl = new JLabel("[swap section with db data]");
 		lblClientName_cl.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
@@ -321,13 +360,34 @@ public class SystemUI extends JFrame implements ChangeListener
 		lblClientEmail_cl.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientEmail_cl.setBounds(5, 66, 450, 15);
 		pnlClientInfo.add(lblClientEmail_cl);
+		// END OF CL_INFO PANEL
 		
+		// START OF CLIENTGRID
 		JPanel pnlClientOverview = new JPanel();
 		pnlClientOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlClientOverview.setBackground(Color.WHITE);
 		pnlClientOverview.setBounds(3, 99, 790, 569);
-		_pnlClients.add(pnlClientOverview);
+		pnlClients.add(pnlClientOverview);
 		
+		clientColumn = new String[]{"Sags nr", "Virksomhed", "Oprettet", "Ansvarlig", "Note", " "};
+		
+		clientTable = new JTable()
+		{
+			public boolean isCellEditable(int data, int columns)
+            {
+                if(columns == 5 || columns == 6)
+                    return true;
+                return false;
+            }
+		};
+		
+		clientModel = new DefaultTableModel();
+		
+		clientTable.setModel(clientModel);
+		clientTable.setFillsViewportHeight(true);
+		// START OF CLIENTGRID
+		// END OF CLIENTS PANEL
+
 		JTabbedPane tabSelection = new JTabbedPane(JTabbedPane.TOP);
 		tabSelection.setFont(new Font("Dialog", Font.PLAIN, 12));
 		tabSelection.setBounds(5, 0, 202, 668);
@@ -338,31 +398,27 @@ public class SystemUI extends JFrame implements ChangeListener
 		tabSelection.addTab("Time-sager", null, pnlTimeSheetTab, null);
 		pnlTimeSheetTab.setLayout(null);
 		
-		_chkUsersSheetsOnly = new JCheckBox("Vis kun mine sager");
-		_chkUsersSheetsOnly.addActionListener(new ActionListener() {
+		chkUsersSheetsOnly = new JCheckBox("Vis kun mine sager");
+		chkUsersSheetsOnly.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkUserSheetsOnly();
 			}
 		});
-		_chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
-		_chkUsersSheetsOnly.setBounds(5, 614, 181, 23);;
-		pnlTimeSheetTab.add(_chkUsersSheetsOnly);
+		chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
+		chkUsersSheetsOnly.setBounds(5, 614, 181, 23);;
+		pnlTimeSheetTab.add(chkUsersSheetsOnly);
 		
-		_lstTimeSheets = new JList<String>();
-		_lstTimeSheets.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String listSelection = _lstTimeSheets.getSelectedValue();
-				String selectedValue = listSelection.substring(0, listSelection.indexOf(" "));
-				
-				System.out.println(selectedValue);
+		lstTimeSheets = new JList<String>();
+		lstTimeSheets.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				addSheetDate();
 			}
 		});
-		_lstTimeSheets.setListData(populateSheetList());
-		_lstTimeSheets.setFont(new Font("Dialog", Font.PLAIN, 12));
-		_lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		_lstTimeSheets.setBounds(5, 5, 187, 605);
-		pnlTimeSheetTab.add(_lstTimeSheets);
+		lstTimeSheets.setListData(populateSheetList());
+		lstTimeSheets.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		lstTimeSheets.setBounds(5, 5, 187, 605);
+		pnlTimeSheetTab.add(lstTimeSheets);
 		
 		JPanel pnlClientTab = new JPanel();
 		tabSelection.addTab("Klienter", null, pnlClientTab, null);
@@ -401,13 +457,13 @@ public class SystemUI extends JFrame implements ChangeListener
 	
 	private void checkUserSheetsOnly()
 	{
-		if(_chkUsersSheetsOnly.isSelected())
+		if(chkUsersSheetsOnly.isSelected())
 		{
-			_lstTimeSheets.setListData(populateSheetByUser());
+			lstTimeSheets.setListData(populateSheetByUser());
 		}
 		else
 		{
-			_lstTimeSheets.setListData(populateSheetList());
+			lstTimeSheets.setListData(populateSheetList());
 		}
 	}
 	
@@ -473,22 +529,56 @@ public class SystemUI extends JFrame implements ChangeListener
 		return null;
 	}
 	
+	private void addSheetDate()
+	{
+		try
+		{
+			int sheetId = 2;
+			
+			TimeSheet sheet = _timesheetCtrl.getTimeSheetById(sheetId);
+			
+			if(sheet != null)
+			{
+				 ArrayList<DataEntry> dataEntries = sheet.getDataEntries();
+				 Object[][] data = {};
+				 sheetModel.setDataVector(data, sheetColumn);
+				 
+				 for(int i = 0; i < dataEntries.size(); i++)
+				 {
+					 DataEntry dataEntry = dataEntries.get(i);
+					 Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(), 
+							                      dataEntry.getUser().getFirstName() + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark() };
+					 sheetModel.addRow(row);
+				 }
+			}
+		}
+		catch(Exception ex)
+		{
+			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void addClientSheetData()
+	{
+		// code missing
+	}
+	
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{	
 		try
 		{
-			if(_primaryTabActive == false)
+			if(primaryTabActive == false)
 			{
-				_pnlClients.setVisible(false);
-				_pnlTimeSheet.setVisible(true);
-				_primaryTabActive = true;
+				pnlClients.setVisible(false);
+				pnlTimeSheet.setVisible(true);
+				primaryTabActive = true;
 			}
 			else
 			{
-				_pnlTimeSheet.setVisible(false);
-				_pnlClients.setVisible(true);
-				_primaryTabActive = false;
+				pnlTimeSheet.setVisible(false);
+				pnlClients.setVisible(true);
+				primaryTabActive = false;
 			}
 		}
 		catch(Exception ex)
