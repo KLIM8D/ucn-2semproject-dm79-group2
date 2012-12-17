@@ -29,7 +29,8 @@ public class GenerateReport
         try
         {
             GenerateReport  ok = new GenerateReport();
-            ok.pdf();
+            int[] sheetIds = {2};
+            ok.fillReport(sheetIds);
         }
         catch(Exception e)
         {
@@ -37,9 +38,8 @@ public class GenerateReport
         }
     }
 
-    public void pdf() throws Exception
+    public void fillReport(int[] sheetIds) throws Exception
     {
-        int[] sheetIds = {2};
         TimeSheetCtrl timeSheetCtrl = new TimeSheetCtrl();
         List<ReportWrapper> listTimeSheets = new ArrayList<ReportWrapper>();
         for(TimeSheet timeSheet : timeSheetCtrl.getAllTimeSheets(sheetIds))
@@ -48,14 +48,14 @@ public class GenerateReport
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listTimeSheets);
         String templateLocation = "/home/klim/workspace/java/ucn-2semproject-dm79-group2/src/utils/templates/TimeSheet.jasper";
         JasperPrint jasperPrint = JasperFillManager.fillReport(templateLocation, new HashMap(), beanCollectionDataSource);
-        postProcessReport(jasperPrint);
+        exportToPdf(jasperPrint);
     }
 
 
-    protected void postProcessReport(JasperPrint populatedReport) throws Exception
+    protected void exportToPdf(JasperPrint populatedReport) throws Exception
     {
         System.out.println("Exporting to PDF");
-        String exportLocation =  "/home/klim/report2.pdf";
+        String exportLocation =  "/home/klim/report.pdf";
         JRPdfExporter exporterPdf = new JRPdfExporter();
         exporterPdf.setParameter(JRExporterParameter.JASPER_PRINT,  populatedReport);
         exporterPdf.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, exportLocation);
