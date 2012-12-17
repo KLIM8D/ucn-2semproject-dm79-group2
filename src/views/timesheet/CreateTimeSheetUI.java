@@ -85,11 +85,10 @@ public class CreateTimeSheetUI extends JFrame {
 		
 		drpClients = new JComboBox<String>();
 		drpClients.setBounds(49, 11, 353, 22);
-		/*
 		contentPane.add(drpClients);
 		model = new DefaultComboBoxModel<String>(addClients());
 		drpClients.setModel(model);
-		*/
+
 		
 		// addClients();
 
