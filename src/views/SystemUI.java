@@ -411,6 +411,9 @@ public class SystemUI extends JFrame implements ChangeListener
 		lstTimeSheets.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				//DataNotificationUI info = new views.DataNotificationUI();
+				//info.setVisible(true);
+				
 				addSheetData();
 				lblClientName_ts.setText(clientName);
 				lblClientAddress_ts.setText(clientAddress);
@@ -419,6 +422,8 @@ public class SystemUI extends JFrame implements ChangeListener
 				lblCaseId_ts.setText(caseId);
 				lblTimeSheetOwner_ts.setText("Ansvarlig: " + sheetOwner);
 				txtNoteField.setText("Note: " + clientNote);
+				
+				//info.dispose();
 			}
 		});
 		lstTimeSheets.setListData(populateSheetList());
