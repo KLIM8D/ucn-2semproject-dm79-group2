@@ -42,7 +42,7 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets" + _sortExpression);
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets " + _sortExpression);
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
 		
@@ -64,7 +64,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 	@Override
 	public TimeSheet getTimeSheetById(int sheetId) throws Exception
     {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE sheetId = ?" + _sortExpression);
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE sheetId = ? " + _sortExpression);
 		query.setInt(1, sheetId);
 		_da.setSqlCommandText(query);
 		ResultSet timeSheetResult = _da.callCommandGetRow();
@@ -87,7 +87,7 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ?" + _sortExpression);
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? " + _sortExpression);
 		query.setInt(1, user.getUserId());
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
@@ -142,7 +142,7 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		ArrayList<TimeSheet>  returnList = new ArrayList<TimeSheet>();
 		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ?" + _sortExpression);
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? " + _sortExpression);
 		query.setInt(1, client.getClientId());
 		_da.setSqlCommandText(query);
 		ResultSet timeSheets = _da.callCommandGetResultSet();
