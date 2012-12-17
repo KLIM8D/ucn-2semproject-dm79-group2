@@ -13,36 +13,18 @@ import utils.*;
 import views.client.CreateClientUI;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 
-import javax.swing.BorderFactory;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.swing.JTabbedPane;
-import javax.swing.JCheckBox;
-import javax.swing.JList;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -429,7 +411,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		lstTimeSheets.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				addSheetDate();
+				addSheetData();
 				lblClientName_ts.setText(clientName);
 				lblClientAddress_ts.setText(clientAddress);
 				lblClientPhoneNo_ts.setText("Telefon: " + clientPhone);
@@ -494,24 +476,17 @@ public class SystemUI extends JFrame implements ChangeListener
 	
 	private String[] populateSheetList()
 	{
-		ArrayList<TimeSheet> timesheetList;
-		try
-		{
-			timesheetList = _timesheetCtrl.getAllTimeSheets();
-			String[] sheetNames = new String[timesheetList.size()];
-			for(int i = 0; i < timesheetList.size(); i++)
-				sheetNames[i] = timesheetList.get(i).getCaseId() + 
-			  				  " (" + timesheetList.get(i).getClient().getName() + ")";
-			
-			return sheetNames;
-		}
-		catch(Exception ex)
-		{
-			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
-		}
-		
-		return null;
-	}
+        try
+        {
+            return new PopulateSheetList().doInBackground();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 	
 	private String[] populateSheetByUser()
 	{
@@ -554,44 +529,9 @@ public class SystemUI extends JFrame implements ChangeListener
 		return null;
 	}
 	
-	private void addSheetDate()
+	private void addSheetData()
 	{
-		try
-		{
-			int sheetId = 2;
-			
-			TimeSheet sheet = _timesheetCtrl.getTimeSheetById(sheetId);
-			
-			clientName = sheet.getClient().getName();
-			clientAddress = sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName();
-			clientPhone = String.valueOf(sheet.getClient().getPhoneNo());
-			clientEmail = sheet.getClient().getEmail();
-			caseId = sheet.getCaseId();
-			sheetOwner = sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName();
-			clientNote = sheet.getNote();
-			
-
-			if(sheet != null)
-			{
-				 ArrayList<DataEntry> dataEntries = sheet.getDataEntries();
-				 
-				 Object[][] data = {};
-				 sheetModel.setDataVector(data, sheetColumn);
-				 
-				 for(int i = 0; i < dataEntries.size(); i++)
-				 {
-					 
-					 DataEntry dataEntry = dataEntries.get(i);
-					 Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(), 
-							                      dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark() };
-					 sheetModel.addRow(row);
-				 }
-			}
-		}
-		catch(Exception ex)
-		{
-			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
-		}
+        new AddSheetData().execute();
 	}
 	
 	private void addClientSheetData()
@@ -623,4 +563,71 @@ public class SystemUI extends JFrame implements ChangeListener
 			System.exit(0);
 		}
 	}
+
+    class PopulateSheetList extends SwingWorker<String[], Integer>
+    {
+        protected String[] doInBackground() throws Exception
+        {
+            ArrayList<TimeSheet> timeSheetList;
+            try
+            {
+                timeSheetList = _timesheetCtrl.getAllTimeSheets();
+                String[] sheetNames = new String[timeSheetList.size()];
+                for(int i = 0; i < timeSheetList.size(); i++)
+                    sheetNames[i] = timeSheetList.get(i).getCaseId() +
+                            " (" + timeSheetList.get(i).getClient().getName() + ")";
+
+                return sheetNames;
+            }
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            }
+
+            return null;
+        }
+    }
+
+    class AddSheetData extends SwingWorker<Integer, Integer>
+    {
+        protected Integer doInBackground() throws Exception
+        {
+            try
+            {
+                int sheetId = 2;
+
+                TimeSheet sheet = _timesheetCtrl.getTimeSheetById(sheetId);
+
+                if(sheet != null)
+                {
+                    clientName = sheet.getClient().getName();
+                    clientAddress = sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName();
+                    clientPhone = String.valueOf(sheet.getClient().getPhoneNo());
+                    clientEmail = sheet.getClient().getEmail();
+                    caseId = sheet.getCaseId();
+                    sheetOwner = sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName();
+                    clientNote = sheet.getNote();
+                    ArrayList<DataEntry> dataEntries = sheet.getDataEntries();
+
+                    Object[][] data = {};
+                    sheetModel.setDataVector(data, sheetColumn);
+
+                    for(int i = 0; i < dataEntries.size(); i++)
+                    {
+
+                        DataEntry dataEntry = dataEntries.get(i);
+                        Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(),
+                                dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark() };
+                        sheetModel.addRow(row);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            }
+
+            return 0;
+        }
+    }
 }

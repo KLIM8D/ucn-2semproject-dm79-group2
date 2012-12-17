@@ -11,6 +11,7 @@ import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,7 @@ public class GenerateReport
         {
             GenerateReport  ok = new GenerateReport();
             int[] sheetIds = {2};
-            ok.fillReport(sheetIds);
+            ok.fillReport(sheetIds, true, System.getProperty("user.dir") + File.separator + "report.pdf");
         }
         catch(Exception e)
         {
@@ -39,7 +40,7 @@ public class GenerateReport
         }
     }
 
-    public void fillReport(int[] sheetIds) throws Exception
+    public void fillReport(int[] sheetIds, boolean getPdf, String outputPath) throws Exception
     {
         TimeSheetCtrl timeSheetCtrl = new TimeSheetCtrl();
         List<ReportWrapper> listTimeSheets = new ArrayList<ReportWrapper>();
@@ -47,16 +48,19 @@ public class GenerateReport
             listTimeSheets.add(new ReportWrapper(timeSheet));
 
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listTimeSheets);
-        String templateLocation = "/home/klim/workspace/java/ucn-2semproject-dm79-group2/src/utils/templates/TimeSheet.jasper";
+        String templateLocation = System.getProperty("user.dir") + "?src?utils?templates?TimeSheet.jasper";
+        templateLocation = templateLocation.replace("?", File.separator);
         JasperPrint jasperPrint = JasperFillManager.fillReport(templateLocation, new HashMap(), beanCollectionDataSource);
-        exportToPrintDialog(jasperPrint);
+
+        if(getPdf && outputPath.length() > 0)
+            exportToPdf(jasperPrint, outputPath);
+        else
+            exportToPrintDialog(jasperPrint);
     }
 
-
-    protected void exportToPdf(JasperPrint populatedReport) throws Exception
+    protected void exportToPdf(JasperPrint populatedReport, String exportLocation) throws Exception
     {
         System.out.println("Exporting to PDF");
-        String exportLocation =  "/home/klim/report.pdf";
         JRPdfExporter exporterPdf = new JRPdfExporter();
         exporterPdf.setParameter(JRExporterParameter.JASPER_PRINT,  populatedReport);
         exporterPdf.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, exportLocation);
