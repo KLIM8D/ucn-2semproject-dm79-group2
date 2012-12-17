@@ -3,9 +3,6 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/klim/workspace/test/src/"]]></defaultValueExpression>
-	</parameter>
 	<field name="name" class="java.lang.String">
 		<fieldDescription><![CDATA[name]]></fieldDescription>
 	</field>
@@ -173,7 +170,7 @@
 			<subreport>
 				<reportElement uuid="794cdcf3-3061-4725-aee5-342ba53353c8" x="4" y="0" width="549" height="251"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{dataEntries})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "dataEntries.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["dataEntries.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
