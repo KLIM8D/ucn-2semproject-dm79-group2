@@ -13,11 +13,12 @@ import utils.*;
 import views.client.CreateClientUI;
 import java.awt.Cursor;
 import java.awt.Dimension;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
+
+import javax.swing.BorderFactory;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
@@ -42,6 +43,11 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import models.Client;
 import models.DataEntry;
@@ -49,14 +55,6 @@ import models.TimeSheet;
 
 import controllers.ClientCtrl;
 import controllers.TimeSheetCtrl;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
 
 @SuppressWarnings("serial")
 public class SystemUI extends JFrame implements ChangeListener
@@ -69,9 +67,19 @@ public class SystemUI extends JFrame implements ChangeListener
 	private JCheckBox chkUsersSheetsOnly;
 	private JList<String> lstTimeSheets;
 	
+	
 	// Controllers
 	private TimeSheetCtrl _timesheetCtrl;
 	private ClientCtrl _clientCtrl;
+	
+	// InfoDisplay
+	private String clientName;
+	private String clientAddress;
+	private String clientPhone;
+	private String clientEmail;
+	private String clientNote;
+	private String caseId;
+	private String sheetOwner;
 	
 	// Grid
 	private DefaultTableModel sheetModel;
@@ -251,36 +259,36 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheet.add(pnlTimeSheetInfo);
 		pnlTimeSheetInfo.setLayout(null);
 		
-		JLabel lblClientName_ts = new JLabel("[swap section with db data]");
+		final JLabel lblClientName_ts = new JLabel();
 		lblClientName_ts.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		lblClientName_ts.setFont(new Font("Dialog", Font.PLAIN, 18));
 		lblClientName_ts.setBounds(5, 5, 500, 20);
 		pnlTimeSheetInfo.add(lblClientName_ts);
 		
-		JLabel lblCaseId_ts = new JLabel("[swap section with db data]");
+		final JLabel lblCaseId_ts = new JLabel();
 		lblCaseId_ts.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCaseId_ts.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		lblCaseId_ts.setFont(new Font("Dialog", Font.PLAIN, 18));
 		lblCaseId_ts.setBounds(535, 5, 250, 20);
 		pnlTimeSheetInfo.add(lblCaseId_ts);
 		
-		JLabel lblClientAddress_ts = new JLabel("[swap section with db data]");
+		final JLabel lblClientAddress_ts = new JLabel();
 		lblClientAddress_ts.setForeground(Color.GRAY);
 		lblClientAddress_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientAddress_ts.setBounds(5, 25, 500, 15);
 		pnlTimeSheetInfo.add(lblClientAddress_ts);
 		
-		JLabel lblClientPhoneNo_ts = new JLabel("Telefon: [swap section with db data]");
+		final JLabel lblClientPhoneNo_ts = new JLabel();
 		lblClientPhoneNo_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientPhoneNo_ts.setBounds(5, 52, 450, 15);
 		pnlTimeSheetInfo.add(lblClientPhoneNo_ts);
 		
-		JLabel lblClientEmail_ts = new JLabel("E-Mail: [swap section with db data]");
+		final JLabel lblClientEmail_ts = new JLabel();
 		lblClientEmail_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientEmail_ts.setBounds(5, 66, 450, 15);
 		pnlTimeSheetInfo.add(lblClientEmail_ts);
 		
-		JLabel lblTimeSheetOwner_ts = new JLabel("Ansvarlig: [swap section with db data]");
+		final JLabel lblTimeSheetOwner_ts = new JLabel();
 		lblTimeSheetOwner_ts.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTimeSheetOwner_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblTimeSheetOwner_ts.setBounds(485, 66, 300, 15);
@@ -295,17 +303,16 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheet.add(pnlTimeSheetNote);
 		pnlTimeSheetNote.setLayout(null);
 		
-		JTextArea txtNoteField = new JTextArea();
-		txtNoteField.setText("Note: [swap section with db data]");
+		final JTextArea txtNoteField = new JTextArea();
 		txtNoteField.setBounds(5, 5, 780, 55);
 		pnlTimeSheetNote.add(txtNoteField);	
 		// END OF NOTE PANEL
 		
 		// START OF SHEETGRID
 		JPanel pnlTimeSheetOverview = new JPanel();
-		pnlTimeSheetOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		pnlTimeSheetOverview.setBackground(Color.WHITE);
-		pnlTimeSheetOverview.setBounds(3, 176, 790, 492);
+		//pnlTimeSheetOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		//pnlTimeSheetOverview.setBackground(Color.WHITE);
+		pnlTimeSheetOverview.setBounds(3, 170, 790, 498);
 		pnlTimeSheet.add(pnlTimeSheetOverview);
 
 		sheetColumn = new String[]{"Påbegyndt", "Afsluttet", "Opgave", "Registrator", "Bemærkning", " "};
@@ -325,12 +332,13 @@ public class SystemUI extends JFrame implements ChangeListener
 		sheetTable.setModel(sheetModel);
 		sheetTable.setFillsViewportHeight(true);
 		
-		JScrollPane scrollPane = new JScrollPane(sheetTable);
-		sheetTable.setBounds(8, 181, 780, 482);
-		sheetTable.setPreferredScrollableViewportSize(new Dimension(780, 482));
-		scrollPane.setPreferredSize(new Dimension(780, 482));
-		pnlTimeSheetOverview.add(sheetTable);
-		sheetTable.add(scrollPane);
+		JScrollPane sheetScroll = new JScrollPane(sheetTable);
+		//sheetTable.setBounds(0, 0, 750, 490);
+		sheetTable.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		sheetTable.setPreferredScrollableViewportSize(new Dimension(790, 493));
+		sheetScroll.setPreferredSize(new Dimension(790, 493));
+		sheetScroll.setBorder(BorderFactory.createEmptyBorder());
+		pnlTimeSheetOverview.add(sheetScroll);
 		// END OF SHEETGRID
 		// END OF TIMESHEETS PANEL
 		
@@ -418,9 +426,17 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheetTab.add(chkUsersSheetsOnly);
 		
 		lstTimeSheets = new JList<String>();
-		lstTimeSheets.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
+		lstTimeSheets.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				addSheetDate();
+				lblClientName_ts.setText(clientName);
+				lblClientAddress_ts.setText(clientAddress);
+				lblClientPhoneNo_ts.setText("Telefon: " + clientPhone);
+				lblClientEmail_ts.setText("E-Mail: " + clientEmail);
+				lblCaseId_ts.setText(caseId);
+				lblTimeSheetOwner_ts.setText("Ansvarlig: " + sheetOwner);
+				txtNoteField.setText("Note: " + clientNote);
 			}
 		});
 		lstTimeSheets.setListData(populateSheetList());
@@ -485,7 +501,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			String[] sheetNames = new String[timesheetList.size()];
 			for(int i = 0; i < timesheetList.size(); i++)
 				sheetNames[i] = timesheetList.get(i).getCaseId() + 
-								" (" + timesheetList.get(i).getClient().getName() + ")";
+			  				  " (" + timesheetList.get(i).getClient().getName() + ")";
 			
 			return sheetNames;
 		}
@@ -506,7 +522,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			String[] sheetNames = new String[timesheetList.size()];
 			for(int i = 0; i < timesheetList.size(); i++)
 				sheetNames[i] = timesheetList.get(i).getCaseId() + 
-								" (" + timesheetList.get(i).getClient().getName() + ")";
+						" (" + timesheetList.get(i).getClient().getName() + ")";
 			
 			return sheetNames;
 		}
@@ -546,14 +562,25 @@ public class SystemUI extends JFrame implements ChangeListener
 			
 			TimeSheet sheet = _timesheetCtrl.getTimeSheetById(sheetId);
 			
+			clientName = sheet.getClient().getName();
+			clientAddress = sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName();
+			clientPhone = String.valueOf(sheet.getClient().getPhoneNo());
+			clientEmail = sheet.getClient().getEmail();
+			caseId = sheet.getCaseId();
+			sheetOwner = sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName();
+			clientNote = sheet.getNote();
+			
+
 			if(sheet != null)
 			{
 				 ArrayList<DataEntry> dataEntries = sheet.getDataEntries();
+				 
 				 Object[][] data = {};
 				 sheetModel.setDataVector(data, sheetColumn);
 				 
 				 for(int i = 0; i < dataEntries.size(); i++)
 				 {
+					 
 					 DataEntry dataEntry = dataEntries.get(i);
 					 Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(), 
 							                      dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark() };
