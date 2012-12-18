@@ -1,5 +1,6 @@
 package views.dataentry;
 
+import controllers.TaskCtrl;
 import controllers.TimeSheetCtrl;
 import models.DataEntry;
 import models.Task;
@@ -28,6 +29,7 @@ public class CreateDataEntryUI extends JFrame {
 	private JTextField txtDescription;
 	
     private TimeSheetCtrl _tsCtrl;
+    private TaskCtrl _taCtrl;
     private static TimeSheet ts; // timesheet needs to be imported from super, when we open this class.
     
     private JComboBox<Task> drpXTask;
@@ -136,6 +138,13 @@ public class CreateDataEntryUI extends JFrame {
 		txtDescription.setColumns(10);
 		
 		JButton btnCreateTask = new JButton("Opret ny Opgave");
+        btnCreateTask.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                createTask();
+            }
+        });
 		btnCreateTask.setBounds(156, 183, 117, 23);
 		Task.add(btnCreateTask);
 		
@@ -180,6 +189,27 @@ public class CreateDataEntryUI extends JFrame {
             _tsCtrl.addDataEntry(ts, dataEntry);
 
             JOptionPane.showMessageDialog(null, "Registreringen er oprettet", "Information!", JOptionPane.INFORMATION_MESSAGE);
+            _instance = null;
+            _frame.dispose();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Fejl", JOptionPane.WARNING_MESSAGE);
+        }
+	}
+	
+	public void createTask()
+	{
+        try
+        {
+            String title = txtTitle.getText();
+            String description = txtDescription.getText();
+            Task task = new Task(title, description);
+
+            _taCtrl.insertTask(task);
+
+            JOptionPane.showMessageDialog(null, "Opgavetypen er oprettet", "Information!", JOptionPane.INFORMATION_MESSAGE);
             _instance = null;
             _frame.dispose();
         }
