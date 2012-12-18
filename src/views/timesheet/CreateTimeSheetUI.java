@@ -27,27 +27,22 @@ import utils.Logging;
 
 public class CreateTimeSheetUI extends JFrame {
 
-	private JPanel contentPane;
-	private JComboBox<String> drpClients;
+	private JPanel _contentPane;
+	private JComboBox<String> _drpClients;
 	private ClientCtrl _clientCtrl;
-	private DefaultComboBoxModel<String> model;
+	private DefaultComboBoxModel<String> _model;
 
+	private JComboBox<String> _drpUsers;
+	private UserCtrl _userCtrl;
+	private DefaultComboBoxModel<String> _modelUsers;
+		
+	private JComboBox<String> _drpPermissions;
+	private UserPermissionCtrl _userPermissionCtrl;
+	private DefaultComboBoxModel<String> _modelPermissions;
 	
-	private JComboBox<String> drpUsers;
-	private UserCtrl userCtrl;
-	private DefaultComboBoxModel<String> modelUsers;
-	
-	
-	private JComboBox<String> drpPermissions;
-	private UserPermissionCtrl userPermissionCtrl;
-	private DefaultComboBoxModel<String> modelPermissions;
-	
-	
-	
-	
-	private JPanel panel1;
-	private JPanel panel2;
-	private JTextField textField;
+	private JPanel _panel1;
+	private JPanel _panel2;
+	private JTextField _textField;
 
 
 	/**
@@ -66,15 +61,15 @@ public class CreateTimeSheetUI extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 415, 392);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		_contentPane = new JPanel();
+		_contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setContentPane(_contentPane);
+		_contentPane.setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 58, 392, 262);
-		contentPane.add(tabbedPane);
+		_contentPane.add(tabbedPane);
 		
 		JButton btnNewButton = new JButton("Annuller");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -82,7 +77,7 @@ public class CreateTimeSheetUI extends JFrame {
 			}
 		});
 		btnNewButton.setBounds(302, 331, 100, 23);
-		contentPane.add(btnNewButton);
+		_contentPane.add(btnNewButton);
 		
 		JButton btnNewNste = new JButton("N\u00E6ste (1/2)");
 		btnNewNste.addActionListener(new ActionListener() {
@@ -90,18 +85,18 @@ public class CreateTimeSheetUI extends JFrame {
 			}
 		});
 		btnNewNste.setBounds(195, 331, 100, 23);
-		contentPane.add(btnNewNste);
+		_contentPane.add(btnNewNste);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 45, 392, 2);
-		contentPane.add(separator);
+		_contentPane.add(separator);
 		
 		JLabel lblKlient = new JLabel("Klient");
 		lblKlient.setBounds(10, 11, 53, 23);
-		contentPane.add(lblKlient);
+		_contentPane.add(lblKlient);
 		
-		drpClients = new JComboBox<String>();
-		drpClients.setBounds(49, 11, 353, 22);
+		_drpClients = new JComboBox<String>();
+		_drpClients.setBounds(49, 11, 353, 22);
 		/*
 		contentPane.add(drpClients);
 		model = new DefaultComboBoxModel<String>(addClients());
@@ -112,60 +107,60 @@ public class CreateTimeSheetUI extends JFrame {
 		// addUsers();
 
 		// pane1 start
-		panel1 = new JPanel();
-		panel1.setLayout(null);
+		_panel1 = new JPanel();
+		_panel1.setLayout(null);
 		
 		JLabel label1 = new JLabel("ID");
 		label1.setBounds(5, 5, 60, 23);
-		panel1.add(label1);
+		_panel1.add(label1);
 		
 		JLabel label2 = new JLabel("Note");
 		label2.setBounds(5, 30, 60, 23);
-		panel1.add(label2);
+		_panel1.add(label2);
 		
 		// for display ClientId
 		JTextPane textPane = new JTextPane();
 		textPane.setBounds(45, 5, 332, 20);
-		panel1.add(textPane);
+		_panel1.add(textPane);
 		
 		// for notes
-		textField = new JTextField();
-		textField.setBounds(45, 31, 332, 195);
-		panel1.add(textField);
-		textField.setColumns(10);
+		_textField = new JTextField();
+		_textField.setBounds(45, 31, 332, 195);
+		_panel1.add(_textField);
+		_textField.setColumns(10);
 		
-		tabbedPane.add("Time-Sag", panel1);
+		tabbedPane.add("Time-Sag", _panel1);
 		// pane1 end
 		
 		// pane2 start
-		panel2 = new JPanel();
-		panel2.setLayout(null);
+		_panel2 = new JPanel();
+		_panel2.setLayout(null);
 		
 		JLabel label3 = new JLabel("Brugere");
 		label3.setBounds(5, 30, 60, 23);
-		panel2.add(label3);
+		_panel2.add(label3);
 		
 		JLabel label4 = new JLabel("Rettigheder");
 		label4.setBounds(5, 127, 96, 23);
-		panel2.add(label4);
+		_panel2.add(label4);
 		
 	
 		
-		drpUsers = new JComboBox<String>();
-		drpUsers.setBounds(111, 30, 249, 22);
-		panel2.add(drpUsers);
+		_drpUsers = new JComboBox<String>();
+		_drpUsers.setBounds(111, 30, 249, 22);
+		_panel2.add(_drpUsers);
 		//model = new DefaultComboBoxModel<String>(addUsers());
 		//drpUsers.setModel(model);
 		//addUsers();
 		
-		drpPermissions = new JComboBox<String>();
-		drpPermissions.setBounds(111, 127, 249, 22);
-		panel2.add(drpPermissions);
-		//model = new DefaultComboBoxModel<String>();
-		//drpPermissions.setModel(model);
+		_drpPermissions = new JComboBox<String>();
+		_drpPermissions.setBounds(111, 127, 249, 22);
+		_panel2.add(_drpPermissions);
+		//_model = new DefaultComboBoxModel<String>();
+		//_drpPermissions.setModel(_model);
 		//addPermissions();
 				
-		tabbedPane.add("Rettigheder", panel2);
+		tabbedPane.add("Rettigheder", _panel2);
 		// pane2 end
 	}
 	
@@ -196,7 +191,7 @@ public class CreateTimeSheetUI extends JFrame {
 		ArrayList<User> users;
 		try
 		{
-			users = userCtrl.getAllUsers();
+			users = _userCtrl.getAllUsers();
 			String[] userNames = new String[users.size()];
 			for (int index = 0; index < users.size(); index++) {
 				String fName = users.get(index).getFirstName();
@@ -219,7 +214,7 @@ public class CreateTimeSheetUI extends JFrame {
 		ArrayList<UserPermission> permissions;
 		try
 		{
-			permissions = userPermissionCtrl.getAllRoles();
+			permissions = _userPermissionCtrl.getAllRoles();
 			String[] permissionTitles = new String[permissions.size()];
 			for (int index = 0; index < permissions.size(); index++) {
 				permissionTitles[index] = permissions.get(index).getUserRole();

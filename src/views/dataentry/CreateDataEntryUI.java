@@ -7,6 +7,7 @@ import models.TimeSheet;
 import models.User;
 import utils.Logging;
 import utils.UserSession;
+import views.dataentry.CreateDataEntryUI;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,26 +17,31 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CreateDataEntryUI extends JFrame
-{
+public class CreateDataEntryUI extends JFrame {
 
     private static JFrame _frame;
     private static CreateDataEntryUI _instance;
     private JPanel contentPane;
     
-    private TimeSheetCtrl _tsCtrl;
-    private TimeSheet ts; // timesheet needs to be imported from super, when we open this class.
-    
-    private JComboBox<Task> drpAssignment;
-    private JComboBox<Date> drpStartDate;
-    private JComboBox<Date> drpEndDate;
 	private JTextField txtRemark;
+	private JTextField txtTitle;
+	private JTextField txtDescription;
+	
+    private TimeSheetCtrl _tsCtrl;
+    private static TimeSheet ts; // timesheet needs to be imported from super, when we open this class.
+    
+    private JComboBox<Task> drpXTask;
+    private JComboBox<Date> drpXStarted;
+    private JComboBox<Date> drpXEnded;
 
-	public static JFrame createWindow()
+	public static JFrame createWindow(TimeSheet timeSheet)
     {
 		if(_instance == null)
+		{
 			_instance = new CreateDataEntryUI();
-
+			ts = timeSheet;
+		}
+			
 		return _frame;
     }
 
@@ -46,11 +52,10 @@ public class CreateDataEntryUI extends JFrame
 
 	public void createElements() 
 	{
-		
 		_frame = new JFrame();
         _frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
-		_frame.setBounds(100, 100, 450, 300);
+		_frame.setBounds(100, 100, 300, 307);
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);
@@ -60,46 +65,79 @@ public class CreateDataEntryUI extends JFrame
 		contentPane.setLayout(null);
 		_frame.setContentPane(contentPane);
 		
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		tabbedPane.setBounds(0, 0, 434, 239);
+		contentPane.add(tabbedPane);
 		
-		JPanel tabRegistration = new JPanel();
-		tabbedPane.addTab("Registrering", null, tabRegistration, null);
-        tabRegistration.setLayout(null);
+		JPanel dataEntry = new JPanel();
+		tabbedPane.addTab("Registrering", null, dataEntry, null);
+		dataEntry.setLayout(null);
 		
-		JLabel lblAssignment = new JLabel("Opgave");
-		lblAssignment.setBounds(12,12,120,15);
-        tabRegistration.add(lblAssignment);
+		JLabel lblTask = new JLabel("Opgave");
+		lblTask.setBounds(10, 11, 66, 14);
+		dataEntry.add(lblTask);
+		
+		drpXTask = new JComboBox();
+		drpXTask.setBounds(80, 8, 121, 20);
+		dataEntry.add(drpXTask);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 42, 400, 1);
-        tabRegistration.add(separator);
+		separator.setBounds(10, 37, 268, 1);
+		dataEntry.add(separator);
 		
-		JLabel lblCreatedDate = new JLabel("P\u00E5begyndt");
-		lblCreatedDate.setBounds(12,52,120,15);
-        tabRegistration.add(lblCreatedDate);
+		JLabel lblStarted = new JLabel("P\u00E5begyndt");
+		lblStarted.setBounds(10, 50, 66, 14);
+		dataEntry.add(lblStarted);
 		
-		JLabel lblEndDate = new JLabel("Afsluttet");
-		lblEndDate.setBounds(12,82,120,15);
-        tabRegistration.add(lblEndDate);
+		JLabel lblEnded = new JLabel("Afsluttet");
+		lblEnded.setBounds(10, 75, 66, 14);
+		dataEntry.add(lblEnded);
 		
 		JLabel lblRemark = new JLabel("Bem\u00E6rkning");
-		lblRemark.setBounds(12,112,120,15);
-        tabRegistration.add(lblRemark);
-		
-		drpAssignment.setBounds(80, 10, 100, 20);
-        tabRegistration.add(drpAssignment);
-		
-		drpStartDate.setBounds(80, 50, 100, 20);
-        tabRegistration.add(drpStartDate);
-		
-		drpEndDate.setBounds(80, 80, 100, 20);
-        tabRegistration.add(drpEndDate);
+		lblRemark.setBounds(10, 100, 66, 14);
+		dataEntry.add(lblRemark);
 		
 		txtRemark = new JTextField();
-		txtRemark.setBounds(80,120,230,60);
-        tabRegistration.add(txtRemark);
+		txtRemark.setBounds(80, 100, 190, 100);
+		dataEntry.add(txtRemark);
 		txtRemark.setColumns(10);
+		
+		drpXStarted = new JComboBox();
+		drpXStarted.setBounds(80, 47, 121, 20);
+		dataEntry.add(drpXStarted);
+		
+		drpXEnded = new JComboBox();
+		drpXEnded.setBounds(80, 72, 121, 20);
+		dataEntry.add(drpXEnded);
+		
+		JPanel Task = new JPanel();
+		tabbedPane.addTab("Opgave", null, Task, null);
+		Task.setLayout(null);
+		
+		JLabel lblTitle = new JLabel("Title");
+		lblTitle.setBounds(10, 11, 57, 14);
+		Task.add(lblTitle);
+		
+		JLabel lblDescription = new JLabel("Beskrivelse");
+		lblDescription.setBounds(10, 45, 65, 14);
+		Task.add(lblDescription);
+		
+		txtTitle = new JTextField();
+		txtTitle.setBounds(72, 11, 201, 20);
+		Task.add(txtTitle);
+		txtTitle.setColumns(10);
+		
+		txtDescription = new JTextField();
+		txtDescription.setBounds(72, 42, 201, 136);
+		Task.add(txtDescription);
+		txtDescription.setColumns(10);
+		
+		JButton btnCreateTask = new JButton("Opret ny Opgave");
+		btnCreateTask.setBounds(156, 183, 117, 23);
+		Task.add(btnCreateTask);
 		
         JButton btnCancel = new JButton("Annuller");
         btnCancel.addActionListener(new ActionListener()
@@ -110,9 +148,9 @@ public class CreateDataEntryUI extends JFrame
                 _frame.dispose();
             }
         });
-        btnCancel.setBounds(375,195,117,25);
-        contentPane.add(btnCancel);
-
+		btnCancel.setBounds(185, 241, 89, 23);
+		contentPane.add(btnCancel);
+		
         JButton btnCreate = new JButton("Opret");
         btnCreate.addActionListener(new ActionListener()
         {
@@ -121,22 +159,18 @@ public class CreateDataEntryUI extends JFrame
                 createDataEntry();
             }
         });
-        btnCreate.setBounds(246,195,117,25);
-        contentPane.add(btnCreate);
-
-		
-		JPanel tabAssignment = new JPanel();
-		tabbedPane.addTab("Opgave", null, tabAssignment, null);
+		btnCreate.setBounds(86, 241, 89, 23);
+		contentPane.add(btnCreate);
 	}
 	
 	public void createDataEntry()
 	{
         try
         {
-            Task task = (Task)drpAssignment.getSelectedItem();
+            Task task = (Task)drpXTask.getSelectedItem();
             User user = UserSession.getLoggedInUser();
-            Date startDate = (Date)drpStartDate.getSelectedItem();
-            Date endDate = (Date)drpEndDate.getSelectedItem();
+            Date startDate = (Date)drpXStarted.getSelectedItem();
+            Date endDate = (Date)drpXEnded.getSelectedItem();
             String entryRemark = txtRemark.getText();
             Calendar cal = Calendar.getInstance();
             Date creationDate = cal.getTime();
