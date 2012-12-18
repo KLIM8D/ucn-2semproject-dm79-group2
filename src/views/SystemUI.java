@@ -401,13 +401,13 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlClientOverview.setBounds(3,94,790,574);
 		pnlClients.add(pnlClientOverview);
 		
-		clientColumn = new String[]{"Sags nr", "Virksomhed", "Oprettet", "Ansvarlig", "Note", " "};
+		clientColumn = new String[]{"Sags nr", "Oprettet", "Ansvarlig", "Note", " "};
 		
 		clientTable = new JTable()
 		{
 			public boolean isCellEditable(int data, int columns)
             {
-                if(columns == 5 || columns == 6)
+                if(columns == 4 || columns == 5)
                     return true;
                 return false;
             }
@@ -760,8 +760,7 @@ public class SystemUI extends JFrame implements ChangeListener
         {
 			try
 			{
-				String clientName = lstClients.getSelectedValue();
-				Client client = _clientCtrl.getClientByName(clientName);
+				Client client = _clientCtrl.getClientByName(lstClients.getSelectedValue());
 				
 				lblClientName_cl.setText(client.getName());
 				lblClientAddress_cl.setText(client.getAddress() + ", " + client.getCity().getZipCode() + " " + client.getCity().getCityName());
@@ -773,13 +772,13 @@ public class SystemUI extends JFrame implements ChangeListener
 					ArrayList<TimeSheet> timesheets = _timesheetCtrl.getAllTimeSheetsByClient(client);
 					
 					Object[][] data = {};
-					sheetModel.setDataVector(data, sheetColumn);
+					clientModel.setDataVector(data, clientColumn);
 					
 					for(int i = 0; i < timesheets.size(); i++)
 					{
 						TimeSheet timesheet = timesheets.get(i);
-						Object[] row = new Object[]{ timesheet.getCaseId(), timesheet.getClient().getName(), timesheet.getCreationDate(),
-								timesheet.getUser().getFirstName() + timesheet.getUser().getLastName() + timesheet.getNote(), "Rediger/Slet" };
+						Object[] row = new Object[]{ timesheet.getCaseId(), timesheet.getCreationDate(), timesheet.getUser().getFirstName() + " " +
+								timesheet.getUser().getLastName(), timesheet.getNote(), "Rediger/Slet" };
 						
 						clientModel.addRow(row);
 					}
