@@ -49,7 +49,6 @@ public class SystemUI extends JFrame implements ChangeListener
 	private JCheckBox chkUsersSheetsOnly;
 	private JList<String> lstTimeSheets;
 	
-	
 	// Controllers
 	private TimeSheetCtrl _timesheetCtrl;
 	private ClientCtrl _clientCtrl;
@@ -62,6 +61,9 @@ public class SystemUI extends JFrame implements ChangeListener
 	private String clientNote;
 	private String caseId;
 	private String sheetOwner;
+	
+	// Temp JLabel
+	private JLabel lblClientName_ts;
 	
 	// Grid
 	private DefaultTableModel sheetModel;
@@ -415,13 +417,13 @@ public class SystemUI extends JFrame implements ChangeListener
 				//info.setVisible(true);
 				
 				addSheetData();
-				lblClientName_ts.setText(clientName);
+				/*lblClientName_ts.setText(clientName);
 				lblClientAddress_ts.setText(clientAddress);
 				lblClientPhoneNo_ts.setText("Telefon: " + clientPhone);
 				lblClientEmail_ts.setText("E-Mail: " + clientEmail);
 				lblCaseId_ts.setText(caseId);
 				lblTimeSheetOwner_ts.setText("Ansvarlig: " + sheetOwner);
-				txtNoteField.setText("Note: " + clientNote);
+				txtNoteField.setText("Note: " + clientNote);*/
 				
 				//info.dispose();
 			}
@@ -495,16 +497,23 @@ public class SystemUI extends JFrame implements ChangeListener
 	
 	private String[] populateSheetByUser()
 	{
-        try
-        {
-            return new PopulateSheetListByUser().doInBackground();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return null;
+		ArrayList<TimeSheet> timesheetList;
+		try
+		{
+			timesheetList = _timesheetCtrl.getAllTimeSheetsByUser(UserSession.getLoggedInUser());
+			String[] sheetNames = new String[timesheetList.size()];
+			for(int i = 0; i < timesheetList.size(); i++)
+				sheetNames[i] = timesheetList.get(i).getCaseId() + 
+						" (" + timesheetList.get(i).getClient().getName() + ")";
+			
+			return sheetNames;
+		}
+		catch(Exception ex)
+		{
+			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		return null;
 	}
 	
 	private String[] populateClientList()
@@ -586,30 +595,6 @@ public class SystemUI extends JFrame implements ChangeListener
         }
     }
 
-    class PopulateSheetListByUser extends SwingWorker<String[], Integer>
-    {
-        protected String[] doInBackground() throws Exception
-        {
-            ArrayList<TimeSheet> timeSheetList;
-            try
-            {
-                timeSheetList = _timesheetCtrl.getAllTimeSheetsByUser(UserSession.getLoggedInUser());
-                String[] sheetNames = new String[timeSheetList.size()];
-                for(int i = 0; i < timeSheetList.size(); i++)
-                    sheetNames[i] = timeSheetList.get(i).getCaseId() +
-                            " (" + timeSheetList.get(i).getClient().getName() + ")";
-
-                return sheetNames;
-            }
-            catch(Exception ex)
-            {
-                JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
-            }
-
-            return null;
-        }
-    }
-
     class AddSheetData extends SwingWorker<Integer, Integer>
     {
         protected Integer doInBackground() throws Exception
@@ -650,6 +635,10 @@ public class SystemUI extends JFrame implements ChangeListener
             }
 
             return 0;
+        }
+        protected void done()
+        {
+        	lblClientName_ts.setText(clientName);
         }
     }
 }
