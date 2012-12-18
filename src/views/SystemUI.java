@@ -16,7 +16,6 @@ import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
-
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.border.LineBorder;
@@ -48,23 +47,21 @@ public class SystemUI extends JFrame implements ChangeListener
 	private JTextField txtSearchOverview;
 	private JCheckBox chkUsersSheetsOnly;
 	private JList<String> lstTimeSheets;
+	private JLabel lblClientName_ts;
+	private JLabel lblCaseId_ts;
+	private JLabel lblClientAddress_ts;
+	private JLabel lblClientPhoneNo_ts;
+	private JLabel lblClientEmail_ts;
+	private JLabel lblTimeSheetOwner_ts;
+	private JTextArea txtNoteField;
+	
+	// Data Notification Dialog
+	DataNotificationUI dbInfo = new views.DataNotificationUI();
 	
 	// Controllers
 	private TimeSheetCtrl _timesheetCtrl;
 	private ClientCtrl _clientCtrl;
-	
-	// InfoDisplay
-	private String clientName;
-	private String clientAddress;
-	private String clientPhone;
-	private String clientEmail;
-	private String clientNote;
-	private String caseId;
-	private String sheetOwner;
-	
-	// Temp JLabel
-	private JLabel lblClientName_ts;
-	
+
 	// Grid
 	private DefaultTableModel sheetModel;
 	private JTable sheetTable;
@@ -243,36 +240,36 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheet.add(pnlTimeSheetInfo);
 		pnlTimeSheetInfo.setLayout(null);
 		
-		final JLabel lblClientName_ts = new JLabel();
+		lblClientName_ts = new JLabel();
 		lblClientName_ts.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		lblClientName_ts.setFont(new Font("Dialog", Font.PLAIN, 18));
 		lblClientName_ts.setBounds(5, 5, 500, 20);
 		pnlTimeSheetInfo.add(lblClientName_ts);
 		
-		final JLabel lblCaseId_ts = new JLabel();
+		lblCaseId_ts = new JLabel();
 		lblCaseId_ts.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCaseId_ts.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		lblCaseId_ts.setFont(new Font("Dialog", Font.PLAIN, 18));
 		lblCaseId_ts.setBounds(535, 5, 250, 20);
 		pnlTimeSheetInfo.add(lblCaseId_ts);
 		
-		final JLabel lblClientAddress_ts = new JLabel();
+		lblClientAddress_ts = new JLabel();
 		lblClientAddress_ts.setForeground(Color.GRAY);
 		lblClientAddress_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientAddress_ts.setBounds(5, 25, 500, 15);
 		pnlTimeSheetInfo.add(lblClientAddress_ts);
 		
-		final JLabel lblClientPhoneNo_ts = new JLabel();
+		lblClientPhoneNo_ts = new JLabel();
 		lblClientPhoneNo_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientPhoneNo_ts.setBounds(5, 52, 450, 15);
 		pnlTimeSheetInfo.add(lblClientPhoneNo_ts);
 		
-		final JLabel lblClientEmail_ts = new JLabel();
+		lblClientEmail_ts = new JLabel();
 		lblClientEmail_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblClientEmail_ts.setBounds(5, 66, 450, 15);
 		pnlTimeSheetInfo.add(lblClientEmail_ts);
 		
-		final JLabel lblTimeSheetOwner_ts = new JLabel();
+		lblTimeSheetOwner_ts = new JLabel();
 		lblTimeSheetOwner_ts.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTimeSheetOwner_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblTimeSheetOwner_ts.setBounds(485, 66, 300, 15);
@@ -287,7 +284,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheet.add(pnlTimeSheetNote);
 		pnlTimeSheetNote.setLayout(null);
 		
-		final JTextArea txtNoteField = new JTextArea();
+		txtNoteField = new JTextArea();
 		txtNoteField.setBounds(5, 5, 780, 55);
 		pnlTimeSheetNote.add(txtNoteField);	
 		// END OF NOTE PANEL
@@ -413,19 +410,9 @@ public class SystemUI extends JFrame implements ChangeListener
 		lstTimeSheets.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//DataNotificationUI info = new views.DataNotificationUI();
-				//info.setVisible(true);
+				dbInfo.setVisible(true);
 				
 				addSheetData();
-				/*lblClientName_ts.setText(clientName);
-				lblClientAddress_ts.setText(clientAddress);
-				lblClientPhoneNo_ts.setText("Telefon: " + clientPhone);
-				lblClientEmail_ts.setText("E-Mail: " + clientEmail);
-				lblCaseId_ts.setText(caseId);
-				lblTimeSheetOwner_ts.setText("Ansvarlig: " + sheetOwner);
-				txtNoteField.setText("Note: " + clientNote);*/
-				
-				//info.dispose();
 			}
 		});
 		lstTimeSheets.setListData(populateSheetList());
@@ -604,16 +591,17 @@ public class SystemUI extends JFrame implements ChangeListener
                 int sheetId = 2;
 
                 TimeSheet sheet = _timesheetCtrl.getTimeSheetById(sheetId);
+                
+                lblClientName_ts.setText(sheet.getClient().getName());
+    			lblClientAddress_ts.setText(sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName());
+    			lblClientPhoneNo_ts.setText("Telefon: " + String.valueOf(sheet.getClient().getPhoneNo()));
+    			lblClientEmail_ts.setText("E-Mail: " + sheet.getClient().getEmail());
+    			lblCaseId_ts.setText(sheet.getCaseId());
+    			lblTimeSheetOwner_ts.setText("Ansvarlig: " + sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName());
+    			txtNoteField.setText("Note: " + sheet.getNote());
 
                 if(sheet != null)
                 {
-                    clientName = sheet.getClient().getName();
-                    clientAddress = sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName();
-                    clientPhone = String.valueOf(sheet.getClient().getPhoneNo());
-                    clientEmail = sheet.getClient().getEmail();
-                    caseId = sheet.getCaseId();
-                    sheetOwner = sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName();
-                    clientNote = sheet.getNote();
                     ArrayList<DataEntry> dataEntries = sheet.getDataEntries();
 
                     Object[][] data = {};
@@ -638,7 +626,7 @@ public class SystemUI extends JFrame implements ChangeListener
         }
         protected void done()
         {
-        	lblClientName_ts.setText(clientName);
+        	dbInfo.dispose();
         }
     }
 }
