@@ -15,6 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import controllers.ClientCtrl;
 import models.Client;
+import controllers.UserCtrl;
+import models.User;
+import controllers.UserPermissionCtrl;
+import models.UserPermission;
 import java.util.ArrayList;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -27,6 +31,19 @@ public class CreateTimeSheetUI extends JFrame {
 	private JComboBox<String> drpClients;
 	private ClientCtrl _clientCtrl;
 	private DefaultComboBoxModel<String> model;
+
+	
+	private JComboBox<String> drpUsers;
+	private UserCtrl userCtrl;
+	private DefaultComboBoxModel<String> modelUsers;
+	
+	
+	private JComboBox<String> drpPermissions;
+	private UserPermissionCtrl userPermissionCtrl;
+	private DefaultComboBoxModel<String> modelPermissions;
+	
+	
+	
 	
 	private JPanel panel1;
 	private JPanel panel2;
@@ -85,14 +102,16 @@ public class CreateTimeSheetUI extends JFrame {
 		
 		drpClients = new JComboBox<String>();
 		drpClients.setBounds(49, 11, 353, 22);
+		/*
 		contentPane.add(drpClients);
 		model = new DefaultComboBoxModel<String>(addClients());
 		drpClients.setModel(model);
-
+		*/
 		
 		// addClients();
+		// addUsers();
 
-		// pane1
+		// pane1 start
 		panel1 = new JPanel();
 		panel1.setLayout(null);
 		
@@ -116,13 +135,38 @@ public class CreateTimeSheetUI extends JFrame {
 		textField.setColumns(10);
 		
 		tabbedPane.add("Time-Sag", panel1);
+		// pane1 end
 		
-		
-		// pane2
+		// pane2 start
 		panel2 = new JPanel();
 		panel2.setLayout(null);
 		
-		tabbedPane.add("Rettigheder", panel2);		
+		JLabel label3 = new JLabel("Brugere");
+		label3.setBounds(5, 30, 60, 23);
+		panel2.add(label3);
+		
+		JLabel label4 = new JLabel("Rettigheder");
+		label4.setBounds(5, 127, 96, 23);
+		panel2.add(label4);
+		
+	
+		
+		drpUsers = new JComboBox<String>();
+		drpUsers.setBounds(111, 30, 249, 22);
+		panel2.add(drpUsers);
+		//model = new DefaultComboBoxModel<String>(addUsers());
+		//drpUsers.setModel(model);
+		//addUsers();
+		
+		drpPermissions = new JComboBox<String>();
+		drpPermissions.setBounds(111, 127, 249, 22);
+		panel2.add(drpPermissions);
+		//model = new DefaultComboBoxModel<String>();
+		//drpPermissions.setModel(model);
+		//addPermissions();
+				
+		tabbedPane.add("Rettigheder", panel2);
+		// pane2 end
 	}
 	
 	
@@ -143,6 +187,49 @@ public class CreateTimeSheetUI extends JFrame {
 			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
 		}
 		
+		return null;
+	}
+	
+	
+	public String[] addUsers()
+	{
+		ArrayList<User> users;
+		try
+		{
+			users = userCtrl.getAllUsers();
+			String[] userNames = new String[users.size()];
+			for (int index = 0; index < users.size(); index++) {
+				String fName = users.get(index).getFirstName();
+				String lName = users.get(index).getLastName();
+				String fullName = fName + " " + lName;
+				userNames[index] = fullName;
+			}
+			return userNames;
+		}
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+	
+	
+	public String[] addPermissions()
+	{
+		ArrayList<UserPermission> permissions;
+		try
+		{
+			permissions = userPermissionCtrl.getAllRoles();
+			String[] permissionTitles = new String[permissions.size()];
+			for (int index = 0; index < permissions.size(); index++) {
+				permissionTitles[index] = permissions.get(index).getUserRole();
+			}
+			return permissionTitles;
+		}
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
+		}
 		return null;
 	}
 }
