@@ -11,6 +11,9 @@ package views;
 
 import utils.*;
 import views.client.CreateClientUI;
+import views.dataentry.CreateDataEntryUI;
+import views.timesheet.CreateTimeSheetUI;
+
 import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.*;
@@ -26,6 +29,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -97,8 +101,10 @@ public class SystemUI extends JFrame implements ChangeListener
 		menuBar.add(mnFiles);
 		
 		JMenuItem mntmPrint = new JMenuItem("Udskriv");
-		mntmPrint.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		mntmPrint.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				printFunction();
 			}
 		});
@@ -108,16 +114,20 @@ public class SystemUI extends JFrame implements ChangeListener
 		mnFiles.add(separator);
 		
 		JMenuItem mntmLogout = new JMenuItem("Logud");
-		mntmLogout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		mntmLogout.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				applicationLogout();
 			}
 		});
 		mnFiles.add(mntmLogout);
 		
 		JMenuItem mntmExit = new JMenuItem("Afslut");
-		mntmExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		mntmExit.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				applicationExit();
 			}
 		});
@@ -132,8 +142,10 @@ public class SystemUI extends JFrame implements ChangeListener
 		menuBar.add(mnClient);
 		
 		JMenuItem mntmNewClient = new JMenuItem("Ny klient");
-		mntmNewClient.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		mntmNewClient.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				createClient();
 			}
 		});
@@ -157,6 +169,14 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlQuickAccess.setLayout(null);
 		
 		JLabel lblNewTimeSheet = new JLabel("Ny time-sag");
+		lblNewTimeSheet.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				createTimSheet();
+			}
+		});
 		lblNewTimeSheet.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNewTimeSheet.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblNewTimeSheet.setIcon(new ImageIcon(SystemUI.class.getResource("/new_timesheet.png")));
@@ -164,6 +184,14 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlQuickAccess.add(lblNewTimeSheet);
 		
 		JLabel lblNewDataEntry = new JLabel("Ny registrering");
+		lblNewDataEntry.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				createDataEntry();
+			}
+		});
 		lblNewDataEntry.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNewDataEntry.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblNewDataEntry.setIcon(new ImageIcon(SystemUI.class.getResource("/new_dataentry.png")));
@@ -171,9 +199,11 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlQuickAccess.add(lblNewDataEntry);
 		
 		JLabel lblNewClient = new JLabel("Ny klient");
-		lblNewClient.addMouseListener(new MouseAdapter() {
+		lblNewClient.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				createClient();
 			}
 		});
@@ -211,13 +241,16 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlQuickAccess.add(lblSearchOverview);
 		
 		txtSearchOverview = new JTextField();
-		txtSearchOverview.addFocusListener(new FocusAdapter() {
+		txtSearchOverview.addFocusListener(new FocusAdapter()
+		{
 			@Override
-			public void focusGained(FocusEvent e) {
+			public void focusGained(FocusEvent e)
+			{
 				txtSearchOverview.setText("");
 			}
 			@Override
-			public void focusLost(FocusEvent e) {
+			public void focusLost(FocusEvent e)
+			{
 				txtSearchOverview.setText("S\u00F8g");
 			}
 		});
@@ -411,7 +444,8 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheetTab.add(pnlSheetList);
 		
 		lstTimeSheets = new JList<String>();
-		lstTimeSheets.addMouseListener(new MouseAdapter() {
+		lstTimeSheets.addMouseListener(new MouseAdapter()
+		{
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
@@ -428,7 +462,8 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlSheetList.add(lstTimeSheets);
 		
 		chkUsersSheetsOnly = new JCheckBox("Vis kun mine sager");
-		chkUsersSheetsOnly.addActionListener(new ActionListener() {
+		chkUsersSheetsOnly.addActionListener(new ActionListener()
+		{
 			public void actionPerformed(ActionEvent e)
 			{
 				checkUserSheetsOnly();
@@ -450,7 +485,8 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlClientTab.add(pnlClientList);
 				
 		JList<String> lstClients = new JList<String>();
-		lstClients.addMouseListener(new MouseAdapter() {
+		lstClients.addMouseListener(new MouseAdapter()
+		{
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
@@ -485,11 +521,22 @@ public class SystemUI extends JFrame implements ChangeListener
 	
 	private void printFunction()
 	{
+		// code missing
 	}
 	
 	private void createClient()
 	{
 		CreateClientUI.createWindow();
+	}
+	
+	private void createTimSheet()
+	{
+		// code missing
+	}
+	
+	private void createDataEntry()
+	{
+		// code missing
 	}
 	
 	private void checkUserSheetsOnly()
@@ -502,6 +549,34 @@ public class SystemUI extends JFrame implements ChangeListener
 		{
 			lstTimeSheets.setListData(populateSheetList());
 		}
+	}
+	
+	private void addButtonsToSheets(final int columnIndex)
+	{
+		Action show = new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				// code missing
+			}
+		};
+		ButtonColumn buttonColumn = new ButtonColumn(sheetTable, show, columnIndex);
+		buttonColumn.setMnemonic(KeyEvent.VK_D);
+	}
+	
+	private void addButtonToClient(final int columnIndex)
+	{
+		Action show = new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				// code missing
+			}
+		};
+		ButtonColumn buttonColumn = new ButtonColumn(sheetTable, show, columnIndex);
+		buttonColumn.setMnemonic(KeyEvent.VK_D);
 	}
 	
 	private String[] populateSheetList()
@@ -657,9 +732,11 @@ public class SystemUI extends JFrame implements ChangeListener
 
                         DataEntry dataEntry = dataEntries.get(i);
                         Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(),
-                                dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark() };
+                                dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark(), "Rediger/Slet"};
                         sheetModel.addRow(row);
                     }
+                    
+                    //addButtonsToSheets(6);
                 }
             }
             catch(Exception ex)
