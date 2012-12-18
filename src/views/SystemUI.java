@@ -52,6 +52,7 @@ public class SystemUI extends JFrame implements ChangeListener
 	private JTextField txtSearchOverview;
 	private JCheckBox chkUsersSheetsOnly;
 	private JList<String> lstTimeSheets;
+	private JList<String> lstClients;
 	private JLabel lblClientName_ts;
 	private JLabel lblCaseId_ts;
 	private JLabel lblClientAddress_ts;
@@ -484,7 +485,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlClientList.setLayout(null);
 		pnlClientTab.add(pnlClientList);
 				
-		JList<String> lstClients = new JList<String>();
+		lstClients = new JList<String>();
 		lstClients.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -746,6 +747,7 @@ public class SystemUI extends JFrame implements ChangeListener
 
             return null;
         }
+        
         protected void done()
         {
         	dbInfo.dispose();
@@ -756,7 +758,46 @@ public class SystemUI extends JFrame implements ChangeListener
     {
     	protected Integer doInBackground() throws Exception
         {
+			try
+			{
+				String clientName = lstClients.getSelectedValue();
+				Client client = _clientCtrl.getClientByName(clientName);
+				
+				lblClientName_cl.setText(client.getName());
+				lblClientAddress_cl.setText(client.getAddress() + ", " + client.getCity().getZipCode() + " " + client.getCity().getCityName());
+				lblClientPhoneNo_cl.setText("Telefon: " + String.valueOf(client.getPhoneNo()));
+				lblClientEmail_cl.setText("E-Mail: " + client.getEmail());
+				
+				if(client != null)
+				{			
+					ArrayList<TimeSheet> timesheets = _timesheetCtrl.getAllTimeSheetsByClient(client);
+					
+					Object[][] data = {};
+					sheetModel.setDataVector(data, sheetColumn);
+					
+					for(int i = 0; i < timesheets.size(); i++)
+					{
+						TimeSheet timesheet = timesheets.get(i);
+						Object[] row = new Object[]{ timesheet.getCaseId(), timesheet.getClient().getName(), timesheet.getCreationDate(),
+								timesheet.getUser().getFirstName() + timesheet.getUser().getLastName() + timesheet.getNote(), "Rediger/Slet" };
+						
+						clientModel.addRow(row);
+					}
+					
+					//addButtonToClient(6);
+				}
+			}
+			catch(Exception ex)
+			{
+				System.out.println(ex);
+			}
+			
 			return null;
+        }
+    	
+    	protected void done()
+        {
+        	dbInfo.dispose();
         }
     }
     
