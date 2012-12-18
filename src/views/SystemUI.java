@@ -84,9 +84,9 @@ public class SystemUI extends JFrame implements ChangeListener
 		setTitle(SystemInformation.systemInformation(01) + " (" + SystemInformation.systemInformation(02) +
 				" - build " + SystemInformation.systemInformation(03) + ")");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 1024, 768);
+		setBounds(0,0,1024,768);
 		setLocationRelativeTo(null);
-		setMinimumSize(new Dimension(1024, 768));
+		setMinimumSize(new Dimension(1024,768));
 		setResizable(false);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -147,12 +147,12 @@ public class SystemUI extends JFrame implements ChangeListener
 		mnAbout.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnAbout);
 		pnlSystemLayout = new JPanel();
-		pnlSystemLayout.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pnlSystemLayout.setBorder(new EmptyBorder(5,5,5,5));
 		setContentPane(pnlSystemLayout);
 		pnlSystemLayout.setLayout(null);
 		
 		JPanel pnlQuickAccess = new JPanel();
-		pnlQuickAccess.setBounds(5, 0, 1014, 37);
+		pnlQuickAccess.setBounds(5,0,1014,37);
 		pnlSystemLayout.add(pnlQuickAccess);
 		pnlQuickAccess.setLayout(null);
 		
@@ -160,14 +160,14 @@ public class SystemUI extends JFrame implements ChangeListener
 		lblNewTimeSheet.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNewTimeSheet.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblNewTimeSheet.setIcon(new ImageIcon(SystemUI.class.getResource("/new_timesheet.png")));
-		lblNewTimeSheet.setBounds(5, 12, 95, 16);
+		lblNewTimeSheet.setBounds(5,12,95,16);
 		pnlQuickAccess.add(lblNewTimeSheet);
 		
 		JLabel lblNewDataEntry = new JLabel("Ny registrering");
 		lblNewDataEntry.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNewDataEntry.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblNewDataEntry.setIcon(new ImageIcon(SystemUI.class.getResource("/new_dataentry.png")));
-		lblNewDataEntry.setBounds(115, 12, 114, 16);
+		lblNewDataEntry.setBounds(115,12,114,16);
 		pnlQuickAccess.add(lblNewDataEntry);
 		
 		JLabel lblNewClient = new JLabel("Ny klient");
@@ -180,34 +180,34 @@ public class SystemUI extends JFrame implements ChangeListener
 		lblNewClient.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNewClient.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblNewClient.setIcon(new ImageIcon(SystemUI.class.getResource("/new_client.png")));
-		lblNewClient.setBounds(244, 12, 75, 16);
+		lblNewClient.setBounds(244,12,75,16);
 		pnlQuickAccess.add(lblNewClient);
 		
 		JLabel lblPrintOverview = new JLabel("Udskriv");
 		lblPrintOverview.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblPrintOverview.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblPrintOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/print_overview.png")));
-		lblPrintOverview.setBounds(333, 12, 68, 16);
+		lblPrintOverview.setBounds(333,12,68,16);
 		pnlQuickAccess.add(lblPrintOverview);
 		
 		JLabel lblSortOverview = new JLabel("Sortér");
 		lblSortOverview.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblSortOverview.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblSortOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/sort_overview.png")));
-		lblSortOverview.setBounds(416, 12, 60, 16);
+		lblSortOverview.setBounds(416,12,60,16);
 		pnlQuickAccess.add(lblSortOverview);
 		
 		JLabel lblPermission = new JLabel("Rettigheder");
 		lblPermission.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblPermission.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblPermission.setIcon(new ImageIcon(SystemUI.class.getResource("/permission_timesheet.png")));
-		lblPermission.setBounds(493, 12, 114, 16);
+		lblPermission.setBounds(493,12,114,16);
 		pnlQuickAccess.add(lblPermission);
 		
-		JLabel lblSearchOverview = new JLabel("");
+		JLabel lblSearchOverview = new JLabel();
 		lblSearchOverview.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblSearchOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/search_overview.png")));
-		lblSearchOverview.setBounds(833, 12, 16, 16);
+		lblSearchOverview.setBounds(833,12,16,16);
 		pnlQuickAccess.add(lblSearchOverview);
 		
 		txtSearchOverview = new JTextField();
@@ -222,18 +222,18 @@ public class SystemUI extends JFrame implements ChangeListener
 			}
 		});
 		txtSearchOverview.setText("S\u00F8g");
-		txtSearchOverview.setBounds(854, 9, 155, 22);
+		txtSearchOverview.setBounds(854,9,155,22);
 		pnlQuickAccess.add(txtSearchOverview);
 		txtSearchOverview.setColumns(10);
 		
 		JPanel pnlOverviewSelection = new JPanel();
-		pnlOverviewSelection.setBounds(5, 36, 215, 675);
+		pnlOverviewSelection.setBounds(5,36,215,675);
 		pnlSystemLayout.add(pnlOverviewSelection);
 		pnlOverviewSelection.setLayout(null);
 
 		// START OF TIMESHEETS PANEL
 		pnlTimeSheet = new JPanel();
-		pnlTimeSheet.setBounds(220, 36, 799, 675);
+		pnlTimeSheet.setBounds(220,36,799,675);
 		pnlSystemLayout.add(pnlTimeSheet);
 		pnlTimeSheet.setLayout(null);
 		
@@ -241,43 +241,43 @@ public class SystemUI extends JFrame implements ChangeListener
 		JPanel pnlTimeSheetInfo = new JPanel();
 		pnlTimeSheetInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlTimeSheetInfo.setBackground(Color.WHITE);
-		pnlTimeSheetInfo.setBounds(3, 2, 790, 86);
+		pnlTimeSheetInfo.setBounds(3,2,790,86);
 		pnlTimeSheet.add(pnlTimeSheetInfo);
 		pnlTimeSheetInfo.setLayout(null);
 		
 		lblClientName_ts = new JLabel();
 		lblClientName_ts.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		lblClientName_ts.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblClientName_ts.setBounds(5, 5, 500, 20);
+		lblClientName_ts.setBounds(5,5,500,20);
 		pnlTimeSheetInfo.add(lblClientName_ts);
 		
 		lblCaseId_ts = new JLabel();
 		lblCaseId_ts.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCaseId_ts.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		lblCaseId_ts.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblCaseId_ts.setBounds(535, 5, 250, 20);
+		lblCaseId_ts.setBounds(535,5,250,20);
 		pnlTimeSheetInfo.add(lblCaseId_ts);
 		
 		lblClientAddress_ts = new JLabel();
 		lblClientAddress_ts.setForeground(Color.GRAY);
 		lblClientAddress_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblClientAddress_ts.setBounds(5, 25, 500, 15);
+		lblClientAddress_ts.setBounds(5,25,500,15);
 		pnlTimeSheetInfo.add(lblClientAddress_ts);
 		
 		lblClientPhoneNo_ts = new JLabel();
 		lblClientPhoneNo_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblClientPhoneNo_ts.setBounds(5, 52, 450, 15);
+		lblClientPhoneNo_ts.setBounds(5,52,450,15);
 		pnlTimeSheetInfo.add(lblClientPhoneNo_ts);
 		
 		lblClientEmail_ts = new JLabel();
 		lblClientEmail_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblClientEmail_ts.setBounds(5, 66, 450, 15);
+		lblClientEmail_ts.setBounds(5,66,450,15);
 		pnlTimeSheetInfo.add(lblClientEmail_ts);
 		
 		lblTimeSheetOwner_ts = new JLabel();
 		lblTimeSheetOwner_ts.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTimeSheetOwner_ts.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblTimeSheetOwner_ts.setBounds(485, 66, 300, 15);
+		lblTimeSheetOwner_ts.setBounds(485,66,300,15);
 		pnlTimeSheetInfo.add(lblTimeSheetOwner_ts);
 		// END OF TS_INFO PANEL
 		
@@ -285,18 +285,18 @@ public class SystemUI extends JFrame implements ChangeListener
 		JPanel pnlTimeSheetNote = new JPanel();
 		pnlTimeSheetNote.setBackground(Color.WHITE);
 		pnlTimeSheetNote.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		pnlTimeSheetNote.setBounds(3, 99, 790, 65);
+		pnlTimeSheetNote.setBounds(3,99,790,65);
 		pnlTimeSheet.add(pnlTimeSheetNote);
 		pnlTimeSheetNote.setLayout(null);
 		
 		txtNoteField = new JTextArea();
-		txtNoteField.setBounds(5, 5, 780, 55);
+		txtNoteField.setBounds(5,5,780,55);
 		pnlTimeSheetNote.add(txtNoteField);	
 		// END OF NOTE PANEL
 		
 		// START OF SHEETGRID
 		JPanel pnlTimeSheetOverview = new JPanel();
-		pnlTimeSheetOverview.setBounds(3, 170, 790, 498);
+		pnlTimeSheetOverview.setBounds(3,170,790,498);
 		pnlTimeSheet.add(pnlTimeSheetOverview);
 
 		sheetColumn = new String[]{"Påbegyndt", "Afsluttet", "Opgave", "Registrator", "Bemærkning", " "};
@@ -318,8 +318,8 @@ public class SystemUI extends JFrame implements ChangeListener
 		
 		JScrollPane sheetDataScroll = new JScrollPane(sheetTable);
 		sheetTable.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		sheetTable.setPreferredScrollableViewportSize(new Dimension(790, 493));
-		sheetDataScroll.setPreferredSize(new Dimension(790, 493));
+		sheetTable.setPreferredScrollableViewportSize(new Dimension(790,493));
+		sheetDataScroll.setPreferredSize(new Dimension(790,493));
 		sheetDataScroll.setBorder(BorderFactory.createEmptyBorder());
 		pnlTimeSheetOverview.add(sheetDataScroll);
 		// END OF SHEETGRID
@@ -327,7 +327,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		
 		// START OF CLIENTS PANEL
 		pnlClients = new JPanel();
-		pnlClients.setBounds(220, 36, 799, 675);
+		pnlClients.setBounds(220,36,799,675);
 		pnlSystemLayout.add(pnlClients);
 		pnlClients.setLayout(null);
 		
@@ -336,35 +336,35 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlClientInfo.setLayout(null);
 		pnlClientInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlClientInfo.setBackground(Color.WHITE);
-		pnlClientInfo.setBounds(3, 2, 790, 86);
+		pnlClientInfo.setBounds(3,2,790,86);
 		pnlClients.add(pnlClientInfo);
 		
-		lblClientName_cl = new JLabel("[swap section with db data]");
+		lblClientName_cl = new JLabel();
 		lblClientName_cl.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		lblClientName_cl.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblClientName_cl.setBounds(5, 5, 500, 20);
+		lblClientName_cl.setBounds(5,5,500,20);
 		pnlClientInfo.add(lblClientName_cl);
 		
-		lblClientAddress_cl = new JLabel("[swap section with db data]");
+		lblClientAddress_cl = new JLabel();
 		lblClientAddress_cl.setForeground(Color.GRAY);
 		lblClientAddress_cl.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblClientAddress_cl.setBounds(5, 25, 500, 15);
+		lblClientAddress_cl.setBounds(5,25,500,15);
 		pnlClientInfo.add(lblClientAddress_cl);
 		
-		lblClientPhoneNo_cl = new JLabel("Telefon: [swap section with db data]");
+		lblClientPhoneNo_cl = new JLabel();
 		lblClientPhoneNo_cl.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblClientPhoneNo_cl.setBounds(5, 52, 450, 15);
+		lblClientPhoneNo_cl.setBounds(5,52,450,15);
 		pnlClientInfo.add(lblClientPhoneNo_cl);
 		
-		lblClientEmail_cl = new JLabel("E-Mail: [swap section with db data]");
+		lblClientEmail_cl = new JLabel();
 		lblClientEmail_cl.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblClientEmail_cl.setBounds(5, 66, 450, 15);
+		lblClientEmail_cl.setBounds(5,66,450,15);
 		pnlClientInfo.add(lblClientEmail_cl);
 		// END OF CL_INFO PANEL
 		
 		// START OF CLIENTGRID
 		JPanel pnlClientOverview = new JPanel();
-		pnlClientOverview.setBounds(3, 94, 790, 574);
+		pnlClientOverview.setBounds(3,94,790,574);
 		pnlClients.add(pnlClientOverview);
 		
 		clientColumn = new String[]{"Sags nr", "Virksomhed", "Oprettet", "Ansvarlig", "Note", " "};
@@ -386,8 +386,8 @@ public class SystemUI extends JFrame implements ChangeListener
 		
 		JScrollPane clientDataScroll = new JScrollPane(clientTable);
 		clientTable.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		clientTable.setPreferredScrollableViewportSize(new Dimension(790, 569));
-		clientDataScroll.setPreferredSize(new Dimension(790, 569));
+		clientTable.setPreferredScrollableViewportSize(new Dimension(790,569));
+		clientDataScroll.setPreferredSize(new Dimension(790,569));
 		clientDataScroll.setBorder(BorderFactory.createEmptyBorder());
 		pnlClientOverview.add(clientDataScroll);
 		// END OF CLIENTGRID
@@ -397,7 +397,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		// START OF CASE TAB
 		JTabbedPane tabSelection = new JTabbedPane(JTabbedPane.TOP);
 		tabSelection.setFont(new Font("Dialog", Font.PLAIN, 12));
-		tabSelection.setBounds(5, 0, 202, 668);
+		tabSelection.setBounds(5,0,202,668);
 		tabSelection.addChangeListener(this);
 		pnlOverviewSelection.add(tabSelection);
 		
@@ -406,35 +406,36 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheetTab.setLayout(null);
 		
 		JPanel pnlSheetList = new JPanel();
-		pnlSheetList.setBounds(5, 5, 187, 605);
+		pnlSheetList.setBounds(5,5,187,605);
 		pnlSheetList.setLayout(null);
 		pnlTimeSheetTab.add(pnlSheetList);
 		
 		lstTimeSheets = new JList<String>();
 		lstTimeSheets.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				dbInfo.setVisible(true);
-				
 				addSheetData();
 			}
 		});
 		lstTimeSheets.setListData(populateSheetList());
 		lstTimeSheets.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstTimeSheets.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		lstTimeSheets.setBounds(0, 0, 187, 605);
+		lstTimeSheets.setBounds(0,0,187,605);
 		JScrollPane sheetListScroll = new JScrollPane(lstTimeSheets);
 		pnlSheetList.add(sheetListScroll);
 		pnlSheetList.add(lstTimeSheets);
 		
 		chkUsersSheetsOnly = new JCheckBox("Vis kun mine sager");
 		chkUsersSheetsOnly.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				checkUserSheetsOnly();
 			}
 		});
 		chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
-		chkUsersSheetsOnly.setBounds(5, 614, 181, 23);;
+		chkUsersSheetsOnly.setBounds(5,614,181,23);;
 		pnlTimeSheetTab.add(chkUsersSheetsOnly);
 		// END OF CASE TAB
 		
@@ -444,21 +445,23 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlClientTab.setLayout(null);
 		
 		JPanel pnlClientList = new JPanel();
-		pnlClientList.setBounds(5, 5, 187, 631);
+		pnlClientList.setBounds(5,5,187,631);
 		pnlClientList.setLayout(null);
 		pnlClientTab.add(pnlClientList);
 				
 		JList<String> lstClients = new JList<String>();
 		lstClients.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-
+			public void mouseClicked(MouseEvent e)
+			{
+				dbInfo.setVisible(true);
+				addClientData();
 			}
 		});
 		lstClients.setListData(populateClientList());
 		lstClients.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstClients.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		lstClients.setBounds(0, 0, 187, 631);
+		lstClients.setBounds(0,0,187,631);
 		JScrollPane clientListScroll = new JScrollPane(lstClients);
 		pnlClientList.add(clientListScroll);
 		pnlClientList.add(lstClients);
