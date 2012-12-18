@@ -22,11 +22,11 @@ import models.UserPermission;
 import java.util.ArrayList;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-
+import views.dataentry.CreateDataEntryUI;
 import utils.Logging;
 
 public class CreateTimeSheetUI extends JFrame {
-
+	
 	private JPanel _contentPane;
 	private JComboBox<String> _drpClients;
 	private ClientCtrl _clientCtrl;
@@ -44,6 +44,8 @@ public class CreateTimeSheetUI extends JFrame {
 	private JPanel _panel2;
 	private JTextField _textField;
 
+	private CreateDataEntryUI createDataEntryUI;
+	
 
 	/**
 	 * Create the frame.
@@ -82,6 +84,7 @@ public class CreateTimeSheetUI extends JFrame {
 		JButton btnNewNste = new JButton("N\u00E6ste (1/2)");
 		btnNewNste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				createDataEntryUI.createWindow();
 			}
 		});
 		btnNewNste.setBounds(195, 331, 100, 23);
@@ -143,8 +146,6 @@ public class CreateTimeSheetUI extends JFrame {
 		JLabel label4 = new JLabel("Rettigheder");
 		label4.setBounds(5, 127, 96, 23);
 		_panel2.add(label4);
-		
-	
 		
 		_drpUsers = new JComboBox<String>();
 		_drpUsers.setBounds(111, 30, 249, 22);
