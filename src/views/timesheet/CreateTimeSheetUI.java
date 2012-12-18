@@ -15,15 +15,20 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import controllers.ClientCtrl;
 import models.Client;
+import models.TimeSheet;
 import controllers.UserCtrl;
 import models.User;
 import controllers.UserPermissionCtrl;
 import models.UserPermission;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import views.dataentry.CreateDataEntryUI;
 import utils.Logging;
+import utils.UserSession;
 
 public class CreateTimeSheetUI extends JFrame {
 	
@@ -42,7 +47,8 @@ public class CreateTimeSheetUI extends JFrame {
 	
 	private JPanel _panel1;
 	private JPanel _panel2;
-	private JTextField _textField;
+	private JTextField _txtNotes;
+	JTextPane textPane;
 
 	private CreateDataEntryUI createDataEntryUI;
 	
@@ -84,7 +90,7 @@ public class CreateTimeSheetUI extends JFrame {
 		JButton btnNewNste = new JButton("N\u00E6ste (1/2)");
 		btnNewNste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				createDataEntryUI.createWindow();
+				createDataEntryUI.createWindow(createTimeSheet());
 			}
 		});
 		btnNewNste.setBounds(195, 331, 100, 23);
@@ -122,15 +128,15 @@ public class CreateTimeSheetUI extends JFrame {
 		_panel1.add(label2);
 		
 		// for display ClientId
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		textPane.setBounds(45, 5, 332, 20);
 		_panel1.add(textPane);
 		
 		// for notes
-		_textField = new JTextField();
-		_textField.setBounds(45, 31, 332, 195);
-		_panel1.add(_textField);
-		_textField.setColumns(10);
+		_txtNotes = new JTextField();
+		_txtNotes.setBounds(45, 31, 332, 195);
+		_panel1.add(_txtNotes);
+		_txtNotes.setColumns(10);
 		
 		tabbedPane.add("Time-Sag", _panel1);
 		// pane1 end
@@ -209,7 +215,6 @@ public class CreateTimeSheetUI extends JFrame {
 		return null;
 	}
 	
-	
 	public String[] addPermissions()
 	{
 		ArrayList<UserPermission> permissions;
@@ -227,5 +232,19 @@ public class CreateTimeSheetUI extends JFrame {
 			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
+	}
+	
+	public TimeSheet createTimeSheet()
+	{
+		String caseId = textPane.getSelectedText();
+        User user = UserSession.getLoggedInUser();
+        Client client = (Client)_drpClients.getSelectedItem();
+        String note = _txtNotes.getText();
+        Calendar cal = Calendar.getInstance();
+        Date creationDate = cal.getTime();
+        Date editedDate =  cal.getTime();
+        
+		TimeSheet ts = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
+		return ts;
 	}
 }
