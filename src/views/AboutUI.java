@@ -34,7 +34,7 @@ public class AboutUI {
 	private AboutUI() {
 		_frame = new JFrame();
 		_frame.setTitle("Om " + SystemInformation.systemInformation(01));
-		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.setBounds(0, 0, 470, 430);
 		_frame.setAlwaysOnTop(true);
 		_frame.setResizable(false);
