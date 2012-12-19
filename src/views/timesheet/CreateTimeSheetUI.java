@@ -25,11 +25,16 @@ import java.util.Date;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+
+import views.client.CreateClientUI;
 import views.dataentry.CreateDataEntryUI;
 import utils.Logging;
 import utils.UserSession;
 
-public class CreateTimeSheetUI extends JFrame {
+public class CreateTimeSheetUI
+{
+    private static JFrame _frame;
+    private static CreateTimeSheetUI _instance;
 	
 	private JPanel _contentPane;
 	private JComboBox<String> _drpClients;
@@ -51,11 +56,17 @@ public class CreateTimeSheetUI extends JFrame {
 
 	private CreateDataEntryUI createDataEntryUI;
 	
+    public static JFrame createWindow()
+    {
+        if(_instance == null)
+            _instance = new CreateTimeSheetUI();
 
+        return _frame;
+    }
 	/**
 	 * Create the frame.
 	 */
-	public CreateTimeSheetUI() 
+	private CreateTimeSheetUI() 
 	{	
 		createElements();	
 	}
@@ -63,15 +74,15 @@ public class CreateTimeSheetUI extends JFrame {
 	
 	public void createElements()
 	{
-		setTitle("Ny Registrering");
-		setVisible(true);
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 415, 392);
+		_frame.setTitle("Ny Registrering");
+		_frame.setVisible(true);
+		_frame.setResizable(false);
+		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame.setBounds(100, 100, 415, 392);
 		_contentPane = new JPanel();
 		_contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		setContentPane(_contentPane);
+		_frame.setContentPane(_contentPane);
 		_contentPane.setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

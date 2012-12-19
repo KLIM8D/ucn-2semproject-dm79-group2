@@ -18,7 +18,8 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CreateDataEntryUI extends JFrame {
+public class CreateDataEntryUI
+{
 
     private static JFrame _frame;
     private static CreateDataEntryUI _instance;
@@ -67,7 +68,7 @@ public class CreateDataEntryUI extends JFrame {
 		contentPane.setLayout(null);
 		_frame.setContentPane(contentPane);
 		
-		setContentPane(contentPane);
+		_frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
