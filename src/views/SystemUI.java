@@ -11,6 +11,8 @@ package views;
 
 import utils.*;
 import views.client.CreateClientUI;
+import views.timesheet.CreateTimeSheetUI;
+
 import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.*;
@@ -103,7 +105,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				printFunction();
+
 			}
 		});
 		mnFiles.add(mntmPrint);
@@ -140,7 +142,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				createTimeSheet();
+				CreateTimeSheetUI.createWindow();
 			}
 		});
 		mnTimeSheet.add(mntmNewTimeSheet);
@@ -154,7 +156,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				createClient();
+				CreateClientUI.createWindow();
 			}
 		});
 		mnClient.add(mntmNewClient);
@@ -164,7 +166,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				editClient();
+
 			}
 		});
 		mnClient.add(mntmEditClient);
@@ -176,6 +178,16 @@ public class SystemUI extends JFrame implements ChangeListener
 		JMenu mnAbout = new JMenu("Om");
 		mnAbout.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnAbout);
+		
+		JMenuItem mntmAboutThis = new JMenuItem("Applikationen");
+		mntmAboutThis.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				AboutUI.createWindow();
+			}
+		});
+		
 		pnlSystemLayout = new JPanel();
 		pnlSystemLayout.setBorder(new EmptyBorder(5,5,5,5));
 		setContentPane(pnlSystemLayout);
@@ -192,7 +204,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				createTimeSheet();
+				CreateTimeSheetUI.createWindow();
 			}
 		});
 		lblNewTimeSheet.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -207,7 +219,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				createDataEntry();
+
 			}
 		});
 		lblNewDataEntry.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -222,7 +234,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				createClient();
+
 			}
 		});
 		lblNewClient.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -535,31 +547,6 @@ public class SystemUI extends JFrame implements ChangeListener
 		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil logge ud af programmet?", "Logud", JOptionPane.YES_NO_OPTION);
 		if(request == JOptionPane.YES_OPTION)
 			return; // logout and go to login dialog
-	}
-	
-	private void printFunction()
-	{
-		// code missing
-	}
-	
-	private void createTimeSheet()
-	{
-		// code missing
-	}
-	
-	private void createDataEntry()
-	{
-		// code missing
-	}
-	
-	private void createClient()
-	{
-		CreateClientUI.createWindow();
-	}
-	
-	private void editClient()
-	{
-		// code missing
 	}
 	
 	private void checkUserSheetsOnly()
