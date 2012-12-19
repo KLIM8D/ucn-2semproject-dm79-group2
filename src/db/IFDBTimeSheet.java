@@ -28,6 +28,14 @@ public interface IFDBTimeSheet
 	 */
 	public TimeSheet getTimeSheetById(int sheetId) throws Exception;
 	
+	/**
+	 * Retrieve a specific TimeSheet by caseId
+	 * 
+	 * @param caseId					the caseId of the TimeSheet you want returned
+	 * @return
+	 * @throws Exception
+	 */
+	public TimeSheet getTimeSheetByCaseId(String caseId) throws Exception;
 	
 	/**
 	 * Retrieve all TimeSheets by specific user

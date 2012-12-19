@@ -62,6 +62,18 @@ public class TimeSheetCtrl
     {
         return _dbTimeSheet.getTimeSheetById(sheetId);
     }
+    
+    /**
+     * Retrieve a specific TimeSheet by caseId
+     * 
+     * @param caseId					the caseId of the TimeSheet you want returned
+     * @return TimeSheet
+     * @throws Exception
+     */
+    public TimeSheet getTimeSheetByCaseId(String caseId) throws Exception
+    {
+    	return _dbTimeSheet.getTimeSheetByCaseId(caseId);
+    }
 
     /**
      * Retrieve all TimeSheets by specific user

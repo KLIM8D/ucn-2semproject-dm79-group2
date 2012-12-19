@@ -74,6 +74,26 @@ public class DBTimeSheet implements IFDBTimeSheet
 
         return null;
 	}
+	
+	/**
+	 * Get a specific TimeSheet by caseId
+	 * 
+	 * @param caseId						the caseId of the TimeSheet you want returned
+	 * @return TimeSheet
+	 */
+	@Override
+	public TimeSheet getTimeSheetByCaseId(String caseId) throws Exception
+	{
+		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE caseId = ? " + _sortExpression);
+		query.setString(1, caseId);
+		_da.setSqlCommandText(query);
+		ResultSet timeSheetResult = _da.callCommandGetRow();
+		
+		if(timeSheetResult.next())
+			return buildTimeSheet(timeSheetResult);
+		
+		return null;
+	}
 
 
 	/**
