@@ -234,7 +234,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-
+				CreateClientUI.createWindow();
 			}
 		});
 		lblNewClient.setFont(new Font("Dialog", Font.PLAIN, 12));
