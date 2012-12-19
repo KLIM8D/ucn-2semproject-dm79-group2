@@ -598,6 +598,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		};
 		ButtonColumn buttonColumn = new ButtonColumn(clientTable, show, columnIndex);
 		buttonColumn.setMnemonic(KeyEvent.VK_D);
+        clientTable.repaint();
 	}
 	
 	private String[] populateSheetList()
