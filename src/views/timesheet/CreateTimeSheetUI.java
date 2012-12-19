@@ -23,10 +23,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import views.SystemUI;
 import views.client.CreateClientUI;
 import views.dataentry.CreateDataEntryUI;
 import utils.Logging;
@@ -75,10 +77,12 @@ public class CreateTimeSheetUI
 	
 	public void createElements()
 	{
+		_frame = new JFrame();
+		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_timesheet.png")));
 		_frame.setTitle("Ny Registrering");
 		_frame.setVisible(true);
 		_frame.setResizable(false);
-		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.setBounds(100, 100, 415, 392);
 		_contentPane = new JPanel();
 		_contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -91,19 +95,25 @@ public class CreateTimeSheetUI
 		_contentPane.add(tabbedPane);
 		
 		JButton btnNewButton = new JButton("Annuller");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnNewButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                _instance = null;
+                _frame.dispose();
+            }
+        });
 		btnNewButton.setBounds(302, 331, 100, 23);
 		_contentPane.add(btnNewButton);
 		
 		JButton btnNewNste = new JButton("N\u00E6ste (1/2)");
-		btnNewNste.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				createDataEntryUI.createWindow(createTimeSheet());
-			}
-		});
+		btnNewNste.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                createTimeSheet();
+            }
+        });
 		btnNewNste.setBounds(195, 331, 100, 23);
 		_contentPane.add(btnNewNste);
 		
@@ -245,7 +255,7 @@ public class CreateTimeSheetUI
 		return null;
 	}
 	
-	public TimeSheet createTimeSheet()
+	public void createTimeSheet()
 	{
 		String caseId = textPane.getSelectedText();
         User user = UserSession.getLoggedInUser();
@@ -256,6 +266,6 @@ public class CreateTimeSheetUI
         Date editedDate =  cal.getTime();
         
 		TimeSheet ts = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
-		return ts;
+		CreateDataEntryUI.createWindow(ts);
 	}
 }
