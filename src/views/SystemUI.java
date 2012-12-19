@@ -187,6 +187,7 @@ public class SystemUI extends JFrame implements ChangeListener
 				AboutUI.createWindow();
 			}
 		});
+		mnAbout.add(mntmAboutThis);
 		
 		pnlSystemLayout = new JPanel();
 		pnlSystemLayout.setBorder(new EmptyBorder(5,5,5,5));
@@ -565,7 +566,6 @@ public class SystemUI extends JFrame implements ChangeListener
 	{
 		Action show = new AbstractAction()
 		{
-			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				// code missing
@@ -579,13 +579,20 @@ public class SystemUI extends JFrame implements ChangeListener
 	{
 		Action show = new AbstractAction()
 		{
-			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// code missing
+				JTable clientTable = (JTable) e.getSource();
+				int row = Integer.valueOf(e.getActionCommand());
+				String caseId = clientTable.getValueAt(row, 0).toString();
+				if(columnIndex == 5)
+				{
+					pnlClients.setVisible(false);
+					pnlTimeSheet.setVisible(true);
+					primaryTabActive = true;
+				}
 			}
 		};
-		ButtonColumn buttonColumn = new ButtonColumn(sheetTable, show, columnIndex);
+		ButtonColumn buttonColumn = new ButtonColumn(clientTable, show, columnIndex);
 		buttonColumn.setMnemonic(KeyEvent.VK_D);
 	}
 	
@@ -786,17 +793,17 @@ public class SystemUI extends JFrame implements ChangeListener
 					{
 						TimeSheet timesheet = timesheets.get(i);
 						Object[] row = new Object[]{ timesheet.getCaseId(), timesheet.getCreationDate(), timesheet.getUser().getFirstName() + " " +
-								timesheet.getUser().getLastName(), timesheet.getNote(), "Rediger/Slet" };
+								timesheet.getUser().getLastName(), timesheet.getNote(), "Vis" };
 						
 						clientModel.addRow(row);
 					}
+					
+					addButtonToClient(4);
 					
 					lblClientName_cl.setText(client.getName());
 					lblClientAddress_cl.setText(client.getAddress() + ", " + client.getCity().getZipCode() + " " + client.getCity().getCityName());
 					lblClientPhoneNo_cl.setText("Telefon: " + String.valueOf(client.getPhoneNo()));
 					lblClientEmail_cl.setText("E-Mail: " + client.getEmail());
-					
-					//addButtonToClient(6);
 				}
 			}
 			catch(Exception ex)
