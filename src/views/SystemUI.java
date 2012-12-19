@@ -460,7 +460,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		// START OF TAB SECTION
 		JTabbedPane tabSelection = new JTabbedPane(JTabbedPane.TOP);
 		tabSelection.setFont(new Font("Dialog", Font.PLAIN, 12));
-		tabSelection.setBounds(5,0,202,668);
+		tabSelection.setBounds(5, 0, 202, 668);
 		tabSelection.addChangeListener(this);
 		pnlOverviewSelection.add(tabSelection);
 		
@@ -632,7 +632,7 @@ public class SystemUI extends JFrame implements ChangeListener
 	{
 		try
 		{
-			return new PopulateCLientList().doInBackground();
+			return new PopulateClientList().doInBackground();
 		}
 		catch(Exception ex)
 		{
@@ -682,14 +682,14 @@ public class SystemUI extends JFrame implements ChangeListener
     	@Override
     	protected String[] doInBackground() throws Exception
     	{
-    		ArrayList<TimeSheet> timesheetList;
+    		ArrayList<TimeSheet> timeSheetList;
     		try
     		{
-    			timesheetList = _timesheetCtrl.getAllTimeSheetsByUser(UserSession.getLoggedInUser());
-    			String[] sheetNames = new String[timesheetList.size()];
-    			for(int i = 0; i < timesheetList.size(); i++)
-    				sheetNames[i] = timesheetList.get(i).getCaseId() + 
-    						" (" + timesheetList.get(i).getClient().getName() + ")";
+                timeSheetList = _timesheetCtrl.getAllTimeSheetsByUser(UserSession.getLoggedInUser());
+    			String[] sheetNames = new String[timeSheetList.size()];
+    			for(int i = 0; i < timeSheetList.size(); i++)
+    				sheetNames[i] = timeSheetList.get(i).getCaseId() +
+    						" (" + timeSheetList.get(i).getClient().getName() + ")";
     			
     			return sheetNames;
     		}
@@ -702,7 +702,7 @@ public class SystemUI extends JFrame implements ChangeListener
     	}
     }
     
-    class PopulateCLientList extends SwingWorker<String[], Integer>
+    class PopulateClientList extends SwingWorker<String[], Integer>
     {
     	@Override
     	protected String[] doInBackground() throws Exception
@@ -793,14 +793,14 @@ public class SystemUI extends JFrame implements ChangeListener
 				
 				if(client != null)
 				{	
-					ArrayList<TimeSheet> timesheets = _timesheetCtrl.getAllTimeSheetsByClient(client);
+					ArrayList<TimeSheet> timeSheets = _timesheetCtrl.getAllTimeSheetsByClient(client);
 					
 					Object[][] data = {};
 					clientModel.setDataVector(data, clientColumn);
 					
-					for(int i = 0; i < timesheets.size(); i++)
+					for(int i = 0; i < timeSheets.size(); i++)
 					{
-						TimeSheet timesheet = timesheets.get(i);
+						TimeSheet timesheet = timeSheets.get(i);
 						Object[] row = new Object[]{ timesheet.getCaseId(), timesheet.getCreationDate(), timesheet.getUser().getFirstName() + " " +
 								timesheet.getUser().getLastName(), timesheet.getNote(), "Redigere/Slet" };
 						
