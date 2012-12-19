@@ -458,13 +458,13 @@ public class SystemUI extends JFrame implements ChangeListener
 		// END OF CLIENTS PANEL
 
 		// START OF TAB SECTION
-		// START OF CASE TAB
 		JTabbedPane tabSelection = new JTabbedPane(JTabbedPane.TOP);
 		tabSelection.setFont(new Font("Dialog", Font.PLAIN, 12));
 		tabSelection.setBounds(5,0,202,668);
 		tabSelection.addChangeListener(this);
 		pnlOverviewSelection.add(tabSelection);
 		
+		// START OF CASE TAB
 		JPanel pnlTimeSheetTab = new JPanel();
 		tabSelection.addTab("Time-sager", null, pnlTimeSheetTab, null);
 		pnlTimeSheetTab.setLayout(null);
@@ -568,7 +568,13 @@ public class SystemUI extends JFrame implements ChangeListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				// code missing
+				JTable sheetTable = (JTable) e.getSource();
+				int row = Integer.valueOf(e.getActionCommand());
+				
+				if(columnIndex == 5)
+				{
+
+				}
 			}
 		};
 		ButtonColumn buttonColumn = new ButtonColumn(sheetTable, show, columnIndex);
@@ -583,12 +589,10 @@ public class SystemUI extends JFrame implements ChangeListener
 			{
 				JTable clientTable = (JTable) e.getSource();
 				int row = Integer.valueOf(e.getActionCommand());
-				String caseId = clientTable.getValueAt(row, 0).toString();
-				if(columnIndex == 5)
+
+				if(columnIndex == 4)
 				{
-					pnlClients.setVisible(false);
-					pnlTimeSheet.setVisible(true);
-					primaryTabActive = true;
+
 				}
 			}
 		};
@@ -650,6 +654,7 @@ public class SystemUI extends JFrame implements ChangeListener
 
     class PopulateSheetList extends SwingWorker<String[], Integer>
     {
+    	@Override
         protected String[] doInBackground() throws Exception
         {
             ArrayList<TimeSheet> timeSheetList;
@@ -674,6 +679,7 @@ public class SystemUI extends JFrame implements ChangeListener
     
     class PopulateSheetByUser extends SwingWorker<String[], Integer>
     {
+    	@Override
     	protected String[] doInBackground() throws Exception
     	{
     		ArrayList<TimeSheet> timesheetList;
@@ -698,6 +704,7 @@ public class SystemUI extends JFrame implements ChangeListener
     
     class PopulateCLientList extends SwingWorker<String[], Integer>
     {
+    	@Override
     	protected String[] doInBackground() throws Exception
     	{
     		ArrayList<Client> clientsList;
@@ -721,6 +728,7 @@ public class SystemUI extends JFrame implements ChangeListener
 
     class AddSheetData extends SwingWorker<Integer, Integer>
     {
+    	@Override
         protected Integer doInBackground() throws Exception
         {
             try
@@ -745,6 +753,8 @@ public class SystemUI extends JFrame implements ChangeListener
                         sheetModel.addRow(row);
                     }
                     
+                    addButtonsToSheets(5);
+                    
                     lblClientName_ts.setText(sheet.getClient().getName());
         			lblClientAddress_ts.setText(sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName());
         			lblClientPhoneNo_ts.setText("Telefon: " + String.valueOf(sheet.getClient().getPhoneNo()));
@@ -752,8 +762,6 @@ public class SystemUI extends JFrame implements ChangeListener
         			lblCaseId_ts.setText(sheet.getCaseId());
         			lblTimeSheetOwner_ts.setText("Ansvarlig: " + sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName());
         			txtNoteField.setText("Note: " + sheet.getNote());
-                    
-                    //addButtonsToSheets(6);
                 }
             }
             catch(Exception ex)
@@ -763,7 +771,8 @@ public class SystemUI extends JFrame implements ChangeListener
 
             return null;
         }
-        
+    	
+    	@Override
         protected void done()
         {
         	dbInfo.dispose();
@@ -772,11 +781,11 @@ public class SystemUI extends JFrame implements ChangeListener
     
     class AddClientData extends SwingWorker<Integer, Integer>
     {
+    	@Override
     	protected Integer doInBackground() throws Exception
         {
 			try
 			{
-				
 				long clientPhone = Long.parseLong(lstClients.getSelectedValue().substring(lstClients.getSelectedValue().indexOf("(")+1, 
 													lstClients.getSelectedValue().indexOf(")")));
 				
@@ -793,13 +802,13 @@ public class SystemUI extends JFrame implements ChangeListener
 					{
 						TimeSheet timesheet = timesheets.get(i);
 						Object[] row = new Object[]{ timesheet.getCaseId(), timesheet.getCreationDate(), timesheet.getUser().getFirstName() + " " +
-								timesheet.getUser().getLastName(), timesheet.getNote(), "Vis" };
+								timesheet.getUser().getLastName(), timesheet.getNote(), "Redigere/Slet" };
 						
 						clientModel.addRow(row);
 					}
 					
 					addButtonToClient(4);
-					
+
 					lblClientName_cl.setText(client.getName());
 					lblClientAddress_cl.setText(client.getAddress() + ", " + client.getCity().getZipCode() + " " + client.getCity().getCityName());
 					lblClientPhoneNo_cl.setText("Telefon: " + String.valueOf(client.getPhoneNo()));
@@ -814,6 +823,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			return null;
         }
     	
+    	@Override
     	protected void done()
         {
         	dbInfo.dispose();
