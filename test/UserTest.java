@@ -33,11 +33,10 @@ public class UserTest {
 	@Test
 	public void insertUser() throws Exception
 	{
-		Calendar cal = Calendar.getInstance();
-		User newUser = new User(1, "Test", "User", "test", "1289hjusbv7f123", "testpass", new Date(), new Date())
+		User newUser = new User(new UserPermission(3, "User", new Date(), new Date()), "Test", "User", "test", "1289hjusbv7f123", "testpass", new Date(), new Date());
 		int rowsAffected = _userCtrl.insertUser(newUser);
 		
-		assertEquals(1 rowsAffected);
+		assertEquals(1, rowsAffected);
 	}
 	
 	
@@ -53,7 +52,7 @@ public class UserTest {
 	@Test
 	public void getUserByUserName() throws Exception
 	{
-		User user = _userCtrl.getUserByName();
+		User user = _userCtrl.getUserByName("test");
 	}
 	
 	

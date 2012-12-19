@@ -20,15 +20,24 @@ public class DateTimePanel
     {
     }
 
+    private static JSpinner _timeSpinner;
+    private static JDateChooser _dateChooser;
+
+    public JSpinner getTimeSpinner()
+    { return _timeSpinner; }
+
+    public JDateChooser getDateChooser()
+    { return _dateChooser; }
+
     public static JPanel buildDateTimePanel(Date value)
     {
         JPanel datePanel = new JPanel();
 
-        JDateChooser dateChooser = new JDateChooser();
+        _dateChooser = new JDateChooser();
         if (value != null)
-            dateChooser.setDate(value);
+            _dateChooser.setDate(value);
 
-        for (Component comp : dateChooser.getComponents())
+        for (Component comp : _dateChooser.getComponents())
         {
             if (comp instanceof JTextField)
             {
@@ -37,17 +46,17 @@ public class DateTimePanel
             }
         }
 
-        datePanel.add(dateChooser);
+        datePanel.add(_dateChooser);
 
         SpinnerModel model = new SpinnerDateModel();
-        JSpinner timeSpinner = new JSpinner(model);
-        JComponent editor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
-        timeSpinner.setEditor(editor);
+        _timeSpinner = new JSpinner(model);
+        JComponent editor = new JSpinner.DateEditor(_timeSpinner, "HH:mm");
+        _timeSpinner.setEditor(editor);
 
         if(value != null)
-            timeSpinner.setValue(value);
+            _timeSpinner.setValue(value);
 
-        datePanel.add(timeSpinner);
+        datePanel.add(_timeSpinner);
 
         return datePanel;
     }

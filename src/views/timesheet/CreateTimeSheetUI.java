@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
@@ -22,11 +23,11 @@ import models.UserPermission;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.awt.EventQueue;
-import java.awt.Toolkit;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicBorders;
 
 import views.SystemUI;
 import views.client.CreateClientUI;
@@ -54,8 +55,8 @@ public class CreateTimeSheetUI
 	
 	private JPanel _panel1;
 	private JPanel _panel2;
-	private JTextField _txtNotes;
-	JTextPane textPane;
+	private JTextPane txtNotes;
+    private JTextField txtCaseId;
 
 	private CreateDataEntryUI createDataEntryUI;
 	
@@ -77,6 +78,7 @@ public class CreateTimeSheetUI
 	
 	public void createElements()
 	{
+        _clientCtrl = new ClientCtrl();
 		_frame = new JFrame();
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_timesheet.png")));
 		_frame.setTitle("Ny Registrering");
@@ -127,13 +129,11 @@ public class CreateTimeSheetUI
 		
 		_drpClients = new JComboBox<String>();
 		_drpClients.setBounds(49, 11, 353, 22);
-		/*
-		contentPane.add(drpClients);
-		model = new DefaultComboBoxModel<String>(addClients());
-		drpClients.setModel(model);
-		*/
-		
-		// addClients();
+		_contentPane.add(_drpClients);
+		_model = new DefaultComboBoxModel<String>(addClients());
+        _drpClients.setModel(_model);
+
+		//addClients();
 		// addUsers();
 
 		// pane1 start
@@ -149,15 +149,16 @@ public class CreateTimeSheetUI
 		_panel1.add(label2);
 		
 		// for display ClientId
-		textPane = new JTextPane();
-		textPane.setBounds(45, 5, 332, 20);
-		_panel1.add(textPane);
+		txtCaseId = new JTextField();
+		txtCaseId.setBounds(45, 5, 332, 20);
+		_panel1.add(txtCaseId);
 		
 		// for notes
-		_txtNotes = new JTextField();
-		_txtNotes.setBounds(45, 31, 332, 195);
-		_panel1.add(_txtNotes);
-		_txtNotes.setColumns(10);
+		txtNotes = new JTextPane();
+		txtNotes.setBounds(45, 31, 332, 195);
+		_panel1.add(txtNotes);
+        txtNotes.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		//_txtNotes.setColumns(10);
 		
 		tabbedPane.add("Time-Sag", _panel1);
 		// pane1 end
@@ -200,10 +201,10 @@ public class CreateTimeSheetUI
 		{
 			clients = _clientCtrl.getAllClients();
 			String[] clientNames = new String[clients.size()];
-			for (int index = 0; index < clients.size(); index++) {
-				clientNames[index] = clients.get(index).getName();
-			}
-			return  clientNames;
+			for (int index = 0; index < clients.size(); index++)
+				clientNames[index] = clients.get(index).getName() + " (" + clients.get(index).getPhoneNo() +")";
+
+			return clientNames;
 		}
 		catch (Exception e)
 		{
@@ -257,10 +258,21 @@ public class CreateTimeSheetUI
 	
 	public void createTimeSheet()
 	{
-		String caseId = textPane.getSelectedText();
+		String caseId = txtCaseId.getSelectedText();
         User user = UserSession.getLoggedInUser();
-        Client client = (Client)_drpClients.getSelectedItem();
-        String note = _txtNotes.getText();
+        long clientPhone = Long.parseLong(_drpClients.getSelectedItem().toString().substring(_drpClients.getSelectedItem().toString().indexOf("(") + 1,
+                _drpClients.getSelectedItem().toString().indexOf(")")));
+
+        Client client = null;
+        try
+        {
+            client = _clientCtrl.getClientByPhone(clientPhone);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        String note = txtNotes.getText();
         Calendar cal = Calendar.getInstance();
         Date creationDate = cal.getTime();
         Date editedDate =  cal.getTime();

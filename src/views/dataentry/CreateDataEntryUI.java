@@ -9,6 +9,7 @@ import models.User;
 import utils.Logging;
 import utils.UserSession;
 import views.dataentry.CreateDataEntryUI;
+import views.shared.DateTimePanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,8 +35,10 @@ public class CreateDataEntryUI
     private static TimeSheet ts; // timesheet needs to be imported from super, when we open this class.
     
     private JComboBox<Task> drpXTask;
-    private JComboBox<Date> drpXStarted;
-    private JComboBox<Date> drpXEnded;
+    private DateTimePanel startDate;
+    private DateTimePanel endDate;
+
+    private JPanel task;
 
 	public static JFrame createWindow(TimeSheet timeSheet)
     {
@@ -107,35 +110,37 @@ public class CreateDataEntryUI
 		txtRemark.setBounds(80, 100, 190, 100);
 		dataEntry.add(txtRemark);
 		txtRemark.setColumns(10);
+
+        startDate = new DateTimePanel();
+        JPanel pnlStartDate = startDate.buildDateTimePanel(new Date());
+        pnlStartDate.setBounds(80, 47, 200, 20);
+		dataEntry.add(pnlStartDate);
+
+        endDate = new DateTimePanel();
+        JPanel pnlEndDate = startDate.buildDateTimePanel(new Date());
+        pnlEndDate.setBounds(80, 72, 200, 20);
+        dataEntry.add(pnlEndDate);
 		
-		drpXStarted = new JComboBox();
-		drpXStarted.setBounds(80, 47, 121, 20);
-		dataEntry.add(drpXStarted);
-		
-		drpXEnded = new JComboBox();
-		drpXEnded.setBounds(80, 72, 121, 20);
-		dataEntry.add(drpXEnded);
-		
-		JPanel Task = new JPanel();
-		tabbedPane.addTab("Opgave", null, Task, null);
-		Task.setLayout(null);
+		task = new JPanel();
+		tabbedPane.addTab("Opgave", null, task, null);
+		task.setLayout(null);
 		
 		JLabel lblTitle = new JLabel("Title");
 		lblTitle.setBounds(10, 11, 57, 14);
-		Task.add(lblTitle);
+		task.add(lblTitle);
 		
 		JLabel lblDescription = new JLabel("Beskrivelse");
 		lblDescription.setBounds(10, 45, 65, 14);
-		Task.add(lblDescription);
+		task.add(lblDescription);
 		
 		txtTitle = new JTextField();
 		txtTitle.setBounds(72, 11, 201, 20);
-		Task.add(txtTitle);
+		task.add(txtTitle);
 		txtTitle.setColumns(10);
 		
 		txtDescription = new JTextField();
 		txtDescription.setBounds(72, 42, 201, 136);
-		Task.add(txtDescription);
+		task.add(txtDescription);
 		txtDescription.setColumns(10);
 		
 		JButton btnCreateTask = new JButton("Opret ny Opgave");
@@ -147,7 +152,7 @@ public class CreateDataEntryUI
             }
         });
 		btnCreateTask.setBounds(156, 183, 117, 23);
-		Task.add(btnCreateTask);
+		task.add(btnCreateTask);
 		
         JButton btnCancel = new JButton("Annuller");
         btnCancel.addActionListener(new ActionListener()
@@ -177,15 +182,18 @@ public class CreateDataEntryUI
 	{
         try
         {
+            System.out.println(startDate.getTimeSpinner().getValue().toString());
+            Date ok = new Date(endDate.getTimeSpinner().getValue().toString());
+
             Task task = (Task)drpXTask.getSelectedItem();
             User user = UserSession.getLoggedInUser();
-            Date startDate = (Date)drpXStarted.getSelectedItem();
-            Date endDate = (Date)drpXEnded.getSelectedItem();
+            Date chosenStartDate = startDate.getDateChooser().getDate();
+            Date chosenEndDate = endDate.getDateChooser().getDate();
             String entryRemark = txtRemark.getText();
             Calendar cal = Calendar.getInstance();
             Date creationDate = cal.getTime();
             Date editedDate =  cal.getTime();
-            DataEntry dataEntry = new DataEntry(task, user, startDate, endDate, entryRemark, creationDate, editedDate);
+            DataEntry dataEntry = new DataEntry(task, user, chosenStartDate, chosenEndDate, entryRemark, creationDate, editedDate);
 
             _tsCtrl.addDataEntry(ts, dataEntry);
 
