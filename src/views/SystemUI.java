@@ -135,6 +135,16 @@ public class SystemUI extends JFrame implements ChangeListener
 		mnTimeSheet.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnTimeSheet);
 		
+		JMenuItem mntmNewTimeSheet = new JMenuItem("Ny time-sag");
+		mntmNewTimeSheet.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				createTimeSheet();
+			}
+		});
+		mnTimeSheet.add(mntmNewTimeSheet);
+		
 		JMenu mnClient = new JMenu("Klient");
 		mnClient.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnClient);
@@ -148,6 +158,16 @@ public class SystemUI extends JFrame implements ChangeListener
 			}
 		});
 		mnClient.add(mntmNewClient);
+		
+		JMenuItem mntmEditClient = new JMenuItem("Rediger klient");
+		mntmEditClient.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				editClient();
+			}
+		});
+		mnClient.add(mntmEditClient);
 		
 		JMenu mnSettings = new JMenu("Indstillinger");
 		mnSettings.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -172,7 +192,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				createTimSheet();
+				createTimeSheet();
 			}
 		});
 		lblNewTimeSheet.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -522,17 +542,22 @@ public class SystemUI extends JFrame implements ChangeListener
 		// code missing
 	}
 	
-	private void createClient()
-	{
-		CreateClientUI.createWindow();
-	}
-	
-	private void createTimSheet()
+	private void createTimeSheet()
 	{
 		// code missing
 	}
 	
 	private void createDataEntry()
+	{
+		// code missing
+	}
+	
+	private void createClient()
+	{
+		CreateClientUI.createWindow();
+	}
+	
+	private void editClient()
 	{
 		// code missing
 	}
@@ -687,7 +712,7 @@ public class SystemUI extends JFrame implements ChangeListener
     			clientsList = _clientCtrl.getAllClients();
     			String[] clientNames = new String[clientsList.size()];
     			for(int i = 0; i < clientsList.size(); i++)
-    				clientNames[i] = clientsList.get(i).getName();
+    				clientNames[i] = clientsList.get(i).getName() + " (" + clientsList.get(i).getPhoneNo() + ")";
     			
     			return clientNames;
     		}
@@ -706,20 +731,12 @@ public class SystemUI extends JFrame implements ChangeListener
         {
             try
             {
-                int sheetId = 2;
-
-                TimeSheet sheet = _timesheetCtrl.getTimeSheetById(sheetId);
-                
-                lblClientName_ts.setText(sheet.getClient().getName());
-    			lblClientAddress_ts.setText(sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName());
-    			lblClientPhoneNo_ts.setText("Telefon: " + String.valueOf(sheet.getClient().getPhoneNo()));
-    			lblClientEmail_ts.setText("E-Mail: " + sheet.getClient().getEmail());
-    			lblCaseId_ts.setText(sheet.getCaseId());
-    			lblTimeSheetOwner_ts.setText("Ansvarlig: " + sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName());
-    			txtNoteField.setText("Note: " + sheet.getNote());
+            	String clientId = lstTimeSheets.getSelectedValue().substring(0, lstTimeSheets.getSelectedValue().indexOf("(")-1);
+            	
+            	TimeSheet sheet = _timesheetCtrl.getTimeSheetByCaseId(clientId);
 
                 if(sheet != null)
-                {
+                {	
                     ArrayList<DataEntry> dataEntries = sheet.getDataEntries();
 
                     Object[][] data = {};
@@ -733,6 +750,14 @@ public class SystemUI extends JFrame implements ChangeListener
                                 dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark(), "Rediger/Slet"};
                         sheetModel.addRow(row);
                     }
+                    
+                    lblClientName_ts.setText(sheet.getClient().getName());
+        			lblClientAddress_ts.setText(sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName());
+        			lblClientPhoneNo_ts.setText("Telefon: " + String.valueOf(sheet.getClient().getPhoneNo()));
+        			lblClientEmail_ts.setText("E-Mail: " + sheet.getClient().getEmail());
+        			lblCaseId_ts.setText(sheet.getCaseId());
+        			lblTimeSheetOwner_ts.setText("Ansvarlig: " + sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName());
+        			txtNoteField.setText("Note: " + sheet.getNote());
                     
                     //addButtonsToSheets(6);
                 }
@@ -757,15 +782,14 @@ public class SystemUI extends JFrame implements ChangeListener
         {
 			try
 			{
-				Client client = _clientCtrl.getClientByName(lstClients.getSelectedValue());
 				
-				lblClientName_cl.setText(client.getName());
-				lblClientAddress_cl.setText(client.getAddress() + ", " + client.getCity().getZipCode() + " " + client.getCity().getCityName());
-				lblClientPhoneNo_cl.setText("Telefon: " + String.valueOf(client.getPhoneNo()));
-				lblClientEmail_cl.setText("E-Mail: " + client.getEmail());
+				long clientPhone = Long.parseLong(lstClients.getSelectedValue().substring(lstClients.getSelectedValue().indexOf("(")+1, 
+													lstClients.getSelectedValue().indexOf(")")));
+				
+				Client client = _clientCtrl.getClientByPhone(clientPhone);
 				
 				if(client != null)
-				{			
+				{	
 					ArrayList<TimeSheet> timesheets = _timesheetCtrl.getAllTimeSheetsByClient(client);
 					
 					Object[][] data = {};
@@ -779,6 +803,11 @@ public class SystemUI extends JFrame implements ChangeListener
 						
 						clientModel.addRow(row);
 					}
+					
+					lblClientName_cl.setText(client.getName());
+					lblClientAddress_cl.setText(client.getAddress() + ", " + client.getCity().getZipCode() + " " + client.getCity().getCityName());
+					lblClientPhoneNo_cl.setText("Telefon: " + String.valueOf(client.getPhoneNo()));
+					lblClientEmail_cl.setText("E-Mail: " + client.getEmail());
 					
 					//addButtonToClient(6);
 				}
