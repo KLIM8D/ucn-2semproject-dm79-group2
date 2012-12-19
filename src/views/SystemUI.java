@@ -589,10 +589,18 @@ public class SystemUI extends JFrame implements ChangeListener
 			{
 				JTable clientTable = (JTable) e.getSource();
 				int row = Integer.valueOf(e.getActionCommand());
-
+				String caseId = clientTable.getValueAt(row, 0).toString();
 				if(columnIndex == 4)
 				{
-
+					try
+					{
+						TimeSheet sheet = _timesheetCtrl.getTimeSheetByCaseId(caseId);
+						// insert method for editing timesheet
+					} 
+					catch (Exception ex)
+					{
+						JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		};
