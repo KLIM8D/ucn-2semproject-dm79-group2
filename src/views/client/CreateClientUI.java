@@ -111,26 +111,12 @@ public class CreateClientUI
                 {
                 	Helper.checkIfInt(txtZipCode);
                 }
+                if(txtZipCode.getText().length() > 3)
+                {
+                	lookupCity();
+                }
             }
         });
-        txtZipCode.addFocusListener(new FocusListener()
-        {	
-        	public void focusGained(FocusEvent e)
-            {}
-        	public void focusLost(FocusEvent e)
-            {
-            	try
-            	{
-           			txtCity.setText(_cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText())).getCityName());
-           		}
-            	catch (Exception error)
-            	{
-            		error.printStackTrace();
-            		JOptionPane.showMessageDialog(null, Logging.handleException(error, 1), "Forkert postnummer", JOptionPane.WARNING_MESSAGE);
-            	}
-        	}
-        });
-
         txtZipCode.setDocument(new JTextFieldLimit(5));
         txtZipCode.setBounds(142,55,50,19);
         contentPane.add(txtZipCode);
@@ -194,6 +180,22 @@ public class CreateClientUI
         });
     }
 
+    private void lookupCity()
+    {
+    	try
+        {
+        	if(_cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText())).getCityName().equals(""))
+        	{
+        		throw new Exception();
+        	}
+            txtCity.setText(_cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText())).getCityName());
+        }
+        catch (Exception error)
+        {
+            JOptionPane.showMessageDialog(null, Logging.handleException(error, 1), "Ukendt postnummer", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     private void createClient()
     {
     	try

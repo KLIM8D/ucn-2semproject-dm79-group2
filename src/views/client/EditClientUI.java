@@ -113,25 +113,10 @@ public class EditClientUI
                 {
                     Helper.checkIfInt(txtZipCode);
                 }
-            }
-        });
-        txtZipCode.addFocusListener(new FocusListener()
-        {
-
-            public void focusGained(FocusEvent e)
-            {
-            }
-
-            public void focusLost(FocusEvent e)
-            {
-                try
+                
+                if(txtZipCode.getText().length() > 3)
                 {
-                    txtCity.setText(_cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText())).getCityName());
-                }
-                catch (Exception error)
-                {
-                    error.printStackTrace();
-                    JOptionPane.showMessageDialog(null, Logging.handleException(error, 1), "Forkert postnummer", JOptionPane.WARNING_MESSAGE);
+                	lookupCity();
                 }
             }
         });
@@ -193,6 +178,22 @@ public class EditClientUI
         });
     }
     
+    private void lookupCity()
+    {
+    	try
+        {
+        	if(_cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText())).getCityName().equals(""))
+        	{
+        		throw new Exception();
+        	}
+            txtCity.setText(_cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText())).getCityName());
+        }
+        catch (Exception error)
+        {
+            JOptionPane.showMessageDialog(null, Logging.handleException(error, 1), "Ukendt postnummer", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     private void updateClient()
     {
     	try
@@ -207,8 +208,7 @@ public class EditClientUI
     	}
     	catch (Exception e)
     	{
-    		e.printStackTrace();
-            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Telefonnummeret eksisterer for en anden klient!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Telefonnummeret eksisterer for en anden klient!", JOptionPane.ERROR_MESSAGE);
     	}
     	try
     	{    		
@@ -248,7 +248,7 @@ public class EditClientUI
     	}
     	catch (Exception ex)
         {
-            JOptionPane.showMessageDialog(null, Logging.handleException(ex, 1), "Fejl", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, Logging.handleException(ex, 1), "Fejl", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
