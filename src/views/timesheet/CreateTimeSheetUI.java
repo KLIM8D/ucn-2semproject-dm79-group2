@@ -22,6 +22,7 @@ import models.UserPermission;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.awt.EventQueue;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -35,16 +36,16 @@ public class CreateTimeSheetUI
 {
     private static JFrame _frame;
     private static CreateTimeSheetUI _instance;
-	
 	private JPanel _contentPane;
-	private JComboBox<String> _drpClients;
+	
+	// Controllers
 	private ClientCtrl _clientCtrl;
+	
+	private JComboBox<String> _drpClients;
 	private DefaultComboBoxModel<String> _model;
-
 	private JComboBox<String> _drpUsers;
 	private UserCtrl _userCtrl;
 	private DefaultComboBoxModel<String> _modelUsers;
-		
 	private JComboBox<String> _drpPermissions;
 	private UserPermissionCtrl _userPermissionCtrl;
 	private DefaultComboBoxModel<String> _modelPermissions;
