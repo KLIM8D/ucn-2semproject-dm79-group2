@@ -41,6 +41,12 @@ public class UserCtrl
 		return dbu.getUserById(value);
 	}
 	
+	public User getUserByName(String userName) throws Exception
+	{
+		DBUser dbu = new DBUser();
+		return dbu.getUserByUserName(userName);
+	}
+	
 	public int insertUser(User user) throws Exception
 	{
 		DBUser dbu = new DBUser();
