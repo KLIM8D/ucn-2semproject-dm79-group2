@@ -5,6 +5,7 @@ import models.DataEntry;
 import models.TimeSheet;
 import models.User;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -41,10 +42,11 @@ public class DBTimeSheet implements IFDBTimeSheet
 	public ArrayList<TimeSheet> getAllTimeSheets() throws Exception
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
-		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets " + _sortExpression);
-		_da.setSqlCommandText(query);
-		ResultSet timeSheets = _da.callCommandGetResultSet();
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets " + _sortExpression);
+
+		ResultSet timeSheets = _da.callCommandGetResultSet(query, con);
 		
 		while (timeSheets.next())
 		{
@@ -64,10 +66,11 @@ public class DBTimeSheet implements IFDBTimeSheet
 	@Override
 	public TimeSheet getTimeSheetById(int sheetId) throws Exception
     {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE sheetId = ? " + _sortExpression);
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE sheetId = ? " + _sortExpression);
 		query.setInt(1, sheetId);
-		_da.setSqlCommandText(query);
-		ResultSet timeSheetResult = _da.callCommandGetRow();
+
+		ResultSet timeSheetResult = _da.callCommandGetRow(query, con);
 
         if(timeSheetResult.next())
             return buildTimeSheet(timeSheetResult);
@@ -84,10 +87,10 @@ public class DBTimeSheet implements IFDBTimeSheet
 	@Override
 	public TimeSheet getTimeSheetByCaseId(String caseId) throws Exception
 	{
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE caseId = ? " + _sortExpression);
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE caseId = ? " + _sortExpression);
 		query.setString(1, caseId);
-		_da.setSqlCommandText(query);
-		ResultSet timeSheetResult = _da.callCommandGetRow();
+		ResultSet timeSheetResult = _da.callCommandGetRow(query, con);
 		
 		if(timeSheetResult.next())
 			return buildTimeSheet(timeSheetResult);
@@ -106,11 +109,12 @@ public class DBTimeSheet implements IFDBTimeSheet
 	public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user) throws Exception
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
-		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? " + _sortExpression);
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? " + _sortExpression);
 		query.setInt(1, user.getUserId());
-		_da.setSqlCommandText(query);
-		ResultSet timeSheets = _da.callCommandGetResultSet();
+
+		ResultSet timeSheets = _da.callCommandGetResultSet(query, con);
 		
 		while (timeSheets.next())
 		{
@@ -133,13 +137,14 @@ public class DBTimeSheet implements IFDBTimeSheet
     public ArrayList<TimeSheet> getAllTimeSheetsByUser(User user, Date startDate, Date endDate) throws Exception
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
-		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND creationDate BETWEEN = ? AND = ? " + _sortExpression);
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND creationDate BETWEEN = ? AND = ? " + _sortExpression);
 		query.setInt(1, user.getUserId());
 		query.setString(2, _da.dateToSqlDate(startDate));
 		query.setString(3, _da.dateToSqlDate(endDate));
-		_da.setSqlCommandText(query);
-		ResultSet timeSheets = _da.callCommandGetResultSet();
+
+		ResultSet timeSheets = _da.callCommandGetResultSet(query, con);
 		
 		while (timeSheets.next())
 		{
@@ -161,11 +166,12 @@ public class DBTimeSheet implements IFDBTimeSheet
 	public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client) throws Exception
     {
 		ArrayList<TimeSheet>  returnList = new ArrayList<TimeSheet>();
-		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? " + _sortExpression);
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? " + _sortExpression);
 		query.setInt(1, client.getClientId());
-		_da.setSqlCommandText(query);
-		ResultSet timeSheets = _da.callCommandGetResultSet();
+
+		ResultSet timeSheets = _da.callCommandGetResultSet(query, con);
 		
 		while (timeSheets.next())
 		{
@@ -189,13 +195,14 @@ public class DBTimeSheet implements IFDBTimeSheet
     public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client, Date startDate, Date endDate) throws Exception
     {
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
-		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? " + _sortExpression);
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? " + _sortExpression);
         query.setInt(1, client.getClientId());
         query.setString(2, _da.dateToSqlDate(startDate));
         query.setString(3, _da.dateToSqlDate(endDate));
-		_da.setSqlCommandText(query);
-		ResultSet timeSheets = _da.callCommandGetResultSet();
+
+		ResultSet timeSheets = _da.callCommandGetResultSet(query, con);
 		
 		while (timeSheets.next())
 		{
@@ -218,17 +225,17 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		if (timeSheet == null)
 		    return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO TimeSheets (caseId, userId, clientId, note, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?)");
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("INSERT INTO TimeSheets (caseId, userId, clientId, note, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?)");
         query.setString(1, timeSheet.getCaseId());
 		query.setInt(2, timeSheet.getUser().getUserId());
 		query.setInt(3, timeSheet.getClient().getClientId());
 		query.setString(4, timeSheet.getNote());
 		query.setString(5, _da.dateToSqlDate(timeSheet.getCreationDate()));
 		query.setString(6, _da.dateToSqlDate(timeSheet.getEditedDate()));
-		_da.setSqlCommandText(query);
 		
-		return _da.callCommand();
+		return _da.callCommand(query, con);
 	}
 
 
@@ -243,17 +250,17 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		if (timeSheet == null)
 			return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE TimeSheets SET caseId = ?, userId = ?, clientId = ?, note = ?, editedDate = ? WHERE sheetId = ?");
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("UPDATE TimeSheets SET caseId = ?, userId = ?, clientId = ?, note = ?, editedDate = ? WHERE sheetId = ?");
         query.setString(1, timeSheet.getCaseId());
         query.setInt(2, timeSheet.getUser().getUserId());
 		query.setInt(3, timeSheet.getClient().getClientId());
 		query.setString(4, timeSheet.getNote());
 		query.setString(5, _da.dateToSqlDate(timeSheet.getEditedDate()));
         query.setInt(6, timeSheet.getSheetId());
-		_da.setSqlCommandText(query);
 		
-		return _da.callCommand();
+		return _da.callCommand(query, con);
 	}
 
 	
@@ -268,14 +275,12 @@ public class DBTimeSheet implements IFDBTimeSheet
     {
 		if (timeSheet == null)
 		    return 0;
-		
-		int rowsAffected = 0;
-		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM TimeSheets WHERE sheetId = ?");
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("DELETE FROM TimeSheets WHERE sheetId = ?");
 		query.setInt(1, timeSheet.getSheetId());
-		_da.setSqlCommandText(query);
-		rowsAffected += _da.callCommand();
-		
-		return rowsAffected;
+
+        return _da.callCommand(query, con);
 	}
 
 	

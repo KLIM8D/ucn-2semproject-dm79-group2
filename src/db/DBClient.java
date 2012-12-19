@@ -3,6 +3,7 @@ package db;
 import models.City;
 import models.Client;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -26,9 +27,9 @@ public class DBClient implements IFDBClient
 	{
 		ArrayList<Client> returnList = new ArrayList<Client>();
 
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Clients");
-        _da.setSqlCommandText(query);
-        ResultSet clients = _da.callCommandGetResultSet();
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Clients");
+        ResultSet clients = _da.callCommandGetResultSet(query, con);
 
         while(clients.next())
         {
@@ -48,10 +49,10 @@ public class DBClient implements IFDBClient
     @Override
 	public Client getClientById(int id) throws Exception
 	{
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Clients WHERE clientId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Clients WHERE clientId = ?");
         query.setInt(1, id);
-        _da.setSqlCommandText(query);
-        ResultSet clientResult = _da.callCommandGetRow();
+        ResultSet clientResult = _da.callCommandGetRow(query, con);
         if(clientResult.next())
             return buildClient(clientResult);
 
@@ -67,10 +68,10 @@ public class DBClient implements IFDBClient
 	@Override
 	public Client getClientByPhone(long phoneNo) throws Exception 
 	{
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Clients WHERE phoneNo = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Clients WHERE phoneNo = ?");
         query.setLong(1, phoneNo);
-        _da.setSqlCommandText(query);
-        ResultSet clientResult = _da.callCommandGetRow();
+        ResultSet clientResult = _da.callCommandGetRow(query, con);
         if(clientResult.next())
             return buildClient(clientResult);
 
@@ -86,10 +87,10 @@ public class DBClient implements IFDBClient
     @Override
 	public Client getClientByName(String name) throws Exception
 	{
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Clients WHERE name = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Clients WHERE name = ?");
         query.setString(1, name);
-        _da.setSqlCommandText(query);
-        ResultSet clientResult = _da.callCommandGetRow();
+        ResultSet clientResult = _da.callCommandGetRow(query, con);
         if(clientResult.next())
             return buildClient(clientResult);
 
@@ -108,7 +109,8 @@ public class DBClient implements IFDBClient
         if(client == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Clients (name, address, cityId, phoneNo, eMail, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("INSERT INTO Clients (name, address, cityId, phoneNo, eMail, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         query.setString(1, client.getName());
         query.setString(2, client.getAddress());
@@ -117,9 +119,8 @@ public class DBClient implements IFDBClient
         query.setString(5, client.getEmail());
         query.setString(6, _da.dateToSqlDate(client.getCreationDate()));
         query.setString(7, _da.dateToSqlDate(client.getEditedDate()));
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
 	}
 
     /**
@@ -134,7 +135,8 @@ public class DBClient implements IFDBClient
 		if(client == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("UPDATE Clients SET cityId = ?, name = ?, address = ?, phoneNo = ?, eMail = ?, editedDate = ? WHERE clientId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("UPDATE Clients SET cityId = ?, name = ?, address = ?, phoneNo = ?, eMail = ?, editedDate = ? WHERE clientId = ?");
         query.setInt(1, client.getCity().getCityId());
         query.setString(2, client.getName());
         query.setString(3, client.getAddress());
@@ -142,9 +144,8 @@ public class DBClient implements IFDBClient
         query.setString(5, client.getEmail());
         query.setString(6, _da.dateToSqlDate(client.getEditedDate()));
         query.setInt(7, client.getClientId());
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
 	}
 
     /**
@@ -163,10 +164,10 @@ public class DBClient implements IFDBClient
             return 0;
 
         int rowsAffected = 0;
-        PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Clients WHERE clientId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("DELETE FROM Clients WHERE clientId = ?");
         query.setLong(1, client.getClientId());
-        _da.setSqlCommandText(query);
-        rowsAffected += _da.callCommand();
+        rowsAffected += _da.callCommand(query, con);
 
         return rowsAffected;
     }

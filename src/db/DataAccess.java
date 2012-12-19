@@ -4,11 +4,17 @@ package db;
  * Created: 12-10-2012
  * @version: 0.1
  * Filename: DataAccess.java
- * Description:
+ * Description: A class which handles all the database connections
+ *
+ * Driver used: http://jtds.sourceforge.net/index.html
+ *
  * @changes
+ * 19.12 MKS: Changed driver for better performance and thread safety. Changed the class to be thread safe.
  */
 
 import com.sun.rowset.CachedRowSetImpl;
+import com.jolbox.bonecp.BoneCP;
+import com.jolbox.bonecp.BoneCPConfig;
 
 import javax.sql.rowset.CachedRowSet;
 import java.lang.management.ManagementFactory;
@@ -19,29 +25,29 @@ import java.text.SimpleDateFormat;
 
 public class DataAccess
 {
-    private PreparedStatement _sqlCommand;
     private int _dbType = 1;
-    private final String _connectionString = "jdbc:sqlserver://IPADDR;" +
-                                             "databaseName=DBNAME;" +
-                                             "user=USERNAME;" +
-                                             "password=PASSWORD";
     private final boolean _enableSqlMonitor = true;
-    private static Connection _con;
+    private BoneCP _connectionPool;
     private static DataAccess _instance;
-
-    public PreparedStatement getSqlCommandText()
-    { return _sqlCommand; }
-    public void setSqlCommandText(PreparedStatement value)
-    { _sqlCommand = value; }
 
     public void setDbType(int value)
     { _dbType = value; }
 
-    public Connection getCon() throws SQLException
+    protected Connection getCon() throws SQLException
     {
-        if(_con == null || isClosed())
-            openConnection();
-        return _con;
+        return _connectionPool.getConnection();
+    }
+
+    protected void closeConnection(Connection connection)
+    {
+        try
+        {
+            connection.close();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     public static DataAccess getInstance()
@@ -56,8 +62,19 @@ public class DataAccess
             case 1:
                 try
                 {
-                    //MSSQL Server
-                    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                    //MSSQL Server (JDBC Driver)
+                    //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+                    //MSSQL Server (JTDS Driver)
+                    Class.forName("net.sourceforge.jtds.jdbc.Driver");
+                    BoneCPConfig config = new BoneCPConfig();
+                    config.setJdbcUrl("jdbc:jtds:sqlserver://IPADDR//DB_NAME");
+                    config.setUsername("USERNAME");
+                    config.setPassword("PASSWORD");
+                    config.setMinConnectionsPerPartition(5);
+                    config.setMaxConnectionsPerPartition(10);
+                    config.setPartitionCount(1);
+                    _connectionPool = new BoneCP(config);
                 }
                 catch(Exception e)
                 {
@@ -69,95 +86,12 @@ public class DataAccess
     }
 
     /**
-     * Open the connection to the database
-     *
-     */
-    public void openConnection()
-    {
-        try
-        {
-            _con = DriverManager.getConnection(_connectionString);
-            _con.setAutoCommit(true);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            System.out.println("ConnectionString: " + _connectionString);
-        }
-    }
-
-    /**
-     * Close the connection to the database
-     *
-     */
-    public static void closeConnection()
-    {
-        try
-        {
-            _con.close();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Set AutoCommit to false. Which will hold back any transactions/queries
-     *
-     */
-    public static void startTransaction()
-    {
-        try
-        {
-            _con.setAutoCommit(false);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Set AutoCommit to true. Which will execute the queries immediately
-     *
-     */
-    public static void commitTransaction()
-    {
-        try
-        {
-            _con.setAutoCommit(true);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-    * Rollback the failed update you performed
-    *
-    */
-    public static void rollbackTransaction()
-    {
-        try
-        {
-            _con.rollback();
-            _con.setAutoCommit(true);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Get a ResultSet which contains the rows returned from the database. comment
      *
      * @return ResultSet the rows returned from the database
      *
      */
-    public ResultSet callCommandGetResultSet()
+    public synchronized ResultSet callCommandGetResultSet(PreparedStatement _sqlCommand, Connection _con)
     {
         //Benchmark time start
         ThreadMXBean threadmxbean = ManagementFactory.getThreadMXBean();
@@ -167,15 +101,13 @@ public class DataAccess
         if (_enableSqlMonitor)
             startTime =  threadmxbean.getCurrentThreadCpuTime();
 
+        ResultSet newResultSet = null;
         try
         {
-            ResultSet newResultSet = _sqlCommand.executeQuery();
             CachedRowSet cachedRowSet = new CachedRowSetImpl();
-            if(isClosed())
-                openConnection();
-
+            newResultSet = _sqlCommand.executeQuery();
             cachedRowSet.populate(newResultSet);
-            newResultSet.close();
+
             return cachedRowSet;
         }
         catch (Exception e)
@@ -184,9 +116,7 @@ public class DataAccess
         }
         finally
         {
-            if (_con != null)
-                closeConnection();
-            _sqlCommand = null;
+            close(newResultSet, _sqlCommand, _con);
         }
 
         if (_enableSqlMonitor)
@@ -205,17 +135,15 @@ public class DataAccess
     * @return ResultSet the rows returned from the database
     *
     */
-    private ResultSet callCommandGetResultSetWithOutMonitor()
+    private synchronized ResultSet callCommandGetResultSetWithOutMonitor(PreparedStatement _sqlCommand, Connection _con)
     {
+        ResultSet newResultSet = null;
         try
         {
-            ResultSet newResultSet = _sqlCommand.executeQuery();
             CachedRowSet cachedRowSet = new CachedRowSetImpl();
-            if(isClosed())
-                openConnection();
-
+            newResultSet = _sqlCommand.executeQuery();
             cachedRowSet.populate(newResultSet);
-            newResultSet.close();
+
             return cachedRowSet;
         }
         catch (Exception e)
@@ -224,9 +152,7 @@ public class DataAccess
         }
         finally
         {
-            if (_con != null)
-                closeConnection();
-            _sqlCommand = null;
+            close(newResultSet, _sqlCommand, _con);
         }
 
         return null;
@@ -238,7 +164,7 @@ public class DataAccess
     * @return int number of rows affected by the query
     *
     */
-    public int callCommand()
+    public synchronized int callCommand(PreparedStatement _sqlCommand, Connection _con)
     {
         int returnVal = 0;
 
@@ -252,9 +178,11 @@ public class DataAccess
 
         try
         {
-            if(isClosed())
-                openConnection();
-            returnVal = _sqlCommand.executeUpdate();
+            _sqlCommand.addBatch();
+            int[] updateCount = _sqlCommand.executeBatch();
+
+            for (int i = 0; i < updateCount.length; i++)
+                returnVal += updateCount[i];
         }
         catch (Exception e)
         {
@@ -262,9 +190,7 @@ public class DataAccess
         }
         finally
         {
-            if (_con != null)
-                closeConnection();
-            _sqlCommand = null;
+            close(null, _sqlCommand, _con);
         }
 
         if (_enableSqlMonitor)
@@ -282,7 +208,7 @@ public class DataAccess
     * @return String the value from the database
     *
     */
-    public String callCommandGetField()
+    public synchronized String callCommandGetField(PreparedStatement _sqlCommand, Connection _con)
     {
         //Benchmark time start
         ThreadMXBean threadmxbean = ManagementFactory.getThreadMXBean();
@@ -293,10 +219,10 @@ public class DataAccess
             startTime =  threadmxbean.getCurrentThreadCpuTime();
 
         String returnVal = "";
-
+        ResultSet listData = null;
         try
         {
-            ResultSet listData = callCommandGetResultSetWithOutMonitor();
+            listData = callCommandGetResultSetWithOutMonitor(_sqlCommand, _con);
             if (listData != null && listData.next())
             {
                 returnVal = listData.getString(1);
@@ -308,9 +234,7 @@ public class DataAccess
         }
         finally
         {
-            if(_con != null)
-                closeConnection();
-            _sqlCommand = null;
+            close(listData, null, null);
         }
 
         if (_enableSqlMonitor)
@@ -328,7 +252,7 @@ public class DataAccess
     * @return ResultSet which contains the row
     *
     */
-    public ResultSet callCommandGetRow()
+    public synchronized ResultSet callCommandGetRow(PreparedStatement _sqlCommand, Connection _con)
     {
         //Benchmark time start
         ThreadMXBean threadmxbean = ManagementFactory.getThreadMXBean();
@@ -338,14 +262,15 @@ public class DataAccess
         if (_enableSqlMonitor)
             startTime =  threadmxbean.getCurrentThreadCpuTime();
 
+        ResultSet listData = null;
         try
         {
-            ResultSet listData = callCommandGetResultSetWithOutMonitor();
             CachedRowSet dataSet = new CachedRowSetImpl();
+            listData = callCommandGetResultSetWithOutMonitor(_sqlCommand, _con);
+
             if (listData != null)
             {
                 dataSet.populate(listData);
-                listData.close();
                 return dataSet;
             }
         }
@@ -355,9 +280,7 @@ public class DataAccess
         }
         finally
         {
-            if(_con != null)
-                closeConnection();
-            _sqlCommand = null;
+            close(listData, null, null);
         }
 
         if (_enableSqlMonitor)
@@ -376,7 +299,7 @@ public class DataAccess
     * @return returns a formated String
     *
     */
-    public String dateToSqlDate(java.util.Date d)
+    public synchronized String dateToSqlDate(java.util.Date d)
     {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return df.format(d);
@@ -389,7 +312,7 @@ public class DataAccess
     * @return Returns java.util.date
     *
     */
-    public java.util.Date sqlDateToDate(java.sql.Date sqlDate)
+    public synchronized java.util.Date sqlDateToDate(java.sql.Date sqlDate)
     {
         return new Date(sqlDate.getTime());
     }
@@ -401,14 +324,16 @@ public class DataAccess
     * @return long the next ID/identity value
     *
     */
-    public long getNextId(String tableName)
+    public synchronized long getNextId(String tableName)
     {
         try
         {
-            _sqlCommand = getCon().prepareStatement("SELECT IDENT_CURRENT(?) + IDENT_INCR(?)");
+            Connection con = getCon();
+            PreparedStatement _sqlCommand = con.prepareStatement("SELECT IDENT_CURRENT(?) + IDENT_INCR(?)");
             _sqlCommand.setString(1, tableName);
             _sqlCommand.setString(2, tableName);
-            String returnVal = callCommandGetField();
+            String returnVal = callCommandGetField(_sqlCommand, con);
+
             return Long.parseLong(returnVal);
         }
         catch (Exception e)
@@ -433,7 +358,8 @@ public class DataAccess
         ResultSet rs;
         try
         {
-            stmt = _con.createStatement();
+            Connection con = getCon();
+            stmt = con.createStatement();
             rs = stmt.executeQuery("SELECT 1");
             if (rs.next())
                 return false; // connection is valid
@@ -445,5 +371,42 @@ public class DataAccess
         }
 
         return false;
+    }
+
+    protected void close(ResultSet rs, Statement ps, Connection conn)
+    {
+        if (rs != null)
+        {
+            try
+            {
+                rs.close();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("The result set cannot be closed." + e);
+            }
+        }
+        if (ps != null)
+        {
+            try
+            {
+                ps.close();
+            }
+            catch (SQLException e)
+            {
+                System.out.println("The result set cannot be closed." + e);
+            }
+        }
+        if (conn != null)
+        {
+            try
+            {
+                conn.close();
+            }
+            catch (SQLException e)
+            {
+                System.out.println("The result set cannot be closed." + e);
+            }
+        }
     }
 }

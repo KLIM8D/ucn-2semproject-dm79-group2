@@ -11,6 +11,7 @@ package db;
 
 import models.UserPermission;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -33,10 +34,11 @@ public class DBUserPermission implements IFDBUserPermission
 	public ArrayList<UserPermission> getAllRoles() throws Exception
 	{
 		ArrayList<UserPermission> returnList = new ArrayList<UserPermission>();
-		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM UserPermissions");
-		_da.setSqlCommandText(query);
-		ResultSet roleResult = _da.callCommandGetResultSet();
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM UserPermissions");
+
+		ResultSet roleResult = _da.callCommandGetResultSet(query, con);
 		
 		while(roleResult.next())
 		{
@@ -56,10 +58,11 @@ public class DBUserPermission implements IFDBUserPermission
 	@Override
 	public UserPermission getRoleById(int value) throws Exception
 	{
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM UserPermissions WHERE permissionId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM UserPermissions WHERE permissionId = ?");
 		query.setInt(1, value);
-		_da.setSqlCommandText(query);
-		ResultSet roleResult = _da.callCommandGetRow();
+
+		ResultSet roleResult = _da.callCommandGetRow(query, con);
 		if(roleResult.next())
 			return buildRoles(roleResult);
 		
@@ -77,16 +80,16 @@ public class DBUserPermission implements IFDBUserPermission
 	{
 		if(userPermission == null)
 			return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO UserPermissions (userRole, creationDate, editedDate " +
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("INSERT INTO UserPermissions (userRole, creationDate, editedDate " +
 																"VALUES(?, ?, ?)");
 		
 		query.setString(1, userPermission.getUserRole());
-		query.setDate(2, (java.sql.Date)userPermission.getCreationDate());
-		query.setDate(3, (java.sql.Date) userPermission.getEditedDate());
-		_da.setSqlCommandText(query);
+		query.setString(2,  _da.dateToSqlDate(userPermission.getCreationDate()));
+		query.setString(3, _da.dateToSqlDate(userPermission.getEditedDate()));
 		
-		return _da.callCommand();
+		return _da.callCommand(query, con);
 	}
 	
 	/**
@@ -103,16 +106,16 @@ public class DBUserPermission implements IFDBUserPermission
 		
 		if(getRoleById(userPermission.getPermissionId()) == null)
 			return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE UserRoles SET userRole = ?, " + 
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("UPDATE UserRoles SET userRole = ?, " +
 																"editedDate = ? WHERE permissionId = ?");
 		
 		query.setString(1, userPermission.getUserRole());
-		query.setDate(2, (java.sql.Date)userPermission.getEditedDate());
+		query.setString(2, _da.dateToSqlDate(userPermission.getEditedDate()));
 		query.setInt(3, userPermission.getPermissionId());
-		_da.setSqlCommandText(query);
 		
-		return _da.callCommand();
+		return _da.callCommand(query, con);
 	}
 	
 	/**
@@ -126,13 +129,13 @@ public class DBUserPermission implements IFDBUserPermission
 	{
 		if(userPermission == null)
 			return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM UserPermissions WHERE permissionId = ?");
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("DELETE FROM UserPermissions WHERE permissionId = ?");
 		
 		query.setInt(1, userPermission.getPermissionId());
-		_da.setSqlCommandText(query);
 		
-		return _da.callCommand();
+		return _da.callCommand(query, con);
 	}
 	
 	private UserPermission buildRoles(ResultSet row) throws Exception

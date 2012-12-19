@@ -12,6 +12,7 @@ package db;
 import models.User;
 import models.UserPermission;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -34,10 +35,11 @@ public class DBUser implements IFDBUser
 	public ArrayList<User> getAllUsers() throws Exception
 	{
 		ArrayList<User> returnList = new ArrayList<User>();
-		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Users");
-		_da.setSqlCommandText(query);
-		ResultSet userResult = _da.callCommandGetResultSet();
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Users");
+
+		ResultSet userResult = _da.callCommandGetResultSet(query, con);
 		
 		while(userResult.next())
 		{
@@ -58,10 +60,11 @@ public class DBUser implements IFDBUser
     {
         ArrayList<User> returnList = new ArrayList<User>();
 
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Users WHERE permissionId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Users WHERE permissionId = ?");
         query.setInt(1, userPermission.getPermissionId());
-        _da.setSqlCommandText(query);
-        ResultSet userResult = _da.callCommandGetResultSet();
+
+        ResultSet userResult = _da.callCommandGetResultSet(query, con);
 
         while(userResult.next())
         {
@@ -81,10 +84,11 @@ public class DBUser implements IFDBUser
 	@Override
 	public User getUserById(int value) throws Exception
 	{
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Users WHERE userId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Users WHERE userId = ?");
 		query.setInt(1, value);
-		_da.setSqlCommandText(query);
-		ResultSet userResult = _da.callCommandGetRow();
+
+		ResultSet userResult = _da.callCommandGetRow(query, con);
 
 		if(userResult.next())
 			return buildUsers(userResult);
@@ -101,10 +105,11 @@ public class DBUser implements IFDBUser
     @Override
     public User getUserByUserName(String userName) throws Exception
     {
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Users WHERE userName = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Users WHERE userName = ?");
         query.setString(1, userName);
-        _da.setSqlCommandText(query);
-        ResultSet userResult = _da.callCommandGetRow();
+
+        ResultSet userResult = _da.callCommandGetRow(query, con);
 
         if(userResult.next())
             return buildUsers(userResult);
@@ -123,8 +128,9 @@ public class DBUser implements IFDBUser
 	{
 		if(user == null)
 			return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Users (permissionId, firstName, lastName, " +
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("INSERT INTO Users (permissionId, firstName, lastName, " +
 																"userName, userPassword, saltValue, creationDate, editedDate " +
 																"VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -136,9 +142,8 @@ public class DBUser implements IFDBUser
         query.setString(6, user.getSaltValue());
 		query.setString(7, _da.dateToSqlDate(user.getCreationDate()));
 		query.setString(8, _da.dateToSqlDate(user.getEditedDate()));
-		_da.setSqlCommandText(query);
-		
-		return _da.callCommand();
+
+		return _da.callCommand(query, con);
 	}
 	
 	/**
@@ -155,8 +160,9 @@ public class DBUser implements IFDBUser
 		
 		if(getUserById(user.getUserId()) == null)
 			return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE Users SET permissionId = ? , firstName = ?, lastName = ?, " +
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("UPDATE Users SET permissionId = ? , firstName = ?, lastName = ?, " +
 																"userName = ?, userPassword = ?, editedDate = ? " +
 																"WHERE userId = ?");
 		
@@ -167,9 +173,8 @@ public class DBUser implements IFDBUser
 		query.setString(5, user.getUserPassword());
 		query.setString(6, _da.dateToSqlDate(user.getEditedDate()));
 		query.setInt(7, user.getUserId());
-		_da.setSqlCommandText(query);
 		
-		return _da.callCommand();
+		return _da.callCommand(query, con);
 	}
 	
 	/**
@@ -183,13 +188,12 @@ public class DBUser implements IFDBUser
 	{
 		if(user == null)
 			return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Users WHERE userId = ?");
-		
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("DELETE FROM Users WHERE userId = ?");
 		query.setInt(1, user.getUserId());
-		_da.setSqlCommandText(query);
 		
-		return _da.callCommand();
+		return _da.callCommand(query, con);
 	}
 
 	private User buildUsers(ResultSet row) throws Exception

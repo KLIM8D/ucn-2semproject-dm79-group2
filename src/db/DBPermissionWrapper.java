@@ -4,6 +4,7 @@ import models.TimeSheet;
 import models.User;
 import models.UserPermission;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -31,11 +32,11 @@ public class DBPermissionWrapper implements IFDBPermissionWrapper
     @Override
     public boolean getPermissionByUser(TimeSheet timeSheet, User user) throws Exception
     {
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM PermissionWrapper WHERE sheetId = ? AND permissionType = 1 AND permissionValue = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM PermissionWrapper WHERE sheetId = ? AND permissionType = 1 AND permissionValue = ?");
         query.setInt(1, timeSheet.getSheetId());
         query.setInt(2, user.getUserId());
-        _da.setSqlCommandText(query);
-        ResultSet userResult = _da.callCommandGetResultSet();
+        ResultSet userResult = _da.callCommandGetResultSet(query, con);
 
         return userResult.next();
     }
@@ -48,11 +49,11 @@ public class DBPermissionWrapper implements IFDBPermissionWrapper
     @Override
     public boolean getPermissionByUserRole(TimeSheet timeSheet, UserPermission userPermission) throws Exception
     {
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM PermissionWrapper WHERE sheetId = ? AND permissionType = 2 AND permissionValue = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM PermissionWrapper WHERE sheetId = ? AND permissionType = 2 AND permissionValue = ?");
         query.setInt(1, timeSheet.getSheetId());
         query.setInt(2, userPermission.getPermissionId());
-        _da.setSqlCommandText(query);
-        ResultSet userResult = _da.callCommandGetResultSet();
+        ResultSet userResult = _da.callCommandGetResultSet(query, con);
 
         return userResult.next();
     }
@@ -70,13 +71,13 @@ public class DBPermissionWrapper implements IFDBPermissionWrapper
         if(timeSheet == null || user == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO PermissionWrapper (sheetId, permissionType, permissionValue) VALUES (?, 1, ?)");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("INSERT INTO PermissionWrapper (sheetId, permissionType, permissionValue) VALUES (?, 1, ?)");
 
         query.setInt(1, timeSheet.getSheetId());
         query.setInt(2, user.getUserId());
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
     }
 
     /**
@@ -92,13 +93,13 @@ public class DBPermissionWrapper implements IFDBPermissionWrapper
         if(timeSheet == null || userPermission == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO PermissionWrapper (sheetId, permissionType, permissionValue) VALUES (?, 2, ?)");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("INSERT INTO PermissionWrapper (sheetId, permissionType, permissionValue) VALUES (?, 2, ?)");
 
         query.setInt(1, timeSheet.getSheetId());
         query.setInt(2, userPermission.getPermissionId());
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
     }
 
     /**
@@ -114,13 +115,13 @@ public class DBPermissionWrapper implements IFDBPermissionWrapper
         if(timeSheet == null || user == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM PermissionWrapper WHERE sheetId = ? AND permissionType = 1 AND permissionValue = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("DELETE FROM PermissionWrapper WHERE sheetId = ? AND permissionType = 1 AND permissionValue = ?");
 
         query.setInt(1, timeSheet.getSheetId());
         query.setInt(2, user.getUserId());
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
     }
 
     /**
@@ -136,12 +137,12 @@ public class DBPermissionWrapper implements IFDBPermissionWrapper
         if(timeSheet == null || userPermission == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM PermissionWrapper WHERE sheetId = ? AND permissionType = 2 AND permissionValue = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("DELETE FROM PermissionWrapper WHERE sheetId = ? AND permissionType = 2 AND permissionValue = ?");
 
         query.setInt(1, timeSheet.getSheetId());
         query.setInt(2, userPermission.getPermissionId());
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
     }
 }

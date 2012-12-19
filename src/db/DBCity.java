@@ -2,6 +2,7 @@ package db;
 
 import models.City;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ public class DBCity implements IFDBCity
 	public ArrayList<City> getAllCities() throws Exception
     {
 		ArrayList<City> returnList = new ArrayList<City>();
-		
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities");
-		_da.setSqlCommandText(query);
-		ResultSet cities = _da.callCommandGetResultSet();
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Cities");
+		ResultSet cities = _da.callCommandGetResultSet(query, con);
 		
 		while (cities.next()) 
 		{
@@ -45,10 +46,10 @@ public class DBCity implements IFDBCity
 	@Override
 	public City getCityById(int cityId) throws Exception
     {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities WHERE cityId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Cities WHERE cityId = ?");
 		query.setInt(1, cityId);
-		_da.setSqlCommandText(query);
-		ResultSet cityResult = _da.callCommandGetRow();
+		ResultSet cityResult = _da.callCommandGetRow(query, con);
 		cityResult.next();
 		
 		return buildCity(cityResult); 
@@ -61,10 +62,10 @@ public class DBCity implements IFDBCity
 	@Override
 	public City getCityByZipCode(int zipCode) throws Exception
     {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities WHERE zipCode = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Cities WHERE zipCode = ?");
 		query.setInt(1, zipCode);
-		_da.setSqlCommandText(query);
-		ResultSet cityResult = _da.callCommandGetRow();
+		ResultSet cityResult = _da.callCommandGetRow(query, con);
 		cityResult.next();
 		
 		return buildCity(cityResult);
@@ -77,10 +78,10 @@ public class DBCity implements IFDBCity
 	@Override
 	public City getCityByName(String cityName) throws Exception
     {
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Cities WHERE cityName = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Cities WHERE cityName = ?");
 		query.setString(1, cityName);
-		_da.setSqlCommandText(query);
-		ResultSet cityResult = _da.callCommandGetRow();
+		ResultSet cityResult = _da.callCommandGetRow(query, con);
 		cityResult.next();
 		
 		return buildCity(cityResult);
@@ -95,13 +96,13 @@ public class DBCity implements IFDBCity
     {
 		if(city == null)
 			return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Cities (cityName, zipCode) VALUES (?, ?)");
+
+        Connection con = _da.getCon();
+		PreparedStatement query = con.prepareStatement("INSERT INTO Cities (cityName, zipCode) VALUES (?, ?)");
 		query.setString(1, city.getCityName());
 		query.setInt(2, city.getZipCode());
-		_da.setSqlCommandText(query);
 		
-		return _da.callCommand();
+		return _da.callCommand(query, con);
 	}
 
 	
@@ -116,14 +117,14 @@ public class DBCity implements IFDBCity
 		
 		if (getCityById(city.getCityId()) == null)
 			return 0;
-		
-		PreparedStatement query = _da.getCon().prepareStatement("UPDATE Cities SET cityName = ?, zipCode = ? WHERE cityId = ?");
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("UPDATE Cities SET cityName = ?, zipCode = ? WHERE cityId = ?");
         query.setString(1, city.getCityName());
         query.setInt(2, city.getZipCode());
 		query.setInt(3, city.getCityId());
-		_da.setSqlCommandText(query);
 		
-		return _da.callCommand();
+		return _da.callCommand(query, con);
 	}
 
 	
@@ -138,14 +139,12 @@ public class DBCity implements IFDBCity
 		
 		if (getCityById(city.getCityId()) == null)
 			return 0;
-		
-		int rowsAffected = 0;
-		PreparedStatement query = _da.getCon().prepareStatement("SELECT FROM Cities WHERE zipCode = ?");
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT FROM Cities WHERE zipCode = ?");
 		query.setInt(1, city.getZipCode());
-		_da.setSqlCommandText(query);
-		rowsAffected += _da.callCommand();
-		
-		return rowsAffected;
+
+        return _da.callCommand(query, con);
 	}
 	
 	

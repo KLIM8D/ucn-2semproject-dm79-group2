@@ -5,6 +5,7 @@ import models.Task;
 import models.TimeSheet;
 import models.User;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -36,9 +37,9 @@ public class DBDataEntry implements IFDBDataEntry
     {
         ArrayList<DataEntry> returnList = new ArrayList<DataEntry>();
 
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM DataEntries");
-        _da.setSqlCommandText(query);
-        ResultSet dataEntries = _da.callCommandGetResultSet();
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM DataEntries");
+        ResultSet dataEntries = _da.callCommandGetResultSet(query, con);
 
         while(dataEntries.next())
         {
@@ -60,10 +61,10 @@ public class DBDataEntry implements IFDBDataEntry
     {
         ArrayList<DataEntry> returnList = new ArrayList<DataEntry>();
 
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM DataEntries WHERE userId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM DataEntries WHERE userId = ?");
         query.setInt(1, user.getUserId());
-        _da.setSqlCommandText(query);
-        ResultSet dataEntries = _da.callCommandGetResultSet();
+        ResultSet dataEntries = _da.callCommandGetResultSet(query, con);
 
         while(dataEntries.next())
         {
@@ -85,10 +86,10 @@ public class DBDataEntry implements IFDBDataEntry
     {
         ArrayList<DataEntry> returnList = new ArrayList<DataEntry>();
 
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM DataEntries WHERE sheetId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM DataEntries WHERE sheetId = ?");
         query.setInt(1, timeSheet.getSheetId());
-        _da.setSqlCommandText(query);
-        ResultSet dataEntries = _da.callCommandGetResultSet();
+        ResultSet dataEntries = _da.callCommandGetResultSet(query, con);
 
         while(dataEntries.next())
         {
@@ -110,10 +111,10 @@ public class DBDataEntry implements IFDBDataEntry
     {
         ArrayList<DataEntry> returnList = new ArrayList<DataEntry>();
 
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM DataEntries WHERE taskId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM DataEntries WHERE taskId = ?");
         query.setInt(1, task.getTaskId());
-        _da.setSqlCommandText(query);
-        ResultSet dataEntries = _da.callCommandGetResultSet();
+        ResultSet dataEntries = _da.callCommandGetResultSet(query, con);
 
         while(dataEntries.next())
         {
@@ -133,10 +134,10 @@ public class DBDataEntry implements IFDBDataEntry
     @Override
     public DataEntry getDataEntryById(int value) throws Exception
     {
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM DataEntries WHERE entryId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM DataEntries WHERE entryId = ?");
         query.setInt(1, value);
-        _da.setSqlCommandText(query);
-        ResultSet entryResult = _da.callCommandGetRow();
+        ResultSet entryResult = _da.callCommandGetRow(query, con);
 
         if(entryResult.next())
             return buildDataEntry(entryResult);
@@ -157,8 +158,8 @@ public class DBDataEntry implements IFDBDataEntry
         if(dataEntry == null || sheetId < 0)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO DataEntries (sheetId, taskId, userId, startDate, endDate, entryRemark, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("INSERT INTO DataEntries (sheetId, taskId, userId, startDate, endDate, entryRemark, creationDate, editedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         query.setInt(1, sheetId);
         query.setInt(2, dataEntry.getTask().getTaskId());
         query.setInt(3, dataEntry.getUser().getUserId());
@@ -167,9 +168,8 @@ public class DBDataEntry implements IFDBDataEntry
         query.setString(6, dataEntry.getEntryRemark());
         query.setString(7, _da.dateToSqlDate(dataEntry.getCreationDate()));
         query.setString(8, _da.dateToSqlDate(dataEntry.getEditedDate()));
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
     }
 
     /**
@@ -184,7 +184,8 @@ public class DBDataEntry implements IFDBDataEntry
         if(dataEntry == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("UPDATE DataEntries SET taskId = ?, userId = ?, startDate = ?, endDate = ?, entryRemark = ?, editedDate = ? WHERE entryId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("UPDATE DataEntries SET taskId = ?, userId = ?, startDate = ?, endDate = ?, entryRemark = ?, editedDate = ? WHERE entryId = ?");
         query.setInt(1, dataEntry.getTask().getTaskId());
         query.setInt(2, dataEntry.getUser().getUserId());
         query.setString(3, _da.dateToSqlDate(dataEntry.getStartDate()));
@@ -192,9 +193,8 @@ public class DBDataEntry implements IFDBDataEntry
         query.setString(5, dataEntry.getEntryRemark());
         query.setString(6, _da.dateToSqlDate(dataEntry.getEditedDate()));
         query.setInt(7, dataEntry.getEntryId());
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
     }
 
     /**
@@ -209,11 +209,11 @@ public class DBDataEntry implements IFDBDataEntry
         if(dataEntry == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM DataEntries WHERE entryId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("DELETE FROM DataEntries WHERE entryId = ?");
         query.setInt(1, dataEntry.getEntryId());
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
     }
 
     private DataEntry buildDataEntry(ResultSet row) throws Exception

@@ -3,6 +3,7 @@ package db;
 import models.Log;
 import models.User;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -34,9 +35,9 @@ public class DBLog implements IFDBLog
     {
         ArrayList<Log> returnList = new ArrayList<Log>();
 
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Logs");
-        _da.setSqlCommandText(query);
-        ResultSet logData = _da.callCommandGetResultSet();
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Logs");
+        ResultSet logData = _da.callCommandGetResultSet(query, con);
 
         while(logData.next())
         {
@@ -58,10 +59,10 @@ public class DBLog implements IFDBLog
     {
         ArrayList<Log> returnList = new ArrayList<Log>();
 
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Logs WHERE userId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Logs WHERE userId = ?");
         query.setInt(1, user.getUserId());
-        _da.setSqlCommandText(query);
-        ResultSet logData = _da.callCommandGetResultSet();
+        ResultSet logData = _da.callCommandGetResultSet(query, con);
 
         while(logData.next())
         {
@@ -81,10 +82,10 @@ public class DBLog implements IFDBLog
     @Override
     public Log getLogById(int value) throws Exception
     {
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Logs WHERE logId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Logs WHERE logId = ?");
         query.setLong(1, value);
-        _da.setSqlCommandText(query);
-        ResultSet logResult = _da.callCommandGetRow();
+        ResultSet logResult = _da.callCommandGetRow(query, con);
 
         if(logResult.next())
             return buildLog(logResult);
@@ -104,16 +105,15 @@ public class DBLog implements IFDBLog
         if(logEntry == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Logs (userId, userDetails, exception, exceptionLocation, creationDate) VALUES (?, ?, ?, ?, ?)");
-
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("INSERT INTO Logs (userId, userDetails, exception, exceptionLocation, creationDate) VALUES (?, ?, ?, ?, ?)");
         query.setInt(1, logEntry.getUser().getUserId());
         query.setString(2, logEntry.getUserDetails());
         query.setString(3, logEntry.getException());
         query.setString(4, logEntry.getExceptionLocation());
         query.setString(5, _da.dateToSqlDate(logEntry.getCreationDate()));
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
     }
 
     private Log buildLog(ResultSet row) throws Exception

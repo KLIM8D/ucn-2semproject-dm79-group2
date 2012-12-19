@@ -2,6 +2,7 @@ package db;
 
 import models.Task;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -24,9 +25,10 @@ public class DBTask implements IFDBTask
 	{
 		ArrayList<Task> returnList = new ArrayList<Task>();
 
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Tasks");
-        _da.setSqlCommandText(query);
-        ResultSet tasks = _da.callCommandGetResultSet();
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Tasks");
+
+        ResultSet tasks = _da.callCommandGetResultSet(query, con);
 
         while(tasks.next())
         {
@@ -46,10 +48,11 @@ public class DBTask implements IFDBTask
     @Override
 	public Task getTaskById(long id) throws Exception
 	{
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Tasks WHERE taskId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Tasks WHERE taskId = ?");
         query.setLong(1, id);
-        _da.setSqlCommandText(query);
-        ResultSet taskResult = _da.callCommandGetRow();
+
+        ResultSet taskResult = _da.callCommandGetRow(query, con);
         if(taskResult.next())
             return buildTask(taskResult);
 
@@ -65,10 +68,11 @@ public class DBTask implements IFDBTask
     @Override
 	public Task getTaskByTitle(String title) throws Exception
 	{
-        PreparedStatement query = _da.getCon().prepareStatement("SELECT * FROM Tasks WHERE title = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Tasks WHERE title = ?");
         query.setString(1, title);
-        _da.setSqlCommandText(query);
-        ResultSet taskResult = _da.callCommandGetRow();
+
+        ResultSet taskResult = _da.callCommandGetRow(query, con);
         if(taskResult.next())
             return buildTask(taskResult);
 
@@ -87,13 +91,13 @@ public class DBTask implements IFDBTask
         if(task == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("INSERT INTO Tasks (title, description) VALUES (?, ?)");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("INSERT INTO Tasks (title, description) VALUES (?, ?)");
 
         query.setString(1, task.getTitle());
         query.setString(2, task.getDescription());
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
 	}
 
     /**
@@ -108,13 +112,13 @@ public class DBTask implements IFDBTask
 		if(task == null)
             return 0;
 
-        PreparedStatement query = _da.getCon().prepareStatement("UPDATE Tasks SET title = ?, description = ? WHERE taskId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("UPDATE Tasks SET title = ?, description = ? WHERE taskId = ?");
         query.setString(1, task.getTitle());
         query.setString(2, task.getDescription());
         query.setLong(3, task.getTaskId());
-        _da.setSqlCommandText(query);
 
-        return _da.callCommand();
+        return _da.callCommand(query, con);
 	}
 
     /**
@@ -132,13 +136,11 @@ public class DBTask implements IFDBTask
         if(getTaskById(task.getTaskId()) == null)
             return 0;
 
-        int rowsAffected = 0;
-        PreparedStatement query = _da.getCon().prepareStatement("DELETE FROM Tasks WHERE taskId = ?");
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("DELETE FROM Tasks WHERE taskId = ?");
         query.setLong(1, task.getTaskId());
-        _da.setSqlCommandText(query);
-        rowsAffected += _da.callCommand();
 
-        return rowsAffected;
+        return _da.callCommand(query, con);
     }
 
 	private Task buildTask(ResultSet row) throws Exception
