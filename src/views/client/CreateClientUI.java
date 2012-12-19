@@ -63,26 +63,32 @@ public class CreateClientUI
         _frame.setContentPane(contentPane);
 
         JLabel lblClientName = new JLabel("Navn:");
+        lblClientName.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientName.setBounds(5,7,120,15);
         contentPane.add(lblClientName);
         
         JLabel lblClientAddress = new JLabel("Adresse:");
+        lblClientAddress.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientAddress.setBounds(5,32,120,15);
         contentPane.add(lblClientAddress);
         
         JLabel lblClientZipCode = new JLabel("Postnummer:");
+        lblClientZipCode.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientZipCode.setBounds(5,57,120,15);
         contentPane.add(lblClientZipCode);
         
-        JLabel lblClientCity = new JLabel("By");
+        JLabel lblClientCity = new JLabel("By:");
+        lblClientCity.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientCity.setBounds(222,57,120,15);
         contentPane.add(lblClientCity);
         
         JLabel lblClientNumber = new JLabel("Telefonnummer:");
+        lblClientNumber.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientNumber.setBounds(5,82,120,15);
         contentPane.add(lblClientNumber);
         
         JLabel lblClientEmail = new JLabel("Email:");
+        lblClientEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientEmail.setBounds(244,82,120,15);
         contentPane.add(lblClientEmail);
                 
@@ -108,12 +114,9 @@ public class CreateClientUI
             }
         });
         txtZipCode.addFocusListener(new FocusListener()
-        {
-        	
+        {	
         	public void focusGained(FocusEvent e)
-            {
-        	}
-        	
+            {}
         	public void focusLost(FocusEvent e)
             {
             	try
@@ -137,6 +140,7 @@ public class CreateClientUI
         txtCity.setBounds(265,55,232,19);
         contentPane.add(txtCity);
         txtCity.setColumns(10);
+        txtCity.setEditable(false);
         
         txtPhoneNo = new JTextField();
         txtPhoneNo.addKeyListener(new KeyAdapter()
@@ -156,11 +160,7 @@ public class CreateClientUI
         txtEmail.setBounds(305,80,192,19);
         contentPane.add(txtEmail);
         txtEmail.setColumns(10);
-        
-        JSeparator separator = new JSeparator();
-        separator.setBounds(5,105,490,1);
-        contentPane.add(separator);
-        
+
         JButton btnCancel = new JButton("Annuller");
         btnCancel.addActionListener(new ActionListener()
         {
@@ -196,13 +196,21 @@ public class CreateClientUI
 
     private void createClient()
     {
-        try
-        {
+    	try
+    	{
         	if(_cliCtrl.getClientByPhone(Long.parseLong(txtPhoneNo.getText())) != null)
         	{
         		throw new Exception();
-        	}
-        	
+        	}	
+    	}
+    	catch (Exception e)
+    	{
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Telefonnummeret eksisterer for en anden klient!", JOptionPane.WARNING_MESSAGE);
+    	}
+    	
+        try
+        {        	
             String name = txtName.getText();
             String address = txtAddress.getText();
             City city = _cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText()));

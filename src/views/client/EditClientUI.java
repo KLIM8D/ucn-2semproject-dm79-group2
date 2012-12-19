@@ -23,7 +23,7 @@ public class EditClientUI
 
     //Controllers
     private ClientCtrl _cliCtrl;
-    private long _phoneNo;
+    private Client _client;
 
     private JTextField txtName;
     private JTextField txtAddress;
@@ -32,7 +32,7 @@ public class EditClientUI
     private JTextField txtPhoneNo;
     private JTextField txtEmail;
 
-    public static JFrame createWindow(long data)
+    public static JFrame createWindow(Client data)
     {
         if(_instance == null)
             _instance = new EditClientUI(data);
@@ -40,9 +40,9 @@ public class EditClientUI
         return _frame;
     }
 
-    private EditClientUI(long data)
+    private EditClientUI(Client data)
     {
-    	_phoneNo = data;
+    	_client = data;
         createElements();
     }
 
@@ -65,26 +65,32 @@ public class EditClientUI
         _frame.setContentPane(contentPane);
 
         JLabel lblClientName = new JLabel("Navn:");
+        lblClientName.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientName.setBounds(5, 7, 120, 15);
         contentPane.add(lblClientName);
         
         JLabel lblClientAddress = new JLabel("Adresse:");
+        lblClientAddress.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientAddress.setBounds(5, 32, 120, 15);
         contentPane.add(lblClientAddress);
         
         JLabel lblClientZipCode = new JLabel("Postnummer:");
+        lblClientZipCode.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientZipCode.setBounds(5, 57, 120, 15);
         contentPane.add(lblClientZipCode);
         
         JLabel lblClientCity = new JLabel("By");
+        lblClientCity.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientCity.setBounds(222, 57, 120, 15);
         contentPane.add(lblClientCity);
         
         JLabel lblClientNumber = new JLabel("Telefonnummer:");
+        lblClientNumber.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientNumber.setBounds(5, 82, 120, 15);
         contentPane.add(lblClientNumber);
         
         JLabel lblClientEmail = new JLabel("Email:");
+        lblClientEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblClientEmail.setBounds(244, 82, 120, 15);
         contentPane.add(lblClientEmail);
                 
@@ -139,10 +145,10 @@ public class EditClientUI
         txtCity.setBounds(265, 55, 232, 19);
         contentPane.add(txtCity);
         txtCity.setColumns(10);
+        txtCity.setEditable(false);
         
         txtPhoneNo = new JTextField();
         txtPhoneNo.setBounds(142, 80, 75, 19);
-        txtPhoneNo.setEditable(false);
         txtPhoneNo.setDocument(new JTextFieldLimit(9));
         contentPane.add(txtPhoneNo);
         txtPhoneNo.setColumns(10);
@@ -151,10 +157,6 @@ public class EditClientUI
         txtEmail.setBounds(305, 80, 192, 19);
         contentPane.add(txtEmail);
         txtEmail.setColumns(10);
-        
-        JSeparator separator = new JSeparator();
-        separator.setBounds(5, 105, 490, 1);
-        contentPane.add(separator);
         
         JButton btnCancel = new JButton("Annuller");
         btnCancel.addActionListener(new ActionListener()
@@ -179,7 +181,7 @@ public class EditClientUI
         btnCreate.setBounds(246,115,120,25);
         contentPane.add(btnCreate);
         
-        addData(_phoneNo);
+        addData(_client);
 
         _frame.addWindowListener(new WindowAdapter()
         {
@@ -195,13 +197,28 @@ public class EditClientUI
     {
     	try
     	{
+    		if(Long.parseLong(txtPhoneNo.getText()) != _client.getPhoneNo())
+    		{
+    			if(_cliCtrl.getClientByPhone(Long.parseLong(txtPhoneNo.getText())) != null)
+    			{
+    				throw new Exception();
+    			}
+    		}
+    	}
+    	catch (Exception e)
+    	{
+    		e.printStackTrace();
+            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Telefonnummeret eksisterer for en anden klient!", JOptionPane.WARNING_MESSAGE);
+    	}
+    	try
+    	{    		
     		String name = txtName.getText();
     		String address = txtAddress.getText();
     		City city = _cliCtrl.getCityByZipCode(Integer.parseInt(txtZipCode.getText()));
-    		long phoneNo = _phoneNo;
+    		long phoneNo = Long.parseLong(txtPhoneNo.getText());
     		String eMail = txtEmail.getText();
             Calendar cal = Calendar.getInstance();
-            Date creationDate = _cliCtrl.getClientByPhone(_phoneNo).getCreationDate();
+            Date creationDate = _client.getCreationDate();
             Date editedDate =  cal.getTime();
     		Client client = new Client(name, address, city, phoneNo, eMail, creationDate, editedDate);
     		
@@ -217,25 +234,17 @@ public class EditClientUI
 		
     }
     
-    private void addData(long phoneNo)
+    private void addData(Client client)
     {
     	try
     	{
-    		Client client = _cliCtrl.getClientByPhone(phoneNo);
-    		if(client != null)
-    		{
-    			txtName.setText(client.getName());
-    			txtAddress.setText(client.getAddress());
-    			City city = client.getCity();
-    			txtZipCode.setText(String.valueOf(city.getZipCode()));
-    			txtCity.setText(city.getCityName());
-    			txtPhoneNo.setText(String.valueOf(client.getPhoneNo()));
-    			txtEmail.setText(client.getEmail());
-    		}
-    		else
-    		{
-    			JOptionPane.showMessageDialog(null, "Der skete en fejl i hentning af klient information", "Fejl", JOptionPane.WARNING_MESSAGE);
-    		}
+    		txtName.setText(client.getName());
+   			txtAddress.setText(client.getAddress());
+   			City city = client.getCity();
+   			txtZipCode.setText(String.valueOf(city.getZipCode()));
+   			txtCity.setText(city.getCityName());
+    		txtPhoneNo.setText(String.valueOf(client.getPhoneNo()));  
+    		txtEmail.setText(client.getEmail());
     	}
     	catch (Exception ex)
         {
