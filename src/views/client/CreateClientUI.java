@@ -113,6 +113,7 @@ public class CreateClientUI
                 }
                 if(txtZipCode.getText().length() > 3)
                 {
+                    //TODO: Fix hvis postnummer kun har 3 cifre
                 	lookupCity();
                 }
             }

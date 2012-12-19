@@ -226,9 +226,9 @@ public class DBTimeSheet implements IFDBTimeSheet
         ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 
         Connection con = _da.getCon();
-        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE caseId LIKE '%?%' OR note LIKE '%?%'" + _sortExpression);
-        query.setString(1, searchString);
-        query.setString(2, searchString);
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE caseId LIKE ? OR note LIKE ?" + _sortExpression);
+        query.setString(1, "%" + searchString + "%");
+        query.setString(2, "%" + searchString + "%");
 
         ResultSet timeSheets = _da.callCommandGetResultSet(query, con);
 

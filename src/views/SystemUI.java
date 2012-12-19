@@ -9,6 +9,7 @@
 
 package views;
 
+import controllers.SearchCtrl;
 import utils.*;
 import views.client.CreateClientUI;
 import views.timesheet.CreateTimeSheetUI;
@@ -18,19 +19,13 @@ import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.event.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import models.Client;
@@ -68,8 +63,9 @@ public class SystemUI extends JFrame implements ChangeListener
 	DataNotificationUI dbInfo = new views.DataNotificationUI();
 	
 	// Controllers
-	private TimeSheetCtrl _timesheetCtrl;
+	private TimeSheetCtrl _timeSheetCtrl;
 	private ClientCtrl _clientCtrl;
+    private SearchCtrl _searchCtrl;
 
 	// Sheet and Client grid view
 	private DefaultTableModel sheetModel;
@@ -81,8 +77,9 @@ public class SystemUI extends JFrame implements ChangeListener
 
 	public SystemUI()
 	{
-		_timesheetCtrl = new TimeSheetCtrl();
+		_timeSheetCtrl = new TimeSheetCtrl();
 		_clientCtrl = new ClientCtrl();
+        _searchCtrl = new SearchCtrl();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
 		setTitle(SystemInformation.systemInformation(01) + " (" + SystemInformation.systemInformation(02) +
@@ -285,6 +282,23 @@ public class SystemUI extends JFrame implements ChangeListener
 				txtSearchOverview.setText("S\u00F8g");
 			}
 		});
+        txtSearchOverview.addKeyListener(new KeyAdapter()
+        {
+            public void keyPressed(KeyEvent e)
+            {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                {
+                    try
+                    {
+                        _searchCtrl.testSearch(txtSearchOverview.getText());
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
 		txtSearchOverview.setText("S\u00F8g");
 		txtSearchOverview.setBounds(854,9,155,22);
 		pnlQuickAccess.add(txtSearchOverview);
@@ -355,6 +369,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		
 		txtNoteField = new JTextArea();
 		txtNoteField.setBounds(5,5,780,55);
+        txtNoteField.setEditable(false);
 		pnlTimeSheetNote.add(txtNoteField);	
 		// END OF NOTE PANEL
 		
@@ -579,6 +594,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		};
 		ButtonColumn buttonColumn = new ButtonColumn(sheetTable, show, columnIndex);
 		buttonColumn.setMnemonic(KeyEvent.VK_D);
+        sheetTable.repaint();
 	}
 	
 	private void addButtonToClient(final int columnIndex)
@@ -594,7 +610,7 @@ public class SystemUI extends JFrame implements ChangeListener
 				{
 					try
 					{
-						TimeSheet sheet = _timesheetCtrl.getTimeSheetByCaseId(caseId);
+						TimeSheet sheet = _timeSheetCtrl.getTimeSheetByCaseId(caseId);
 						// insert method for editing timesheet
 					} 
 					catch (Exception ex)
@@ -669,7 +685,7 @@ public class SystemUI extends JFrame implements ChangeListener
             ArrayList<TimeSheet> timeSheetList;
             try
             {
-                timeSheetList = _timesheetCtrl.getAllTimeSheets();
+                timeSheetList = _timeSheetCtrl.getAllTimeSheets();
                 String[] sheetNames = new String[timeSheetList.size()];
                 for(int i = 0; i < timeSheetList.size(); i++)
                     sheetNames[i] = timeSheetList.get(i).getCaseId() +
@@ -694,7 +710,7 @@ public class SystemUI extends JFrame implements ChangeListener
     		ArrayList<TimeSheet> timeSheetList;
     		try
     		{
-                timeSheetList = _timesheetCtrl.getAllTimeSheetsByUser(UserSession.getLoggedInUser());
+                timeSheetList = _timeSheetCtrl.getAllTimeSheetsByUser(UserSession.getLoggedInUser());
     			String[] sheetNames = new String[timeSheetList.size()];
     			for(int i = 0; i < timeSheetList.size(); i++)
     				sheetNames[i] = timeSheetList.get(i).getCaseId() +
@@ -744,7 +760,7 @@ public class SystemUI extends JFrame implements ChangeListener
             {
             	String clientId = lstTimeSheets.getSelectedValue().substring(0, lstTimeSheets.getSelectedValue().indexOf("(")-1);
             	
-            	TimeSheet sheet = _timesheetCtrl.getTimeSheetByCaseId(clientId);
+            	TimeSheet sheet = _timeSheetCtrl.getTimeSheetByCaseId(clientId);
 
                 if(sheet != null)
                 {	
@@ -802,7 +818,7 @@ public class SystemUI extends JFrame implements ChangeListener
 				
 				if(client != null)
 				{	
-					ArrayList<TimeSheet> timeSheets = _timesheetCtrl.getAllTimeSheetsByClient(client);
+					ArrayList<TimeSheet> timeSheets = _timeSheetCtrl.getAllTimeSheetsByClient(client);
 					
 					Object[][] data = {};
 					clientModel.setDataVector(data, clientColumn);
@@ -826,7 +842,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			}
 			catch(Exception ex)
 			{
-				System.out.println(ex);
+				ex.printStackTrace();
 			}
 			
 			return null;

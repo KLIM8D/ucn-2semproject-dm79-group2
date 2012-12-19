@@ -39,4 +39,13 @@ public class SearchCtrl
 
         return results;
     }
+
+    public void testSearch(String searchString) throws Exception
+    {
+        SearchResult result = search(searchString);
+
+        System.out.println("TimeSheet collection size: " + result.getTimeSheetCollection().size());
+        System.out.println("Client collection size: " + result.getClientCollection().size());
+        System.out.println("Task collection size: " + result.getTaskCollection().size());
+    }
 }

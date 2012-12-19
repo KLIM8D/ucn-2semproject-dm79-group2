@@ -92,9 +92,9 @@ public class DBTask implements IFDBTask
         ArrayList<Task> returnList = new ArrayList<Task>();
 
         Connection con = _da.getCon();
-        PreparedStatement query = con.prepareStatement("SELECT * FROM Tasks WHERE title LIKE '%?%' OR description LIKE '%?%'");
-        query.setString(1, searchString);
-        query.setString(2, searchString);
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Tasks WHERE title LIKE ? OR description LIKE ?");
+        query.setString(1, "%" + searchString + "%");
+        query.setString(2, "%" + searchString + "%");
 
         ResultSet tasks = _da.callCommandGetResultSet(query, con);
 

@@ -110,9 +110,9 @@ public class DBClient implements IFDBClient
         ArrayList<Client> returnList = new ArrayList<Client>();
 
         Connection con = _da.getCon();
-        PreparedStatement query = con.prepareStatement("SELECT * FROM Clients WHERE name LIKE '%?%' OR phoneNo LIKE '%?%'");
-        query.setString(1, searchString);
-        query.setString(2, searchString);
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Clients WHERE name LIKE ? OR phoneNo LIKE ?");
+        query.setString(1, "%" + searchString + "%");
+        query.setString(2, "%" + searchString + "%");
 
         ResultSet clients = _da.callCommandGetResultSet(query, con);
 
