@@ -3,10 +3,13 @@ import db.DataAccess;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
 import models.User;
+import models.UserPermission;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +34,7 @@ public class UserTest {
 	public void insertUser() throws Exception
 	{
 		Calendar cal = Calendar.getInstance();
-		User newUser = new User(userPermission, firstName, lastName, userName, saltValue, userPassword, createdDate, editedDate)
+		User newUser = new User(1, "Test", "User", "test", "1289hjusbv7f123", "testpass", new Date(), new Date())
 		int rowsAffected = _userCtrl.insertUser(newUser);
 		
 		assertEquals(1 rowsAffected);
