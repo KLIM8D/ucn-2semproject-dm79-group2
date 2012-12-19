@@ -62,4 +62,13 @@ public interface IFDBClient
      */
     public int deleteClient(Client client) throws Exception;
 
+    /**
+     * Using a wildcard search to, retrieve all Clients by the searchString.
+     *
+     * @param searchString				what you want to search for
+     * @return ArrayList<Client>
+     * @throws Exception
+     */
+    public ArrayList<Client> searchForClients(String searchString) throws Exception;
+
 }

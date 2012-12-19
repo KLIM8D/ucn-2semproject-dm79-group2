@@ -53,4 +53,13 @@ public interface IFDBTask
      * @return int 			returns the number of rows affected
      */
     public int deleteTask(Task task) throws Exception;
+
+    /**
+     * Using a wildcard search to, retrieve all Tasks by the searchString.
+     *
+     * @param searchString				what you want to search for
+     * @return ArrayList<Task>
+     * @throws Exception
+     */
+    public ArrayList<Task> searchForTasks(String searchString) throws Exception;
 }

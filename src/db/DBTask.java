@@ -80,6 +80,34 @@ public class DBTask implements IFDBTask
 	}
 
     /**
+     * Using a wildcard search to, retrieve all Tasks by the searchString.
+     *
+     * @param searchString				what you want to search for
+     * @return ArrayList<Task>
+     * @throws Exception
+     */
+    @Override
+    public ArrayList<Task> searchForTasks(String searchString) throws Exception
+    {
+        ArrayList<Task> returnList = new ArrayList<Task>();
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Tasks WHERE title LIKE '%?%' OR description LIKE '%?%'");
+        query.setString(1, searchString);
+        query.setString(2, searchString);
+
+        ResultSet tasks = _da.callCommandGetResultSet(query, con);
+
+        while (tasks.next())
+        {
+            Task task = buildTask(tasks);
+            returnList.add(task);
+        }
+
+        return returnList;
+    }
+
+    /**
      * Inserts a new task in the database
      *
      * @param task				the object containing the information you want stored

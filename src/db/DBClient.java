@@ -98,6 +98,34 @@ public class DBClient implements IFDBClient
 	}
 
     /**
+     * Using a wildcard search to, retrieve all Clients by the searchString.
+     *
+     * @param searchString				what you want to search for
+     * @return ArrayList<Client>
+     * @throws Exception
+     */
+    @Override
+    public ArrayList<Client> searchForClients(String searchString) throws Exception
+    {
+        ArrayList<Client> returnList = new ArrayList<Client>();
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM Clients WHERE name LIKE '%?%' OR phoneNo LIKE '%?%'");
+        query.setString(1, searchString);
+        query.setString(2, searchString);
+
+        ResultSet clients = _da.callCommandGetResultSet(query, con);
+
+        while (clients.next())
+        {
+            Client client = buildClient(clients);
+            returnList.add(client);
+        }
+
+        return returnList;
+    }
+
+    /**
      * Inserts a new client in the database
      *
      * @param client				the object containing the information you want stored

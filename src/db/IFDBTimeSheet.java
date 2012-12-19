@@ -108,4 +108,13 @@ public interface IFDBTimeSheet
 	 * @throws Exception
 	 */
 	public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client, Date startDate, Date endDate) throws Exception;
+
+    /**
+     * Using a wildcard search to, retrieve all TimeSheets by the searchString.
+     *
+     * @param searchString				what you want to search for
+     * @return ArrayList<TimeSheet>
+     * @throws Exception
+     */
+    public ArrayList<TimeSheet> searchForTimeSheets(String searchString) throws Exception;
 }

@@ -212,6 +212,34 @@ public class DBTimeSheet implements IFDBTimeSheet
 
 		return returnList;
     }
+
+    /**
+     * Using a wildcard search to, retrieve all TimeSheets by the searchString.
+     *
+     * @param searchString				what you want to search for
+     * @return ArrayList<TimeSheet>
+     * @throws Exception
+     */
+    @Override
+    public ArrayList<TimeSheet> searchForTimeSheets(String searchString) throws Exception
+    {
+        ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE caseId LIKE '%?%' OR note LIKE '%?%'" + _sortExpression);
+        query.setString(1, searchString);
+        query.setString(2, searchString);
+
+        ResultSet timeSheets = _da.callCommandGetResultSet(query, con);
+
+        while (timeSheets.next())
+        {
+            TimeSheet timeSheet = buildTimeSheet(timeSheets);
+            returnList.add(timeSheet);
+        }
+
+        return returnList;
+    }
 	
     
 	/**
