@@ -52,7 +52,7 @@ public class EditClientUI
 
         _frame = new JFrame();
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_client.png")));
-        _frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         _frame.setTitle("Rediger kunde");
         _frame.setBounds(0,0,509,175);
         _frame.setResizable(false);

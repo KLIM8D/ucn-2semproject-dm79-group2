@@ -49,7 +49,7 @@ public class CreateClientUI
         _cliCtrl = new ClientCtrl();
 
         _frame = new JFrame();
-        _frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_client.png")));
         _frame.setTitle("Opret ny klient");
         _frame.setBounds(0,0,509,175);
