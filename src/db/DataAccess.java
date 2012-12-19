@@ -33,6 +33,11 @@ public class DataAccess
     public void setDbType(int value)
     { _dbType = value; }
 
+    public int getTotalLeasedConnections()
+    {
+        return _connectionPool.getTotalLeased();
+    }
+
     protected Connection getCon() throws SQLException
     {
         return _connectionPool.getConnection();
@@ -68,7 +73,7 @@ public class DataAccess
                     //MSSQL Server (JTDS Driver)
                     Class.forName("net.sourceforge.jtds.jdbc.Driver");
                     BoneCPConfig config = new BoneCPConfig();
-                    config.setJdbcUrl("jdbc:jtds:sqlserver://IPADDR//DB_NAME");
+                    config.setJdbcUrl("jdbc:jtds:sqlserver://IPADDR//DBNAME");
                     config.setUsername("USERNAME");
                     config.setPassword("PASSWORD");
                     config.setMinConnectionsPerPartition(5);
@@ -91,7 +96,7 @@ public class DataAccess
      * @return ResultSet the rows returned from the database
      *
      */
-    public synchronized ResultSet callCommandGetResultSet(PreparedStatement _sqlCommand, Connection _con)
+    public ResultSet callCommandGetResultSet(PreparedStatement _sqlCommand, Connection _con)
     {
         //Benchmark time start
         ThreadMXBean threadmxbean = ManagementFactory.getThreadMXBean();
@@ -135,7 +140,7 @@ public class DataAccess
     * @return ResultSet the rows returned from the database
     *
     */
-    private synchronized ResultSet callCommandGetResultSetWithOutMonitor(PreparedStatement _sqlCommand, Connection _con)
+    private ResultSet callCommandGetResultSetWithOutMonitor(PreparedStatement _sqlCommand, Connection _con)
     {
         ResultSet newResultSet = null;
         try
@@ -164,7 +169,7 @@ public class DataAccess
     * @return int number of rows affected by the query
     *
     */
-    public synchronized int callCommand(PreparedStatement _sqlCommand, Connection _con)
+    public int callCommand(PreparedStatement _sqlCommand, Connection _con)
     {
         int returnVal = 0;
 
@@ -208,7 +213,7 @@ public class DataAccess
     * @return String the value from the database
     *
     */
-    public synchronized String callCommandGetField(PreparedStatement _sqlCommand, Connection _con)
+    public String callCommandGetField(PreparedStatement _sqlCommand, Connection _con)
     {
         //Benchmark time start
         ThreadMXBean threadmxbean = ManagementFactory.getThreadMXBean();
@@ -252,7 +257,7 @@ public class DataAccess
     * @return ResultSet which contains the row
     *
     */
-    public synchronized ResultSet callCommandGetRow(PreparedStatement _sqlCommand, Connection _con)
+    public ResultSet callCommandGetRow(PreparedStatement _sqlCommand, Connection _con)
     {
         //Benchmark time start
         ThreadMXBean threadmxbean = ManagementFactory.getThreadMXBean();
@@ -299,7 +304,7 @@ public class DataAccess
     * @return returns a formated String
     *
     */
-    public synchronized String dateToSqlDate(java.util.Date d)
+    public String dateToSqlDate(java.util.Date d)
     {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return df.format(d);
@@ -312,7 +317,7 @@ public class DataAccess
     * @return Returns java.util.date
     *
     */
-    public synchronized java.util.Date sqlDateToDate(java.sql.Date sqlDate)
+    public java.util.Date sqlDateToDate(java.sql.Date sqlDate)
     {
         return new Date(sqlDate.getTime());
     }
@@ -324,7 +329,7 @@ public class DataAccess
     * @return long the next ID/identity value
     *
     */
-    public synchronized long getNextId(String tableName)
+    public long getNextId(String tableName)
     {
         try
         {

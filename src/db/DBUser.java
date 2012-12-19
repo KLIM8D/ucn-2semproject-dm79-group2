@@ -131,7 +131,7 @@ public class DBUser implements IFDBUser
 
         Connection con = _da.getCon();
         PreparedStatement query = con.prepareStatement("INSERT INTO Users (permissionId, firstName, lastName, " +
-																"userName, userPassword, saltValue, creationDate, editedDate " +
+																"userName, userPassword, saltValue, creationDate, editedDate) " +
 																"VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
 
 		query.setInt(1, user.getUserPermission().getPermissionId());
