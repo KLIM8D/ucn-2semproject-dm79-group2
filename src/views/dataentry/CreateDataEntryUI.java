@@ -13,9 +13,12 @@ import views.shared.DateTimePanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -26,17 +29,18 @@ public class CreateDataEntryUI
     private static CreateDataEntryUI _instance;
     private JPanel contentPane;
     
-	private JTextField txtRemark;
+	private JTextPane txtRemark;
 	private JTextField txtTitle;
-	private JTextField txtDescription;
+	private JTextPane txtDescription;
 	
     private TimeSheetCtrl _tsCtrl;
     private TaskCtrl _taCtrl;
     private static TimeSheet ts; // timesheet needs to be imported from super, when we open this class.
     
-    private JComboBox<Task> drpXTask;
+    private JComboBox<String> drpXTask;
     private DateTimePanel startDate;
     private DateTimePanel endDate;
+	private DefaultComboBoxModel<String> _model;
 
     private JPanel task;
 
@@ -58,8 +62,10 @@ public class CreateDataEntryUI
 
 	public void createElements() 
 	{
+		_taCtrl = new TaskCtrl();
+		
 		_frame = new JFrame();
-        _frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
 		_frame.setBounds(100, 100, 300, 307);
         _frame.setResizable(false);
@@ -86,9 +92,11 @@ public class CreateDataEntryUI
 		lblTask.setBounds(10, 11, 66, 14);
 		dataEntry.add(lblTask);
 		
-		drpXTask = new JComboBox();
+		drpXTask = new JComboBox<String>();
 		drpXTask.setBounds(80, 8, 121, 20);
 		dataEntry.add(drpXTask);
+		_model = new DefaultComboBoxModel<String>(addTasks());
+        drpXTask.setModel(_model);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 37, 268, 1);
@@ -106,10 +114,10 @@ public class CreateDataEntryUI
 		lblRemark.setBounds(10, 100, 66, 14);
 		dataEntry.add(lblRemark);
 		
-		txtRemark = new JTextField();
+		txtRemark = new JTextPane();
 		txtRemark.setBounds(80, 100, 190, 100);
+		txtRemark.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		dataEntry.add(txtRemark);
-		txtRemark.setColumns(10);
 
         startDate = new DateTimePanel();
         JPanel pnlStartDate = startDate.buildDateTimePanel(new Date());
@@ -138,10 +146,10 @@ public class CreateDataEntryUI
 		task.add(txtTitle);
 		txtTitle.setColumns(10);
 		
-		txtDescription = new JTextField();
+		txtDescription = new JTextPane();
 		txtDescription.setBounds(72, 42, 201, 136);
+		txtDescription.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		task.add(txtDescription);
-		txtDescription.setColumns(10);
 		
 		JButton btnCreateTask = new JButton("Opret ny Opgave");
         btnCreateTask.addActionListener(new ActionListener()
@@ -183,7 +191,6 @@ public class CreateDataEntryUI
         try
         {
             System.out.println(startDate.getTimeSpinner().getValue().toString());
-            Date ok = new Date(endDate.getTimeSpinner().getValue().toString());
 
             Task task = (Task)drpXTask.getSelectedItem();
             User user = UserSession.getLoggedInUser();
@@ -227,5 +234,25 @@ public class CreateDataEntryUI
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Fejl", JOptionPane.WARNING_MESSAGE);
         }
+	}
+	
+	public String[] addTasks()
+	{
+		ArrayList<Task> tasks;
+		try
+		{
+			tasks = _taCtrl.getAllTasks();
+			String[] tasksNames = new String[tasks.size()];
+			for (int index = 0; index < tasks.size(); index++)
+				tasksNames[index] = tasks.get(index).getTitle();
+
+			return tasksNames;
+		}
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		return null;
 	}
 }

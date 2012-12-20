@@ -8,12 +8,18 @@ import javax.swing.JButton;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.SwingWorker;
+
 import controllers.ClientCtrl;
+import controllers.TaskCtrl;
 import models.Client;
 import models.TimeSheet;
 import controllers.UserCtrl;
@@ -27,13 +33,11 @@ import java.util.Date;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.basic.BasicBorders;
-
 import views.SystemUI;
-import views.client.CreateClientUI;
 import views.dataentry.CreateDataEntryUI;
 import utils.Logging;
 import utils.UserSession;
+import javax.swing.JList;
 
 public class CreateTimeSheetUI
 {
@@ -41,24 +45,22 @@ public class CreateTimeSheetUI
     private static CreateTimeSheetUI _instance;
 	private JPanel _contentPane;
 	
-	// Controllers
-	private ClientCtrl _clientCtrl;
+	private JList<String> lstGroup;
+	private JList<String> lstUser;
+
 	
 	private JComboBox<String> _drpClients;
 	private DefaultComboBoxModel<String> _model;
-	private JComboBox<String> _drpUsers;
-	private UserCtrl _userCtrl;
-	private DefaultComboBoxModel<String> _modelUsers;
-	private JComboBox<String> _drpPermissions;
-	private UserPermissionCtrl _userPermissionCtrl;
-	private DefaultComboBoxModel<String> _modelPermissions;
 	
-	private JPanel _panel1;
-	private JPanel _panel2;
+	private JPanel _timeSheetPanel;
+	private JPanel _permissionPanel;
 	private JTextPane txtNotes;
     private JTextField txtCaseId;
-
-	private CreateDataEntryUI createDataEntryUI;
+    
+	// Controllers
+	private ClientCtrl _clientCtrl;
+	private UserCtrl _userCtrl;
+	private UserPermissionCtrl _userPermissionCtrl;
 	
     public static JFrame createWindow()
     {
@@ -79,6 +81,9 @@ public class CreateTimeSheetUI
 	public void createElements()
 	{
         _clientCtrl = new ClientCtrl();
+        _userCtrl = new UserCtrl();
+        _userPermissionCtrl = new UserPermissionCtrl();
+        
 		_frame = new JFrame();
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_timesheet.png")));
 		_frame.setTitle("Ny Registrering");
@@ -137,60 +142,68 @@ public class CreateTimeSheetUI
 		// addUsers();
 
 		// pane1 start
-		_panel1 = new JPanel();
-		_panel1.setLayout(null);
+		_timeSheetPanel = new JPanel();
+		_timeSheetPanel.setLayout(null);
 		
 		JLabel label1 = new JLabel("ID");
 		label1.setBounds(5, 5, 60, 23);
-		_panel1.add(label1);
+		_timeSheetPanel.add(label1);
 		
 		JLabel label2 = new JLabel("Note");
 		label2.setBounds(5, 30, 60, 23);
-		_panel1.add(label2);
+		_timeSheetPanel.add(label2);
 		
 		// for display ClientId
 		txtCaseId = new JTextField();
 		txtCaseId.setBounds(45, 5, 332, 20);
-		_panel1.add(txtCaseId);
+		_timeSheetPanel.add(txtCaseId);
 		
 		// for notes
 		txtNotes = new JTextPane();
 		txtNotes.setBounds(45, 31, 332, 195);
-		_panel1.add(txtNotes);
+		_timeSheetPanel.add(txtNotes);
         txtNotes.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		//_txtNotes.setColumns(10);
 		
-		tabbedPane.add("Time-Sag", _panel1);
-		// pane1 end
+		tabbedPane.add("Time-Sag", _timeSheetPanel);
 		
-		// pane2 start
-		_panel2 = new JPanel();
-		_panel2.setLayout(null);
-		
-		JLabel label3 = new JLabel("Brugere");
-		label3.setBounds(5, 30, 60, 23);
-		_panel2.add(label3);
-		
-		JLabel label4 = new JLabel("Rettigheder");
-		label4.setBounds(5, 127, 96, 23);
-		_panel2.add(label4);
-		
-		_drpUsers = new JComboBox<String>();
-		_drpUsers.setBounds(111, 30, 249, 22);
-		_panel2.add(_drpUsers);
-		//model = new DefaultComboBoxModel<String>(addUsers());
-		//drpUsers.setModel(model);
-		//addUsers();
-		
-		_drpPermissions = new JComboBox<String>();
-		_drpPermissions.setBounds(111, 127, 249, 22);
-		_panel2.add(_drpPermissions);
+		_permissionPanel = new JPanel();
+		_permissionPanel.setLayout(null);
 		//_model = new DefaultComboBoxModel<String>();
 		//_drpPermissions.setModel(_model);
 		//addPermissions();
 				
-		tabbedPane.add("Rettigheder", _panel2);
-		// pane2 end
+		tabbedPane.add("Rettigheder", _permissionPanel);
+		
+		JPanel groupPanel = new JPanel();
+		groupPanel.setBounds(10, 11, 179, 212);
+		groupPanel.setBorder(BorderFactory.createTitledBorder("Gruppe"));
+		_permissionPanel.add(groupPanel);
+		groupPanel.setLayout(null);
+		
+		lstGroup = new JList<String>();		
+		lstGroup.setListData(populateGroupList());
+		lstGroup.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lstGroup.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		lstGroup.setBounds(13, 17, 153, 182);
+		//JScrollPane groupListScroll = new JScrollPane(lstGroup);
+		//groupPanel.add(groupListScroll);
+		groupPanel.add(lstGroup);
+		
+		JPanel userPanel = new JPanel();
+		userPanel.setBorder(BorderFactory.createTitledBorder("Bruger"));
+		userPanel.setBounds(197, 11, 179, 212);
+		_permissionPanel.add(userPanel);
+		userPanel.setLayout(null);
+		
+		lstUser = new JList<String>();		
+		lstUser.setListData(populateUserList());
+		lstUser.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lstUser.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		lstUser.setBounds(13, 17, 153, 182);
+		JScrollPane userListScroll = new JScrollPane(lstUser);
+		groupPanel.add(userListScroll);
+		userPanel.add(lstUser);
 	}
 	
 	
@@ -280,4 +293,80 @@ public class CreateTimeSheetUI
 		TimeSheet ts = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
 		CreateDataEntryUI.createWindow(ts);
 	}
+	
+	public String[] populateGroupList()
+	{
+        try
+        {
+            return new PopulateGroupList().doInBackground();
+        }
+        catch(Exception ex)
+        {
+        	JOptionPane.showMessageDialog(null, Logging.handleException(ex, 99), "Fejl!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return null;
+	}
+	
+	public String[] populateUserList()
+	{
+        try
+        {
+            return new PopulateUserList().doInBackground();
+        }
+        catch(Exception ex)
+        {
+        	JOptionPane.showMessageDialog(null, Logging.handleException(ex, 99), "Fejl!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return null;
+	}
+	
+	class PopulateUserList extends SwingWorker<String[], Integer>
+    {
+    	@Override
+        protected String[] doInBackground() throws Exception
+        {
+            ArrayList<User> userList;
+            try
+            {
+                userList = _userCtrl.getAllUsers();
+                String[] userNames = new String[userList.size()];
+                for(int i = 0; i < userList.size(); i++)
+                    userNames[i] = userList.get(i).getFirstName() + " " + userList.get(i).getLastName();
+
+                return userNames;
+            }
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            }
+
+            return null;
+        }
+    }
+	
+	class PopulateGroupList extends SwingWorker<String[], Integer>
+    {
+    	@Override
+        protected String[] doInBackground() throws Exception
+        {
+            ArrayList<UserPermission> groupList;
+            try
+            {
+                groupList = _userPermissionCtrl.getAllRoles();
+                String[] groupNames = new String[groupList.size()];
+                for(int i = 0; i < groupList.size(); i++)
+                    groupNames[i] = groupList.get(i).getUserRole();
+
+                return groupNames;
+            }
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            }
+
+            return null;
+        }
+    }
 }
