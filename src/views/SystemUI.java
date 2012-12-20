@@ -612,7 +612,6 @@ public class SystemUI extends JFrame implements ChangeListener
 					try
 					{
 						TimeSheet sheet = _timeSheetCtrl.getTimeSheetByCaseId(caseId);
-                        System.out.println(sheet != null);
 						EditTimeSheetUI.createWindow(sheet);
 					} 
 					catch (Exception ex)

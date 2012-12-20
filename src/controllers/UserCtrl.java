@@ -84,6 +84,9 @@ public class UserCtrl
     public boolean isUserAllowed(TimeSheet sheet, String userName) throws Exception
     {
         User user = getUserByName(userName);
+        if(user ==  null)
+            return false;
+
         DBPermissionWrapper dbPermissionWrapper = new DBPermissionWrapper();
         return dbPermissionWrapper.getPermissionByUser(sheet, user);
     }

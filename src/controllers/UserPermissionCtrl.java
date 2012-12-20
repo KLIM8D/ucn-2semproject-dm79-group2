@@ -62,6 +62,9 @@ public class UserPermissionCtrl
     public boolean isRoleAllowed(TimeSheet sheet, String roleName) throws Exception
     {
         UserPermission role = getPermissionByTitle(roleName);
+        if(role == null)
+            return false;
+
         DBPermissionWrapper dbPermissionWrapper = new DBPermissionWrapper();
         return dbPermissionWrapper.getPermissionByUserRole(sheet, role);
     }
