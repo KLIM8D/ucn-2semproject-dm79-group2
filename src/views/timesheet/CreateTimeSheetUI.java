@@ -129,11 +129,12 @@ public class CreateTimeSheetUI
 		_contentPane.add(separator);
 		
 		JLabel lblKlient = new JLabel("Klient");
-		lblKlient.setBounds(10, 11, 53, 23);
+		lblKlient.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblKlient.setBounds(15, 11, 53, 23);
 		_contentPane.add(lblKlient);
 		
 		_drpClients = new JComboBox<String>();
-		_drpClients.setBounds(49, 11, 353, 22);
+		_drpClients.setBounds(55, 11, 347, 22);
 		_contentPane.add(_drpClients);
 		_model = new DefaultComboBoxModel<String>(addClients());
         _drpClients.setModel(_model);
@@ -145,13 +146,15 @@ public class CreateTimeSheetUI
 		_timeSheetPanel = new JPanel();
 		_timeSheetPanel.setLayout(null);
 		
-		JLabel label1 = new JLabel("ID");
-		label1.setBounds(5, 5, 60, 23);
-		_timeSheetPanel.add(label1);
+		JLabel lblID = new JLabel("ID");
+		lblID.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblID.setBounds(5, 5, 60, 23);
+		_timeSheetPanel.add(lblID);
 		
-		JLabel label2 = new JLabel("Note");
-		label2.setBounds(5, 30, 60, 23);
-		_timeSheetPanel.add(label2);
+		JLabel lblNote = new JLabel("Note");
+		lblNote.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblNote.setBounds(5, 30, 60, 23);
+		_timeSheetPanel.add(lblNote);
 		
 		// for display ClientId
 		txtCaseId = new JTextField();

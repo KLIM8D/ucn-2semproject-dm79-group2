@@ -67,7 +67,7 @@ public class CreateDataEntryUI
 		_frame = new JFrame();
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
-		_frame.setBounds(100, 100, 300, 307);
+		_frame.setBounds(100, 100, 320, 327);
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);
@@ -81,19 +81,22 @@ public class CreateDataEntryUI
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 434, 239);
+		tabbedPane.setBounds(10, 10, 295, 230);
 		contentPane.add(tabbedPane);
 		
 		JPanel dataEntry = new JPanel();
+		dataEntry.setFont(new Font("Dialog", Font.PLAIN, 12));
 		tabbedPane.addTab("Registrering", null, dataEntry, null);
 		dataEntry.setLayout(null);
 		
-		JLabel lblTask = new JLabel("Opgave");
-		lblTask.setBounds(10, 11, 66, 14);
+		JLabel lblTask = new JLabel("Opgave:");
+		lblTask.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblTask.setBounds(10, 11, 70, 14);
 		dataEntry.add(lblTask);
 		
 		drpXTask = new JComboBox<String>();
-		drpXTask.setBounds(80, 8, 121, 20);
+		drpXTask.setFont(new Font("Dialog", Font.PLAIN, 12));
+		drpXTask.setBounds(95, 8, 183, 20);
 		dataEntry.add(drpXTask);
 		_model = new DefaultComboBoxModel<String>(addTasks());
         drpXTask.setModel(_model);
@@ -102,52 +105,58 @@ public class CreateDataEntryUI
 		separator.setBounds(10, 37, 268, 1);
 		dataEntry.add(separator);
 		
-		JLabel lblStarted = new JLabel("P\u00E5begyndt");
-		lblStarted.setBounds(10, 50, 66, 14);
+		JLabel lblStarted = new JLabel("P\u00E5begyndt:");
+		lblStarted.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblStarted.setBounds(10, 50, 70, 14);
 		dataEntry.add(lblStarted);
 		
-		JLabel lblEnded = new JLabel("Afsluttet");
-		lblEnded.setBounds(10, 75, 66, 14);
+		JLabel lblEnded = new JLabel("Afsluttet:");
+		lblEnded.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblEnded.setBounds(10, 75, 70, 14);
 		dataEntry.add(lblEnded);
 		
-		JLabel lblRemark = new JLabel("Bem\u00E6rkning");
-		lblRemark.setBounds(10, 100, 66, 14);
+		JLabel lblRemark = new JLabel("Bem\u00E6rkning:");
+		lblRemark.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblRemark.setBounds(10, 100, 80, 14);
 		dataEntry.add(lblRemark);
 		
 		txtRemark = new JTextPane();
-		txtRemark.setBounds(80, 100, 190, 100);
+		txtRemark.setBounds(95, 100, 190, 100);
 		txtRemark.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		dataEntry.add(txtRemark);
 
         startDate = new DateTimePanel();
         JPanel pnlStartDate = startDate.buildDateTimePanel(new Date());
-        pnlStartDate.setBounds(80, 47, 200, 20);
+        pnlStartDate.setBounds(95, 47, 240, 20);
 		dataEntry.add(pnlStartDate);
 
         endDate = new DateTimePanel();
         JPanel pnlEndDate = startDate.buildDateTimePanel(new Date());
-        pnlEndDate.setBounds(80, 72, 200, 20);
+        pnlEndDate.setBounds(95, 72, 240, 20);
         dataEntry.add(pnlEndDate);
 		
 		task = new JPanel();
+		task.setFont(new Font("Dialog", Font.PLAIN, 12));
 		tabbedPane.addTab("Opgave", null, task, null);
 		task.setLayout(null);
 		
-		JLabel lblTitle = new JLabel("Title");
+		JLabel lblTitle = new JLabel("Title:");
+		lblTitle.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblTitle.setBounds(10, 11, 57, 14);
 		task.add(lblTitle);
 		
-		JLabel lblDescription = new JLabel("Beskrivelse");
+		JLabel lblDescription = new JLabel("Beskrivelse:");
+		lblDescription.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblDescription.setBounds(10, 45, 65, 14);
 		task.add(lblDescription);
 		
 		txtTitle = new JTextField();
-		txtTitle.setBounds(72, 11, 201, 20);
+		txtTitle.setBounds(77, 11, 201, 20);
 		task.add(txtTitle);
 		txtTitle.setColumns(10);
 		
 		txtDescription = new JTextPane();
-		txtDescription.setBounds(72, 42, 201, 136);
+		txtDescription.setBounds(77, 42, 201, 136);
 		txtDescription.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		task.add(txtDescription);
 		
@@ -159,7 +168,7 @@ public class CreateDataEntryUI
                 createTask();
             }
         });
-		btnCreateTask.setBounds(156, 183, 117, 23);
+		btnCreateTask.setBounds(155, 183, 125, 23);
 		task.add(btnCreateTask);
 		
         JButton btnCancel = new JButton("Annuller");
@@ -171,7 +180,7 @@ public class CreateDataEntryUI
                 _frame.dispose();
             }
         });
-		btnCancel.setBounds(185, 241, 89, 23);
+		btnCancel.setBounds(195, 248, 89, 23);
 		contentPane.add(btnCancel);
 		
         JButton btnCreate = new JButton("Opret");
@@ -182,7 +191,7 @@ public class CreateDataEntryUI
                 createDataEntry();
             }
         });
-		btnCreate.setBounds(86, 241, 89, 23);
+		btnCreate.setBounds(96, 248, 89, 23);
 		contentPane.add(btnCreate);
 	}
 	
