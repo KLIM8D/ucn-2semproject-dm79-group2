@@ -61,7 +61,7 @@ public class TimeSheetTest
     @Test
     public void getTimeSheetBySheetId() throws Exception
     {
-        TimeSheet timeSheet = _timeSheetCrtl.getTimeSheetById(1);
+        TimeSheet timeSheet = _timeSheetCrtl.getTimeSheetById(2);
 
         assertNotNull(timeSheet);
     }
@@ -69,7 +69,7 @@ public class TimeSheetTest
     @Test
     public void getTimeSheetByCaseId() throws Exception
     {
-        TimeSheet timeSheet = _timeSheetCrtl.getTimeSheetByCaseId(1);
+        TimeSheet timeSheet = _timeSheetCrtl.getTimeSheetByCaseId("4422");
 
         assertNotNull(timeSheet);
     }
@@ -87,7 +87,7 @@ public class TimeSheetTest
     {
     	Client client = _clientCtrl.getClientById(1);
     	ArrayList<TimeSheet> timeSheets;
-    	timeSheets = _timeSheetCrtl.getAllTimeSheetsByUser(client);
+    	timeSheets = _timeSheetCrtl.getAllTimeSheetsByClient(client);
     }
        
     @Test
@@ -95,7 +95,7 @@ public class TimeSheetTest
     {
         DataAccess _da = DataAccess.getInstance();
         long id = _da.getNextId("TimeSheets");
-        TimeSheet timeSheet = _timeSheetCrtl.getTimeSheetByCaseId((int)id - 1);
+        TimeSheet timeSheet = _timeSheetCrtl.getTimeSheetByCaseId("L-445521");
         int rowsAffected = _timeSheetCrtl.deleteTimeSheet(timeSheet);
 
         assertEquals(1, rowsAffected);
@@ -106,8 +106,8 @@ public class TimeSheetTest
     {
         DataAccess _da = DataAccess.getInstance();
         long id = _da.getNextId("TimeSheets");
-        TimeSheet timeSheet = _timeSheetCrtl.getTimeSheetByCaseId((int)id - 1);
-        client.setName("Bente Nielsen");
+        TimeSheet timeSheet = _timeSheetCrtl.getTimeSheetByCaseId("L-445521");
+        //client.setName("");
         int rowsAffected = _timeSheetCrtl.updateTimeSheet(timeSheet);
 
         assertEquals(1, rowsAffected);
