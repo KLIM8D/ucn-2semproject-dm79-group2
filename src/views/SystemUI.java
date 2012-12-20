@@ -290,7 +290,7 @@ public class SystemUI extends JFrame implements ChangeListener
                 {
                     try
                     {
-                        _searchCtrl.testSearch(txtSearchOverview.getText());
+                        SearchUI.createWindow(_searchCtrl.search(txtSearchOverview.getText()));
                     }
                     catch (Exception ex)
                     {
