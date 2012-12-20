@@ -19,7 +19,6 @@ import javax.swing.JComboBox;
 import javax.swing.SwingWorker;
 
 import controllers.ClientCtrl;
-import controllers.TaskCtrl;
 import models.Client;
 import models.TimeSheet;
 import controllers.UserCtrl;
