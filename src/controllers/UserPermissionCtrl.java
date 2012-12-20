@@ -50,4 +50,10 @@ public class UserPermissionCtrl
 		DBUserPermission dbup = new DBUserPermission();
 		return dbup.deleteRole(userPermission);
 	}
+	
+	public UserPermission getPermissionByTitle(String title) throws Exception
+	{
+		DBUserPermission dbup = new DBUserPermission();
+		return dbup.getPermissionByTitle(title);
+	}
 }

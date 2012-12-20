@@ -53,4 +53,12 @@ public interface IFDBUserPermission
 	 * @return int					returns the number of rows affected
 	 */
 	public int deleteRole(UserPermission userPermission) throws Exception;
+	
+	/**
+	 * Get an existing role from the database
+	 * 
+	 * @param title					the object containing the role which is going to be delete from the database
+	 * @return userPermission		returns the number of rows affected
+	 */
+	public UserPermission getPermissionByTitle(String title) throws Exception;
 }

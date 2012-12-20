@@ -150,4 +150,17 @@ public class DBUserPermission implements IFDBUserPermission
 		
 		return new UserPermission(permissionId, userRole, creationDate, editedDate);
 	}
+	
+	public UserPermission getPermissionByTitle(String title) throws Exception
+	{
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM UserPermissions WHERE userRole = ?");
+		query.setString(1, title);
+
+		ResultSet roleResult = _da.callCommandGetRow(query, con);
+		if(roleResult.next())
+			return buildRoles(roleResult);
+		
+		return null;
+	}
 }
