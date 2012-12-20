@@ -71,8 +71,9 @@ public class EditTimeSheetUI
 	 * Create the frame.
 	 */
 	private EditTimeSheetUI(TimeSheet ts) 
-	{	
-		createElements();	
+	{
+        _timeSheet = ts;
+		createElements();
 	}
 	
 	public void createElements()
@@ -225,6 +226,7 @@ public class EditTimeSheetUI
 		catch (Exception e)
 		{
 			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
+            e.printStackTrace();
 		}
 		
 		return null;
@@ -249,6 +251,7 @@ public class EditTimeSheetUI
 		catch (Exception e)
 		{
 			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
+            e.printStackTrace();
 		}
 		return null;
 	}
@@ -329,7 +332,8 @@ public class EditTimeSheetUI
 	{
     	try
     	{
-    		_drpClients.setSelectedItem(_timeSheet.getClient().getName());
+    		String clientName = _timeSheet.getClient().getName();
+            _drpClients.setSelectedItem(clientName);
    			txtCaseId.setText(_timeSheet.getCaseId());
    			txtNotes.setText(_timeSheet.getNote());
    			lstGroup.setSelectedIndices(getSelectedGroups());
@@ -339,18 +343,57 @@ public class EditTimeSheetUI
     	catch (Exception ex)
         {
             JOptionPane.showMessageDialog(null, Logging.handleException(ex, 1), "Fejl", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
 	}
 	
 	public int[] getSelectedGroups()
 	{
-		int[] list = new int[1]; //this is too damm hard
+
+        int[] list = new int[lstGroup.getModel().getSize()];
+        int count = 0;
+        for(int i = 0; i < lstGroup.getModel().getSize(); i++)
+        {
+            try
+            {
+                String roleName = lstUser.getModel().getElementAt(i);
+                if(_userPermissionCtrl.isRoleAllowed(_timeSheet, roleName))
+                {
+                    list[count] = i;
+                    count++;
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
 		return list;
 	}
 	
 	public int[] getSelectedUsers()
 	{
-		int[] list = new int[1]; //this is too damm hard
+        int[] list = new int[lstGroup.getModel().getSize()];
+        int count = 0;
+        for(int i = 0; i < lstUser.getModel().getSize(); i++)
+        {
+
+            try
+            {
+                String userName = lstUser.getModel().getElementAt(i);
+                if(_userCtrl.isUserAllowed(_timeSheet, userName))
+                {
+                    list[count] = i;
+                    count++;
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
 		return list;
 	}
 	
@@ -372,6 +415,7 @@ public class EditTimeSheetUI
             catch(Exception ex)
             {
                 JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
             }
 
             return null;
@@ -396,6 +440,7 @@ public class EditTimeSheetUI
             catch(Exception ex)
             {
                 JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
             }
 
             return null;

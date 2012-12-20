@@ -9,7 +9,9 @@
 
 package controllers;
 
+import db.DBPermissionWrapper;
 import db.DBUserPermission;
+import models.TimeSheet;
 import models.UserPermission;
 
 import java.util.ArrayList;
@@ -56,4 +58,11 @@ public class UserPermissionCtrl
 		DBUserPermission dbup = new DBUserPermission();
 		return dbup.getPermissionByTitle(title);
 	}
+
+    public boolean isRoleAllowed(TimeSheet sheet, String roleName) throws Exception
+    {
+        UserPermission role = getPermissionByTitle(roleName);
+        DBPermissionWrapper dbPermissionWrapper = new DBPermissionWrapper();
+        return dbPermissionWrapper.getPermissionByUserRole(sheet, role);
+    }
 }

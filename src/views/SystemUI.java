@@ -34,6 +34,7 @@ import models.TimeSheet;
 
 import controllers.ClientCtrl;
 import controllers.TimeSheetCtrl;
+import views.timesheet.EditTimeSheetUI;
 
 @SuppressWarnings("serial")
 public class SystemUI extends JFrame implements ChangeListener
@@ -611,7 +612,8 @@ public class SystemUI extends JFrame implements ChangeListener
 					try
 					{
 						TimeSheet sheet = _timeSheetCtrl.getTimeSheetByCaseId(caseId);
-						// insert method for editing timesheet
+                        System.out.println(sheet != null);
+						EditTimeSheetUI.createWindow(sheet);
 					} 
 					catch (Exception ex)
 					{

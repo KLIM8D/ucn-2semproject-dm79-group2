@@ -9,7 +9,9 @@
 
 package controllers;
 
+import db.DBPermissionWrapper;
 import db.DBUser;
+import models.TimeSheet;
 import models.User;
 import models.UserPermission;
 import utils.Helper;
@@ -77,5 +79,12 @@ public class UserCtrl
         String hashed = Helper.hashPassword(password, saltValue);
 
         return hashed.equals(user.getUserPassword());
+    }
+
+    public boolean isUserAllowed(TimeSheet sheet, String userName) throws Exception
+    {
+        User user = getUserByName(userName);
+        DBPermissionWrapper dbPermissionWrapper = new DBPermissionWrapper();
+        return dbPermissionWrapper.getPermissionByUser(sheet, user);
     }
 }
