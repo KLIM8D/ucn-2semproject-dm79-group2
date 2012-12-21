@@ -78,7 +78,7 @@ public class CreateTimeSheetUI
         
 		_frame = new JFrame();
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_timesheet.png")));
-		_frame.setTitle("Ny Registrering");
+		_frame.setTitle("Ny time-sag");
 		_frame.setVisible(true);
 		_frame.setAlwaysOnTop(true);
 		_frame.setResizable(false);

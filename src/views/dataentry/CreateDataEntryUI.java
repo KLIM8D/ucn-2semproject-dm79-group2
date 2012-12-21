@@ -35,7 +35,7 @@ public class CreateDataEntryUI
 	
     private TimeSheetCtrl _tsCtrl;
     private TaskCtrl _taCtrl;
-    private static TimeSheet ts; // timesheet needs to be imported from super, when we open this class.
+    private static TimeSheet _ts; // timesheet needs to be imported from super, when we open this class.
     
     private JComboBox<String> drpXTask;
     private DateTimePanel startDate;
@@ -49,7 +49,7 @@ public class CreateDataEntryUI
 		if(_instance == null)
 		{
 			_instance = new CreateDataEntryUI();
-			ts = timeSheet;
+			_ts = timeSheet;
 		}
 			
 		return _frame;
@@ -62,6 +62,7 @@ public class CreateDataEntryUI
 
 	public void createElements() 
 	{
+		_tsCtrl = new TimeSheetCtrl();
 		_taCtrl = new TaskCtrl();
 		
 		_frame = new JFrame();
@@ -211,7 +212,7 @@ public class CreateDataEntryUI
             Date editedDate =  cal.getTime();
             DataEntry dataEntry = new DataEntry(task, user, chosenStartDate, chosenEndDate, entryRemark, creationDate, editedDate);
 
-            _tsCtrl.addDataEntry(ts, dataEntry);
+            _tsCtrl.addDataEntry(_ts, dataEntry);
 
             JOptionPane.showMessageDialog(null, "Registreringen er oprettet", "Information!", JOptionPane.INFORMATION_MESSAGE);
             _instance = null;
