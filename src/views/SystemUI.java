@@ -9,35 +9,28 @@
 
 package views;
 
+import controllers.ClientCtrl;
 import controllers.SearchCtrl;
+import controllers.TimeSheetCtrl;
+import models.Client;
+import models.DataEntry;
+import models.TimeSheet;
 import utils.*;
 import views.client.CreateClientUI;
 import views.timesheet.CreateTimeSheetUI;
+import views.timesheet.EditTimeSheetUI;
 
-import java.awt.Cursor;
-import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
-import java.awt.event.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
-import java.awt.Font;
-import java.io.File;
+import java.awt.*;
+import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import models.Client;
-import models.DataEntry;
-import models.TimeSheet;
-
-import controllers.ClientCtrl;
-import controllers.TimeSheetCtrl;
-import views.timesheet.EditTimeSheetUI;
 
 @SuppressWarnings("serial")
 public class SystemUI extends JFrame implements ChangeListener

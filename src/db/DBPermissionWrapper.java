@@ -145,4 +145,23 @@ public class DBPermissionWrapper implements IFDBPermissionWrapper
 
         return _da.callCommand(query, con);
     }
+
+    /**
+     * Remove all permissions for a TimeSheet
+     *
+     * @param timeSheet      the TimeSheet object which the user should grant access to
+     * @return int                     returns the number of rows affected
+     */
+    @Override
+    public int deleteAllPermissions(TimeSheet timeSheet) throws Exception
+    {
+        if(timeSheet == null)
+            return 0;
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("DELETE FROM PermissionWrapper WHERE sheetId = ?");
+        query.setInt(1, timeSheet.getSheetId());
+
+        return _da.callCommand(query, con);
+    }
 }

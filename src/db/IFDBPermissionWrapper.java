@@ -63,4 +63,12 @@ public interface IFDBPermissionWrapper
      * @return int 			        returns the number of rows affected
      */
     public int deletePermission(TimeSheet timeSheet, UserPermission userPermission) throws Exception;
+
+    /**
+     * Remove all permissions for a TimeSheet
+     *
+     * @param timeSheet      the TimeSheet object which the user should grant access to
+     * @return int                     returns the number of rows affected
+     */
+    public int deleteAllPermissions(TimeSheet timeSheet) throws Exception;
 }

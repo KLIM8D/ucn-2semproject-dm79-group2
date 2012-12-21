@@ -239,9 +239,15 @@ public class EditTimeSheetUI
           
             _tsCtrl.updateTimeSheet(_timeSheet);
             
-            //updating permissions still not done.
-            int group = lstGroup.getSelectedIndex();
-            int[] users = lstUser.getSelectedIndices();
+            _tsCtrl.deleteAllPermissions(_timeSheet);
+            for(String roleName : lstGroup.getSelectedValuesList())
+            {
+                _tsCtrl.insertPermission(_timeSheet, _userPermissionCtrl.getPermissionByTitle(roleName));
+            }
+            for(String userName : lstUser.getSelectedValuesList())
+            {
+                _tsCtrl.insertPermission(_timeSheet, _userCtrl.getUserByName(userName));
+            }
             
             
     		JOptionPane.showMessageDialog(null, "Time-sagen er nu opdateret", "INFORMATION!", JOptionPane.INFORMATION_MESSAGE);
@@ -251,6 +257,7 @@ public class EditTimeSheetUI
         catch (Exception e)
         {
             JOptionPane.showMessageDialog(null, Logging.handleException(e, 99), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
 	}
 	

@@ -31,6 +31,7 @@ public class TimeSheetCtrl
     {
         _dbTimeSheet = new DBTimeSheet();
         _dbDataEntry = new DBDataEntry();
+        _dbPermissionWrapper = new DBPermissionWrapper();
     }
 
     /**
@@ -189,6 +190,11 @@ public class TimeSheetCtrl
     public int deletePermission(TimeSheet timeSheet, UserPermission userPermission) throws Exception
     {
     	return _dbPermissionWrapper.deletePermission(timeSheet, userPermission);
+    }
+
+    public int deleteAllPermissions(TimeSheet timeSheet) throws Exception
+    {
+        return _dbPermissionWrapper.deleteAllPermissions(timeSheet);
     }
     
     public int insertPermission(TimeSheet timeSheet, User user) throws Exception
