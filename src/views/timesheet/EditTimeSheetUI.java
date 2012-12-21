@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import controllers.ClientCtrl;
+import controllers.TimeSheetCtrl;
 import models.Client;
 import models.TimeSheet;
 import controllers.UserCtrl;
@@ -47,6 +48,7 @@ public class EditTimeSheetUI
 	private ClientCtrl _clientCtrl;
 	private UserCtrl _userCtrl;
 	private UserPermissionCtrl _userPermissionCtrl;
+	private TimeSheetCtrl _tsCtrl;
 	
     public static JFrame createWindow(TimeSheet ts)
     {
@@ -107,12 +109,12 @@ public class EditTimeSheetUI
 		btnCancel.setBounds(302, 331, 100, 23);
 		_contentPane.add(btnCancel);
 		
-		JButton btnNext = new JButton("N\u00E6ste (1/2)");
+		JButton btnNext = new JButton("Opdater");
 		btnNext.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                createTimeSheet();
+                updateTimeSheet();
             }
         });
 		btnNext.setBounds(195, 331, 100, 23);
@@ -133,9 +135,6 @@ public class EditTimeSheetUI
 		_contentPane.add(drpClients);
 		_model = new DefaultComboBoxModel<String>(addClients());
         drpClients.setModel(_model);
-
-		//addClients();
-		// addUsers();
 
 		// pane1 start
 		pnlTimeSheet = new JPanel();
@@ -161,15 +160,11 @@ public class EditTimeSheetUI
 		txtNotes.setBounds(45, 31, 332, 195);
 		pnlTimeSheet.add(txtNotes);
         txtNotes.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		//_txtNotes.setColumns(10);
 		
 		tabbedPane.add("Time-Sag", pnlTimeSheet);
 		
 		pnlPermission = new JPanel();
 		pnlPermission.setLayout(null);
-		//_model = new DefaultComboBoxModel<String>();
-		//_drpPermissions.setModel(_model);
-		//addPermissions();
 				
 		tabbedPane.add("Rettigheder", pnlPermission);
 		
@@ -185,8 +180,6 @@ public class EditTimeSheetUI
 		lstGroup.setBounds(13, 17, 153, 182);
         lstGroup.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         populateGroupList();
-		//JScrollPane groupListScroll = new JScrollPane(lstGroup);
-		//groupPanel.add(groupListScroll);
 		groupPanel.add(lstGroup);
 		
 		JPanel pnlUser = new JPanel();
@@ -229,54 +222,11 @@ public class EditTimeSheetUI
 		return null;
 	}
 	
-	
-	public String[] addUsers()
-	{
-		ArrayList<User> users;
-		try
-		{
-			users = _userCtrl.getAllUsers();
-			String[] userNames = new String[users.size()];
-			for (int index = 0; index < users.size(); index++) {
-				String fName = users.get(index).getFirstName();
-				String lName = users.get(index).getLastName();
-				String fullName = fName + " " + lName;
-				userNames[index] = fullName;
-			}
-			return userNames;
-		}
-		catch (Exception e)
-		{
-			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
-            e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public String[] addPermissions()
-	{
-		ArrayList<UserPermission> permissions;
-		try
-		{
-			permissions = _userPermissionCtrl.getAllRoles();
-			String[] permissionTitles = new String[permissions.size()];
-			for (int index = 0; index < permissions.size(); index++) {
-				permissionTitles[index] = permissions.get(index).getUserRole();
-			}
-			return permissionTitles;
-		}
-		catch (Exception e)
-		{
-			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
-		}
-		return null;
-	}
-	
-	public void createTimeSheet()
+	public void updateTimeSheet()
 	{
         try
         {
-            String caseId = txtCaseId.getSelectedText();
+            String caseId = txtCaseId.getText();
             User user = UserSession.getLoggedInUser();
             long clientPhone = Long.parseLong(drpClients.getSelectedItem().toString().substring(drpClients.getSelectedItem().toString().indexOf("(") + 1,
                     drpClients.getSelectedItem().toString().indexOf(")")));
@@ -284,11 +234,11 @@ public class EditTimeSheetUI
             Client client = _clientCtrl.getClientByPhone(clientPhone);
             String note = txtNotes.getText();
             Calendar cal = Calendar.getInstance();
-            Date creationDate = cal.getTime();
+            Date creationDate = _timeSheet.getCreationDate();
             Date editedDate =  cal.getTime();
 
             TimeSheet ts = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
-            CreateDataEntryUI.createWindow(ts);
+            _tsCtrl.updateTimeSheet(ts); 
         }
         catch (Exception e)
         {
