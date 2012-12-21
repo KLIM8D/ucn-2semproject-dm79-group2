@@ -130,7 +130,7 @@ public class EditTimeSheetUI
 		
 		drpClients = new JComboBox<String>();
 		drpClients.setBounds(55, 11, 347, 22);
-		drpClients.setEditable(false);
+		drpClients.setEnabled(false);
 		_contentPane.add(drpClients);
 		_model = new DefaultComboBoxModel<String>(addClients());
         drpClients.setModel(_model);
@@ -240,7 +240,10 @@ public class EditTimeSheetUI
             _tsCtrl.updateTimeSheet(_timeSheet);
             
             //updating permissions still not done.
-             
+            int group = lstGroup.getSelectedIndex();
+            int[] users = lstUser.getSelectedIndices();
+            
+            
     		JOptionPane.showMessageDialog(null, "Time-sagen er nu opdateret", "INFORMATION!", JOptionPane.INFORMATION_MESSAGE);
     		_instance = null;
     		_frame.dispose();
