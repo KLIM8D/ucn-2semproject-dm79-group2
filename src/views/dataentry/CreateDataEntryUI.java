@@ -69,6 +69,7 @@ public class CreateDataEntryUI
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
 		_frame.setBounds(100, 100, 320, 327);
+		_frame.setAlwaysOnTop(true);
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);
