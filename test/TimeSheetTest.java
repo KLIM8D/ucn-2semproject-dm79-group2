@@ -107,7 +107,7 @@ public class TimeSheetTest
         DataAccess _da = DataAccess.getInstance();
         long id = _da.getNextId("TimeSheets");
         TimeSheet timeSheet = _timeSheetCrtl.getTimeSheetByCaseId("L-445521");
-        //client.setName("");
+        // set another client
         int rowsAffected = _timeSheetCrtl.updateTimeSheet(timeSheet);
 
         assertEquals(1, rowsAffected);
