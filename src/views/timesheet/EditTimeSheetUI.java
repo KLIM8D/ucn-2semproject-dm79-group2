@@ -19,11 +19,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.border.LineBorder;
 import views.SystemUI;
-import views.dataentry.CreateDataEntryUI;
 import utils.Logging;
 import utils.UserSession;
 
@@ -226,21 +224,26 @@ public class EditTimeSheetUI
 	public void updateTimeSheet()
 	{
         try
-        {
-            String caseId = txtCaseId.getText();
-            User user = UserSession.getLoggedInUser();
+        {	
+        	//updating TimeSheet
+        	_timeSheet.setCaseId(txtCaseId.getText());
+            _timeSheet.setUser(UserSession.getLoggedInUser());
+            
             long clientPhone = Long.parseLong(drpClients.getSelectedItem().toString().substring(drpClients.getSelectedItem().toString().indexOf("(") + 1,
                     drpClients.getSelectedItem().toString().indexOf(")")));
 
-            Client client = _clientCtrl.getClientByPhone(clientPhone);
-            String note = txtNotes.getText();
+            _timeSheet.setClient(_clientCtrl.getClientByPhone(clientPhone));
+            _timeSheet.setNote(txtNotes.getText());
             Calendar cal = Calendar.getInstance();
-            Date creationDate = _timeSheet.getCreationDate();
-            Date editedDate =  cal.getTime();
-
-            TimeSheet ts = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
-            _tsCtrl.updateTimeSheet(ts);
+            _timeSheet.setEditedDate(cal.getTime());
+          
+            _tsCtrl.updateTimeSheet(_timeSheet);
             
+            //updating permissions still not done.
+             
+    		JOptionPane.showMessageDialog(null, "Time-sagen er nu opdateret", "INFORMATION!", JOptionPane.INFORMATION_MESSAGE);
+    		_instance = null;
+    		_frame.dispose();
         }
         catch (Exception e)
         {

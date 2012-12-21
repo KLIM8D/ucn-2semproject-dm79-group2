@@ -1,11 +1,13 @@
 package controllers;
 
 import db.DBDataEntry;
+import db.DBPermissionWrapper;
 import db.DBTimeSheet;
 import models.Client;
 import models.DataEntry;
 import models.TimeSheet;
 import models.User;
+import models.UserPermission;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +25,7 @@ public class TimeSheetCtrl
 {
     private DBTimeSheet _dbTimeSheet;
     private DBDataEntry _dbDataEntry;
+    private DBPermissionWrapper _dbPermissionWrapper;
    
     public TimeSheetCtrl()
     {
@@ -176,5 +179,25 @@ public class TimeSheetCtrl
     public int removeDataEntry(DataEntry dataEntry) throws Exception
     {
         return _dbDataEntry.deleteDataEntry(dataEntry);
+    }
+    
+    public int deletePermission(TimeSheet timeSheet, User user) throws Exception
+    {
+    	return _dbPermissionWrapper.deletePermission(timeSheet, user);
+    }
+    
+    public int deletePermission(TimeSheet timeSheet, UserPermission userPermission) throws Exception
+    {
+    	return _dbPermissionWrapper.deletePermission(timeSheet, userPermission);
+    }
+    
+    public int insertPermission(TimeSheet timeSheet, User user) throws Exception
+    {
+    	return _dbPermissionWrapper.insertPermission(timeSheet, user);
+    }
+    
+    public int insertPermission(TimeSheet timeSheet, UserPermission userPermission) throws Exception
+    {
+    	return _dbPermissionWrapper.insertPermission(timeSheet, userPermission);
     }
 }
