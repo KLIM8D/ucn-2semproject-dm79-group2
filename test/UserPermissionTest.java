@@ -44,7 +44,9 @@ public class UserPermissionTest
     @Test
     public void getUserPermissionById() throws Exception
     {
-    	UserPermission userPermission = _userPermissionCtrl.getRoleById(4);
+        DataAccess da = DataAccess.getInstance();
+        long id = da.getNextId("UserPermissions");
+    	UserPermission userPermission = _userPermissionCtrl.getRoleById((int) id - 1);
 
         assertNotNull(userPermission);
     }
@@ -69,8 +71,8 @@ public class UserPermissionTest
     @Test
     public void updateUserPermission() throws Exception
     {
-        DataAccess _da = DataAccess.getInstance();
-        long id = _da.getNextId("UserPermissions");
+        DataAccess da = DataAccess.getInstance();
+        long id = da.getNextId("UserPermissions");
         UserPermission userPermission = _userPermissionCtrl.getRoleById((int)id - 1);
         userPermission.setUserRole("Bogholder");
         int rowsAffected = _userPermissionCtrl.updateRole(userPermission);
@@ -84,7 +86,6 @@ public class UserPermissionTest
     	DataAccess _da = DataAccess.getInstance();
         long id = _da.getNextId("UserPermissions");
         UserPermission userPermission = _userPermissionCtrl.getRoleById((int)id - 1);
-        userPermission.setUserRole("Bogholder");
         int rowsAffected = _userPermissionCtrl.deleteRole(userPermission);
 
         assertEquals(1, rowsAffected);

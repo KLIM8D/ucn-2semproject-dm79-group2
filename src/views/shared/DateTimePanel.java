@@ -41,7 +41,7 @@ public class DateTimePanel
         {
             if (comp instanceof JTextField)
             {
-                ((JTextField) comp).setColumns(50);
+                ((JTextField) comp).setColumns(70);
                 ((JTextField) comp).setEditable(false);
             }
         }

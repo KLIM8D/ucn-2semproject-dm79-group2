@@ -255,6 +255,14 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlQuickAccess.add(lblPrintOverview);
 		
 		JLabel lblSortOverview = new JLabel("Sortér");
+        lblSortOverview.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                SortUI.createWindow();
+            }
+        });
 		lblSortOverview.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblSortOverview.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblSortOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/sort_overview.png")));

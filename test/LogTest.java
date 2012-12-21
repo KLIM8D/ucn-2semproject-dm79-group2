@@ -57,39 +57,29 @@ public class LogTest
     }
     
     @Test
-    public void getLogById() throws Exception
-    {
-    	Log log = _logCtrl.getLogById(1);
-
-        assertNotNull(log);
-    }
-    
-    @Test
     public void insertLog() throws Exception
     {
         Calendar cal = Calendar.getInstance();
-        
+        StringBuilder sb = new StringBuilder();
+        sb.append("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + "<br/>");
+        sb.append("Java vendor: " + System.getProperty("java.vendor") + "<br/>");
+        sb.append("Java version: " + System.getProperty("java.version") + "<br/>");
+        sb.append("User home dir: " + System.getProperty("user.home") + "<br/>");
         User user = _userCtrl.getUserById(1);
+        Log newLog = new Log(user, sb.toString(), new Exception("Test exception").getMessage(), getClass().getName(), cal.getTime());
         
-        String userFname = user.getFirstName();
-        String userLname = user.getLastName();
-        String userUname = user.getUserName();
-        String saltValue = user.getSaltValue();
-        String userPword = null;
-        Date creaDate = user.getCreationDate();
-        Date editDate = user.getEditedDate();
-        String userDetails = userFname + ", " + userLname + ", " + userUname + ", " + saltValue + ", " + creaDate + ", " + editDate;
-        
-        
-        
-        
-        Log log = new Log(null,null,null,null,null);
-        // (User user, String userDetails, String exception, String exceptionLocation, Date createdDate)
-        
-        Task task = null; // get a task 
-        
-        int rowsAffected = _logCtrl.insertLog(null);
+        int rowsAffected = _logCtrl.insertLog(newLog);
 
         assertEquals(1, rowsAffected);
+    }
+
+    @Test
+    public void getLogById() throws Exception
+    {
+        DataAccess da = DataAccess.getInstance();
+        int nextId = (int)da.getNextId("Logs");
+        Log log = _logCtrl.getLogById(nextId - 1);
+
+        assertNotNull(log);
     }
 }

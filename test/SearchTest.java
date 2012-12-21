@@ -36,6 +36,7 @@ public class SearchTest
     public void searchResult() throws Exception
     {
     	String searchString = "Mogens";
-    	_searchCtrl.search(searchString);
+    	SearchResult searchResult = _searchCtrl.search(searchString);
+        assertNotNull(searchResult);
     }
 }

@@ -72,9 +72,10 @@ public class SearchUI
 
         _frame = new JFrame();
         _frame.setTitle("S\u00F8ge resultater");
+        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/search_overview.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setBounds(0, 0, 600, 700);
-        _frame.setAlwaysOnTop(true);
+        _frame.toFront();
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);
@@ -89,7 +90,7 @@ public class SearchUI
         pnlSearch = new JPanel();
         pnlSearch.setBorder(new EmptyBorder(5, 5, 5, 5));
         pnlSearch.setLayout(null);
-        pnlSearch.setBounds(0, 0, 600, 750);
+        pnlSearch.setBounds(0, 0, 600, 700);
         _frame.setContentPane(pnlSearch);
 
         JLabel lblTimeSheetsHeader = new JLabel("Fundne time-sager");

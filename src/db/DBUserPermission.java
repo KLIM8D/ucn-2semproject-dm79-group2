@@ -82,7 +82,7 @@ public class DBUserPermission implements IFDBUserPermission
 			return 0;
 
         Connection con = _da.getCon();
-        PreparedStatement query = con.prepareStatement("INSERT INTO UserPermissions (userRole, creationDate, editedDate " +
+        PreparedStatement query = con.prepareStatement("INSERT INTO UserPermissions (userRole, creationDate, editedDate) " +
 																"VALUES(?, ?, ?)");
 		
 		query.setString(1, userPermission.getUserRole());
@@ -108,8 +108,7 @@ public class DBUserPermission implements IFDBUserPermission
 			return 0;
 
         Connection con = _da.getCon();
-        PreparedStatement query = con.prepareStatement("UPDATE UserRoles SET userRole = ?, " +
-																"editedDate = ? WHERE permissionId = ?");
+        PreparedStatement query = con.prepareStatement("UPDATE UserPermissions SET userRole = ?, editedDate = ? WHERE permissionId = ?");
 		
 		query.setString(1, userPermission.getUserRole());
 		query.setString(2, _da.dateToSqlDate(userPermission.getEditedDate()));
