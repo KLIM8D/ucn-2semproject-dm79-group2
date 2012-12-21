@@ -6,6 +6,7 @@ import models.DataEntry;
 import models.Task;
 import models.TimeSheet;
 import models.User;
+import utils.Helper;
 import utils.Logging;
 import utils.UserSession;
 import views.dataentry.CreateDataEntryUI;
@@ -69,6 +70,7 @@ public class CreateDataEntryUI
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
 		_frame.setBounds(100, 100, 320, 327);
+		Helper.centerOnScreen(_frame);
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);

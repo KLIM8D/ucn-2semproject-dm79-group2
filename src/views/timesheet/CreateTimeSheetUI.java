@@ -36,6 +36,7 @@ import models.UserPermission;
 import views.SystemUI;
 import views.dataentry.CreateDataEntryUI;
 
+import utils.Helper;
 import utils.Logging;
 import utils.UserSession;
 
@@ -83,7 +84,7 @@ public class CreateTimeSheetUI
 		_frame.setResizable(false);
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.setSize(new Dimension(420,400));
-		_frame.setLocationRelativeTo(null);
+		Helper.centerOnScreen(_frame);
 		_frame.toFront();
 		_frame.addWindowListener(new WindowAdapter()
         {
