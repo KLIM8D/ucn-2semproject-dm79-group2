@@ -94,14 +94,17 @@ public class SearchUI
 
         JLabel lblTimeSheetsHeader = new JLabel("Fundne time-sager");
         lblTimeSheetsHeader.setBounds(5, 5, 180, 15);
+        lblTimeSheetsHeader.setFont(new Font("Dialog", Font.PLAIN, 12));
         pnlSearch.add(lblTimeSheetsHeader);
 
         JLabel lblClientsHeader = new JLabel("Fundne klienter");
         lblClientsHeader.setBounds(5, 238, 120, 15);
+        lblClientsHeader.setFont(new Font("Dialog", Font.PLAIN, 12));
         pnlSearch.add(lblClientsHeader);
 
         JLabel lblTasksHeader = new JLabel("Fundne opgaver");
         lblTasksHeader.setBounds(5, 471, 120, 15);
+        lblTasksHeader.setFont(new Font("Dialog", Font.PLAIN, 12));
         pnlSearch.add(lblTasksHeader);
 
         //SheetTable start

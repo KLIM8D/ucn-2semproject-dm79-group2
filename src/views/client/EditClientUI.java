@@ -53,7 +53,7 @@ public class EditClientUI
         _frame = new JFrame();
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_client.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        _frame.setTitle("Rediger kunde");
+        _frame.setTitle("Rediger klient");
         _frame.setBounds(0,0,509,175);
         _frame.setResizable(false);
         _frame.setVisible(true);
@@ -114,7 +114,7 @@ public class EditClientUI
                     Helper.checkIfInt(txtZipCode);
                 }
                 
-                if(txtZipCode.getText().length() > 3)
+                if(txtZipCode.getText().length() > 2)
                 {
                 	lookupCity();
                 }

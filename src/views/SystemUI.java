@@ -26,7 +26,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import models.Client;
 import models.DataEntry;
@@ -41,6 +44,7 @@ public class SystemUI extends JFrame implements ChangeListener
 {
 	// GUI elements
 	private boolean primaryTabActive;
+    private TimeSheet _sheet;
 	private JPanel pnlSystemLayout;
 	private JPanel pnlClients;
 	private JPanel pnlTimeSheet;
@@ -103,8 +107,8 @@ public class SystemUI extends JFrame implements ChangeListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-
-			}
+                printSheet();
+            }
 		});
 		mnFiles.add(mntmPrint);
 		
@@ -243,6 +247,14 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlQuickAccess.add(lblNewClient);
 		
 		JLabel lblPrintOverview = new JLabel("Udskriv");
+        lblPrintOverview.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                printSheet();
+            }
+        });
 		lblPrintOverview.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblPrintOverview.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblPrintOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/print_overview.png")));
@@ -551,8 +563,34 @@ public class SystemUI extends JFrame implements ChangeListener
 		// END OF CLIENT TAB
 		// END OF TAB SECTION
 	}
-	
-	private void applicationExit()
+
+    private void printSheet()
+    {
+        if(primaryTabActive)
+        {
+            if(_sheet != null)
+            {
+                GenerateReport genReport = new GenerateReport();
+                try
+                {
+                    genReport.fillReport(_sheet.getSheetId(), UserSession.getPrintToPdf(), UserSession.getOutputPath() + _sheet.getCaseId() + " (" + new SimpleDateFormat("dd-MM-yyyy HH.mm)").format(new Date()) + ".pdf");
+                    JOptionPane.showMessageDialog(null, "Time-sagen er nu udskrevet", "Information!", JOptionPane.INFORMATION_MESSAGE);
+                }
+                catch (Exception ex)
+                {
+                    JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Du skal vælge den time-sag du ønsker at udskrive", "Information!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Det er kun muligt at udskrive, med time-sag fanen aktiv", "Information!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void applicationExit()
 	{
 		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil afslutte programmet?", "Afslut", JOptionPane.YES_NO_OPTION);
 		if(request == JOptionPane.YES_OPTION)
@@ -780,7 +818,8 @@ public class SystemUI extends JFrame implements ChangeListener
                     }
                     
                     addButtonsToSheets(5);
-                    
+
+                    _sheet = sheet;
                     lblClientName_ts.setText(sheet.getClient().getName());
         			lblClientAddress_ts.setText(sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName());
         			lblClientPhoneNo_ts.setText("Telefon: " + String.valueOf(sheet.getClient().getPhoneNo()));
@@ -861,7 +900,7 @@ public class SystemUI extends JFrame implements ChangeListener
 	{	
 		try
 		{
-			if(primaryTabActive == false)
+			if(!primaryTabActive)
 			{
 				pnlClients.setVisible(false);
 				pnlTimeSheet.setVisible(true);
