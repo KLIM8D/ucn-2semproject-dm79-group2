@@ -84,6 +84,7 @@ public class CreateTimeSheetUI
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.setSize(new Dimension(420,400));
 		_frame.setLocationRelativeTo(null);
+		_frame.toFront();
 		_frame.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)

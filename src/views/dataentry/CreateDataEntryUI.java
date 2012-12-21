@@ -72,6 +72,7 @@ public class CreateDataEntryUI
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);
+        _frame.toFront();
         
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
