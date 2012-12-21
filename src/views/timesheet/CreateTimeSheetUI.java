@@ -80,7 +80,6 @@ public class CreateTimeSheetUI
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_timesheet.png")));
 		_frame.setTitle("Ny time-sag");
 		_frame.setVisible(true);
-		_frame.setAlwaysOnTop(true);
 		_frame.setResizable(false);
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.setSize(new Dimension(420,400));
