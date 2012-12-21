@@ -71,6 +71,7 @@ public class EditTimeSheetUI
         _clientCtrl = new ClientCtrl();
         _userCtrl = new UserCtrl();
         _userPermissionCtrl = new UserPermissionCtrl();
+        _tsCtrl = new TimeSheetCtrl();
         
 		_frame = new JFrame();
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_timesheet.png")));
@@ -238,7 +239,8 @@ public class EditTimeSheetUI
             Date editedDate =  cal.getTime();
 
             TimeSheet ts = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
-            _tsCtrl.updateTimeSheet(ts); 
+            _tsCtrl.updateTimeSheet(ts);
+            
         }
         catch (Exception e)
         {
