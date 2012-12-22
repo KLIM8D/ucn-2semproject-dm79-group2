@@ -6,6 +6,7 @@ import models.TimeSheet;
 import models.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created: 12-12-2012
@@ -39,6 +40,16 @@ public interface IFDBDataEntry
      * @return ArrayList<DataEntry>
      */
     public ArrayList<DataEntry> getAllDataEntriesByTimeSheet(TimeSheet timeSheet) throws Exception;
+
+    /**
+     * Retrieve all DataEntries from database, between 2 dates
+     *
+     * @param timeSheet			        the TimeSheet which the DataEntries are associated to
+     * @param startDate                 the startDate, where the filtering should start from
+     * @param endDate                   the endDate, where the filtering should end
+     * @return ArrayList<DataEntry>
+     */
+    public ArrayList<DataEntry> getAllDataEntriesByTimeSheet(TimeSheet timeSheet, Date startDate, Date endDate) throws Exception;
 
     /**
      * Retrieve all DataEntries from database

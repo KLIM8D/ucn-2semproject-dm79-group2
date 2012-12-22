@@ -590,11 +590,11 @@ public class SystemUI extends JFrame implements ChangeListener
                 }
             }
             else
-                JOptionPane.showMessageDialog(null, "Du skal vælge den time-sag du ønsker at udskrive", "Information!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Vælg den time-sag du ønsker at udskrive", "Information!", JOptionPane.INFORMATION_MESSAGE);
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Det er kun muligt at udskrive, med time-sag fanen aktiv", "Information!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Udskrift funktionen er kun tilgængelig under \"Time-Sager\"", "Information!", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -805,9 +805,13 @@ public class SystemUI extends JFrame implements ChangeListener
         {
             try
             {
-            	String clientId = lstTimeSheets.getSelectedValue().substring(0, lstTimeSheets.getSelectedValue().indexOf("(")-1);
+            	String caseId = lstTimeSheets.getSelectedValue().substring(0, lstTimeSheets.getSelectedValue().indexOf("(")-1);
             	
-            	TimeSheet sheet = _timeSheetCtrl.getTimeSheetByCaseId(clientId);
+            	TimeSheet sheet;
+                if(sortStartDate != null && sortEndDate != null)
+                    sheet = _timeSheetCtrl.getTimeSheetByCaseId(caseId, sortStartDate, sortEndDate);
+                else
+                    sheet = _timeSheetCtrl.getTimeSheetByCaseId(caseId);
 
                 if(sheet != null)
                 {	
@@ -918,12 +922,14 @@ public class SystemUI extends JFrame implements ChangeListener
 				pnlClients.setVisible(false);
 				pnlTimeSheet.setVisible(true);
 				primaryTabActive = true;
+                setSortDates(null, null);
 			}
 			else
 			{
 				pnlTimeSheet.setVisible(false);
 				pnlClients.setVisible(true);
 				primaryTabActive = false;
+                setSortDates(null, null);
 			}
 		}
 		catch(Exception ex)
@@ -935,9 +941,23 @@ public class SystemUI extends JFrame implements ChangeListener
 
     public void sortData()
     {
-        if(!lstClients.isSelectionEmpty())
+        if(!primaryTabActive)
         {
-            new AddClientData().execute();
+            if(!lstClients.isSelectionEmpty())
+            {
+                new AddClientData().execute();
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Vælg en klient, før du kan oprette et filter", "Information!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            if(!lstTimeSheets.isSelectionEmpty())
+            {
+                new AddSheetData().execute();
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Vælg en time-sag, før du kan oprette et filter", "Information!", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

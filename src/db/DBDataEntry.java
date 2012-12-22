@@ -101,6 +101,36 @@ public class DBDataEntry implements IFDBDataEntry
     }
 
     /**
+     * Retrieve all DataEntries from database, between 2 dates
+     *
+     * @param timeSheet			        the TimeSheet which the DataEntries are associated to
+     * @param startDate                 the startDate, where the filtering should start from
+     * @param endDate                   the endDate, where the filtering should end
+     * @return ArrayList<DataEntry>
+     */
+    @Override
+    public ArrayList<DataEntry> getAllDataEntriesByTimeSheet(TimeSheet timeSheet, Date startDate, Date endDate) throws Exception
+    {
+        ArrayList<DataEntry> returnList = new ArrayList<DataEntry>();
+
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM DataEntries WHERE sheetId = ? AND startDate BETWEEN ? AND ?");
+        query.setInt(1, timeSheet.getSheetId());
+        query.setString(2, _da.dateToSqlDate(startDate));
+        query.setString(3, _da.dateToSqlDate(endDate));
+
+        ResultSet dataEntries = _da.callCommandGetResultSet(query, con);
+
+        while(dataEntries.next())
+        {
+            DataEntry dataEntry = buildDataEntry(dataEntries);
+            returnList.add(dataEntry);
+        }
+
+        return returnList;
+    }
+
+    /**
      * Retrieve all DataEntries from database
      *
      * @param task                    the Task which the DataEntries are associated to

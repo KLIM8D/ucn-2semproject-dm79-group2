@@ -66,6 +66,20 @@ public class TimeSheetCtrl
     {
         return _dbTimeSheet.getTimeSheetById(sheetId);
     }
+
+    /**
+     * Retrieve a specific TimeSheet by id, between 2 dates
+     *
+     * @param sheetId					the id of the TimeSheet you need returned
+     * @param startDate                 the startDate, where the filtering should start from
+     * @param endDate                   the endDate, where the filtering should end
+     * @return TimeSheet
+     * @throws Exception
+     */
+    public TimeSheet getTimeSheetById(int sheetId, Date startDate, Date endDate) throws Exception
+    {
+        return _dbTimeSheet.getTimeSheetById(sheetId, startDate, endDate);
+    }
     
     /**
      * Retrieve a specific TimeSheet by caseId
@@ -77,6 +91,20 @@ public class TimeSheetCtrl
     public TimeSheet getTimeSheetByCaseId(String caseId) throws Exception
     {
     	return _dbTimeSheet.getTimeSheetByCaseId(caseId);
+    }
+
+    /**
+     * Retrieve a specific TimeSheet by caseId, between 2 dates
+     *
+     * @param caseId					the caseId of the TimeSheet you want returned
+     * @param startDate                 the startDate, where the filtering should start from
+     * @param endDate                   the endDate, where the filtering should end
+     * @return TimeSheet
+     * @throws Exception
+     */
+    public TimeSheet getTimeSheetByCaseId(String caseId, Date startDate, Date endDate) throws Exception
+    {
+        return _dbTimeSheet.getTimeSheetByCaseId(caseId, startDate, endDate);
     }
 
     /**

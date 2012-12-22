@@ -77,6 +77,30 @@ public class DBTimeSheet implements IFDBTimeSheet
 
         return null;
 	}
+
+    /**
+     * Retrieve a specific TimeSheet by id, between 2 dates
+     *
+     * @param sheetId					the id of the TimeSheet you need returned
+     * @param startDate                 the startDate, where the filtering should start from
+     * @param endDate                   the endDate, where the filtering should end
+     * @return TimeSheet
+     * @throws Exception
+     */
+    @Override
+    public TimeSheet getTimeSheetById(int sheetId, Date startDate, Date endDate) throws Exception
+    {
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE sheetId = ? " + _sortExpression);
+        query.setInt(1, sheetId);
+
+        ResultSet timeSheetResult = _da.callCommandGetRow(query, con);
+
+        if(timeSheetResult.next())
+            return buildTimeSheet(timeSheetResult, startDate, endDate);
+
+        return null;
+    }
 	
 	/**
 	 * Get a specific TimeSheet by caseId
@@ -97,6 +121,30 @@ public class DBTimeSheet implements IFDBTimeSheet
 		
 		return null;
 	}
+
+    /**
+     * Retrieve a specific TimeSheet by caseId, between 2 dates
+     *
+     * @param caseId					the caseId of the TimeSheet you want returned
+     * @param startDate                 the startDate, where the filtering should start from
+     * @param endDate                   the endDate, where the filtering should end
+     * @return TimeSheet
+     * @throws Exception
+     */
+    @Override
+    public TimeSheet getTimeSheetByCaseId(String caseId, Date startDate, Date endDate) throws Exception
+    {
+        Connection con = _da.getCon();
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE caseId = ? " + _sortExpression);
+        query.setString(1, caseId);
+
+        ResultSet timeSheetResult = _da.callCommandGetRow(query, con);
+
+        if(timeSheetResult.next())
+            return buildTimeSheet(timeSheetResult, startDate, endDate);
+
+        return null;
+    }
 
 
 	/**
@@ -335,4 +383,28 @@ public class DBTimeSheet implements IFDBTimeSheet
 
         return timeSheet;
 	}
+
+    private TimeSheet buildTimeSheet(ResultSet row, Date startDate, Date endDate) throws Exception
+    {
+        if (row == null)
+            return null;
+
+        DBUser dbu = new DBUser();
+        DBClient dbc = new DBClient();
+        DBDataEntry dbDataEntry = new DBDataEntry();
+
+        int sheetId = row.getInt("sheetId");
+        String caseId = row.getString("caseId");
+        User user = dbu.getUserById(row.getInt("userId"));
+        Client client = dbc.getClientById(row.getInt("clientId"));
+        String note = row.getString("note");
+        Date creationDate = row.getDate("creationDate");
+        Date editedDate = row.getDate("editedDate");
+
+        TimeSheet timeSheet = new TimeSheet(sheetId, caseId, user, client, note, creationDate, editedDate);
+        ArrayList<DataEntry> dataEntries = dbDataEntry.getAllDataEntriesByTimeSheet(timeSheet, startDate, endDate);
+        timeSheet.setDataEntries(dataEntries);
+
+        return timeSheet;
+    }
 }

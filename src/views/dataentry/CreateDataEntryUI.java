@@ -53,8 +53,8 @@ public class CreateDataEntryUI
     {
 		if(_instance == null)
 		{
-			_instance = new CreateDataEntryUI();
-			_timeSheet = timeSheet;
+            _timeSheet = timeSheet;
+            _instance = new CreateDataEntryUI();
 		}
 			
 		return _frame;

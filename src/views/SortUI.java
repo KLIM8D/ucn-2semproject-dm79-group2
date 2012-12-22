@@ -47,7 +47,7 @@ public class SortUI
         _frame.setTitle("Sortering");
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/sort_overview.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        _frame.setBounds(0, 0, 300, 170);
+        _frame.setBounds(0, 0, 300, 157);
         _frame.toFront();
         _frame.setResizable(false);
         _frame.setVisible(true);
@@ -67,7 +67,7 @@ public class SortUI
         pnlSort.setBounds(0, 0, 300, 400);
         _frame.setContentPane(pnlSort);
 
-        JLabel lblSortDateHeader = new JLabel("Filtre mellem oprettet dato");
+        JLabel lblSortDateHeader = new JLabel("Filtre mellem datoer");
         lblSortDateHeader.setBounds(5, 5, 180, 15);
         lblSortDateHeader.setFont(new Font("Dialog", Font.PLAIN, 12));
         pnlSort.add(lblSortDateHeader);
@@ -97,13 +97,15 @@ public class SortUI
         pnlSort.add(separator);
 
 
-        JButton btnUpdate = new JButton("Opdater");
+        JButton btnUpdate = new JButton("Opret filter");
         btnUpdate.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
                 SystemUI.getInstance().setSortDates(startDate.getDateChooser().getDate(), endDate.getDateChooser().getDate());
                 SystemUI.getInstance().sortData();
+                _instance = null;
+                _frame.dispose();
             }
         });
         btnUpdate.setBounds(5, 100, 125, 23);
