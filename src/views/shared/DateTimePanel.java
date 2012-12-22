@@ -32,8 +32,8 @@ public class DateTimePanel
     public static JPanel buildDateTimePanel(Date value)
     {
         JPanel datePanel = new JPanel();
-
         _dateChooser = new JDateChooser();
+        _dateChooser.setPreferredSize(new Dimension(120, 20));
         if (value != null)
             _dateChooser.setDate(value);
 
@@ -41,7 +41,7 @@ public class DateTimePanel
         {
             if (comp instanceof JTextField)
             {
-                ((JTextField) comp).setColumns(70);
+                ((JTextField) comp).setColumns(60);
                 ((JTextField) comp).setEditable(false);
             }
         }
