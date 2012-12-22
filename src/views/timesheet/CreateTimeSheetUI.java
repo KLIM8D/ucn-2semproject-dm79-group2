@@ -237,8 +237,8 @@ public class CreateTimeSheetUI
         Date creationDate = cal.getTime();
         Date editedDate =  cal.getTime();
         
-		TimeSheet timesheet = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
-		CreateDataEntryUI.createWindow(timesheet);
+		TimeSheet timeSheet = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
+		CreateDataEntryUI.createWindow(timeSheet);
 	}
 	
 	private String[] populateClientList()

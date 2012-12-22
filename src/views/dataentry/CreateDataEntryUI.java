@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import models.Client;
 import models.DataEntry;
 import models.Task;
 import models.TimeSheet;
@@ -33,7 +32,6 @@ public class CreateDataEntryUI
 
     private static JFrame _frame;
     private static CreateDataEntryUI _instance;
-    private static boolean _newTimeSheet;
     private JPanel contentPane;
     
 	private JTextPane txtRemark;
@@ -42,7 +40,7 @@ public class CreateDataEntryUI
 	
     private TimeSheetCtrl _timesheetCtrl;
     private TaskCtrl _taskCtrl;
-    private static TimeSheet _timesheet; // timesheet needs to be imported from super, when we open this class.
+    private static TimeSheet _timeSheet; // timesheet needs to be imported from super, when we open this class.
     
     private JComboBox<String> drpTask;
     private DateTimePanel startDate;
@@ -50,22 +48,13 @@ public class CreateDataEntryUI
 	private DefaultComboBoxModel<String> _model;
 
     private JPanel pnlTask;
-    
-    public static JFrame createWindow()
-    {
-    	if(_instance == null)
-    		_instance = new CreateDataEntryUI();
-    	
-    	return _frame;
-    }
 
 	public static JFrame createWindow(TimeSheet timeSheet)
     {
 		if(_instance == null)
 		{
 			_instance = new CreateDataEntryUI();
-			_newTimeSheet = true;
-			_timesheet = timeSheet;
+			_timeSheet = timeSheet;
 		}
 			
 		return _frame;
@@ -269,50 +258,31 @@ public class CreateDataEntryUI
 		@Override
 		protected Integer doInBackground() throws Exception
 		{
-			if(_newTimeSheet == true)
-			{
-				try
-				{ 
-					System.out.println("new timesheet");
-					
-					System.out.println(startDate.getTimeSpinner().getValue().toString());
-					
-					Task task = (Task)drpTask.getSelectedItem();
-					User user = UserSession.getLoggedInUser();
-		            Date chosenStartDate = startDate.getDateChooser().getDate();
-		            Date chosenEndDate = endDate.getDateChooser().getDate();
-		            String entryRemark = txtRemark.getText();
-		            Calendar cal = Calendar.getInstance();
-		            Date creationDate = cal.getTime();
-		            Date editedDate =  cal.getTime();
-		            DataEntry dataEntry = new DataEntry(task, user, chosenStartDate, chosenEndDate, entryRemark, creationDate, editedDate);
+			try
+			{ 
+				Task task = _taskCtrl.getTaskByTitle((String) drpTask.getSelectedItem());
+				User user = UserSession.getLoggedInUser();
+		        Date chosenStartDate = startDate.getDateChooser().getDate();
+		        Date chosenEndDate = endDate.getDateChooser().getDate();
+		        String entryRemark = txtRemark.getText();
+		        Calendar cal = Calendar.getInstance();
+		        Date creationDate = cal.getTime();
+		        Date editedDate =  cal.getTime();
+		        DataEntry dataEntry = new DataEntry(task, user, chosenStartDate, chosenEndDate, entryRemark, creationDate, editedDate);
+		        
+		        _timesheetCtrl.insertTimeSheet(_timeSheet);	        
+		        //_timesheetCtrl.addDataEntry(_timeSheet, dataEntry);
 
-		            _timesheetCtrl.addDataEntry(_timesheet, dataEntry);
-
-		            JOptionPane.showMessageDialog(null, "Time-sagen er oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
-		            _instance = null;
-		            _frame.dispose();
-				}
-				catch(Exception ex)
-				{
-					JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
-				}
+		        JOptionPane.showMessageDialog(null, "Time-sagen er oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
+		        _instance = null;
+		        _frame.dispose();
 			}
-			else if(_newTimeSheet == false)
+			catch(Exception ex)
 			{
-				try
-				{
-					
-				}
-				catch(Exception ex)
-				{
-					
-				}
+				JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
+				ex.printStackTrace();
 			}
-			else
-			{
-				// error
-			}
+			
 			return null;
 		}
 	}
