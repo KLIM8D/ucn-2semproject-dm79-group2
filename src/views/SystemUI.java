@@ -64,17 +64,24 @@ public class SystemUI extends JFrame implements ChangeListener
 	private TimeSheetCtrl _timeSheetCtrl;
 	private ClientCtrl _clientCtrl;
     private SearchCtrl _searchCtrl;
+    private static SystemUI _instance;
 
 	// Sheet and Client grid view
 	private DefaultTableModel sheetModel;
 	private JTable sheetTable;
 	private String[] sheetColumn;
+    private Date sortStartDate;
+    private Date sortEndDate;
 	private DefaultTableModel clientModel;
 	private JTable clientTable;
 	private String[] clientColumn;
 
+    public static SystemUI getInstance()
+    { return _instance; }
+
 	public SystemUI()
 	{
+        _instance = this;
 		_timeSheetCtrl = new TimeSheetCtrl();
 		_clientCtrl = new ClientCtrl();
         _searchCtrl = new SearchCtrl();
@@ -833,6 +840,7 @@ public class SystemUI extends JFrame implements ChangeListener
             catch(Exception ex)
             {
                 JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
             }
 
             return null;
@@ -859,7 +867,11 @@ public class SystemUI extends JFrame implements ChangeListener
 				
 				if(client != null)
 				{	
-					ArrayList<TimeSheet> timeSheets = _timeSheetCtrl.getAllTimeSheetsByClient(client);
+					ArrayList<TimeSheet> timeSheets;
+                    if(sortStartDate != null && sortEndDate != null)
+                        timeSheets = _timeSheetCtrl.getAllTimeSheetsByClient(client, sortStartDate, sortEndDate);
+                    else
+                        timeSheets = _timeSheetCtrl.getAllTimeSheetsByClient(client);
 					
 					Object[][] data = {};
 					clientModel.setDataVector(data, clientColumn);
@@ -920,4 +932,18 @@ public class SystemUI extends JFrame implements ChangeListener
 			System.exit(0);
 		}
 	}
+
+    public void sortData()
+    {
+        if(!lstClients.isSelectionEmpty())
+        {
+            new AddClientData().execute();
+        }
+    }
+
+    public void setSortDates(Date startDate, Date endDate)
+    {
+        sortStartDate = startDate;
+        sortEndDate = endDate;
+    }
 }

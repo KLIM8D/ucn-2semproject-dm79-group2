@@ -142,12 +142,12 @@ public class CreateDataEntryUI
 		pnlDataEntry.add(lblRemark);
 
         startDate = new DateTimePanel();
-        JPanel pnlStartDate = DateTimePanel.buildDateTimePanel(new Date());
+        JPanel pnlStartDate = startDate.buildDateTimePanel(new Date());
         pnlStartDate.setBounds(90, 49, 215, 25);
 		pnlDataEntry.add(pnlStartDate);
 
         endDate = new DateTimePanel();
-        JPanel pnlEndDate = DateTimePanel.buildDateTimePanel(new Date());
+        JPanel pnlEndDate = endDate.buildDateTimePanel(new Date());
         pnlEndDate.setBounds(90, 78, 215, 25);
         pnlDataEntry.add(pnlEndDate);
         
@@ -220,12 +220,14 @@ public class CreateDataEntryUI
 	{
 		try
 		{
-			return new = PopulateTaskList().doInBackground();
+			return new PopulateTaskList().doInBackground();
 		}
 		catch(Exception ex)
 		{
 			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 99), "Fejl!", JOptionPane.ERROR_MESSAGE);
 		}
+
+        return null;
 	}
 	
 	private void createDataEntry()

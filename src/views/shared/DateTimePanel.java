@@ -20,8 +20,8 @@ public class DateTimePanel
     {
     }
 
-    private static JSpinner _timeSpinner;
-    private static JDateChooser _dateChooser;
+    private JSpinner _timeSpinner;
+    private JDateChooser _dateChooser;
 
     public JSpinner getTimeSpinner()
     { return _timeSpinner; }
@@ -29,7 +29,7 @@ public class DateTimePanel
     public JDateChooser getDateChooser()
     { return _dateChooser; }
 
-    public static JPanel buildDateTimePanel(Date value)
+    public JPanel buildDateTimePanel(Date value)
     {
         JPanel datePanel = new JPanel();
         _dateChooser = new JDateChooser();

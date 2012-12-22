@@ -1,11 +1,14 @@
 package views;
 
 import controllers.TimeSheetCtrl;
+import db.DataAccess;
 import views.shared.DateTimePanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
@@ -44,7 +47,7 @@ public class SortUI
         _frame.setTitle("Sortering");
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/sort_overview.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        _frame.setBounds(0, 0, 300, 400);
+        _frame.setBounds(0, 0, 300, 170);
         _frame.toFront();
         _frame.setResizable(false);
         _frame.setVisible(true);
@@ -85,12 +88,39 @@ public class SortUI
         pnlSort.add(pnlStartDate);
 
         endDate = new DateTimePanel();
-        JPanel pnlEndDate = startDate.buildDateTimePanel(new Date());
+        JPanel pnlEndDate = endDate.buildDateTimePanel(new Date());
         pnlEndDate.setBounds(60, 50, 240, 25);
         pnlSort.add(pnlEndDate);
 
         JSeparator separator = new JSeparator();
         separator.setBounds(0, 85, 300, 1);
         pnlSort.add(separator);
+
+
+        JButton btnUpdate = new JButton("Opdater");
+        btnUpdate.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                SystemUI.getInstance().setSortDates(startDate.getDateChooser().getDate(), endDate.getDateChooser().getDate());
+                SystemUI.getInstance().sortData();
+            }
+        });
+        btnUpdate.setBounds(5, 100, 125, 23);
+        pnlSort.add(btnUpdate);
+
+        JButton btnCancel = new JButton("Fjern filter");
+        btnCancel.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                SystemUI.getInstance().setSortDates(null, null);
+                SystemUI.getInstance().sortData();
+                _instance = null;
+                _frame.dispose();
+            }
+        });
+        btnCancel.setBounds(155, 100, 125, 23);
+        pnlSort.add(btnCancel);
     }
 }

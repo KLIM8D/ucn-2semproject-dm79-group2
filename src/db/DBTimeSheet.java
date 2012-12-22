@@ -139,7 +139,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 
         Connection con = _da.getCon();
-        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND creationDate BETWEEN = ? AND = ? " + _sortExpression);
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE userId = ? AND creationDate BETWEEN ? AND ? " + _sortExpression);
 		query.setInt(1, user.getUserId());
 		query.setString(2, _da.dateToSqlDate(startDate));
 		query.setString(3, _da.dateToSqlDate(endDate));
@@ -197,7 +197,7 @@ public class DBTimeSheet implements IFDBTimeSheet
 		ArrayList<TimeSheet> returnList = new ArrayList<TimeSheet>();
 
         Connection con = _da.getCon();
-        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN = ? AND = ? " + _sortExpression);
+        PreparedStatement query = con.prepareStatement("SELECT * FROM TimeSheets WHERE clientId = ? AND creationDate BETWEEN ? AND ? " + _sortExpression);
         query.setInt(1, client.getClientId());
         query.setString(2, _da.dateToSqlDate(startDate));
         query.setString(3, _da.dateToSqlDate(endDate));
