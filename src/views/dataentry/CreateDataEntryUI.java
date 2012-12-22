@@ -1,168 +1,185 @@
 package views.dataentry;
 
-import controllers.TaskCtrl;
-import controllers.TimeSheetCtrl;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.SwingWorker;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import models.Client;
 import models.DataEntry;
 import models.Task;
 import models.TimeSheet;
 import models.User;
-import utils.Helper;
-import utils.Logging;
-import utils.UserSession;
+
 import views.dataentry.CreateDataEntryUI;
 import views.shared.DateTimePanel;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+import utils.Logging;
+import utils.UserSession;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import controllers.TaskCtrl;
+import controllers.TimeSheetCtrl;
 
 public class CreateDataEntryUI
 {
 
     private static JFrame _frame;
     private static CreateDataEntryUI _instance;
+    private static boolean _newTimeSheet;
     private JPanel contentPane;
     
 	private JTextPane txtRemark;
 	private JTextField txtTitle;
-	private JTextPane txtDescription;
+	private JTextPane txtDesc;
 	
-    private TimeSheetCtrl _tsCtrl;
-    private TaskCtrl _taCtrl;
-    private static TimeSheet _ts; // timesheet needs to be imported from super, when we open this class.
+    private TimeSheetCtrl _timesheetCtrl;
+    private TaskCtrl _taskCtrl;
+    private static TimeSheet _timesheet; // timesheet needs to be imported from super, when we open this class.
     
-    private JComboBox<String> drpXTask;
+    private JComboBox<String> drpTask;
     private DateTimePanel startDate;
     private DateTimePanel endDate;
 	private DefaultComboBoxModel<String> _model;
 
-    private JPanel task;
+    private JPanel pnlTask;
+    
+    public static JFrame createWindow()
+    {
+    	if(_instance == null)
+    		_instance = new CreateDataEntryUI();
+    	
+    	return _frame;
+    }
 
 	public static JFrame createWindow(TimeSheet timeSheet)
     {
 		if(_instance == null)
 		{
 			_instance = new CreateDataEntryUI();
-			_ts = timeSheet;
+			_newTimeSheet = true;
+			_timesheet = timeSheet;
 		}
 			
 		return _frame;
     }
 
-    private CreateDataEntryUI()
-    {
-    	createElements();	
-    }
-
-	public void createElements() 
+	private CreateDataEntryUI() 
 	{
-		_tsCtrl = new TimeSheetCtrl();
-		_taCtrl = new TaskCtrl();
+		_timesheetCtrl = new TimeSheetCtrl();
+		_taskCtrl = new TaskCtrl();
 		
 		_frame = new JFrame();
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
-		_frame.setBounds(100, 100, 320, 327);
-		Helper.centerOnScreen(_frame);
+		//_frame.setBounds(100, 100, 320, 327);
+		_frame.setSize(new Dimension(338, 335));
+		_frame.setLocationRelativeTo(null);
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);
         _frame.toFront();
+        _frame.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
+                _instance = null;
+                _frame.dispose();
+            }
+        });
         
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 		contentPane.setLayout(null);
 		_frame.setContentPane(contentPane);
-		
-		_frame.setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 10, 295, 230);
+		tabbedPane.setBounds(10, 10, 315, 245);
 		contentPane.add(tabbedPane);
 		
-		JPanel dataEntry = new JPanel();
-		dataEntry.setFont(new Font("Dialog", Font.PLAIN, 12));
-		tabbedPane.addTab("Registrering", null, dataEntry, null);
-		dataEntry.setLayout(null);
+		JPanel pnlDataEntry = new JPanel();
+		pnlDataEntry.setFont(new Font("Dialog", Font.PLAIN, 12));
+		tabbedPane.addTab("Registrering", null, pnlDataEntry, null);
+		pnlDataEntry.setLayout(null);
 		
 		JLabel lblTask = new JLabel("Opgave:");
 		lblTask.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblTask.setBounds(10, 11, 70, 14);
-		dataEntry.add(lblTask);
+		lblTask.setBounds(10, 12, 70, 16);
+		pnlDataEntry.add(lblTask);
 		
-		drpXTask = new JComboBox<String>();
-		drpXTask.setFont(new Font("Dialog", Font.PLAIN, 12));
-		drpXTask.setBounds(95, 8, 183, 20);
-		dataEntry.add(drpXTask);
-		_model = new DefaultComboBoxModel<String>(addTasks());
-        drpXTask.setModel(_model);
+		drpTask = new JComboBox<String>();
+		drpTask.setFont(new Font("Dialog", Font.PLAIN, 12));
+		drpTask.setBackground(Color.WHITE);
+		drpTask.setBounds(95, 12, 205, 22);
+		pnlDataEntry.add(drpTask);
+		_model = new DefaultComboBoxModel<String>(populateTaskList());
+        drpTask.setModel(_model);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 37, 268, 1);
-		dataEntry.add(separator);
+		separator.setBounds(10, 43, 290, 2);
+		pnlDataEntry.add(separator);
 		
 		JLabel lblStarted = new JLabel("P\u00E5begyndt:");
 		lblStarted.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblStarted.setBounds(10, 50, 70, 14);
-		dataEntry.add(lblStarted);
+		lblStarted.setBounds(10, 57, 86, 16);
+		pnlDataEntry.add(lblStarted);
 		
 		JLabel lblEnded = new JLabel("Afsluttet:");
 		lblEnded.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblEnded.setBounds(10, 75, 70, 14);
-		dataEntry.add(lblEnded);
+		lblEnded.setBounds(10, 85, 70, 16);
+		pnlDataEntry.add(lblEnded);
 		
 		JLabel lblRemark = new JLabel("Bem\u00E6rkning:");
 		lblRemark.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblRemark.setBounds(10, 100, 80, 14);
-		dataEntry.add(lblRemark);
-		
-		txtRemark = new JTextPane();
-		txtRemark.setBounds(95, 100, 190, 100);
-		txtRemark.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		dataEntry.add(txtRemark);
+		lblRemark.setBounds(10, 114, 99, 16);
+		pnlDataEntry.add(lblRemark);
 
         startDate = new DateTimePanel();
-        JPanel pnlStartDate = startDate.buildDateTimePanel(new Date());
-        pnlStartDate.setBounds(95, 47, 240, 20);
-		dataEntry.add(pnlStartDate);
+        JPanel pnlStartDate = DateTimePanel.buildDateTimePanel(new Date());
+        pnlStartDate.setBounds(90, 49, 215, 25);
+		pnlDataEntry.add(pnlStartDate);
 
         endDate = new DateTimePanel();
-        JPanel pnlEndDate = startDate.buildDateTimePanel(new Date());
-        pnlEndDate.setBounds(95, 72, 240, 20);
-        dataEntry.add(pnlEndDate);
+        JPanel pnlEndDate = DateTimePanel.buildDateTimePanel(new Date());
+        pnlEndDate.setBounds(90, 78, 215, 25);
+        pnlDataEntry.add(pnlEndDate);
+        
+        txtRemark = new JTextPane();
+		txtRemark.setBounds(95, 114, 205, 95);
+		txtRemark.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		pnlDataEntry.add(txtRemark);
 		
-		task = new JPanel();
-		task.setFont(new Font("Dialog", Font.PLAIN, 12));
-		tabbedPane.addTab("Opgave", null, task, null);
-		task.setLayout(null);
+		pnlTask = new JPanel();
+		pnlTask.setFont(new Font("Dialog", Font.PLAIN, 12));
+		tabbedPane.addTab("Opgave", null, pnlTask, null);
+		pnlTask.setLayout(null);
 		
 		JLabel lblTitle = new JLabel("Title:");
 		lblTitle.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblTitle.setBounds(10, 11, 57, 14);
-		task.add(lblTitle);
+		lblTitle.setBounds(10, 14, 57, 14);
+		pnlTask.add(lblTitle);
 		
 		JLabel lblDescription = new JLabel("Beskrivelse:");
 		lblDescription.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblDescription.setBounds(10, 45, 65, 14);
-		task.add(lblDescription);
+		lblDescription.setBounds(10, 42, 84, 14);
+		pnlTask.add(lblDescription);
 		
 		txtTitle = new JTextField();
-		txtTitle.setBounds(77, 11, 201, 20);
-		task.add(txtTitle);
+		txtTitle.setBounds(95, 12, 205, 20);
+		pnlTask.add(txtTitle);
 		txtTitle.setColumns(10);
 		
-		txtDescription = new JTextPane();
-		txtDescription.setBounds(77, 42, 201, 136);
-		txtDescription.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		task.add(txtDescription);
+		txtDesc = new JTextPane();
+		txtDesc.setBounds(95, 43, 205, 132);
+		txtDesc.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		pnlTask.add(txtDesc);
 		
 		JButton btnCreateTask = new JButton("Opret ny Opgave");
         btnCreateTask.addActionListener(new ActionListener()
@@ -172,8 +189,8 @@ public class CreateDataEntryUI
                 createTask();
             }
         });
-		btnCreateTask.setBounds(155, 183, 125, 23);
-		task.add(btnCreateTask);
+		btnCreateTask.setBounds(95, 186, 205, 23);
+		pnlTask.add(btnCreateTask);
 		
         JButton btnCancel = new JButton("Annuller");
         btnCancel.addActionListener(new ActionListener()
@@ -184,7 +201,7 @@ public class CreateDataEntryUI
                 _frame.dispose();
             }
         });
-		btnCancel.setBounds(195, 248, 89, 23);
+		btnCancel.setBounds(200, 267, 125, 23);
 		contentPane.add(btnCancel);
 		
         JButton btnCreate = new JButton("Opret");
@@ -195,77 +212,133 @@ public class CreateDataEntryUI
                 createDataEntry();
             }
         });
-		btnCreate.setBounds(96, 248, 89, 23);
+		btnCreate.setBounds(63, 267, 125, 23);
 		contentPane.add(btnCreate);
 	}
 	
-	public void createDataEntry()
+	private String[] populateTaskList()
 	{
-        try
-        {
-            System.out.println(startDate.getTimeSpinner().getValue().toString());
-
-            Task task = (Task)drpXTask.getSelectedItem();
-            User user = UserSession.getLoggedInUser();
-            Date chosenStartDate = startDate.getDateChooser().getDate();
-            Date chosenEndDate = endDate.getDateChooser().getDate();
-            String entryRemark = txtRemark.getText();
-            Calendar cal = Calendar.getInstance();
-            Date creationDate = cal.getTime();
-            Date editedDate =  cal.getTime();
-            DataEntry dataEntry = new DataEntry(task, user, chosenStartDate, chosenEndDate, entryRemark, creationDate, editedDate);
-
-            _tsCtrl.addDataEntry(_ts, dataEntry);
-
-            JOptionPane.showMessageDialog(null, "Registreringen er oprettet", "Information!", JOptionPane.INFORMATION_MESSAGE);
-            _instance = null;
-            _frame.dispose();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Fejl", JOptionPane.WARNING_MESSAGE);
-        }
-	}
-	
-	public void createTask()
-	{
-        try
-        {
-            String title = txtTitle.getText();
-            String description = txtDescription.getText();
-            Task task = new Task(title, description);
-
-            _taCtrl.insertTask(task);
-
-            JOptionPane.showMessageDialog(null, "Opgavetypen er oprettet", "Information!", JOptionPane.INFORMATION_MESSAGE);
-            _instance = null;
-            _frame.dispose();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Fejl", JOptionPane.WARNING_MESSAGE);
-        }
-	}
-	
-	public String[] addTasks()
-	{
-		ArrayList<Task> tasks;
 		try
 		{
-			tasks = _taCtrl.getAllTasks();
-			String[] tasksNames = new String[tasks.size()];
-			for (int index = 0; index < tasks.size(); index++)
-				tasksNames[index] = tasks.get(index).getTitle();
-
-			return tasksNames;
+			return new = PopulateTaskList().doInBackground();
 		}
-		catch (Exception e)
+		catch(Exception ex)
 		{
-			JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 99), "Fejl!", JOptionPane.ERROR_MESSAGE);
 		}
-		
-		return null;
+	}
+	
+	private void createDataEntry()
+	{
+		new CreateDataEntry().execute();
+	}
+	
+	private void createTask()
+	{
+		new CreateTask().execute();
+	}
+	
+	class PopulateTaskList extends SwingWorker<String[], Integer>
+	{
+		@Override
+		protected String[] doInBackground() throws Exception
+		{
+			ArrayList<Task> tasks;
+			try
+			{
+				tasks = _taskCtrl.getAllTasks();
+				String[] taskTitles = new String[tasks.size()];
+				for(int i = 0; i < tasks.size(); i++)
+					taskTitles[i] = tasks.get(i).getTitle();
+				
+				return taskTitles;
+			}
+			catch(Exception ex)
+			{
+				JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			return null;
+		}
+	}
+	
+	class CreateDataEntry extends SwingWorker<Integer, Integer>
+	{
+		@Override
+		protected Integer doInBackground() throws Exception
+		{
+			if(_newTimeSheet == true)
+			{
+				try
+				{ 
+					System.out.println("new timesheet");
+					
+					System.out.println(startDate.getTimeSpinner().getValue().toString());
+					
+					Task task = (Task)drpTask.getSelectedItem();
+					User user = UserSession.getLoggedInUser();
+		            Date chosenStartDate = startDate.getDateChooser().getDate();
+		            Date chosenEndDate = endDate.getDateChooser().getDate();
+		            String entryRemark = txtRemark.getText();
+		            Calendar cal = Calendar.getInstance();
+		            Date creationDate = cal.getTime();
+		            Date editedDate =  cal.getTime();
+		            DataEntry dataEntry = new DataEntry(task, user, chosenStartDate, chosenEndDate, entryRemark, creationDate, editedDate);
+
+		            _timesheetCtrl.addDataEntry(_timesheet, dataEntry);
+
+		            JOptionPane.showMessageDialog(null, "Time-sagen er oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
+		            _instance = null;
+		            _frame.dispose();
+				}
+				catch(Exception ex)
+				{
+					JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			else if(_newTimeSheet == false)
+			{
+				try
+				{
+					
+				}
+				catch(Exception ex)
+				{
+					
+				}
+			}
+			else
+			{
+				// error
+			}
+			return null;
+		}
+	}
+	
+	class CreateTask extends SwingWorker<Integer, Integer>
+	{
+		@Override
+		protected Integer doInBackground() throws Exception
+		{
+			try
+			{
+				String taskTitle = txtTitle.getText();
+				String taskDesc = txtDesc.getText();
+				Task task = new Task(taskTitle, taskDesc);
+				
+				_taskCtrl.insertTask(task);
+				
+				JOptionPane.showMessageDialog(null, "Opgavetype oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
+
+				_instance = null;
+				_frame.dispose();
+			}
+			catch(Exception ex)
+			{
+				JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			return null;
+		}
 	}
 }
