@@ -52,7 +52,7 @@ public class CreateClientUI
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_client.png")));
         _frame.setTitle("Opret ny klient");
-        _frame.setBounds(0,0,509,175);
+        _frame.setSize(new Dimension(509,186));
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);
@@ -79,7 +79,7 @@ public class CreateClientUI
         
         JLabel lblClientCity = new JLabel("By:");
         lblClientCity.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblClientCity.setBounds(222,57,120,15);
+        lblClientCity.setBounds(232,57,36,15);
         contentPane.add(lblClientCity);
         
         JLabel lblClientNumber = new JLabel("Telefonnummer:");
@@ -89,7 +89,7 @@ public class CreateClientUI
         
         JLabel lblClientEmail = new JLabel("Email:");
         lblClientEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblClientEmail.setBounds(244,82,120,15);
+        lblClientEmail.setBounds(232,84,55,15);
         contentPane.add(lblClientEmail);
                 
         txtName = new JTextField();
@@ -113,7 +113,6 @@ public class CreateClientUI
                 }
                 if(txtZipCode.getText().length() > 3)
                 {
-                    //TODO: Fix hvis postnummer kun har 3 cifre
                 	lookupCity();
                 }
             }
@@ -124,7 +123,7 @@ public class CreateClientUI
         txtZipCode.setColumns(10);
         
         txtCity = new JTextField();
-        txtCity.setBounds(265,55,232,19);
+        txtCity.setBounds(275,55,222,19);
         contentPane.add(txtCity);
         txtCity.setColumns(10);
         txtCity.setEditable(false);
@@ -144,7 +143,7 @@ public class CreateClientUI
         txtPhoneNo.setColumns(10);
         
         txtEmail = new JTextField();
-        txtEmail.setBounds(305,80,192,19);
+        txtEmail.setBounds(275,80,222,19);
         contentPane.add(txtEmail);
         txtEmail.setColumns(10);
 

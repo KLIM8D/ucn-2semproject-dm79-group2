@@ -1,7 +1,9 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -33,9 +35,11 @@ public class AboutUI {
 
 	private AboutUI() {
 		_frame = new JFrame();
+		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
 		_frame.setTitle("Om " + SystemInformation.systemInformation(01));
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		_frame.setBounds(0, 0, 470, 430);
+		_frame.setSize(new Dimension(470,430));
+		_frame.setLocationRelativeTo(null);
 		_frame.setResizable(false);
 		_frame.setVisible(true);
 		_frame.toFront();

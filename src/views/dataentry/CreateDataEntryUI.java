@@ -18,6 +18,7 @@ import models.Task;
 import models.TimeSheet;
 import models.User;
 
+import views.SystemUI;
 import views.dataentry.CreateDataEntryUI;
 import views.shared.DateTimePanel;
 import views.timesheet.CreateTimeSheetUI;
@@ -80,6 +81,7 @@ public class CreateDataEntryUI
 		_taskCtrl = new TaskCtrl();
 		
 		_frame = new JFrame();
+		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_dataentry.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
 		_frame.setSize(new Dimension(338,335));

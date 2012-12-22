@@ -54,7 +54,7 @@ public class EditClientUI
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_client.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Rediger klient");
-        _frame.setBounds(0,0,509,175);
+        _frame.setSize(new Dimension(509,186));
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);
@@ -79,9 +79,9 @@ public class EditClientUI
         lblClientZipCode.setBounds(5, 57, 120, 15);
         contentPane.add(lblClientZipCode);
         
-        JLabel lblClientCity = new JLabel("By");
+        JLabel lblClientCity = new JLabel("By:");
         lblClientCity.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblClientCity.setBounds(222, 57, 120, 15);
+        lblClientCity.setBounds(232, 57, 28, 15);
         contentPane.add(lblClientCity);
         
         JLabel lblClientNumber = new JLabel("Telefonnummer:");
@@ -91,7 +91,7 @@ public class EditClientUI
         
         JLabel lblClientEmail = new JLabel("Email:");
         lblClientEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblClientEmail.setBounds(244, 82, 120, 15);
+        lblClientEmail.setBounds(232, 82, 37, 15);
         contentPane.add(lblClientEmail);
                 
         txtName = new JTextField();
@@ -127,7 +127,7 @@ public class EditClientUI
         txtZipCode.setColumns(10);
         
         txtCity = new JTextField();
-        txtCity.setBounds(265, 55, 232, 19);
+        txtCity.setBounds(275, 55, 222, 19);
         contentPane.add(txtCity);
         txtCity.setColumns(10);
         txtCity.setEditable(false);
@@ -139,7 +139,7 @@ public class EditClientUI
         txtPhoneNo.setColumns(10);
         
         txtEmail = new JTextField();
-        txtEmail.setBounds(305, 80, 192, 19);
+        txtEmail.setBounds(275, 80, 222, 19);
         contentPane.add(txtEmail);
         txtEmail.setColumns(10);
         

@@ -10,7 +10,10 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -25,7 +28,8 @@ public class DataNotificationUI extends JDialog {
 	public DataNotificationUI() {
 		setResizable(false);
 		setTitle("Vent venligst....");
-		setBounds(100, 100, 310, 85);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
+		setSize(new Dimension(310,85));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
