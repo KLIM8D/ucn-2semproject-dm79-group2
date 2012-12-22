@@ -36,7 +36,6 @@ import models.UserPermission;
 import views.SystemUI;
 import views.dataentry.CreateDataEntryUI;
 
-import utils.Helper;
 import utils.Logging;
 import utils.UserSession;
 
@@ -83,8 +82,8 @@ public class CreateTimeSheetUI
 		_frame.setVisible(true);
 		_frame.setResizable(false);
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		_frame.setSize(new Dimension(420,400));
-		Helper.centerOnScreen(_frame);
+		_frame.setSize(new Dimension(415,397));
+		_frame.setLocationRelativeTo(null);
 		_frame.toFront();
 		_frame.addWindowListener(new WindowAdapter()
         {
@@ -95,18 +94,18 @@ public class CreateTimeSheetUI
             }
         });
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 		
 		_frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 58, 392, 262);
+		tabbedPane.setBounds(10,55,392,262);
 		tabbedPane.setFont(new Font("Dialog", Font.PLAIN, 12));
 		contentPane.add(tabbedPane);
 		
-		JButton btnNewButton = new JButton("Annuller");
-		btnNewButton.addActionListener(new ActionListener()
+		JButton btnCancel = new JButton("Annuller");
+		btnCancel.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
@@ -114,27 +113,34 @@ public class CreateTimeSheetUI
                 _frame.dispose();
             }
         });
-		btnNewButton.setBounds(276, 331, 125, 23);
-		contentPane.add(btnNewButton);
+		btnCancel.setBounds(276,329,125,23);
+		contentPane.add(btnCancel);
 		
 		JButton btnNext = new JButton("N\u00E6ste (1/2)");
 		btnNext.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                createTimeSheet();
+            	if(txtCaseId.getSelectionEnd() != 0)
+            	{
+            		createTimeSheet();
+            	}
+            	else
+            	{
+            		JOptionPane.showMessageDialog(null, "Der skal indtastes sags nummer", "Fejl!", JOptionPane.WARNING_MESSAGE);
+            	}
             }
         });
-		btnNext.setBounds(139, 331, 125, 23);
+		btnNext.setBounds(139,329,125,23);
 		contentPane.add(btnNext);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 45, 392, 2);
+		separator.setBounds(10,45,392,2);
 		contentPane.add(separator);
 		
 		JLabel lblKlient = new JLabel("Klient");
 		lblKlient.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblKlient.setBounds(10, 12, 53, 23);
+		lblKlient.setBounds(10,12,53,23);
 		contentPane.add(lblKlient);
 		
 		drpClients = new JComboBox<String>();
@@ -151,22 +157,22 @@ public class CreateTimeSheetUI
 		
 		JLabel lblCaseId = new JLabel("Sags Nr.:");
 		lblCaseId.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblCaseId.setBounds(5, 11, 60, 20);
+		lblCaseId.setBounds(5,11,60,20);
 		pnlTimeSheet.add(lblCaseId);
 		
 		JLabel lblNote = new JLabel("Note:");
 		lblNote.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblNote.setBounds(5, 43, 60, 20);
+		lblNote.setBounds(5,43,60,20);
 		pnlTimeSheet.add(lblNote);
 		
 		// for display ClientId
 		txtCaseId = new JTextField();
-		txtCaseId.setBounds(67, 12, 310, 20);
+		txtCaseId.setBounds(67,12,310,20);
 		pnlTimeSheet.add(txtCaseId);
 		
 		// for notes
 		txtNotes = new JTextPane();
-		txtNotes.setBounds(67, 44, 310, 182);
+		txtNotes.setBounds(67,44,310,182);
 		pnlTimeSheet.add(txtNotes);
         txtNotes.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		
@@ -178,7 +184,7 @@ public class CreateTimeSheetUI
 		tabbedPane.add("Rettigheder", pnlPermission);
 		
 		JPanel pnlGroup = new JPanel();
-		pnlGroup.setBounds(10, 11, 179, 212);
+		pnlGroup.setBounds(10,11,179,212);
 		pnlGroup.setBorder(BorderFactory.createTitledBorder(null, "Gruppe", 0, 0, new Font("Dialog", Font.PLAIN, 12)));
 		pnlGroup.setFont(new Font("Dialog", Font.PLAIN, 12));
 		pnlPermission.add(pnlGroup);
@@ -189,14 +195,14 @@ public class CreateTimeSheetUI
 		lstGroup.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lstGroup.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstGroup.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		lstGroup.setBounds(13, 17, 153, 182);
+		lstGroup.setBounds(13,17,153,182);
 		JScrollPane groupListScroll = new JScrollPane(lstGroup);
 		pnlGroup.add(groupListScroll);
 		pnlGroup.add(lstGroup);
 		
 		JPanel pnlUser = new JPanel();
 		pnlUser.setBorder(BorderFactory.createTitledBorder(null, "Bruger", 0, 0, new Font("Dialog", Font.PLAIN, 12)));
-		pnlUser.setBounds(197, 11, 179, 212);
+		pnlUser.setBounds(197,11,179,212);
 		pnlPermission.add(pnlUser);
 		pnlUser.setLayout(null);
 		
@@ -204,7 +210,7 @@ public class CreateTimeSheetUI
 		lstUser.setListData(populateUserList());
 		lstUser.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstUser.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		lstUser.setBounds(13, 17, 153, 182);
+		lstUser.setBounds(13,17,153,182);
 		JScrollPane userListScroll = new JScrollPane(lstUser);
 		pnlUser.add(userListScroll);
 		pnlUser.add(lstUser);
@@ -231,8 +237,8 @@ public class CreateTimeSheetUI
         Date creationDate = cal.getTime();
         Date editedDate =  cal.getTime();
         
-		TimeSheet ts = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
-		CreateDataEntryUI.createWindow(ts);
+		TimeSheet timesheet = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
+		CreateDataEntryUI.createWindow(timesheet);
 	}
 	
 	private String[] populateClientList()

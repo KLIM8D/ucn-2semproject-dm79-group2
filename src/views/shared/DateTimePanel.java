@@ -33,7 +33,7 @@ public class DateTimePanel
     {
         JPanel datePanel = new JPanel();
         _dateChooser = new JDateChooser();
-        _dateChooser.setPreferredSize(new Dimension(120, 20));
+        _dateChooser.setPreferredSize(new Dimension(143, 20));
         if (value != null)
             _dateChooser.setDate(value);
 
