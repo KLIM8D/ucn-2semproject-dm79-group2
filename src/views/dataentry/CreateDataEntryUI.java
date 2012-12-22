@@ -20,6 +20,7 @@ import models.User;
 
 import views.dataentry.CreateDataEntryUI;
 import views.shared.DateTimePanel;
+import views.timesheet.CreateTimeSheetUI;
 
 import utils.Logging;
 import utils.UserSession;
@@ -32,6 +33,7 @@ public class CreateDataEntryUI
 
     private static JFrame _frame;
     private static CreateDataEntryUI _instance;
+    private static boolean _existingCase; 
     private JPanel contentPane;
     
 	private JTextPane txtRemark;
@@ -49,7 +51,7 @@ public class CreateDataEntryUI
 
     private JPanel pnlTask;
 
-	public static JFrame createWindow(TimeSheet timeSheet)
+	public static JFrame createWindowForNewCase(TimeSheet timeSheet)
     {
 		if(_instance == null)
 		{
@@ -59,6 +61,18 @@ public class CreateDataEntryUI
 			
 		return _frame;
     }
+	
+	public static JFrame createWindowForExistingCase(TimeSheet timeSheet)
+	{
+		if(_instance == null)
+		{
+			_existingCase = true;
+			_timeSheet = timeSheet;
+			_instance = new CreateDataEntryUI();
+		}
+		
+		return _frame;
+	}
 
 	private CreateDataEntryUI() 
 	{
@@ -68,8 +82,7 @@ public class CreateDataEntryUI
 		_frame = new JFrame();
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
-		//_frame.setBounds(100, 100, 320, 327);
-		_frame.setSize(new Dimension(338, 335));
+		_frame.setSize(new Dimension(338,335));
 		_frame.setLocationRelativeTo(null);
         _frame.setResizable(false);
         _frame.setVisible(true);
@@ -90,7 +103,7 @@ public class CreateDataEntryUI
 		_frame.setContentPane(contentPane);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 10, 315, 245);
+		tabbedPane.setBounds(10,10,315,245);
 		contentPane.add(tabbedPane);
 		
 		JPanel pnlDataEntry = new JPanel();
@@ -100,48 +113,48 @@ public class CreateDataEntryUI
 		
 		JLabel lblTask = new JLabel("Opgave:");
 		lblTask.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblTask.setBounds(10, 12, 70, 16);
+		lblTask.setBounds(10,12,70,16);
 		pnlDataEntry.add(lblTask);
 		
 		drpTask = new JComboBox<String>();
 		drpTask.setFont(new Font("Dialog", Font.PLAIN, 12));
 		drpTask.setBackground(Color.WHITE);
-		drpTask.setBounds(95, 12, 205, 22);
+		drpTask.setBounds(95,12,205,22);
 		pnlDataEntry.add(drpTask);
 		_model = new DefaultComboBoxModel<String>(populateTaskList());
         drpTask.setModel(_model);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 43, 290, 2);
+		separator.setBounds(10,43,290,2);
 		pnlDataEntry.add(separator);
 		
 		JLabel lblStarted = new JLabel("P\u00E5begyndt:");
 		lblStarted.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblStarted.setBounds(10, 57, 86, 16);
+		lblStarted.setBounds(10,57,86,16);
 		pnlDataEntry.add(lblStarted);
 		
 		JLabel lblEnded = new JLabel("Afsluttet:");
 		lblEnded.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblEnded.setBounds(10, 85, 70, 16);
+		lblEnded.setBounds(10,85,70,16);
 		pnlDataEntry.add(lblEnded);
 		
 		JLabel lblRemark = new JLabel("Bem\u00E6rkning:");
 		lblRemark.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblRemark.setBounds(10, 114, 99, 16);
+		lblRemark.setBounds(10,114,99,16);
 		pnlDataEntry.add(lblRemark);
 
         startDate = new DateTimePanel();
         JPanel pnlStartDate = startDate.buildDateTimePanel(new Date());
-        pnlStartDate.setBounds(90, 49, 215, 25);
+        pnlStartDate.setBounds(90,49,215,25);
 		pnlDataEntry.add(pnlStartDate);
 
         endDate = new DateTimePanel();
         JPanel pnlEndDate = endDate.buildDateTimePanel(new Date());
-        pnlEndDate.setBounds(90, 78, 215, 25);
+        pnlEndDate.setBounds(90,78,215,25);
         pnlDataEntry.add(pnlEndDate);
         
         txtRemark = new JTextPane();
-		txtRemark.setBounds(95, 114, 205, 95);
+		txtRemark.setBounds(95,114,205,95);
 		txtRemark.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlDataEntry.add(txtRemark);
 		
@@ -152,21 +165,21 @@ public class CreateDataEntryUI
 		
 		JLabel lblTitle = new JLabel("Title:");
 		lblTitle.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblTitle.setBounds(10, 14, 57, 14);
+		lblTitle.setBounds(10,14,57,14);
 		pnlTask.add(lblTitle);
 		
 		JLabel lblDescription = new JLabel("Beskrivelse:");
 		lblDescription.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblDescription.setBounds(10, 42, 84, 14);
+		lblDescription.setBounds(10,42,84,14);
 		pnlTask.add(lblDescription);
 		
 		txtTitle = new JTextField();
-		txtTitle.setBounds(95, 12, 205, 20);
+		txtTitle.setBounds(95,12,205,20);
 		pnlTask.add(txtTitle);
 		txtTitle.setColumns(10);
 		
 		txtDesc = new JTextPane();
-		txtDesc.setBounds(95, 43, 205, 132);
+		txtDesc.setBounds(95,43,205,132);
 		txtDesc.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pnlTask.add(txtDesc);
 		
@@ -175,10 +188,17 @@ public class CreateDataEntryUI
         {
             public void actionPerformed(ActionEvent e)
             {
-                createTask();
+            	if(txtTitle.getSelectionEnd() != 0 & txtDesc.getSelectionEnd() != 0)
+            	{
+            		createTask();
+            	}
+            	else
+            	{
+            		JOptionPane.showMessageDialog(null, "Begge felter skal benyttes.", "Fejl!", JOptionPane.WARNING_MESSAGE);
+            	}
             }
         });
-		btnCreateTask.setBounds(95, 186, 205, 23);
+		btnCreateTask.setBounds(95,186,205,23);
 		pnlTask.add(btnCreateTask);
 		
         JButton btnCancel = new JButton("Annuller");
@@ -190,7 +210,7 @@ public class CreateDataEntryUI
                 _frame.dispose();
             }
         });
-		btnCancel.setBounds(200, 267, 125, 23);
+		btnCancel.setBounds(200,267,125,23);
 		contentPane.add(btnCancel);
 		
         JButton btnCreate = new JButton("Opret");
@@ -201,7 +221,7 @@ public class CreateDataEntryUI
                 createDataEntry();
             }
         });
-		btnCreate.setBounds(63, 267, 125, 23);
+		btnCreate.setBounds(63,267,125,23);
 		contentPane.add(btnCreate);
 	}
 	
@@ -270,17 +290,21 @@ public class CreateDataEntryUI
 		        Date editedDate =  cal.getTime();
 		        DataEntry dataEntry = new DataEntry(task, user, chosenStartDate, chosenEndDate, entryRemark, creationDate, editedDate);
 		        
-		        _timesheetCtrl.insertTimeSheet(_timeSheet);	        
-		        //_timesheetCtrl.addDataEntry(_timeSheet, dataEntry);
+		        if(_existingCase != true)
+		        	_timesheetCtrl.insertTimeSheet(_timeSheet);
+		        
+		        _timesheetCtrl.addDataEntry(_timesheetCtrl.getTimeSheetByCaseId(_timeSheet.getCaseId()).getSheetId(), dataEntry);
 
-		        JOptionPane.showMessageDialog(null, "Time-sagen er oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
+		        JOptionPane.showMessageDialog(null, "Time-sag oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
 		        _instance = null;
 		        _frame.dispose();
+		        
+		        if(_existingCase != true)
+		        	CreateTimeSheetUI.createWindow().dispose();
 			}
 			catch(Exception ex)
 			{
 				JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
-				ex.printStackTrace();
 			}
 			
 			return null;
@@ -301,9 +325,6 @@ public class CreateDataEntryUI
 				_taskCtrl.insertTask(task);
 				
 				JOptionPane.showMessageDialog(null, "Opgavetype oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
-
-				_instance = null;
-				_frame.dispose();
 			}
 			catch(Exception ex)
 			{

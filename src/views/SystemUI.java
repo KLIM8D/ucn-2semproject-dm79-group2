@@ -17,6 +17,7 @@ import models.DataEntry;
 import models.TimeSheet;
 import utils.*;
 import views.client.CreateClientUI;
+import views.dataentry.CreateDataEntryUI;
 import views.timesheet.CreateTimeSheetUI;
 import views.timesheet.EditTimeSheetUI;
 
@@ -222,7 +223,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-
+				newDataEntry();
 			}
 		});
 		lblNewDataEntry.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -610,6 +611,26 @@ public class SystemUI extends JFrame implements ChangeListener
 		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil logge ud af programmet?", "Logud", JOptionPane.YES_NO_OPTION);
 		if(request == JOptionPane.YES_OPTION)
 			return; // logout and go to login dialog
+	}
+	
+	private void newDataEntry()
+	{
+		if(lstTimeSheets.getSelectedIndex() != -1)
+		{
+			String caseId = lstTimeSheets.getSelectedValue().substring(0, lstTimeSheets.getSelectedValue().indexOf("(")-1);
+			try {
+				TimeSheet timeSheet = _timeSheetCtrl.getTimeSheetByCaseId(caseId);
+				CreateDataEntryUI.createWindowForExistingCase(timeSheet);
+			}
+			catch(Exception ex)
+			{
+				JOptionPane.showMessageDialog(null, Logging.handleException(ex, 99), "Fejl", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Der er ikke valgt en time-sag.", "Fejl", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 	
 	private void checkUserSheetsOnly()

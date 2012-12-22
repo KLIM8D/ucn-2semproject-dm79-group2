@@ -127,7 +127,7 @@ public class CreateTimeSheetUI
             	}
             	else
             	{
-            		JOptionPane.showMessageDialog(null, "Der skal indtastes sags nummer", "Fejl!", JOptionPane.WARNING_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "Der skal indtastes sags nummer.", "Fejl!", JOptionPane.WARNING_MESSAGE);
             	}
             }
         });
@@ -218,7 +218,7 @@ public class CreateTimeSheetUI
 
 	public void createTimeSheet()
 	{
-		String caseId = txtCaseId.getSelectedText();
+		String caseId = txtCaseId.getText();
         User user = UserSession.getLoggedInUser();
         long clientPhone = Long.parseLong(drpClients.getSelectedItem().toString().substring(drpClients.getSelectedItem().toString().indexOf("(") + 1,
                 drpClients.getSelectedItem().toString().indexOf(")")));
@@ -226,7 +226,7 @@ public class CreateTimeSheetUI
         Client client = null;
         try
         {
-            client = _clientCtrl.getClientByPhone(clientPhone);
+            client = _clientCtrl.getClientByPhone(clientPhone);  
         }
         catch (Exception e)
         {
@@ -238,7 +238,7 @@ public class CreateTimeSheetUI
         Date editedDate =  cal.getTime();
         
 		TimeSheet timeSheet = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
-		CreateDataEntryUI.createWindow(timeSheet);
+		CreateDataEntryUI.createWindowForNewCase(timeSheet);
 	}
 	
 	private String[] populateClientList()
