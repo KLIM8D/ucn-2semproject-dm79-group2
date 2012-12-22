@@ -109,7 +109,7 @@ public class SearchUI
         pnlSearch.add(lblTasksHeader);
 
         //SheetTable start
-        sheetColumn = new String[]{"Påbegyndt", "Afsluttet", "Opgave", "Registrator", "Bemærkning", " "};
+        sheetColumn = new String[]{"P" + "\u00e5" + "begyndt", "Afsluttet", "Opgave", "Registrator", "Bem" + "\u00e6" + "rkning", " "};
 
         sheetTable = new JTable()
         {
