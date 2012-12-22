@@ -36,9 +36,9 @@ public class AboutUI {
 		_frame.setTitle("Om " + SystemInformation.systemInformation(01));
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.setBounds(0, 0, 470, 430);
-		_frame.setAlwaysOnTop(true);
 		_frame.setResizable(false);
 		_frame.setVisible(true);
+		_frame.toFront();
 		pnlAbout = new JPanel();
 		pnlAbout.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlAbout.setLayout(new BorderLayout(0, 0));
@@ -117,7 +117,7 @@ public class AboutUI {
 		txtLicense.setWrapStyleWord(true);
 		txtLicense.setLineWrap(true);
 		txtLicense.setEditable(false);
-		txtLicense.setText("Copyright (c) 2012 Rasmus Meyer Lillienskjold Pedersen, Chris Tindb" + "\u00E6" + "k, Morten Klim S" + "\u00F8" + "rensen, Mads Nielsen\n\nDer gives hermed tilladelse, gratis, til enhver person at få en kopi af denne software og tilhørende dokumentation (Time-sag Styring), til at handle med softwaren uden begrænsning, herunder uden begrænsning af retten til at bruge, kopiere, modificere , flette, offentliggøre, distribuere, underlicensere og eller sælge kopier af softwaren samt at tillade de personer, som denne software tilvejebringes for at gøre dette, forudsat at følgende betingelser:\n\nDen over ophavsret og denne tilladelse skal indgå i alle kopier eller væsentlige dele af softwaren.\n\nSOFTWAREN LEVERES SOM DEN ER, UDEN NOGEN FORM FOR GARANTI, DIREKTE ELLER INDIREKTE, INKLUSIVE, MEN IKKE BEGRÆNSET TIL ANSVAR FOR SALGBARHED, EGNETHED TIL ET BESTEMT FORMÅL OG IKKE-KRÆNKELSE. UNDER INGEN OMSTÆNDIGHEDER SKAL FORFATTERNE ELLER OPHAVSRETTIGHAVERNE HOLDES ANSVARLIG FOR NOGEN KRAV, SKADER ELLER ANDET ANSVAR, UANSET OM AF KONTRAKT, TORT ELLER ANDET, OPSTÅET FRA, UD AF ELLER I FORBINDELSE MED SOFTWAREN ELLER BRUGEN ELLER ANDRE FORHOLD VED SOFTWAREN.");
+		txtLicense.setText("Copyright (c) 2012 Rasmus Meyer Lillienskjold Pedersen, Chris Tindb" + "\u00E6" + "k, Morten Klim S" + "\u00F8" + "rensen, Mads Nielsen\n\nDer gives hermed tilladelse, gratis, til enhver person at f" + "\u00e5" +" en kopi af denne software og tilh" + "\u00F8" + "rende dokumentation (Time-sag Styring), til at handle med softwaren uden begr" + "\u00E6" + "nsning, herunder uden begr" + "\u00E6" + "nsning af retten til at bruge, kopiere, modificere , flette, offentligg" + "\u00F8" + "re, distribuere, underlicensere og eller s" + "\u00E6" + "lge kopier af softwaren samt at tillade de personer, som denne software tilvejebringes for at g" + "\u00F8" + "re dette, forudsat at f" + "\u00F8" + "lgende betingelser:\n\nDen over ophavsret og denne tilladelse skal indg" + "\u00e5" +" i alle kopier eller v" + "\u00E6" + "sentlige dele af softwaren.\n\nSOFTWAREN LEVERES SOM DEN ER, UDEN NOGEN FORM FOR GARANTI, DIREKTE ELLER INDIREKTE, INKLUSIVE, MEN IKKE BEGR" + "\u00c6" + "NSET TIL ANSVAR FOR SALGBARHED, EGNETHED TIL ET BESTEMT FORM" + "\u00c5" + "L OG IKKE-KR" + "\u00c6" + "NKELSE. UNDER INGEN OMST" + "\u00c6" + "NDIGHEDER SKAL FORFATTERNE ELLER OPHAVSRETTIGHAVERNE HOLDES ANSVARLIG FOR NOGEN KRAV, SKADER ELLER ANDET ANSVAR, UANSET OM AF KONTRAKT, TORT ELLER ANDET, OPST" + "\u00c5" + "ET FRA, UD AF ELLER I FORBINDELSE MED SOFTWAREN ELLER BRUGEN ELLER ANDRE FORHOLD VED SOFTWAREN.");
 		txtLicense.setBounds(5, 5, 435, 355);
 		pnlLicense.add(txtLicense);
 		
