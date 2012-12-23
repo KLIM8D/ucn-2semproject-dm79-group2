@@ -13,7 +13,7 @@ import models.User;
 public class UserSession
 {
     private static User _loggedInUser;
-    private static boolean _printToPdf;
+    private static boolean _exportToPdf;
     private static String _outputPath;
 
     public static User getLoggedInUser()
@@ -21,10 +21,10 @@ public class UserSession
     public static void setLoggedInUser(User value)
     { _loggedInUser = value; }
 
-    public static boolean getPrintToPdf()
-    { return _printToPdf; }
-    public static void setPrintToPdf(boolean value)
-    { _printToPdf = value; }
+    public static boolean getExportToPdf()
+    { return _exportToPdf; }
+    public static void setExportToPdf(boolean value)
+    { _exportToPdf = value; }
 
     public static String getOutputPath()
     { return _outputPath; }

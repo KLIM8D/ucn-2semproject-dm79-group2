@@ -3,6 +3,7 @@ package views;
 import controllers.SettingsCtrl;
 import utils.Helper;
 import utils.Logging;
+import utils.UserSession;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 /**
  * Created: 23-12-2012
@@ -44,7 +46,7 @@ public class PrintSettingsUI
 
         _frame = new JFrame();
         _frame.setTitle("Indstillinger");
-        //_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/sort_overview.png")));
+        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/app_settings.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setSize(300, 110);
         Helper.centerOnScreen(_frame);
@@ -146,7 +148,9 @@ public class PrintSettingsUI
         try
         {
             _settingsCtrl.setProperty("exportToPdf", chkExportToPdf.isSelected() + "");
-            _settingsCtrl.setProperty("exportPath", txtPath.getText());
+            _settingsCtrl.setProperty("exportPath", txtPath.getText() + File.separator);
+            UserSession.setExportToPdf(chkExportToPdf.isSelected());
+            UserSession.setOutputPath(txtPath.getText() + File.separator);
             JOptionPane.showMessageDialog(null, "Udskrifts indstillingerne er gemt", "Information!", JOptionPane.INFORMATION_MESSAGE);
         }
         catch (Exception e)

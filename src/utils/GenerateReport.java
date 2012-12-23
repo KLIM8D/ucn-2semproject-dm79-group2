@@ -3,7 +3,6 @@ package utils;
 import controllers.TimeSheetCtrl;
 import models.ReportWrapper;
 import models.TimeSheet;
-
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -26,20 +25,6 @@ import java.util.List;
 
 public class GenerateReport
 {
-    public static void main(String[] args)
-    {
-        try
-        {
-            GenerateReport  ok = new GenerateReport();
-            int[] sheetIds = {2};
-            ok.fillReport(sheetIds, true, System.getProperty("user.dir") + File.separator + "report.pdf");
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
     public void fillReport(int sheetId, boolean getPdf, String outputPath) throws Exception
     {
         TimeSheetCtrl timeSheetCtrl = new TimeSheetCtrl();

@@ -598,7 +598,7 @@ public class SystemUI extends JFrame implements ChangeListener
                 GenerateReport genReport = new GenerateReport();
                 try
                 {
-                    genReport.fillReport(_sheet.getSheetId(), UserSession.getPrintToPdf(), UserSession.getOutputPath() + _sheet.getCaseId() + " (" + new SimpleDateFormat("dd-MM-yyyy HH.mm)").format(new Date()) + ".pdf");
+                    genReport.fillReport(_sheet.getSheetId(), UserSession.getExportToPdf(), UserSession.getOutputPath() + _sheet.getCaseId() + " (" + new SimpleDateFormat("dd-MM-yyyy HH.mm)").format(new Date()) + ".pdf");
                     JOptionPane.showMessageDialog(null, "Time-sagen er nu udskrevet", "Information!", JOptionPane.INFORMATION_MESSAGE);
                 }
                 catch (Exception ex)

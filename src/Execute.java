@@ -7,6 +7,7 @@
  * @changes    :
  */
 
+import controllers.SettingsCtrl;
 import models.User;
 import models.UserPermission;
 import utils.UserSession;
@@ -21,11 +22,12 @@ final class Execute
     {
     	try
         {
+            SettingsCtrl settingsCtrl = new SettingsCtrl();
     		// swap with login, when appropriate
             User user = new User(1, new UserPermission(3, "User", new Date(), new Date()), "Test", "User", "test", "1289hjusbv7f123", "testpass", new Date(), new Date());
             UserSession.setLoggedInUser(user);
-            UserSession.setPrintToPdf(false);
-            UserSession.setOutputPath(System.getProperty("user.dir") + File.separator);
+            UserSession.setExportToPdf(Boolean.parseBoolean(settingsCtrl.getProperty("exportToPdf")));
+            UserSession.setOutputPath(settingsCtrl.getProperty("exportPath"));
     		SystemUI window = new views.SystemUI();
     		window.setVisible(true);
     	}
