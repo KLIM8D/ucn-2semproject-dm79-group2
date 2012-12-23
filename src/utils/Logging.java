@@ -63,6 +63,12 @@ public class Logging
                 return "Det var pt. ikke muligt at opdatere produkt kategorien. Pr\u00F8v igen senere eller kontakt support";
             case 5:
             	return "En ukendt system fejl er hændt, programmet afsluttes.";
+            case 6:
+            	return "Brugernavn ikke indtastet.";
+            case 7:
+            	return "Adgangskode ikke indtastet.";
+            case 8:
+            	return "Forkert adgangskode, eller ukendt brugernavn.";
             default:
                 return "Der skete en fejl i udf\u00F8rselen af denne handling. Kontakt support";
         }
