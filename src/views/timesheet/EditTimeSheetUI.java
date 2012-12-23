@@ -22,6 +22,7 @@ import java.util.Calendar;
 
 import javax.swing.border.LineBorder;
 import views.SystemUI;
+import utils.Helper;
 import utils.Logging;
 import utils.UserSession;
 
@@ -83,7 +84,8 @@ public class EditTimeSheetUI
                 _frame.dispose();
             }
         });
-		_frame.setBounds(100, 100, 415, 392);
+        _frame.setSize(new Dimension(415,397));
+		Helper.centerOnScreen(_frame);
         _frame.setVisible(true);
         _frame.setResizable(false);
 		_contentPane = new JPanel();
