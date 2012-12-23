@@ -17,9 +17,11 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import utils.Helper;
 import utils.SystemInformation;
 
-public class AboutUI {
+public class AboutUI
+{
 
 	private static JFrame _frame;
 	private static AboutUI _instance;
@@ -33,13 +35,14 @@ public class AboutUI {
 		return _frame;
 	}
 
-	private AboutUI() {
+	private AboutUI()
+    {
 		_frame = new JFrame();
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/app.png")));
 		_frame.setTitle("Om " + SystemInformation.systemInformation(01));
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.setSize(new Dimension(470,430));
-		_frame.setLocationRelativeTo(null);
+        Helper.centerOnScreen(_frame);
 		_frame.setResizable(false);
 		_frame.setVisible(true);
 		_frame.toFront();
@@ -125,8 +128,10 @@ public class AboutUI {
 		txtLicense.setBounds(5, 5, 435, 355);
 		pnlLicense.add(txtLicense);
 		
-		_frame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
+		_frame.addWindowListener(new WindowAdapter()
+        {
+			public void windowClosing(WindowEvent e)
+            {
 				_instance = null;
 				_frame.dispose();
 			}

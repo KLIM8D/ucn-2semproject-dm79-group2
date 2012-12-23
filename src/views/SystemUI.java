@@ -86,10 +86,10 @@ public class SystemUI extends JFrame implements ChangeListener
 		_timeSheetCtrl = new TimeSheetCtrl();
 		_clientCtrl = new ClientCtrl();
         _searchCtrl = new SearchCtrl();
-		
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/app.png")));
-		setTitle(SystemInformation.systemInformation(01) + " (" + SystemInformation.systemInformation(02) +
-				" - build " + SystemInformation.systemInformation(03) + ")");
+		setTitle(SystemInformation.systemInformation(1) + " (" + SystemInformation.systemInformation(2) +
+				" - build " + SystemInformation.systemInformation(3) + ")");
 		WindowListener exitListener = new WindowAdapter() {
 			public void windowClosing(WindowEvent e)
 			{
@@ -108,7 +108,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		JMenu mnFiles = new JMenu("Filer");
 		mnFiles.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnFiles);
-		
+
 		JMenuItem mntmPrint = new JMenuItem("Udskriv");
 		mntmPrint.addActionListener(new ActionListener()
 		{
@@ -179,10 +179,20 @@ public class SystemUI extends JFrame implements ChangeListener
 			}
 		});
 		mnClient.add(mntmEditClient);
-		
+
 		JMenu mnSettings = new JMenu("Indstillinger");
 		mnSettings.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(mnSettings);
+
+        JMenuItem mntmPrintSettings = new JMenuItem("Udskrift");
+        mntmPrintSettings.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                PrintSettingsUI.createWindow();
+            }
+        });
+        mnSettings.add(mntmPrintSettings);
 		
 		JMenu mnAbout = new JMenu("Om");
 		mnAbout.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -544,7 +554,7 @@ public class SystemUI extends JFrame implements ChangeListener
 			}
 		});
 		chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
-		chkUsersSheetsOnly.setBounds(5,614,181,23);;
+		chkUsersSheetsOnly.setBounds(5,614,181,23);
 		pnlTimeSheetTab.add(chkUsersSheetsOnly);
 		// END OF CASE TAB
 		

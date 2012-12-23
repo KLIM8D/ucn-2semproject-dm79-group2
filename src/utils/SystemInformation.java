@@ -19,11 +19,11 @@ public class SystemInformation
 	{
 		switch(code)
 		{
-		case 01:
+		case 1:
 			return _systemTitle;
-		case 02:
+		case 2:
 			return _systemDescription;
-		case 03:
+		case 3:
 			return _systemBuild;
 		}
 		return null;

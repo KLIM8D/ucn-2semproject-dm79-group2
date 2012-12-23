@@ -4,6 +4,10 @@ import models.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -137,5 +141,30 @@ public class Helper
         }
 
         return "";
+    }
+
+    public static String readFile(String path) throws IOException
+    {
+        FileInputStream stream = new FileInputStream(new File(path));
+        try
+        {
+            FileChannel fc = stream.getChannel();
+            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+
+            /* Instead of using default, pass in a decoder. */
+            return Charset.defaultCharset().decode(bb).toString();
+        }
+        finally
+        {
+            stream.close();
+        }
+    }
+
+    public static void writeFile(String filePath, String content) throws Exception
+    {
+        FileWriter fStream = new FileWriter(filePath);
+        BufferedWriter out = new BufferedWriter(fStream);
+        out.write(content);
+        out.close();
     }
 }

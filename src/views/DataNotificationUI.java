@@ -9,6 +9,8 @@
 
 package views;
 
+import utils.Helper;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -21,19 +23,20 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class DataNotificationUI extends JDialog {
+public class DataNotificationUI extends JDialog
+{
 
-	private final JPanel contentPanel = new JPanel();
-
-	public DataNotificationUI() {
+    public DataNotificationUI()
+    {
 		setResizable(false);
 		setTitle("Vent venligst....");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/app.png")));
 		setSize(new Dimension(310,85));
-		setLocationRelativeTo(null);
+        Helper.centerOnScreen(this);
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        JPanel contentPanel = new JPanel();
+        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		

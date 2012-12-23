@@ -6,6 +6,7 @@ import controllers.TaskCtrl;
 import controllers.TimeSheetCtrl;
 import models.*;
 import utils.ButtonColumn;
+import utils.Helper;
 import utils.Logging;
 import views.client.EditClientUI;
 
@@ -75,10 +76,10 @@ public class SearchUI
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/search_overview.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setBounds(0, 0, 600, 700);
+        Helper.centerOnScreen(_frame);
         _frame.toFront();
         _frame.setResizable(false);
         _frame.setVisible(true);
-        _frame.setLocationRelativeTo(null);
         _frame.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)

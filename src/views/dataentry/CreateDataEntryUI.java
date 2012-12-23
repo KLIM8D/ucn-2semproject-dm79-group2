@@ -18,6 +18,7 @@ import models.Task;
 import models.TimeSheet;
 import models.User;
 
+import utils.Helper;
 import views.SystemUI;
 import views.dataentry.CreateDataEntryUI;
 import views.shared.DateTimePanel;
@@ -85,7 +86,7 @@ public class CreateDataEntryUI
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
 		_frame.setSize(new Dimension(338,335));
-		_frame.setLocationRelativeTo(null);
+        Helper.centerOnScreen(_frame);
         _frame.setResizable(false);
         _frame.setVisible(true);
         _frame.setLocationRelativeTo(null);

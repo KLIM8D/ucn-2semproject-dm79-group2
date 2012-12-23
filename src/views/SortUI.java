@@ -2,6 +2,7 @@ package views;
 
 import controllers.TimeSheetCtrl;
 import db.DataAccess;
+import utils.Helper;
 import views.shared.DateTimePanel;
 
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class SortUI
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/sort_overview.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setSize(300, 157);
-        _frame.setLocationRelativeTo(null);
+        Helper.centerOnScreen(_frame);
         _frame.toFront();
         _frame.setResizable(false);
         _frame.setVisible(true);
