@@ -295,7 +295,7 @@ public class CreateDataEntryUI
 		        if(_existingCase != true)
 		        	_timesheetCtrl.insertTimeSheet(_timeSheet);
 		        
-		        _timesheetCtrl.addDataEntry(_timesheetCtrl.getTimeSheetByCaseId(_timeSheet.getCaseId()).getSheetId(), dataEntry);
+		        _timesheetCtrl.addDataEntry(_timesheetCtrl.getTimeSheetByCaseId(_timeSheet.getCaseId()), dataEntry);
 
 		        JOptionPane.showMessageDialog(null, "Time-sag oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
 		        _instance = null;

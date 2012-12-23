@@ -194,11 +194,6 @@ public class TimeSheetCtrl
     {
         return _dbTimeSheet.getAllTimeSheetsByClient(client, startDate, endDate);
     }
-    
-    public int addDataEntry(int newSheetId, DataEntry dataEntry) throws Exception
-    {
-    	return _dbDataEntry.insertDataEntry(dataEntry, newSheetId);
-    }
 
     public int addDataEntry(TimeSheet timeSheet, DataEntry dataEntry) throws Exception
     {
