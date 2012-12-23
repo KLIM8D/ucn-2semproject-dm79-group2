@@ -47,11 +47,11 @@ public class SortUI
         _frame.setTitle("Sortering");
         _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/sort_overview.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        _frame.setBounds(0, 0, 300, 157);
+        _frame.setSize(300, 157);
+        _frame.setLocationRelativeTo(null);
         _frame.toFront();
         _frame.setResizable(false);
         _frame.setVisible(true);
-        _frame.setLocationRelativeTo(null);
         _frame.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)
@@ -64,7 +64,7 @@ public class SortUI
         pnlSort = new JPanel();
         pnlSort.setBorder(new EmptyBorder(5, 5, 5, 5));
         pnlSort.setLayout(null);
-        pnlSort.setBounds(0, 0, 300, 400);
+        pnlSort.setBounds(0, 0, 300, 157);
         _frame.setContentPane(pnlSort);
 
         JLabel lblSortDateHeader = new JLabel("Filtre mellem datoer");

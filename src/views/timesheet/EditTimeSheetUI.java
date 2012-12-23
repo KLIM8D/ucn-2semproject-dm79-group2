@@ -74,8 +74,6 @@ public class EditTimeSheetUI
 		_frame = new JFrame();
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_timesheet.png")));
 		_frame.setTitle("Ny Registrering");
-		_frame.setVisible(true);
-		_frame.setResizable(false);
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.addWindowListener(new WindowAdapter()
         {
@@ -86,6 +84,8 @@ public class EditTimeSheetUI
             }
         });
 		_frame.setBounds(100, 100, 415, 392);
+        _frame.setVisible(true);
+        _frame.setResizable(false);
 		_contentPane = new JPanel();
 		_contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		

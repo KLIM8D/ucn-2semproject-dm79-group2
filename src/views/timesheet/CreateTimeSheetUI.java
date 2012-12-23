@@ -33,6 +33,7 @@ import models.TimeSheet;
 import models.User;
 import models.UserPermission;
 
+import utils.Helper;
 import views.SystemUI;
 import views.dataentry.CreateDataEntryUI;
 
@@ -79,11 +80,11 @@ public class CreateTimeSheetUI
 		_frame = new JFrame();
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_timesheet.png")));
 		_frame.setTitle("Ny time-sag");
-		_frame.setVisible(true);
-		_frame.setResizable(false);
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.setSize(new Dimension(415,397));
-		_frame.setLocationRelativeTo(null);
+        _frame.setVisible(true);
+        _frame.setResizable(false);
+        Helper.centerOnScreen(_frame);
 		_frame.toFront();
 		_frame.addWindowListener(new WindowAdapter()
         {
@@ -94,10 +95,11 @@ public class CreateTimeSheetUI
             }
         });
 		contentPane = new JPanel();
+        contentPane.setBounds(0, 0, 415, 397);
 		contentPane.setBorder(new EmptyBorder(5,5,5,5));
-		
+        contentPane.setLayout(null);
+
 		_frame.setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10,55,392,262);
