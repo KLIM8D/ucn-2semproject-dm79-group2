@@ -90,7 +90,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
 		setTitle(SystemInformation.systemInformation(01) + " (" + SystemInformation.systemInformation(02) +
 				" - build " + SystemInformation.systemInformation(03) + ")");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1024,768);
 		setLocationRelativeTo(null);
 		setMinimumSize(new Dimension(1024,768));
