@@ -89,7 +89,7 @@ public class PrintSettingsUI
             public void actionPerformed(ActionEvent e)
             {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Vælg hvor PDF filerne skal gemmes");
+                fileChooser.setDialogTitle("V\u00E6lg hvor PDF filerne skal gemmes");
                 fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fileChooser.setAcceptAllFileFilterUsed(false);
 
@@ -99,7 +99,7 @@ public class PrintSettingsUI
             }
         });
 
-        JButton btnUpdate = new JButton("Opdater");
+        JButton btnUpdate = new JButton("Gem");
         btnUpdate.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
