@@ -1,9 +1,21 @@
 package views.dataentry;
 
+import controllers.TaskCtrl;
+import controllers.TimeSheetCtrl;
+import models.DataEntry;
+import models.Task;
+import models.TimeSheet;
+import models.User;
+import utils.Helper;
+import utils.Logging;
+import utils.UserSession;
+import views.SystemUI;
+import views.shared.DateTimePanel;
+import views.timesheet.CreateTimeSheetUI;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.SwingWorker;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,23 +24,6 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import models.DataEntry;
-import models.Task;
-import models.TimeSheet;
-import models.User;
-
-import utils.Helper;
-import views.SystemUI;
-import views.dataentry.CreateDataEntryUI;
-import views.shared.DateTimePanel;
-import views.timesheet.CreateTimeSheetUI;
-
-import utils.Logging;
-import utils.UserSession;
-
-import controllers.TaskCtrl;
-import controllers.TimeSheetCtrl;
 
 public class CreateDataEntryUI
 {

@@ -1,30 +1,28 @@
 package views.timesheet;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import controllers.ClientCtrl;
 import controllers.TimeSheetCtrl;
+import controllers.UserCtrl;
+import controllers.UserPermissionCtrl;
 import models.Client;
 import models.TimeSheet;
-import controllers.UserCtrl;
 import models.User;
-import controllers.UserPermissionCtrl;
 import models.UserPermission;
+import utils.Helper;
+import utils.Logging;
+import utils.UserSession;
+import views.SystemUI;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import javax.swing.border.LineBorder;
-import views.SystemUI;
-import utils.Helper;
-import utils.Logging;
-import utils.UserSession;
 
 public class EditTimeSheetUI
 {

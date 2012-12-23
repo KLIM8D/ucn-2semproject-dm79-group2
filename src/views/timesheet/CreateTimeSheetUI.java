@@ -1,48 +1,29 @@
 package views.timesheet;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTabbedPane;
-import javax.swing.JButton;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingWorker;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.border.LineBorder;
-import javax.swing.JList;
-
+import controllers.ClientCtrl;
+import controllers.UserCtrl;
+import controllers.UserPermissionCtrl;
 import models.Client;
 import models.TimeSheet;
 import models.User;
 import models.UserPermission;
-
 import utils.Helper;
+import utils.Logging;
+import utils.UserSession;
 import views.SystemUI;
 import views.dataentry.CreateDataEntryUI;
 
-import utils.Logging;
-import utils.UserSession;
-
-import controllers.ClientCtrl;
-import controllers.UserCtrl;
-import controllers.UserPermissionCtrl;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CreateTimeSheetUI
 {

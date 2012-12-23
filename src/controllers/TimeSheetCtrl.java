@@ -3,11 +3,7 @@ package controllers;
 import db.DBDataEntry;
 import db.DBPermissionWrapper;
 import db.DBTimeSheet;
-import models.Client;
-import models.DataEntry;
-import models.TimeSheet;
-import models.User;
-import models.UserPermission;
+import models.*;
 
 import java.util.ArrayList;
 import java.util.Date;
