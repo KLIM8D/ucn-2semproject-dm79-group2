@@ -53,7 +53,7 @@ public class Helper
 
     public static int showConfirmDialog(String objectName)
     {
-        int option = JOptionPane.showConfirmDialog (null, String.format("Er du sikker på du vil slette dette %s?", objectName));
+        int option = JOptionPane.showConfirmDialog (null, String.format("Er du sikker p" + "\u00e5" + " du vil slette dette %s?", objectName));
         if (option == JOptionPane.YES_OPTION )
             return 1;
 

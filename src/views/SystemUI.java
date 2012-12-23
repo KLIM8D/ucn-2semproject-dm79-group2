@@ -262,7 +262,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		lblPrintOverview.setBounds(333,12,68,16);
 		pnlQuickAccess.add(lblPrintOverview);
 		
-		JLabel lblSortOverview = new JLabel("Sortér");
+		JLabel lblSortOverview = new JLabel("Sort" + "\u00e9" + "r");
         lblSortOverview.addMouseListener(new MouseAdapter()
         {
             @Override
@@ -400,7 +400,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlTimeSheetOverview.setBounds(3,170,790,498);
 		pnlTimeSheet.add(pnlTimeSheetOverview);
 
-		sheetColumn = new String[]{"Påbegyndt", "Afsluttet", "Opgave", "Registrator", "Bemærkning", " "};
+		sheetColumn = new String[]{"P" + "\u00e5" + "begyndt", "Afsluttet", "Opgave", "Registrator", "Bem" + "\u00e6" + "rkning", " "};
 		
 		sheetTable = new JTable()
 		{
@@ -591,24 +591,24 @@ public class SystemUI extends JFrame implements ChangeListener
                 }
             }
             else
-                JOptionPane.showMessageDialog(null, "Vælg den time-sag du ønsker at udskrive", "Information!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "V" + "\u00e6" + "lg den time-sag du " + "\u00f8" + "nsker at udskrive", "Information!", JOptionPane.INFORMATION_MESSAGE);
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Udskrift funktionen er kun tilgængelig under \"Time-Sager\"", "Information!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Udskrift funktionen er kun tilg" + "\u00e6" + "ngelig under \"Time-Sager\"", "Information!", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     private void applicationExit()
 	{
-		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil afslutte programmet?", "Afslut", JOptionPane.YES_NO_OPTION);
+		int request = JOptionPane.showConfirmDialog(null, "Er du sikker p" + "\u00e5" + " at du vil afslutte programmet?", "Afslut", JOptionPane.YES_NO_OPTION);
 		if(request == JOptionPane.YES_OPTION)
 			System.exit(0);
 	}
 	
 	private void applicationLogout()
 	{
-		int request = JOptionPane.showConfirmDialog(null, "Er du sikker på at du vil logge ud af programmet?", "Logud", JOptionPane.YES_NO_OPTION);
+		int request = JOptionPane.showConfirmDialog(null, "Er du sikker p" + "\u00e5" + " at du vil logge ud af programmet?", "Logud", JOptionPane.YES_NO_OPTION);
 		if(request == JOptionPane.YES_OPTION)
 			return; // logout and go to login dialog
 	}
@@ -969,7 +969,7 @@ public class SystemUI extends JFrame implements ChangeListener
                 new AddClientData().execute();
             }
             else
-                JOptionPane.showMessageDialog(null, "Vælg en klient, før du kan oprette et filter", "Information!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "V" + "\u00e6" + "lg en klient, f" + "\u00f8" + "r du kan oprette et filter", "Information!", JOptionPane.INFORMATION_MESSAGE);
         }
         else
         {
@@ -978,7 +978,7 @@ public class SystemUI extends JFrame implements ChangeListener
                 new AddSheetData().execute();
             }
             else
-                JOptionPane.showMessageDialog(null, "Vælg en time-sag, før du kan oprette et filter", "Information!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "V" + "\u00e6" + "lg en time-sag, f" + "\u00f8" + "r du kan oprette et filter", "Information!", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
