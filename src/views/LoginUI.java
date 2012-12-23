@@ -42,7 +42,7 @@ public class LoginUI
 		_frame = new JFrame("Time-sag Styring, Login");
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginUI.class.getResource("/icons/48x48/app.png")));
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		_frame.setSize(new Dimension(400, 135));
+		_frame.setSize(new Dimension(400,135));
 		_frame.setResizable(false);
 		Helper.centerOnScreen(_frame);
 		
@@ -53,25 +53,25 @@ public class LoginUI
 		
 		JLabel lblLoginIcon = new JLabel();
 		lblLoginIcon.setIcon(new ImageIcon(LoginUI.class.getResource("/icons/48x48/app_login.png")));
-		lblLoginIcon.setBounds(12, 8, 48, 48);
+		lblLoginIcon.setBounds(12,8,48,48);
 		pnlContent.add(lblLoginIcon);
 		
 		JLabel lblUserName = new JLabel("Brugernavn:");
 		lblUserName.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblUserName.setBounds(75, 12, 105, 15);
+		lblUserName.setBounds(75,12,105,15);
 		pnlContent.add(lblUserName);
 		
 		JLabel lblUserPassword = new JLabel("Adgangskode:");
 		lblUserPassword.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblUserPassword.setBounds(72, 35, 105, 15);
+		lblUserPassword.setBounds(75,35,105,15);
 		pnlContent.add(lblUserPassword);
 		
 		txtUserName = new JTextField();
-		txtUserName.setBounds(185, 10, 200, 19);
+		txtUserName.setBounds(185,10,200,19);
 		pnlContent.add(txtUserName);
 		
 		pfdUserPassword = new JPasswordField();
-		pfdUserPassword.setBounds(185, 34, 200, 19);
+		pfdUserPassword.setBounds(185,34,200,19);
 		pnlContent.add(pfdUserPassword);
 		
 		JButton btnLogin = new JButton("Login");
@@ -80,7 +80,7 @@ public class LoginUI
 				systemLogin();
 			}
 		});
-		btnLogin.setBounds(123, 65, 125, 25);
+		btnLogin.setBounds(123,65,125,25);
 		pnlContent.add(btnLogin);
 		
 		JButton btnCancel = new JButton("Annullere");
@@ -89,7 +89,7 @@ public class LoginUI
 				System.exit(0);
 			}
 		});
-		btnCancel.setBounds(260, 65, 125, 25);
+		btnCancel.setBounds(260,65,125,25);
 		pnlContent.add(btnCancel);
 	}
 	
