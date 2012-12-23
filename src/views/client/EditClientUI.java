@@ -57,7 +57,7 @@ public class EditClientUI
         _frame.setSize(new Dimension(509,186));
         _frame.setResizable(false);
         _frame.setVisible(true);
-        _frame.setLocationRelativeTo(null);
+        Helper.centerOnScreen(_frame);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
