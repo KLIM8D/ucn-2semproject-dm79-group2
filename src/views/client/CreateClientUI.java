@@ -50,7 +50,7 @@ public class CreateClientUI
 
         _frame = new JFrame();
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_client.png")));
+        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/new_client.png")));
         _frame.setTitle("Opret ny klient");
         _frame.setSize(new Dimension(509,186));
         _frame.setResizable(false);

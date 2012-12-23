@@ -87,7 +87,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		_clientCtrl = new ClientCtrl();
         _searchCtrl = new SearchCtrl();
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/app.png")));
 		setTitle(SystemInformation.systemInformation(01) + " (" + SystemInformation.systemInformation(02) +
 				" - build " + SystemInformation.systemInformation(03) + ")");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -213,7 +213,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		});
 		lblNewTimeSheet.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNewTimeSheet.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblNewTimeSheet.setIcon(new ImageIcon(SystemUI.class.getResource("/new_timesheet.png")));
+		lblNewTimeSheet.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/new_timesheet.png")));
 		lblNewTimeSheet.setBounds(5,12,95,16);
 		pnlQuickAccess.add(lblNewTimeSheet);
 		
@@ -228,7 +228,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		});
 		lblNewDataEntry.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNewDataEntry.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblNewDataEntry.setIcon(new ImageIcon(SystemUI.class.getResource("/new_dataentry.png")));
+		lblNewDataEntry.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/new_dataentry.png")));
 		lblNewDataEntry.setBounds(115,12,114,16);
 		pnlQuickAccess.add(lblNewDataEntry);
 		
@@ -243,7 +243,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		});
 		lblNewClient.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNewClient.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblNewClient.setIcon(new ImageIcon(SystemUI.class.getResource("/new_client.png")));
+		lblNewClient.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/new_client.png")));
 		lblNewClient.setBounds(244,12,75,16);
 		pnlQuickAccess.add(lblNewClient);
 		
@@ -258,7 +258,7 @@ public class SystemUI extends JFrame implements ChangeListener
         });
 		lblPrintOverview.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblPrintOverview.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblPrintOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/print_overview.png")));
+		lblPrintOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/print_overview.png")));
 		lblPrintOverview.setBounds(333,12,68,16);
 		pnlQuickAccess.add(lblPrintOverview);
 		
@@ -273,20 +273,20 @@ public class SystemUI extends JFrame implements ChangeListener
         });
 		lblSortOverview.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblSortOverview.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblSortOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/sort_overview.png")));
+		lblSortOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/sort_overview.png")));
 		lblSortOverview.setBounds(416,12,60,16);
 		pnlQuickAccess.add(lblSortOverview);
 		
 		JLabel lblPermission = new JLabel("Rettigheder");
 		lblPermission.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblPermission.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblPermission.setIcon(new ImageIcon(SystemUI.class.getResource("/permission_timesheet.png")));
+		lblPermission.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/permission_timesheet.png")));
 		lblPermission.setBounds(493,12,114,16);
 		pnlQuickAccess.add(lblPermission);
 		
 		JLabel lblSearchOverview = new JLabel();
 		lblSearchOverview.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblSearchOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/search_overview.png")));
+		lblSearchOverview.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/search_overview.png")));
 		lblSearchOverview.setBounds(833,12,16,16);
 		pnlQuickAccess.add(lblSearchOverview);
 		

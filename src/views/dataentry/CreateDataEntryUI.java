@@ -81,7 +81,7 @@ public class CreateDataEntryUI
 		_taskCtrl = new TaskCtrl();
 		
 		_frame = new JFrame();
-		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_dataentry.png")));
+		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/new_dataentry.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Ny Registrering");
 		_frame.setSize(new Dimension(338,335));

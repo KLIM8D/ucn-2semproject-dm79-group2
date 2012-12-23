@@ -28,7 +28,7 @@ public class DataNotificationUI extends JDialog {
 	public DataNotificationUI() {
 		setResizable(false);
 		setTitle("Vent venligst....");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/app.png")));
 		setSize(new Dimension(310,85));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);

@@ -51,7 +51,7 @@ public class EditClientUI
     	_cliCtrl = new ClientCtrl();
 
         _frame = new JFrame();
-        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_client.png")));
+        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/new_client.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setTitle("Rediger klient");
         _frame.setSize(new Dimension(509,186));

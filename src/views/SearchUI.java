@@ -72,7 +72,7 @@ public class SearchUI
 
         _frame = new JFrame();
         _frame.setTitle("S\u00F8ge resultater");
-        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/search_overview.png")));
+        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/search_overview.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setBounds(0, 0, 600, 700);
         _frame.toFront();

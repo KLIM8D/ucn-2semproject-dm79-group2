@@ -73,7 +73,7 @@ public class EditTimeSheetUI
         _tsCtrl = new TimeSheetCtrl();
         
 		_frame = new JFrame();
-		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/new_timesheet.png")));
+		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/new_timesheet.png")));
 		_frame.setTitle("Ny Registrering");
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.addWindowListener(new WindowAdapter()

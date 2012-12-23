@@ -45,7 +45,7 @@ public class SortUI
 
         _frame = new JFrame();
         _frame.setTitle("Sortering");
-        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/sort_overview.png")));
+        _frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/sort_overview.png")));
         _frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _frame.setSize(300, 157);
         _frame.setLocationRelativeTo(null);

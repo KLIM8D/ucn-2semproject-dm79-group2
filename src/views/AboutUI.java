@@ -35,7 +35,7 @@ public class AboutUI {
 
 	private AboutUI() {
 		_frame = new JFrame();
-		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/app.png")));
+		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(SystemUI.class.getResource("/icons/48x48/app.png")));
 		_frame.setTitle("Om " + SystemInformation.systemInformation(01));
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.setSize(new Dimension(470,430));
