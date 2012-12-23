@@ -84,7 +84,7 @@ public class EditTimeSheetUI
                 _frame.dispose();
             }
         });
-        _frame.setSize(new Dimension(415,397));
+		_frame.setSize(new Dimension(415, 397));
 		Helper.centerOnScreen(_frame);
         _frame.setVisible(true);
         _frame.setResizable(false);
