@@ -47,7 +47,7 @@ public class Logging
         return messages(returnMessage);
     }
 
-    private static String messages(int messageIndex)
+    public static String messages(int messageIndex)
     {
         switch (messageIndex)
         {

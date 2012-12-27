@@ -9,8 +9,10 @@
 
 package views;
 
+import controllers.UserCtrl;
 import utils.Helper;
 import utils.Logging;
+import utils.UserSession;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,26 +23,25 @@ import java.awt.event.ActionListener;
 public class LoginUI
 {
 	private static JFrame _frame;
-	private static LoginUI _instance;
 	private JTextField txtUserName;
 	private JPasswordField pfdUserPassword;
-	
-	public static LoginUI getInstance()
-    { return _instance; }
+    private UserCtrl _userCtrl;
 	
 	public LoginUI()
 	{
+        _userCtrl = new UserCtrl();
 		_frame = new JFrame("Time-sag Styring, Login");
 		_frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginUI.class.getResource("/icons/48x48/app.png")));
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_frame.setSize(new Dimension(400,135));
 		_frame.setResizable(false);
+        _frame.setVisible(true);
 		Helper.centerOnScreen(_frame);
 		
 		JPanel pnlContent = new JPanel();
 		pnlContent.setBorder(new EmptyBorder(5,5,5,5));
 		pnlContent.setLayout(null);
-		_frame.getContentPane().add(pnlContent);
+		_frame.setContentPane(pnlContent);
 		
 		JLabel lblLoginIcon = new JLabel();
 		lblLoginIcon.setIcon(new ImageIcon(LoginUI.class.getResource("/icons/48x48/app_login.png")));
@@ -66,17 +67,21 @@ public class LoginUI
 		pnlContent.add(pfdUserPassword);
 		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnLogin.addActionListener(new ActionListener()
+        {
+			public void actionPerformed(ActionEvent e)
+            {
 				systemLogin();
 			}
 		});
 		btnLogin.setBounds(123,65,125,25);
 		pnlContent.add(btnLogin);
 		
-		JButton btnCancel = new JButton("Annullere");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnCancel = new JButton("Annuller");
+		btnCancel.addActionListener(new ActionListener()
+        {
+			public void actionPerformed(ActionEvent e)
+            {
 				System.exit(0);
 			}
 		});
@@ -86,33 +91,40 @@ public class LoginUI
 	
 	private void systemLogin()
 	{
-		try{
+		try
+        {
 			if(txtUserName.getText().trim().length() != 0)
 			{
-				if(pfdUserPassword.getPassword().toString().trim().length() != 0)
+				if(pfdUserPassword.getPassword().length != 0)
 				{
 					String userName = txtUserName.getText();
-					String userPassword= pfdUserPassword.getPassword().toString();
-					
-					//user check and so on is missing from this method
-					boolean success = false;
+                    String userPassword = "";
+                    for(char c : pfdUserPassword.getPassword())
+                        userPassword += c;
+
+					boolean success = _userCtrl.validateUserLogin(userName, userPassword);
 					if(success)
 					{
-						
+                        UserSession.setLoggedInUser(_userCtrl.getUserByName(userName));
+                        new views.SystemUI().setVisible(true);
+                        _frame.dispose();
 					}
 					else
 					{
-						//wrong password, unknown user name (case 08)
+                        //wrong password, unknown user name (case 8)
+                        JOptionPane.showMessageDialog(null, Logging.messages(8), "Information", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 				else
 				{
-					//no entry in password field (case 07)
+					//no entry in password field (case 7)
+                    JOptionPane.showMessageDialog(null, Logging.messages(7), "Information", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 			else
 			{
 				//no entry in user name field (case 06)
+                JOptionPane.showMessageDialog(null, Logging.messages(6), "Information", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 		catch(Exception ex)

@@ -304,7 +304,6 @@ public class CreateTimeSheetUI
 					userNames[i] = users.get(i).getFirstName() + " " + users.get(i).getLastName();
 				
 				return userNames;
-					
 			}
 			catch(Exception ex)
 			{

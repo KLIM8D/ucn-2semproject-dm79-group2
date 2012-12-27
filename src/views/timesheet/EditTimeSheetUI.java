@@ -343,18 +343,18 @@ public class EditTimeSheetUI
 	
 	class PopulateUserList extends SwingWorker<Integer, Integer>
     {
-    	@Override
+        private DefaultListModel<String> userNames;
+
+        @Override
         protected Integer doInBackground() throws Exception
         {
             ArrayList<User> userList;
             try
             {
                 userList = _userCtrl.getAllUsers();
-                DefaultListModel<String> userNames = new DefaultListModel<String>();
+                userNames = new DefaultListModel<String>();
                 for(int i = 0; i < userList.size(); i++)
                     userNames.add(i, userList.get(i).getUserName());
-
-                lstUser.setModel(userNames);
 
                 return 1;
             }
@@ -369,12 +369,15 @@ public class EditTimeSheetUI
         @Override
         protected void done()
         {
+            lstUser.setModel(userNames);
             selectUsers();
         }
     }
 	
 	class PopulateGroupList extends SwingWorker<Integer, Integer>
     {
+        private DefaultListModel<String> groupNames;
+
     	@Override
         protected Integer doInBackground() throws Exception
         {
@@ -382,11 +385,9 @@ public class EditTimeSheetUI
             try
             {
                 groupList = _userPermissionCtrl.getAllRoles();
-                DefaultListModel<String> groupNames = new DefaultListModel<String>();
+                groupNames = new DefaultListModel<String>();
                 for(int i = 0; i < groupList.size(); i++)
                     groupNames.add(i, groupList.get(i).getUserRole());
-
-                lstGroup.setModel(groupNames);
 
                 return 1;
             }
@@ -401,6 +402,7 @@ public class EditTimeSheetUI
         @Override
         protected void done()
         {
+            lstGroup.setModel(groupNames);
             selectGroups();
         }
     }

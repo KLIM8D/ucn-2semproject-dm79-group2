@@ -8,12 +8,8 @@
  */
 
 import controllers.SettingsCtrl;
-import models.User;
-import models.UserPermission;
 import utils.UserSession;
-import views.SystemUI;
-
-import java.util.Date;
+import views.LoginUI;
 
 final class Execute
 {
@@ -22,13 +18,9 @@ final class Execute
     	try
         {
             SettingsCtrl settingsCtrl = new SettingsCtrl();
-    		// swap with login, when appropriate
-            User user = new User(1, new UserPermission(3, "User", new Date(), new Date()), "Test", "User", "test", "1289hjusbv7f123", "testpass", new Date(), new Date());
-            UserSession.setLoggedInUser(user);
             UserSession.setExportToPdf(Boolean.parseBoolean(settingsCtrl.getProperty("exportToPdf")));
             UserSession.setOutputPath(settingsCtrl.getProperty("exportPath"));
-    		SystemUI window = new views.SystemUI();
-    		window.setVisible(true);
+            new LoginUI();
     	}
     	catch(Exception e)
     	{

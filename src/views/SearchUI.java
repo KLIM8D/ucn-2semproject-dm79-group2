@@ -234,7 +234,6 @@ public class SearchUI
         };
         ButtonColumn buttonColumn = new ButtonColumn(sheetTable, show, columnIndex);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
-        sheetTable.repaint();
     }
 
     private void addButtonsToClients(final int columnIndex)
@@ -260,7 +259,6 @@ public class SearchUI
         };
         ButtonColumn buttonColumn = new ButtonColumn(clientTable, show, columnIndex);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
-        clientTable.repaint();
     }
 
     private void addButtonsToTasks(final int columnIndex)
@@ -280,11 +278,12 @@ public class SearchUI
         };
         ButtonColumn buttonColumn = new ButtonColumn(taskTable, show, columnIndex);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
-        taskTable.repaint();
     }
 
     class AddSheetData extends SwingWorker<Integer, Integer>
     {
+        private DefaultTableModel tmpSheetModel;
+
         @Override
         protected Integer doInBackground() throws Exception
         {
@@ -292,8 +291,9 @@ public class SearchUI
             {
                 ArrayList<TimeSheet> timeSheets = _result.getTimeSheetCollection();
 
+                tmpSheetModel = new DefaultTableModel();
                 Object[][] data = {};
-                sheetModel.setDataVector(data, sheetColumn);
+                tmpSheetModel.setDataVector(data, sheetColumn);
 
                 for(TimeSheet sheet : timeSheets)
                 {
@@ -305,12 +305,10 @@ public class SearchUI
                             DataEntry dataEntry = dataEntries.get(i);
                             Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(),
                                     dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark(), "Vis"};
-                            sheetModel.addRow(row);
+                            tmpSheetModel.addRow(row);
                         }
                     }
                 }
-
-                addButtonsToSheets(5);
             }
             catch(Exception ex)
             {
@@ -323,31 +321,37 @@ public class SearchUI
         @Override
         protected void done()
         {
+            sheetModel = tmpSheetModel;
+            sheetTable.setModel(sheetModel);
+            if(sheetModel.getRowCount() > 0)
+                addButtonsToSheets(5);
             //dbInfo.dispose();
         }
     }
 
     class AddClientData extends SwingWorker<Integer, Integer>
     {
+        private DefaultTableModel tmpClientModel;
+
         @Override
         protected Integer doInBackground() throws Exception
         {
             try
             {
                 ArrayList<Client> clients = _result.getClientCollection();
+
+                tmpClientModel = new DefaultTableModel();
                 Object[][] data = {};
-                clientModel.setDataVector(data, clientColumn);
+                tmpClientModel.setDataVector(data, clientColumn);
 
                 for(Client client : clients)
                 {
                     if(client != null)
                     {
                         Object[] row = new Object[]{ client.getName(), client.getAddress(), client.getCity().getZipCode() + " " + client.getCity().getCityName(), client.getPhoneNo(), client.getEmail(), "Vis"};
-                        clientModel.addRow(row);
+                        tmpClientModel.addRow(row);
                     }
                 }
-
-                addButtonsToClients(5);
             }
             catch(Exception ex)
             {
@@ -360,31 +364,37 @@ public class SearchUI
         @Override
         protected void done()
         {
+            clientModel = tmpClientModel;
+            clientTable.setModel(clientModel);
+            if(clientModel.getRowCount() > 0)
+                addButtonsToClients(5);
             //dbInfo.dispose();
         }
     }
 
     class AddTaskData extends SwingWorker<Integer, Integer>
     {
+        private DefaultTableModel tmpTaskModel;
+
         @Override
         protected Integer doInBackground() throws Exception
         {
             try
             {
                 ArrayList<Task> tasks = _result.getTaskCollection();
+
+                tmpTaskModel = new DefaultTableModel();
                 Object[][] data = {};
-                taskModel.setDataVector(data, taskColumn);
+                tmpTaskModel.setDataVector(data, taskColumn);
 
                 for(Task task : tasks)
                 {
                     if(task != null)
                     {
                         Object[] row = new Object[]{ task.getTitle(), task.getDescription(), "Vis"};
-                        taskModel.addRow(row);
+                        tmpTaskModel.addRow(row);
                     }
                 }
-
-                addButtonsToTasks(2);
             }
             catch(Exception ex)
             {
@@ -398,6 +408,10 @@ public class SearchUI
         @Override
         protected void done()
         {
+            taskModel = tmpTaskModel;
+            taskTable.setModel(taskModel);
+            if(taskModel.getRowCount() > 0)
+                addButtonsToTasks(2);
             //dbInfo.dispose();
         }
     }

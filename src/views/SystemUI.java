@@ -39,6 +39,7 @@ public class SystemUI extends JFrame implements ChangeListener
 	// GUI elements
 	private boolean primaryTabActive;
     private TimeSheet _sheet;
+    private Client _client;
 	private JPanel pnlSystemLayout;
 	private JPanel pnlClients;
 	private JPanel pnlTimeSheet;
@@ -680,7 +681,6 @@ public class SystemUI extends JFrame implements ChangeListener
 		};
 		ButtonColumn buttonColumn = new ButtonColumn(sheetTable, show, columnIndex);
 		buttonColumn.setMnemonic(KeyEvent.VK_D);
-        sheetTable.repaint();
 	}
 	
 	private void addButtonToClient(final int columnIndex)
@@ -708,7 +708,6 @@ public class SystemUI extends JFrame implements ChangeListener
 		};
 		ButtonColumn buttonColumn = new ButtonColumn(clientTable, show, columnIndex);
 		buttonColumn.setMnemonic(KeyEvent.VK_D);
-        clientTable.repaint();
 	}
 	
 	private String[] populateSheetList()
@@ -839,6 +838,8 @@ public class SystemUI extends JFrame implements ChangeListener
 
     class AddSheetData extends SwingWorker<Integer, Integer>
     {
+        private DefaultTableModel tmpSheetModel;
+
     	@Override
         protected Integer doInBackground() throws Exception
         {
@@ -856,8 +857,9 @@ public class SystemUI extends JFrame implements ChangeListener
                 {	
                     ArrayList<DataEntry> dataEntries = sheet.getDataEntries();
 
+                    tmpSheetModel = new DefaultTableModel();
                     Object[][] data = {};
-                    sheetModel.setDataVector(data, sheetColumn);
+                    tmpSheetModel.setDataVector(data, sheetColumn);
 
                     for(int i = 0; i < dataEntries.size(); i++)
                     {
@@ -865,19 +867,10 @@ public class SystemUI extends JFrame implements ChangeListener
                         DataEntry dataEntry = dataEntries.get(i);
                         Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(),
                                 dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark(), "Rediger/Slet"};
-                        sheetModel.addRow(row);
+                        tmpSheetModel.addRow(row);
                     }
-                    
-                    addButtonsToSheets(5);
 
                     _sheet = sheet;
-                    lblClientName_ts.setText(sheet.getClient().getName());
-        			lblClientAddress_ts.setText(sheet.getClient().getAddress() + ", " + sheet.getClient().getCity().getZipCode() + " " + sheet.getClient().getCity().getCityName());
-        			lblClientPhoneNo_ts.setText("Telefon: " + String.valueOf(sheet.getClient().getPhoneNo()));
-        			lblClientEmail_ts.setText("E-Mail: " + sheet.getClient().getEmail());
-        			lblCaseId_ts.setText(sheet.getCaseId());
-        			lblTimeSheetOwner_ts.setText("Ansvarlig: " + sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName());
-        			txtNoteField.setText("Note: " + sheet.getNote());
                 }
             }
             catch(Exception ex)
@@ -892,12 +885,25 @@ public class SystemUI extends JFrame implements ChangeListener
     	@Override
         protected void done()
         {
+            sheetModel = tmpSheetModel;
+            sheetTable.setModel(sheetModel);
+            if(sheetModel.getRowCount() > 0)
+                addButtonsToSheets(5);
+            lblClientName_ts.setText(_sheet.getClient().getName());
+            lblClientAddress_ts.setText(_sheet.getClient().getAddress() + ", " + _sheet.getClient().getCity().getZipCode() + " " + _sheet.getClient().getCity().getCityName());
+            lblClientPhoneNo_ts.setText("Telefon: " + String.valueOf(_sheet.getClient().getPhoneNo()));
+            lblClientEmail_ts.setText("E-Mail: " + _sheet.getClient().getEmail());
+            lblCaseId_ts.setText(_sheet.getCaseId());
+            lblTimeSheetOwner_ts.setText("Ansvarlig: " + _sheet.getUser().getFirstName() + " " + _sheet.getUser().getLastName());
+            txtNoteField.setText("Note: " + _sheet.getNote());
         	dbInfo.dispose();
         }
     }
     
     class AddClientData extends SwingWorker<Integer, Integer>
     {
+        private DefaultTableModel tmpClientModel;
+
     	@Override
     	protected Integer doInBackground() throws Exception
         {
@@ -916,24 +922,21 @@ public class SystemUI extends JFrame implements ChangeListener
                     else
                         timeSheets = _timeSheetCtrl.getAllTimeSheetsByClient(client);
 					
-					Object[][] data = {};
-					clientModel.setDataVector(data, clientColumn);
+					tmpClientModel = new DefaultTableModel();
+
+                    Object[][] data = {};
+                    tmpClientModel.setDataVector(data, clientColumn);
 					
 					for(int i = 0; i < timeSheets.size(); i++)
 					{
 						TimeSheet timesheet = timeSheets.get(i);
 						Object[] row = new Object[]{ timesheet.getCaseId(), timesheet.getCreationDate(), timesheet.getUser().getFirstName() + " " +
 								timesheet.getUser().getLastName(), timesheet.getNote(), "Redigere/Slet" };
-						
-						clientModel.addRow(row);
-					}
-					
-					addButtonToClient(4);
 
-					lblClientName_cl.setText(client.getName());
-					lblClientAddress_cl.setText(client.getAddress() + ", " + client.getCity().getZipCode() + " " + client.getCity().getCityName());
-					lblClientPhoneNo_cl.setText("Telefon: " + String.valueOf(client.getPhoneNo()));
-					lblClientEmail_cl.setText("E-Mail: " + client.getEmail());
+                        tmpClientModel.addRow(row);
+					}
+
+                    _client = client;
 				}
 			}
 			catch(Exception ex)
@@ -947,6 +950,14 @@ public class SystemUI extends JFrame implements ChangeListener
     	@Override
     	protected void done()
         {
+            clientModel = tmpClientModel;
+            clientTable.setModel(clientModel);
+            if(clientModel.getRowCount() > 0)
+                addButtonToClient(4);
+            lblClientName_cl.setText(_client.getName());
+            lblClientAddress_cl.setText(_client.getAddress() + ", " + _client.getCity().getZipCode() + " " + _client.getCity().getCityName());
+            lblClientPhoneNo_cl.setText("Telefon: " + String.valueOf(_client.getPhoneNo()));
+            lblClientEmail_cl.setText("E-Mail: " + _client.getEmail());
         	dbInfo.dispose();
         }
     }
