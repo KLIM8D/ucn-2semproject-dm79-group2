@@ -35,7 +35,6 @@ public class LoginUI
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_frame.setSize(new Dimension(400,135));
 		_frame.setResizable(false);
-        _frame.setVisible(true);
 		Helper.centerOnScreen(_frame);
 		
 		JPanel pnlContent = new JPanel();
@@ -87,6 +86,7 @@ public class LoginUI
 		});
 		btnCancel.setBounds(260,65,125,25);
 		pnlContent.add(btnCancel);
+        _frame.setVisible(true);
 	}
 	
 	private void systemLogin()
