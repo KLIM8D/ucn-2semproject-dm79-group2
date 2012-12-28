@@ -19,6 +19,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginUI
 {
@@ -58,10 +60,29 @@ public class LoginUI
 		pnlContent.add(lblUserPassword);
 		
 		txtUserName = new JTextField();
+        txtUserName.addKeyListener(new KeyAdapter()
+        {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                {
+                    pfdUserPassword.requestFocusInWindow();
+                }
+            }
+        });
 		txtUserName.setBounds(185,10,200,19);
 		pnlContent.add(txtUserName);
 		
 		pfdUserPassword = new JPasswordField();
+        pfdUserPassword.addKeyListener(new KeyAdapter()
+        {
+            public void keyPressed(KeyEvent e)
+            {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                {
+                    systemLogin();
+                }
+            }
+        });
 		pfdUserPassword.setBounds(185,34,200,19);
 		pnlContent.add(pfdUserPassword);
 		
