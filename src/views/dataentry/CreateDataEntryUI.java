@@ -331,5 +331,12 @@ public class CreateDataEntryUI
 			
 			return null;
 		}
+
+        @Override
+        protected void done()
+        {
+            _model = new DefaultComboBoxModel<String>(populateTaskList());
+            drpTask.setModel(_model);
+        }
 	}
 }

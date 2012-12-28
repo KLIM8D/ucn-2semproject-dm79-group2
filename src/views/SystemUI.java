@@ -702,7 +702,11 @@ public class SystemUI extends JFrame implements ChangeListener
 	{
 		int request = JOptionPane.showConfirmDialog(null, "Er du sikker p" + "\u00e5" + " at du vil logge ud af programmet?", "Logud", JOptionPane.YES_NO_OPTION);
 		if(request == JOptionPane.YES_OPTION)
-			return; // logout and go to login dialog
+        {
+			UserSession.setLoggedInUser(null);
+            dispose();
+            new LoginUI();
+        }
 	}
 	
 	private void newDataEntry()
