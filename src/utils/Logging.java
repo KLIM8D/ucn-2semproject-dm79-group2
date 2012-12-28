@@ -3,6 +3,7 @@ package utils;
 import db.DBLog;
 import models.Log;
 import models.User;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 import java.util.Calendar;
 
@@ -29,7 +30,7 @@ public class Logging
         sb.append("Java version: " + System.getProperty("java.version") + "<br/>");
         sb.append("User home dir: " + System.getProperty("user.home") + "<br/>");
         User user = UserSession.getLoggedInUser();
-        Log newLog = new Log(user, sb.toString(), ex.getStackTrace().toString(), ex.getClass().getName(), cal.getTime());
+        Log newLog = new Log(user, sb.toString(), ExceptionUtils.getStackTrace(ex), ex.getClass().getName(), cal.getTime());
 
         try
         {

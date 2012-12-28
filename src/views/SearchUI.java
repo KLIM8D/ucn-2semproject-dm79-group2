@@ -9,6 +9,7 @@ import utils.ButtonColumn;
 import utils.Helper;
 import utils.Logging;
 import views.client.EditClientUI;
+import views.timesheet.EditTimeSheetUI;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -69,6 +70,7 @@ public class SearchUI
         _result = result;
         _searchCtrl = new SearchCtrl();
         _clientCtrl = new ClientCtrl();
+        _timeSheetCtrl = new TimeSheetCtrl();
         _taskCtrl = new TaskCtrl();
 
         _frame = new JFrame();
@@ -110,15 +112,13 @@ public class SearchUI
         pnlSearch.add(lblTasksHeader);
 
         //SheetTable start
-        sheetColumn = new String[]{"P" + "\u00e5" + "begyndt", "Afsluttet", "Opgave", "Registrator", "Bem" + "\u00e6" + "rkning", " "};
+        sheetColumn = new String[]{"Sags nr", "P" + "\u00e5" + "begyndt", "Klient", "Ansvarlig", "Note", " "};
 
         sheetTable = new JTable()
         {
             public boolean isCellEditable(int data, int columns)
             {
-                if(columns == 5)
-                    return true;
-                return false;
+                return columns == 5;
             }
         };
 
@@ -147,9 +147,7 @@ public class SearchUI
         {
             public boolean isCellEditable(int data, int columns)
             {
-                if(columns == 5)
-                    return true;
-                return false;
+                return columns == 5;
             }
         };
 
@@ -177,9 +175,7 @@ public class SearchUI
         {
             public boolean isCellEditable(int data, int columns)
             {
-                if(columns == 2)
-                    return true;
-                return false;
+                return columns == 2;
             }
         };
 
@@ -223,12 +219,19 @@ public class SearchUI
         {
             public void actionPerformed(ActionEvent e)
             {
-                JTable sheetTable = (JTable) e.getSource();
                 int row = Integer.valueOf(e.getActionCommand());
-
+                String caseId = sheetTable.getValueAt(row, 0).toString();
                 if(columnIndex == 5)
                 {
-
+                    try
+                    {
+                        TimeSheet sheet = _timeSheetCtrl.getTimeSheetByCaseId(caseId);
+                        EditTimeSheetUI.createWindow(sheet);
+                    }
+                    catch (Exception ex)
+                    {
+                        JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         };
@@ -299,14 +302,10 @@ public class SearchUI
                 {
                     if(sheet != null)
                     {
-                        ArrayList<DataEntry> dataEntries = sheet.getDataEntries();
-                        for(int i = 0; i < dataEntries.size(); i++)
-                        {
-                            DataEntry dataEntry = dataEntries.get(i);
-                            Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(),
-                                    dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark(), "Vis"};
-                            tmpSheetModel.addRow(row);
-                        }
+                        //"Sags nr", "P" + "\u00e5" + "begyndt", "Klient", "Ansvarlig", "Note", " "
+                        Object[] row = new Object[]{sheet.getCaseId(), sheet.getCreationDate(), sheet.getClient().getName(),
+                                sheet.getUser().getFirstName() + " " + sheet.getUser().getLastName(), sheet.getNote(), "Rediger"};
+                        tmpSheetModel.addRow(row);
                     }
                 }
             }
@@ -348,7 +347,7 @@ public class SearchUI
                 {
                     if(client != null)
                     {
-                        Object[] row = new Object[]{ client.getName(), client.getAddress(), client.getCity().getZipCode() + " " + client.getCity().getCityName(), client.getPhoneNo(), client.getEmail(), "Vis"};
+                        Object[] row = new Object[]{ client.getName(), client.getAddress(), client.getCity().getZipCode() + " " + client.getCity().getCityName(), client.getPhoneNo(), client.getEmail(), "Rediger"};
                         tmpClientModel.addRow(row);
                     }
                 }
@@ -391,7 +390,7 @@ public class SearchUI
                 {
                     if(task != null)
                     {
-                        Object[] row = new Object[]{ task.getTitle(), task.getDescription(), "Vis"};
+                        Object[] row = new Object[]{ task.getTitle(), task.getDescription(), "Rediger"};
                         tmpTaskModel.addRow(row);
                     }
                 }

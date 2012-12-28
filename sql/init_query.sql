@@ -34,7 +34,7 @@ CREATE TABLE "Logs"  (
 	"logId"            	int IDENTITY(1,1) NOT NULL,
 	"userId"           	int NOT NULL,
 	"userDetails"      	varchar(1024) NOT NULL,
-	"exception"        	varchar(2048) NOT NULL,
+	"exception"        	varchar(MAX) NOT NULL,
 	"exceptionLocation"	varchar(1024) NOT NULL,
 	"creationDate"     	datetime NOT NULL,
 	CONSTRAINT "pkLogs" PRIMARY KEY CLUSTERED("logId")
