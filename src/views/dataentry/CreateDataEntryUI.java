@@ -293,7 +293,7 @@ public class CreateDataEntryUI
 		        
 		        _timesheetCtrl.addDataEntry(_timesheetCtrl.getTimeSheetByCaseId(_timeSheet.getCaseId()), dataEntry);
 
-		        JOptionPane.showMessageDialog(null, "Time-sag oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
+		        JOptionPane.showMessageDialog(null, "Indtastningerne er blevet oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
 		        _instance = null;
 		        _frame.dispose();
 		        
