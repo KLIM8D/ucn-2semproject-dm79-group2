@@ -111,13 +111,13 @@ public class CreateClientUI
                 {
                 	Helper.checkIfInt(txtZipCode);
                 }
-                if(txtZipCode.getText().length() > 3)
+                if(txtZipCode.getText().length() > 2)
                 {
                 	lookupCity();
                 }
             }
         });
-        txtZipCode.setDocument(new JTextFieldLimit(5));
+        txtZipCode.setDocument(new JTextFieldLimit(4));
         txtZipCode.setBounds(142,55,50,19);
         contentPane.add(txtZipCode);
         txtZipCode.setColumns(10);
@@ -138,7 +138,7 @@ public class CreateClientUI
             }
         });
         txtPhoneNo.setBounds(142,80,75,19);
-        txtPhoneNo.setDocument(new JTextFieldLimit(9));
+        txtPhoneNo.setDocument(new JTextFieldLimit(8));
         contentPane.add(txtPhoneNo);
         txtPhoneNo.setColumns(10);
         
@@ -192,7 +192,7 @@ public class CreateClientUI
         }
         catch (Exception error)
         {
-            JOptionPane.showMessageDialog(null, Logging.handleException(error, 1), "Ukendt postnummer", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Logging.handleException(error, 9), "Ukendt postnummer", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -208,7 +208,7 @@ public class CreateClientUI
     	catch (Exception e)
     	{
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Telefonnummeret eksisterer for en anden klient!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, Logging.handleException(e, 10), "Telefonnummeret eksisterer for en anden klient!", JOptionPane.WARNING_MESSAGE);
     	}
     	
         try
@@ -232,7 +232,7 @@ public class CreateClientUI
         catch (Exception e)
         {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Fejl", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, Logging.handleException(e, 9), "Fejl", JOptionPane.WARNING_MESSAGE);
         }
     }
 }

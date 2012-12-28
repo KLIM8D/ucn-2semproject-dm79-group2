@@ -121,7 +121,7 @@ public class EditClientUI
             }
         });
 
-        txtZipCode.setDocument(new JTextFieldLimit(5));
+        txtZipCode.setDocument(new JTextFieldLimit(4));
         txtZipCode.setBounds(142, 55, 50, 19);
         contentPane.add(txtZipCode);
         txtZipCode.setColumns(10);
@@ -134,7 +134,7 @@ public class EditClientUI
         
         txtPhoneNo = new JTextField();
         txtPhoneNo.setBounds(142, 80, 75, 19);
-        txtPhoneNo.setDocument(new JTextFieldLimit(9));
+        txtPhoneNo.setDocument(new JTextFieldLimit(8));
         contentPane.add(txtPhoneNo);
         txtPhoneNo.setColumns(10);
         
@@ -190,7 +190,7 @@ public class EditClientUI
         }
         catch (Exception error)
         {
-            JOptionPane.showMessageDialog(null, Logging.handleException(error, 1), "Ukendt postnummer", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Logging.handleException(error, 9), "Ukendt postnummer", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -208,7 +208,7 @@ public class EditClientUI
     	}
     	catch (Exception e)
     	{
-            JOptionPane.showMessageDialog(null, Logging.handleException(e, 1), "Telefonnummeret eksisterer for en anden klient!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Logging.handleException(e, 10), "Telefonnummeret eksisterer for en anden klient!", JOptionPane.ERROR_MESSAGE);
     	}
     	try
     	{    		

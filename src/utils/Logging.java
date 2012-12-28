@@ -69,6 +69,10 @@ public class Logging
             	return "Adgangskode ikke indtastet.";
             case 8:
             	return "Forkert adgangskode, eller ukendt brugernavn.";
+            case 9:
+                return "Der blev ikke fundet nogen by med det indtastede postnummer.";
+            case 10:
+                return "Der eksiterer allerede en klient med det indtastede telefonummer";
             default:
                 return "Der skete en fejl i udf\u00F8rselen af denne handling. Kontakt support";
         }

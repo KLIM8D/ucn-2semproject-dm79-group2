@@ -40,6 +40,7 @@ public class EditTimeSheetUI
     private JTextField txtCaseId;
 	private JList<String> lstGroup;
 	private JList<String> lstUser;
+    private JTabbedPane tabbedPane;
     
 	// Controllers
 	private ClientCtrl _clientCtrl;
@@ -54,6 +55,15 @@ public class EditTimeSheetUI
 
         return _frame;
     }
+
+    public static JFrame createWindow(TimeSheet ts, int selectedIndex)
+    {
+        if(_instance == null)
+            _instance = new EditTimeSheetUI(ts, selectedIndex);
+
+        return _frame;
+    }
+
 	/**
 	 * Create the frame.
 	 */
@@ -62,6 +72,16 @@ public class EditTimeSheetUI
         _timeSheet = ts;
 		createElements();
 	}
+
+    /**
+     * Create the frame and select the tab in the tabbedpane
+     */
+    private EditTimeSheetUI(TimeSheet ts, int selectedIndex)
+    {
+        _timeSheet = ts;
+        createElements();
+        tabbedPane.setSelectedIndex(selectedIndex);
+    }
 	
 	public void createElements()
 	{
@@ -92,7 +112,7 @@ public class EditTimeSheetUI
 		_frame.setContentPane(_contentPane);
 		_contentPane.setLayout(null);
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 58, 392, 262);
 		_contentPane.add(tabbedPane);
 		

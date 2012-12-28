@@ -297,6 +297,14 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlQuickAccess.add(lblSortOverview);
 		
 		JLabel lblPermission = new JLabel("Rettigheder");
+        lblPermission.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                editRights();
+            }
+        });
 		lblPermission.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblPermission.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblPermission.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/permission_timesheet.png")));
@@ -557,8 +565,23 @@ public class SystemUI extends JFrame implements ChangeListener
 			}
 		});
 		chkUsersSheetsOnly.setFont(new Font("Dialog", Font.PLAIN, 12));
-		chkUsersSheetsOnly.setBounds(5,614,181,23);
+		chkUsersSheetsOnly.setBounds(5,614,160,23);
 		pnlTimeSheetTab.add(chkUsersSheetsOnly);
+
+        JLabel lblRefreshTs = new JLabel();
+        lblRefreshTs.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                refreshList();
+            }
+        });
+        lblRefreshTs.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lblRefreshTs.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/list_refresh.png")));
+        lblRefreshTs.setBounds(170,617,16,16);
+        pnlTimeSheetTab.add(lblRefreshTs);
+
 		// END OF CASE TAB
 		
 		// START OF CLIENT TAB
@@ -567,7 +590,7 @@ public class SystemUI extends JFrame implements ChangeListener
 		pnlClientTab.setLayout(null);
 		
 		JPanel pnlClientList = new JPanel();
-		pnlClientList.setBounds(5,5,187,631);
+		pnlClientList.setBounds(5,5,187,605);
 		pnlClientList.setLayout(null);
 		pnlClientTab.add(pnlClientList);
 				
@@ -584,13 +607,63 @@ public class SystemUI extends JFrame implements ChangeListener
 		lstClients.setListData(populateClientList());
 		lstClients.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstClients.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		lstClients.setBounds(0,0,187,631);
+		lstClients.setBounds(0,0,187,605);
 		JScrollPane clientListScroll = new JScrollPane(lstClients);
 		pnlClientList.add(clientListScroll);
 		pnlClientList.add(lstClients);
+
+        JLabel lblRefreshCli = new JLabel();
+        lblRefreshCli.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                refreshList();
+            }
+        });
+        lblRefreshCli.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lblRefreshCli.setIcon(new ImageIcon(SystemUI.class.getResource("/icons/16x16/list_refresh.png")));
+        lblRefreshCli.setBounds(170,617,16,16);
+        pnlClientTab.add(lblRefreshCli);
 		// END OF CLIENT TAB
 		// END OF TAB SECTION
 	}
+
+    private void refreshList()
+    {
+        if(primaryTabActive)
+        {
+            checkUserSheetsOnly();
+        }
+        else
+        {
+            lstClients.setListData(populateClientList());
+        }
+    }
+
+    private void editRights()
+    {
+        if(primaryTabActive)
+        {
+            if(_sheet != null)
+            {
+                try
+                {
+                    EditTimeSheetUI.createWindow(_sheet, 1);
+                }
+                catch (Exception ex)
+                {
+                    JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else
+                JOptionPane.showMessageDialog(null, "V" + "\u00e6" + "lg den time-sag du " + "\u00f8" + "nsker at \u00e6ndre rettigheder for", "Information!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Denne funktionen er kun tilg" + "\u00e6" + "ngelig under \"Time-Sager\"", "Information!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 
     private void printSheet()
     {
@@ -866,7 +939,7 @@ public class SystemUI extends JFrame implements ChangeListener
 
                         DataEntry dataEntry = dataEntries.get(i);
                         Object[] row = new Object[]{ dataEntry.getStartDate(), dataEntry.getEndDate(), dataEntry.getTask().getTitle(),
-                                dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark(), "Rediger/Slet"};
+                                dataEntry.getUser().getFirstName() + " " + dataEntry.getUser().getLastName(), dataEntry.getEntryRemark(), "Slet"};
                         tmpSheetModel.addRow(row);
                     }
 
