@@ -752,7 +752,7 @@ public class SystemUI extends JFrame implements ChangeListener
 				
 				if(columnIndex == 5)
 				{
-
+                    System.out.print(row + "");
 				}
 			}
 		};
@@ -1008,7 +1008,7 @@ public class SystemUI extends JFrame implements ChangeListener
 					{
 						TimeSheet timesheet = timeSheets.get(i);
 						Object[] row = new Object[]{ timesheet.getCaseId(), timesheet.getCreationDate(), timesheet.getUser().getFirstName() + " " +
-								timesheet.getUser().getLastName(), timesheet.getNote(), "Rediger/Slet" };
+								timesheet.getUser().getLastName(), timesheet.getNote(), "Rediger" };
 
                         tmpClientModel.addRow(row);
 					}
