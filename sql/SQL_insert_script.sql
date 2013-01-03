@@ -23,7 +23,7 @@ VALUES (1080, 'Mogens Johnny', 'Bondevej 456', 23568712, 'mojohn@mail.dk','2013/
 
 /* Insert sample Tasks */
 INSERT INTO TASKS (title, description) 
-VALUES ('L5', 'Beregning af løn for klienten'),
+VALUES ('Løn', 'Beregning af løn for klienten'),
        ('Årsregnskab', 'Udførelse af årsregnskab for klienten'),
 	   ('Momsregnskab', 'Udførelse af Momsregnskab for klienten'),
 	   ('Budgettering', 'Estimering af Budget for klienten')
@@ -32,24 +32,28 @@ VALUES ('L5', 'Beregning af løn for klienten'),
 /* Insert sample Timesheets */
 INSERT INTO TIMESHEETS (userId, clientId, note, creationDate, editedDate, caseId)
 VALUES (1, 1, 'Opgaven er netop oprettet', '2013/01/02', '2013/01/03', 'L-455U90'),
-       (2, 2, 'Sagen er igang', '2013/01/02', '2013/01/03', 'L-455U90'),
-	   (3, 3, 'Ingen note', '2013/01/02', '2013/01/03', 'L-455U90'),
-	   (4, 4, 'Sagen er oprettet', '2013/01/02', '2013/01/03', 'L-455U90'),
-	   (5, 5, 'Sagen er oprettet', '2013/01/02', '2013/01/03', 'L-455U90')
+       (2, 2, 'Sagen er igang', '2013/01/02', '2013/01/03', 'L-455U91'),
+	   (3, 3, 'Ingen note', '2013/01/02', '2013/01/03', 'L-455U92'),
+	   (4, 4, 'Sagen er oprettet', '2013/01/02', '2013/01/03', 'L-455U93'),
+	   (5, 5, 'Sagen er oprettet', '2013/01/02', '2013/01/03', 'L-455U94')
 	   
 
 /* Insert sample Data Entries*/
 INSERT INTO DATAENTRIES (sheetId, taskId, userId, startDate, endDate, entryRemark, creationDate, editedDate)
-VALUES (1, 1, 1, '2013/01/02 10:02:00:000', '2013/01/03 16:04:00:000', 'Her skrives bemærkning om sagen', '2013/01/02 10:04:34:353', '2013/01/02 15:17:13:597'),
+VALUES (1, 1, 1, '2013/01/02 10:02:00:000', '2013/01/02 16:04:00:000', 'Her skrives bemærkning om sagen', '2013/01/02 10:04:34:353', '2013/01/02 15:17:13:597'),
+(1, 3, 1, '2013/01/03 11:05:00:000', '2013/01/03 16:04:00:000', 'Her skrives bemærkning om sagen', '2013/01/02 10:04:34:353', '2013/01/02 15:17:13:597'),
+(1, 2, 1, '2013/01/04 14:02:00:000', '2013/01/04 16:04:00:000', 'Her skrives bemærkning om sagen', '2013/01/02 10:04:34:353', '2013/01/02 15:17:13:597'),
        (3, 3, 2, '2013/01/02 10:08:00:000', '2013/01/03 11:05:00:000', 'Her skrives bemærkning om sagen', '2013/01/02 10:12:54:149', '2013/01/02 14:05:43:218'),
 	   (4, 2, 3, '2013/01/03 10:08:00:000', '2013/01/04 11:05:00:000', 'Her skrives bemærkning om sagen', '2013/01/03 10:12:54:149', '2013/01/04 14:05:43:218')
 
 
 /* Insert sample Permission Wrappers*/
 INSERT INTO PERMISSIONWRAPPER (sheetId, permissionType, permissionValue)
-VALUES (1, 1, 49),
+VALUES (1, 1, 7),
        (3, 2, 2),
-	   (4, 1, 51)
+	   (4, 1, 7),
+       (2, 2, 3),
+       (5, 2, 3)
 
 
 /* Insert sample Logs */
