@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dataEntries" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c80a3cfa-38a6-4ca0-bef2-948148893635">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="taskName" class="java.lang.String">
+		<fieldDescription><![CDATA[taskName]]></fieldDescription>
+	</field>
+	<field name="firstName" class="java.lang.String">
+		<fieldDescription><![CDATA[firstName]]></fieldDescription>
+	</field>
+	<field name="lastName" class="java.lang.String">
+		<fieldDescription><![CDATA[lastName]]></fieldDescription>
+	</field>
+	<field name="startDate" class="java.util.Date">
+		<fieldDescription><![CDATA[startDate]]></fieldDescription>
+	</field>
+	<field name="endDate" class="java.util.Date">
+		<fieldDescription><![CDATA[endDate]]></fieldDescription>
+	</field>
+	<field name="entryRemark" class="java.lang.String">
+		<fieldDescription><![CDATA[entryRemark]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="50">
+			<rectangle>
+				<reportElement uuid="41f31d92-88af-4e5b-bbb2-ac4d4b1c84e6" x="2" y="47" width="532" height="1" backcolor="#000000"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="286" y="31" width="81" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registrator]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="100" y="31" width="91" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Afsluttet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="198" y="31" width="81" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Opgave]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="374" y="31" width="81" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bemærkning]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1af7ff49-4623-40a6-96e8-3a3e45e0338d" x="2" y="31" width="91" height="15"/>
+				<textElement>
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Påbegyndt]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement uuid="44f703b6-2069-4647-933d-4d763fc61d5e" x="2" y="0" width="91" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy HH:mm")).format($F{startDate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="44f703b6-2069-4647-933d-4d763fc61d5e" x="100" y="0" width="91" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy HH:mm")).format($F{endDate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a63b07f0-573f-4041-a0a6-d65cc8845d42" x="198" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{taskName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0158037e-a483-4ebd-adf6-ca481d300ef4" x="286" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{firstName} + " " + $F{lastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="324646b5-74d3-41ca-9690-6e838f9cd5ca" x="374" y="0" width="160" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{entryRemark}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

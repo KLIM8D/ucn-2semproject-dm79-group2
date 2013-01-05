@@ -33,7 +33,7 @@ public class GenerateReport
         listTimeSheets.add(new ReportWrapper(timeSheet));
 
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listTimeSheets);
-        String templateLocation = System.getProperty("user.dir") + "?src?utils?templates?TimeSheet.jasper";
+        String templateLocation = System.getProperty("user.dir") + "?system?templates?TimeSheet.jasper";
         templateLocation = templateLocation.replace("?", File.separator);
         JasperPrint jasperPrint = JasperFillManager.fillReport(templateLocation, new HashMap(), beanCollectionDataSource);
 
@@ -51,7 +51,7 @@ public class GenerateReport
             listTimeSheets.add(new ReportWrapper(timeSheet));
 
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listTimeSheets);
-        String templateLocation = System.getProperty("user.dir") + "?src?utils?templates?TimeSheet.jasper";
+        String templateLocation = System.getProperty("user.dir") + "?system?templates?TimeSheet.jasper";
         templateLocation = templateLocation.replace("?", File.separator);
         JasperPrint jasperPrint = JasperFillManager.fillReport(templateLocation, new HashMap(), beanCollectionDataSource);
 

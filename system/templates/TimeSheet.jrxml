@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TimeSheet" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fca4ad81-10b9-48fa-a7cb-a426eea3bb89">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[address]]></fieldDescription>
+	</field>
+	<field name="zipCode" class="java.lang.Integer">
+		<fieldDescription><![CDATA[zipCode]]></fieldDescription>
+	</field>
+	<field name="cityName" class="java.lang.String">
+		<fieldDescription><![CDATA[cityName]]></fieldDescription>
+	</field>
+	<field name="phoneNo" class="java.lang.Long">
+		<fieldDescription><![CDATA[phoneNo]]></fieldDescription>
+	</field>
+	<field name="eMail" class="java.lang.String">
+		<fieldDescription><![CDATA[eMail]]></fieldDescription>
+	</field>
+	<field name="firstName" class="java.lang.String">
+		<fieldDescription><![CDATA[firstName]]></fieldDescription>
+	</field>
+	<field name="lastName" class="java.lang.String">
+		<fieldDescription><![CDATA[lastName]]></fieldDescription>
+	</field>
+	<field name="caseId" class="java.lang.String">
+		<fieldDescription><![CDATA[caseId]]></fieldDescription>
+	</field>
+	<field name="creationDate" class="java.util.Date">
+		<fieldDescription><![CDATA[creationDate]]></fieldDescription>
+	</field>
+	<field name="editedDate" class="java.util.Date">
+		<fieldDescription><![CDATA[editedDate]]></fieldDescription>
+	</field>
+	<field name="note" class="java.lang.String">
+		<fieldDescription><![CDATA[note]]></fieldDescription>
+	</field>
+	<field name="dataEntries" class="java.util.List">
+		<fieldDescription><![CDATA[dataEntries]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="163" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ab6542eb-7b4f-423f-9326-4e09e96bbeb5" x="4" y="56" width="44" height="20"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Telefon.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="90c37648-5676-44fd-b617-0fff95ae47bb" x="314" y="39" width="60" height="20"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Oprettet....:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c4439d32-1a9a-40da-b772-1e008ee81c72" x="314" y="56" width="60" height="20"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sidst rettet:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e74850f3-c6a6-4121-8349-0878069951a0" x="48" y="56" width="211" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{phoneNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="19d77a72-f55c-491f-a60f-ad5267400976" x="371" y="39" width="169" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy HH:mm")).format($F{creationDate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a590030b-77d7-421c-80df-1749a17ffd5a" x="371" y="56" width="169" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy HH:mm")).format($F{editedDate})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5bb2319b-3f5f-46e2-b23c-ebe64450cee2" x="4" y="73" width="44" height="20"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[E-Mail...:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="430397c5-ec81-4291-9d07-300219c39111" x="48" y="73" width="211" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{eMail}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="225aab3e-6ba0-45ef-a83f-179e5e45fb76" x="48" y="109" width="505" height="48"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{note}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5bb2319b-3f5f-46e2-b23c-ebe64450cee2" x="4" y="109" width="44" height="20"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Note.....:]]></text>
+			</staticText>
+			<textField pattern="M/d/yy h:mm:ss a">
+				<reportElement uuid="f4716123-af2f-4962-ac74-78f6289bd0cc" x="371" y="73" width="169" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy HH:mm")).format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7023e5f4-1ef8-4e49-983d-a2e12ea1ac7e" x="314" y="73" width="60" height="20"/>
+				<textElement>
+					<font isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Udskrevet.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="303b09ec-9581-4c1f-b0e8-7e600461b4d9" key="fieldAddress" x="4" y="22" width="257" height="21"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5a281be6-b57f-4118-993b-3e20f3c57239" x="371" y="22" width="169" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{caseId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5756dc35-ae72-4235-b374-623d7d10d008" key="fieldName" x="4" y="5" width="257" height="20"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="144364f5-49c0-4653-a659-ab176269e04e" x="32" y="39" width="229" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cityName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5a64dd82-db95-4229-a247-99d87359bdff" x="371" y="5" width="169" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{firstName} + " " + $F{lastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7e0f0e34-252c-407c-a6a3-61cc50198a09" key="fieldZipCode" x="4" y="39" width="33" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{zipCode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="aff67220-8f6f-41ae-9725-e07585dc6b4c" x="314" y="5" width="60" height="20"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Revisor.....:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ffe12619-16d1-45e4-96ac-e2043299c1f0" x="314" y="22" width="60" height="20"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sags nr.....:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="251" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="794cdcf3-3061-4725-aee5-342ba53353c8" x="4" y="0" width="549" height="251"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{dataEntries})]]></dataSourceExpression>
+				<subreportExpression><![CDATA["dataEntries.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="5193a35c-e911-44cd-b6d6-d24ba6da55ad" positionType="FixRelativeToBottom" x="301" y="34" width="254" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Side " + $V{PAGE_NUMBER} + " af " + $V{PAGE_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

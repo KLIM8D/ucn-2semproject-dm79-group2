@@ -23,7 +23,7 @@ public class SettingsCtrl
 
     public String getProperty(String propertyName) throws Exception
     {
-        String jsonTxt = Helper.readFile(System.getProperty("user.dir") + File.separator + "settings.json");
+        String jsonTxt = Helper.readFile(System.getProperty("user.dir") + File.separator + "system" + File.separator + "settings.json");
         JSONObject jsonObject = (JSONObject) JSONSerializer.toJSON(jsonTxt);
 
         DynaBean bean = (DynaBean) JSONSerializer.toJava( jsonObject );
@@ -32,9 +32,9 @@ public class SettingsCtrl
 
     public void setProperty(String propertyName, String value) throws Exception
     {
-        String jsonTxt = Helper.readFile(System.getProperty("user.dir") + File.separator + "settings.json");
+        String jsonTxt = Helper.readFile(System.getProperty("user.dir") + File.separator + "system" + File.separator + "settings.json");
         JSONObject jsonObject = (JSONObject) JSONSerializer.toJSON(jsonTxt);
         jsonObject.put(propertyName, value);
-        Helper.writeFile(System.getProperty("user.dir") + File.separator + "settings.json", jsonObject.toString());
+        Helper.writeFile(System.getProperty("user.dir") + File.separator + "system" + File.separator + "settings.json", jsonObject.toString());
     }
 }
