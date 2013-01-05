@@ -1,6 +1,7 @@
 package views.timesheet;
 
 import controllers.ClientCtrl;
+import controllers.TimeSheetCtrl;
 import controllers.UserCtrl;
 import controllers.UserPermissionCtrl;
 import models.Client;
@@ -43,6 +44,9 @@ public class CreateTimeSheetUI
 	private ClientCtrl _clientCtrl;
 	private UserCtrl _userCtrl;
 	private UserPermissionCtrl _userPermissionCtrl;
+
+    public static CreateTimeSheetUI getInstance()
+    { return _instance; }
 	
     public static JFrame createWindow()
     {
@@ -174,7 +178,7 @@ public class CreateTimeSheetUI
 		pnlGroup.setLayout(null);
 		
 		lstGroup = new JList<String>();		
-		lstGroup.setListData(populateUserGroups());
+		populateUserGroups();
 		lstGroup.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lstGroup.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstGroup.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -190,7 +194,7 @@ public class CreateTimeSheetUI
 		pnlUser.setLayout(null);
 		
 		lstUser = new JList<String>();		
-		lstUser.setListData(populateUserList());
+		populateUserList();
 		lstUser.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lstUser.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		lstUser.setBounds(13,17,153,182);
@@ -213,7 +217,7 @@ public class CreateTimeSheetUI
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
         }
         String note = txtNotes.getText();
         Calendar cal = Calendar.getInstance();
@@ -223,6 +227,28 @@ public class CreateTimeSheetUI
 		TimeSheet timeSheet = new TimeSheet(caseId, user, client, note, creationDate, editedDate);
 		CreateDataEntryUI.createWindowForNewCase(timeSheet);
 	}
+
+    public void createPermissions(TimeSheet sheet)
+    {
+        try
+        {
+            TimeSheetCtrl timeSheetCtrl = new TimeSheetCtrl();
+            for(String roleName : lstGroup.getSelectedValuesList())
+            {
+                timeSheetCtrl.insertPermission(sheet, _userPermissionCtrl.getPermissionByTitle(roleName));
+            }
+            for(String userName : lstUser.getSelectedValuesList())
+            {
+                timeSheetCtrl.insertPermission(sheet, _userCtrl.getUserByName(userName));
+            }
+        }
+        catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    }
 	
 	private String[] populateClientList()
 	{
@@ -238,32 +264,28 @@ public class CreateTimeSheetUI
 		return null;
 	}
 	
-	private String[] populateUserList()
+	private void populateUserList()
 	{
 		try
 		{
-			return new PopulateUserList().doInBackground();
+			new PopulateUserList().execute();
 		}
 		catch(Exception ex)
 		{
 			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 99), "Fejl!", JOptionPane.ERROR_MESSAGE);
 		}
-		
-		return null;
 	}
 	
-	private String[] populateUserGroups()
+	private void populateUserGroups()
 	{
 		try
 		{
-			return new PopulateUserGroups().doInBackground();
+			new PopulateGroupList().execute();
 		}
 		catch(Exception ex)
 		{
 			JOptionPane.showMessageDialog(null, Logging.handleException(ex, 99), "Fejl!", JOptionPane.ERROR_MESSAGE);
 		}
-		
-		return null;
 	}
 	
 	class PopulateClientList extends SwingWorker<String[], Integer>
@@ -289,52 +311,68 @@ public class CreateTimeSheetUI
 			return null;
 		}
 	}
-	
-	class PopulateUserList extends SwingWorker<String[], Integer>
-	{
-		@Override
-		protected String[] doInBackground() throws Exception
-		{
-			ArrayList<User> users;
-			try
-			{
-				users = _userCtrl.getAllUsers();
-				String[] userNames = new String[users.size()];
-				for (int i = 0; i < users.size(); i++)
-					userNames[i] = users.get(i).getFirstName() + " " + users.get(i).getLastName();
-				
-				return userNames;
-			}
-			catch(Exception ex)
-			{
-				JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
-			}
-			
-			return null;
-		}
-	}
-	
-	class PopulateUserGroups extends SwingWorker<String[], Integer>
-	{
-		@Override
-		protected String[] doInBackground() throws Exception
-		{
-			ArrayList<UserPermission> permissions;
-			try
-			{
-				permissions = _userPermissionCtrl.getAllRoles();
-				String[] permissionTitles = new String[permissions.size()];
-				for (int i = 0; i < permissions.size(); i++)
-					permissionTitles[i] = permissions.get(i).getUserRole();
-				
-				return permissionTitles;
-			}
-			catch(Exception ex)
-			{
-				JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl", JOptionPane.ERROR_MESSAGE);
-			}
-			
-			return null;
-		}
-	}
+
+    class PopulateUserList extends SwingWorker<Integer, Integer>
+    {
+        private DefaultListModel<String> userNames;
+
+        @Override
+        protected Integer doInBackground() throws Exception
+        {
+            ArrayList<User> userList;
+            try
+            {
+                userList = _userCtrl.getAllUsers();
+                userNames = new DefaultListModel<String>();
+                for(int i = 0; i < userList.size(); i++)
+                    userNames.add(i, userList.get(i).getUserName());
+
+                return 1;
+            }
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void done()
+        {
+            lstUser.setModel(userNames);
+        }
+    }
+
+    class PopulateGroupList extends SwingWorker<Integer, Integer>
+    {
+        private DefaultListModel<String> groupNames;
+
+        @Override
+        protected Integer doInBackground() throws Exception
+        {
+            ArrayList<UserPermission> groupList;
+            try
+            {
+                groupList = _userPermissionCtrl.getAllRoles();
+                groupNames = new DefaultListModel<String>();
+                for(int i = 0; i < groupList.size(); i++)
+                    groupNames.add(i, groupList.get(i).getUserRole());
+
+                return 1;
+            }
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, Logging.handleException(ex, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void done()
+        {
+            lstGroup.setModel(groupNames);
+        }
+    }
 }

@@ -2,6 +2,7 @@ package views.dataentry;
 
 import controllers.TaskCtrl;
 import controllers.TimeSheetCtrl;
+import db.DataAccess;
 import models.DataEntry;
 import models.Task;
 import models.TimeSheet;
@@ -289,7 +290,12 @@ public class CreateDataEntryUI
 		        DataEntry dataEntry = new DataEntry(task, user, chosenStartDate, chosenEndDate, entryRemark, creationDate, editedDate);
 		        
 		        if(_existingCase != true)
+                {
+                    DataAccess da = DataAccess.getInstance();
+                    _timeSheet.setSheetId((int)da.getNextId("TimeSheets"));
 		        	_timesheetCtrl.insertTimeSheet(_timeSheet);
+                    CreateTimeSheetUI.getInstance().createPermissions(_timeSheet);
+                }
 		        
 		        _timesheetCtrl.addDataEntry(_timesheetCtrl.getTimeSheetByCaseId(_timeSheet.getCaseId()), dataEntry);
 
