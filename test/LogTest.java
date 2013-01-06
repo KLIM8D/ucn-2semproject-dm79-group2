@@ -1,21 +1,16 @@
 import controllers.LogCtrl;
-import models.Client;
-import models.Log;
 import controllers.UserCtrl;
-import models.User;
-import controllers.TaskCtrl;
-import models.Task;
-
 import db.DataAccess;
+import models.Log;
+import models.User;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created: 21-12-2012

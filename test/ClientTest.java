@@ -1,15 +1,14 @@
 import controllers.ClientCtrl;
 import db.DataAccess;
+import models.City;
+import models.Client;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import static org.junit.Assert.*;
-
-import models.City;
-import models.Client;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Created: 15-12-2012

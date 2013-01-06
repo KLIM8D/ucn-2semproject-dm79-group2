@@ -2,7 +2,6 @@ package views.dataentry;
 
 import controllers.TaskCtrl;
 import controllers.TimeSheetCtrl;
-import db.DataAccess;
 import models.DataEntry;
 import models.Task;
 import models.TimeSheet;
@@ -38,7 +37,7 @@ public class CreateDataEntryUI
 	private JTextField txtTitle;
 	private JTextPane txtDesc;
 	
-    private TimeSheetCtrl _timesheetCtrl;
+    private TimeSheetCtrl _timeSheetCtrl;
     private TaskCtrl _taskCtrl;
     private static TimeSheet _timeSheet; // timesheet needs to be imported from super, when we open this class.
     
@@ -74,7 +73,7 @@ public class CreateDataEntryUI
 
 	private CreateDataEntryUI() 
 	{
-		_timesheetCtrl = new TimeSheetCtrl();
+		_timeSheetCtrl = new TimeSheetCtrl();
 		_taskCtrl = new TaskCtrl();
 		
 		_frame = new JFrame();
@@ -291,13 +290,12 @@ public class CreateDataEntryUI
 		        
 		        if(_existingCase != true)
                 {
-                    DataAccess da = DataAccess.getInstance();
-                    _timeSheet.setSheetId((int)da.getNextId("TimeSheets"));
-		        	_timesheetCtrl.insertTimeSheet(_timeSheet);
+                    _timeSheet.setSheetId(_timeSheetCtrl.getNextId());
+		        	_timeSheetCtrl.insertTimeSheet(_timeSheet);
                     CreateTimeSheetUI.getInstance().createPermissions(_timeSheet);
                 }
 		        
-		        _timesheetCtrl.addDataEntry(_timesheetCtrl.getTimeSheetByCaseId(_timeSheet.getCaseId()), dataEntry);
+		        _timeSheetCtrl.addDataEntry(_timeSheetCtrl.getTimeSheetByCaseId(_timeSheet.getCaseId()), dataEntry);
 
 		        JOptionPane.showMessageDialog(null, "Indtastningerne er blevet oprettet.", "Information!", JOptionPane.INFORMATION_MESSAGE);
 		        _instance = null;

@@ -1,16 +1,14 @@
 import controllers.UserCtrl;
 import db.DataAccess;
+import models.User;
+import models.UserPermission;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.Assert.*;
-
-import models.User;
-import models.UserPermission;
-
-import org.junit.Before;
-import org.junit.Test;
 
 
 public class UserTest

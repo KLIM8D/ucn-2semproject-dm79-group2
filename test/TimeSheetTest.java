@@ -1,23 +1,18 @@
-import db.DataAccess;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import static org.junit.Assert.*;
-
-import models.TimeSheet;
-import models.Client;
-import models.User;
-
-import controllers.TimeSheetCtrl;
 import controllers.ClientCtrl;
+import controllers.TimeSheetCtrl;
 import controllers.UserCtrl;
-
+import db.DataAccess;
+import models.Client;
+import models.TimeSheet;
+import models.User;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created: 15-12-2012
@@ -52,7 +47,7 @@ public class TimeSheetTest
         User newUser = _userCtrl.getUserById(1);
         Client newClient = _clientCtrl.getClientById(1);
                                  
-        TimeSheet newTimeSheet = new TimeSheet("L-445521", newUser, newClient ,"Der skal flere noter på", cal.getTime(), cal.getTime());
+        TimeSheet newTimeSheet = new TimeSheet("L-445521", newUser, newClient ,"Der skal flere noter pï¿½", cal.getTime(), cal.getTime());
         int rowsAffected = _timeSheetCrtl.insertTimeSheet(newTimeSheet);
 
         assertEquals(1, rowsAffected);

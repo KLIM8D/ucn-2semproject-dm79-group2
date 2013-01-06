@@ -1,14 +1,13 @@
 import controllers.UserPermissionCtrl;
-import models.UserPermission;
 import db.DataAccess;
+import models.UserPermission;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Created: 21-12-2012

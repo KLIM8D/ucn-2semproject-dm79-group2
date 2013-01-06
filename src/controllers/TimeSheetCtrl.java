@@ -3,6 +3,7 @@ package controllers;
 import db.DBDataEntry;
 import db.DBPermissionWrapper;
 import db.DBTimeSheet;
+import db.DataAccess;
 import models.*;
 
 import java.util.ArrayList;
@@ -189,6 +190,18 @@ public class TimeSheetCtrl
     public ArrayList<TimeSheet> getAllTimeSheetsByClient(Client client, Date startDate, Date endDate) throws Exception
     {
         return _dbTimeSheet.getAllTimeSheetsByClient(client, startDate, endDate);
+    }
+
+    /**
+     * Returns the next sheetId
+     *
+     * @return int the next sheetId
+     *
+     */
+    public int getNextId()
+    {
+        DataAccess da = DataAccess.getInstance();
+        return (int)da.getNextId("TimeSheets");
     }
 
     public int addDataEntry(TimeSheet timeSheet, DataEntry dataEntry) throws Exception

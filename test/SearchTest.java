@@ -1,14 +1,9 @@
 import controllers.SearchCtrl;
 import models.SearchResult;
-import db.DataAccess;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created: 21-12-2012
