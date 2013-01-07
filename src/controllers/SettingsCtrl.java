@@ -6,6 +6,8 @@ import org.apache.commons.beanutils.DynaBean;
 import utils.Helper;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created: 23-12-2012
@@ -17,8 +19,10 @@ import java.io.File;
 
 public class SettingsCtrl
 {
+    private HashMap<String, String> _properties;
     public SettingsCtrl()
     {
+       _properties = new HashMap<String, String>();
     }
 
     public String getProperty(String propertyName) throws Exception
@@ -32,9 +36,17 @@ public class SettingsCtrl
 
     public void setProperty(String propertyName, String value) throws Exception
     {
+        _properties.put(propertyName, value);
+    }
+
+    public void writeFile() throws Exception
+    {
         String jsonTxt = Helper.readFile(System.getProperty("user.dir") + File.separator + "system" + File.separator + "settings.json");
         JSONObject jsonObject = (JSONObject) JSONSerializer.toJSON(jsonTxt);
-        jsonObject.put(propertyName, value);
+        System.gc();
+        for (Map.Entry<String, String> entry : _properties.entrySet())
+            jsonObject.put(entry.getKey(), entry.getValue());
+
         Helper.writeFile(System.getProperty("user.dir") + File.separator + "system" + File.separator + "settings.json", jsonObject.toString());
     }
 }

@@ -140,6 +140,7 @@ public class PrintSettingsUI
         catch (Exception e)
         {
             JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
@@ -149,6 +150,7 @@ public class PrintSettingsUI
         {
             _settingsCtrl.setProperty("exportToPdf", chkExportToPdf.isSelected() + "");
             _settingsCtrl.setProperty("exportPath", txtPath.getText() + File.separator);
+            _settingsCtrl.writeFile();
             UserSession.setExportToPdf(chkExportToPdf.isSelected());
             UserSession.setOutputPath(txtPath.getText() + File.separator);
             JOptionPane.showMessageDialog(null, "Udskrifts indstillingerne er gemt", "Information!", JOptionPane.INFORMATION_MESSAGE);
@@ -156,6 +158,7 @@ public class PrintSettingsUI
         catch (Exception e)
         {
             JOptionPane.showMessageDialog(null, Logging.handleException(e, 0), "Fejl!", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 }
