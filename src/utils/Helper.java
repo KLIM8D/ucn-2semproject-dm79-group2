@@ -166,5 +166,6 @@ public class Helper
         BufferedWriter out = new BufferedWriter(fStream);
         out.write(content);
         out.close();
+        fStream.close();
     }
 }
