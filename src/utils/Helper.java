@@ -150,6 +150,7 @@ public class Helper
         {
             FileChannel fc = stream.getChannel();
             MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+            fc.close();
 
             /* Instead of using default, pass in a decoder. */
             return Charset.defaultCharset().decode(bb).toString();
@@ -164,8 +165,14 @@ public class Helper
     {
         FileWriter fStream = new FileWriter(filePath);
         BufferedWriter out = new BufferedWriter(fStream);
-        out.write(content);
-        out.close();
-        fStream.close();
+        try
+        {
+            out.write(content);
+        }
+        finally
+        {
+            out.close();
+            fStream.close();
+        }
     }
 }
