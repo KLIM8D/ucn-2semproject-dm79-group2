@@ -25,7 +25,8 @@ import java.util.List;
 
 public class GenerateReport
 {
-    public void fillReport(int sheetId, boolean getPdf, String outputPath) throws Exception
+    @SuppressWarnings("rawtypes")
+	public void fillReport(int sheetId, boolean getPdf, String outputPath) throws Exception
     {
         TimeSheetCtrl timeSheetCtrl = new TimeSheetCtrl();
         List<ReportWrapper> listTimeSheets = new ArrayList<ReportWrapper>();
@@ -35,7 +36,8 @@ public class GenerateReport
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listTimeSheets);
         String templateLocation = System.getProperty("user.dir") + "?system?templates?TimeSheet.jasper";
         templateLocation = templateLocation.replace("?", File.separator);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(templateLocation, new HashMap(), beanCollectionDataSource);
+        @SuppressWarnings("unchecked")
+		JasperPrint jasperPrint = JasperFillManager.fillReport(templateLocation, new HashMap(), beanCollectionDataSource);
 
         if(getPdf && outputPath.length() > 0)
             exportToPdf(jasperPrint, outputPath);
@@ -43,7 +45,8 @@ public class GenerateReport
             exportToPrintDialog(jasperPrint);
     }
 
-    public void fillReport(int[] sheetIds, boolean getPdf, String outputPath) throws Exception
+    @SuppressWarnings("unchecked")
+	public void fillReport(int[] sheetIds, boolean getPdf, String outputPath) throws Exception
     {
         TimeSheetCtrl timeSheetCtrl = new TimeSheetCtrl();
         List<ReportWrapper> listTimeSheets = new ArrayList<ReportWrapper>();
@@ -53,7 +56,8 @@ public class GenerateReport
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listTimeSheets);
         String templateLocation = System.getProperty("user.dir") + "?system?templates?TimeSheet.jasper";
         templateLocation = templateLocation.replace("?", File.separator);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(templateLocation, new HashMap(), beanCollectionDataSource);
+        @SuppressWarnings("rawtypes")
+		JasperPrint jasperPrint = JasperFillManager.fillReport(templateLocation, new HashMap(), beanCollectionDataSource);
 
         if(getPdf && outputPath.length() > 0)
             exportToPdf(jasperPrint, outputPath);

@@ -357,7 +357,8 @@ public class DataAccess
         System.out.println(sb.toString());
     }
 
-    private boolean isClosed()
+    @SuppressWarnings("unused")
+	private boolean isClosed()
     {
         Statement stmt;
         ResultSet rs;

@@ -32,13 +32,14 @@ import java.util.ArrayList;
  * Description:
  * @changes
  */
-
+@SuppressWarnings("unused")
 public class SearchUI
 {
-    private SearchCtrl _searchCtrl;
+
+	private SearchCtrl _searchCtrl;
     private TimeSheetCtrl _timeSheetCtrl;
     private ClientCtrl _clientCtrl;
-    private TaskCtrl _taskCtrl;
+	private TaskCtrl _taskCtrl;
 
     private static JFrame _frame;
     private static SearchUI _instance;
@@ -68,7 +69,8 @@ public class SearchUI
         return _frame;
     }
 
-    private SearchUI(SearchResult result)
+    @SuppressWarnings("serial")
+	private SearchUI(SearchResult result)
     {
         _result = result;
         _searchCtrl = new SearchCtrl();
@@ -216,7 +218,8 @@ public class SearchUI
         new AddTaskData().execute();
     }
 
-    private void addButtonsToSheets(final int columnIndex)
+    @SuppressWarnings("serial")
+	private void addButtonsToSheets(final int columnIndex)
     {
         Action show = new AbstractAction()
         {
@@ -242,7 +245,8 @@ public class SearchUI
         buttonColumn.setMnemonic(KeyEvent.VK_D);
     }
 
-    private void addButtonsToClients(final int columnIndex)
+    @SuppressWarnings("serial")
+	private void addButtonsToClients(final int columnIndex)
     {
         Action show = new AbstractAction()
         {
@@ -267,7 +271,8 @@ public class SearchUI
         buttonColumn.setMnemonic(KeyEvent.VK_D);
     }
 
-    private void addButtonsToTasks(final int columnIndex)
+    @SuppressWarnings("serial")
+	private void addButtonsToTasks(final int columnIndex)
     {
         Action show = new AbstractAction()
         {

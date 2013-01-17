@@ -745,6 +745,7 @@ public class SystemUI extends JFrame implements ChangeListener
 	{
 		Action show = new AbstractAction()
 		{
+			@SuppressWarnings("unused")
 			public void actionPerformed(ActionEvent e)
 			{
 				JTable sheetTable = (JTable) e.getSource();

@@ -21,9 +21,10 @@ import java.util.Date;
  * @changes
  */
 
+@SuppressWarnings("unused")
 public class SortUI
 {
-    private TimeSheetCtrl _timeSheetCtrl;
+	private TimeSheetCtrl _timeSheetCtrl;
 
     private static JFrame _frame;
     private static SortUI _instance;
