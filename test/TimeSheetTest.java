@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNotNull;
  * @changes
  */
 
+@SuppressWarnings("unused")
 public class TimeSheetTest
 {
     private TimeSheetCtrl _timeSheetCrtl;
@@ -73,7 +74,7 @@ public class TimeSheetTest
     public void getTimeSheetsByUser() throws Exception
     {
     	User user = _userCtrl.getUserById(1);
-    	ArrayList<TimeSheet> timeSheets;
+		ArrayList<TimeSheet> timeSheets;
     	timeSheets = _timeSheetCrtl.getAllTimeSheetsByUser(user);
     }
     
